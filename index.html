@@ -613,6 +613,11 @@
           <i class="fa-solid fa-angles-right text-theme-600"></i>
           <span data-en="Show Navigation Sidebar" data-te="నావిగేషన్ మెనూ చూపించు">Show Navigation Sidebar</span>
         </button>
+        <!-- Real-time Cloud Sync Status Pill -->
+        <div id="cloud-sync-status-indicator" class="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs" title="Live Cloud Sync Active via Firebase">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span id="cloud-sync-status-text">Cloud Sync: Live</span>
+        </div>
       </div>
 
       <!-- SECTION 1: HOME DASHBOARD -->
@@ -4197,6 +4202,152 @@
       document.body.removeChild(link);
     }
 
+    // =========================================================================
+    // FIREBASE REALTIME DATABASE CLOUD SYNCHRONIZATION ENGINE
+    // Connected to: https://zpghs-gajwel-default-rtdb.firebaseio.com
+    // Syncs every edit (Students, Staff, Marks, Notices, Holidays, MDM, Timetable)
+    // in real-time across all devices on zpghsgajwel.in
+    // =========================================================================
+    var FIREBASE_DB_URL = 'https://zpghs-gajwel-default-rtdb.firebaseio.com';
+
+    function setCloudSyncStatus(status, text) {
+      var ind = document.getElementById('cloud-sync-status-indicator');
+      var txt = document.getElementById('cloud-sync-status-text');
+      if (!ind || !txt) return;
+
+      if (status === 'syncing') {
+        ind.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full shadow-2xs';
+        ind.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-600 text-[10px]"></i> <span id="cloud-sync-status-text">' + (text || 'Saving to Cloud...') + '</span>';
+      } else if (status === 'error') {
+        ind.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-rose-800 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full shadow-2xs';
+        ind.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-500"></span> <span id="cloud-sync-status-text">' + (text || 'Offline (Local)') + '</span>';
+      } else {
+        ind.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs';
+        ind.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> <span id="cloud-sync-status-text">' + (text || 'Cloud Sync: Live') + '</span>';
+      }
+    }
+
+    // Save a specific key to Firebase Realtime Database
+    function syncToCloud(key, data) {
+      if (!FIREBASE_DB_URL) return;
+      setCloudSyncStatus('syncing', 'Syncing ' + key + '...');
+      fetch(FIREBASE_DB_URL + '/' + key + '.json', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function() {
+        setCloudSyncStatus('success', 'Cloud Synced');
+        setTimeout(function() { setCloudSyncStatus('live'); }, 2000);
+      })
+      .catch(function(err) {
+        console.warn('Firebase cloud sync error for ' + key + ':', err);
+        setCloudSyncStatus('error', 'Sync Failed');
+      });
+    }
+
+    // Pull all datasets from Firebase Realtime Database on page load
+    function pullFromCloud(callback) {
+      if (!FIREBASE_DB_URL) {
+        if (callback) callback();
+        return;
+      }
+      setCloudSyncStatus('syncing', 'Fetching Cloud Data...');
+      fetch(FIREBASE_DB_URL + '.json')
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(cloudData) {
+        if (cloudData && typeof cloudData === 'object') {
+          // If cloud has data, update local arrays and storage
+          if (Array.isArray(cloudData.zphs_staff) && cloudData.zphs_staff.length > 0) {
+            staffList = cloudData.zphs_staff;
+            try { localStorage.setItem('zphs_staff', JSON.stringify(staffList)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_non_teaching) && cloudData.zphs_non_teaching.length > 0) {
+            nonTeachingList = cloudData.zphs_non_teaching;
+            try { localStorage.setItem('zphs_non_teaching', JSON.stringify(nonTeachingList)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_students_portal_v3) && cloudData.zphs_students_portal_v3.length > 0) {
+            studentList = cloudData.zphs_students_portal_v3;
+            try { localStorage.setItem('zphs_students_portal_v3', JSON.stringify(studentList)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_notices) && cloudData.zphs_notices.length > 0) {
+            noticeList = cloudData.zphs_notices;
+            try { localStorage.setItem('zphs_notices', JSON.stringify(noticeList)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_holidays) && cloudData.zphs_holidays.length > 0) {
+            holidayList = cloudData.zphs_holidays;
+            try { localStorage.setItem('zphs_holidays', JSON.stringify(holidayList)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_mdm) && cloudData.zphs_mdm.length > 0) {
+            mdmList = cloudData.zphs_mdm;
+            try { localStorage.setItem('zphs_mdm', JSON.stringify(mdmList)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_activities) && cloudData.zphs_activities.length > 0) {
+            activityList = cloudData.zphs_activities;
+            try { localStorage.setItem('zphs_activities', JSON.stringify(activityList)); } catch(e){}
+          }
+          if (cloudData.zphs_timetables_v3 && typeof cloudData.zphs_timetables_v3 === 'object') {
+            timetableStore = cloudData.zphs_timetables_v3;
+            try { localStorage.setItem('zphs_timetables_v3', JSON.stringify(timetableStore)); } catch(e){}
+          }
+          if (cloudData.zphs_exam_marks && typeof cloudData.zphs_exam_marks === 'object') {
+            examMarksRegistry = cloudData.zphs_exam_marks;
+            try { localStorage.setItem('zphs_exam_marks', JSON.stringify(examMarksRegistry)); } catch(e){}
+          }
+          if (cloudData.zphs_yearwise_students && typeof cloudData.zphs_yearwise_students === 'object') {
+            yearwiseStudentsStore = cloudData.zphs_yearwise_students;
+            try { localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_academic_years) && cloudData.zphs_academic_years.length > 0) {
+            academicYears = cloudData.zphs_academic_years;
+            try { localStorage.setItem('zphs_academic_years', JSON.stringify(academicYears)); } catch(e){}
+          }
+          if (Array.isArray(cloudData.zphs_gallery_photos) && cloudData.zphs_gallery_photos.length > 0) {
+            galleryPhotos = cloudData.zphs_gallery_photos;
+            try { localStorage.setItem('zphs_gallery_photos', JSON.stringify(galleryPhotos)); } catch(e){}
+          }
+        }
+        setCloudSyncStatus('live');
+        if (callback) callback();
+      })
+      .catch(function(err) {
+        console.warn('Could not pull cloud data, using local cached data:', err);
+        setCloudSyncStatus('error', 'Cloud Offline');
+        if (callback) callback();
+      });
+    }
+
+    // Seed initial dataset to Cloud if database is empty
+    function checkAndSeedCloud() {
+      if (!FIREBASE_DB_URL) return;
+      fetch(FIREBASE_DB_URL + '/zphs_staff.json')
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (!data || (Array.isArray(data) && data.length === 0)) {
+          console.log('Firebase Database empty, seeding initial baseline records...');
+          syncToCloud('zphs_staff', staffList);
+          syncToCloud('zphs_non_teaching', nonTeachingList);
+          syncToCloud('zphs_students_portal_v3', studentList);
+          syncToCloud('zphs_notices', noticeList);
+          syncToCloud('zphs_holidays', holidayList);
+          syncToCloud('zphs_mdm', mdmList);
+          syncToCloud('zphs_activities', activityList);
+          syncToCloud('zphs_timetables_v3', timetableStore);
+          syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
+          syncToCloud('zphs_exam_marks', examMarksRegistry);
+        }
+      })
+      .catch(function() {});
+    }
+
+
     function initPortal() {
       // Initialize saved language preference
       try {
@@ -4206,26 +4357,37 @@
         }
       } catch (e) {}
       setLanguage(currentLang);
-      // Re-verify that data is populated before rendering
-      if (!staffList || staffList.length === 0) staffList = defaultStaff;
-      if (!nonTeachingList || nonTeachingList.length === 0) nonTeachingList = defaultNonTeachingStaff;
-      if (!studentList || studentList.length === 0) studentList = defaultStudents;
 
-      updateUIAuthStatus();
-      renderStaffTable();
-      renderStudentTable();
-      renderYearTabs();
-      renderYearwiseTable();
-      renderCertificatesTable();
-      renderMDMTable();
-      renderMarksTable();
-      renderNotices();
-      renderHolidays();
-      renderActivities();
-      renderTimetable('Class 10');
-      updateDashboardStats();
-      initGallery();
-      initBannerFlashRotator();
+      function renderAllViews() {
+        if (!staffList || staffList.length === 0) staffList = defaultStaff;
+        if (!nonTeachingList || nonTeachingList.length === 0) nonTeachingList = defaultNonTeachingStaff;
+        if (!studentList || studentList.length === 0) studentList = defaultStudents;
+
+        updateUIAuthStatus();
+        renderStaffTable();
+        renderStudentTable();
+        renderYearTabs();
+        renderYearwiseTable();
+        renderCertificatesTable();
+        renderMDMTable();
+        renderMarksTable();
+        renderNotices();
+        renderHolidays();
+        renderActivities();
+        renderTimetable(currentTimetableClass || 'Class 10');
+        updateDashboardStats();
+        initGallery();
+        initBannerFlashRotator();
+      }
+
+      // Render local views immediately
+      renderAllViews();
+
+      // Pull latest edits from Firebase Cloud Database in background and update views
+      pullFromCloud(function() {
+        renderAllViews();
+        checkAndSeedCloud();
+      });
     }
 
 
@@ -4787,6 +4949,7 @@
       try {
         localStorage.setItem('zphs_exam_marks', JSON.stringify(examMarksRegistry));
       } catch (err) {}
+      syncToCloud('zphs_exam_marks', examMarksRegistry);
 
       closeModal('modal-marks');
       renderMarksTable();
@@ -4988,6 +5151,7 @@
       try {
         localStorage.setItem('zphs_exam_marks', JSON.stringify(examMarksRegistry));
       } catch (err) {}
+      syncToCloud('zphs_exam_marks', examMarksRegistry);
 
       isInlineMarksEditing = false;
       updateInlineMarksUI();
@@ -6369,9 +6533,8 @@
         activityList = activityList.filter(a => a.id !== id);
         try {
           localStorage.setItem('zphs_activities', JSON.stringify(activityList));
-        } catch (err) {
-          console.warn('Error deleting activity:', err);
-        }
+        } catch (err) {}
+        syncToCloud('zphs_activities', activityList);
         renderActivities();
       }
     }
@@ -6916,9 +7079,8 @@ var currentTimetableClass = 'Class 10';
 
       try {
         localStorage.setItem('zphs_timetables_v3', JSON.stringify(timetableStore));
-      } catch (err) {
-        console.warn('Error saving timetable:', err);
-      }
+      } catch (err) {}
+      syncToCloud('zphs_timetables_v3', timetableStore);
 
       currentTimetableClass = targetCls;
       closeModal('modal-timetable');
@@ -7316,6 +7478,7 @@ var currentTimetableClass = 'Class 10';
           });
         }
         try { localStorage.setItem('zphs_non_teaching', JSON.stringify(nonTeachingList)); } catch (err) {}
+        syncToCloud('zphs_non_teaching', nonTeachingList);
       } else {
         if (isEdit) {
           var targetId = parseInt(idVal, 10);
@@ -7336,6 +7499,7 @@ var currentTimetableClass = 'Class 10';
           });
         }
         try { localStorage.setItem('zphs_staff', JSON.stringify(staffList)); } catch (err) {}
+        syncToCloud('zphs_staff', staffList);
       }
 
       renderStaffTable();
@@ -7397,6 +7561,7 @@ var currentTimetableClass = 'Class 10';
       } catch (err) {
         console.warn('Storage sync error:', err);
       }
+      syncToCloud('zphs_students_portal_v3', studentList);
 
       renderStudentTable();
       renderCertificatesTable();
@@ -7430,9 +7595,8 @@ var currentTimetableClass = 'Class 10';
 
       try {
         localStorage.setItem('zphs_notices', JSON.stringify(noticeList));
-      } catch (err) {
-        console.warn('Error saving notices:', err);
-      }
+      } catch (err) {}
+      syncToCloud('zphs_notices', noticeList);
       renderNotices();
       closeModal('modal-notice');
     }
@@ -7450,9 +7614,8 @@ var currentTimetableClass = 'Class 10';
         noticeList = noticeList.filter(item => item.id !== id);
         try {
           localStorage.setItem('zphs_notices', JSON.stringify(noticeList));
-        } catch (err) {
-          console.warn('Error deleting notice:', err);
-        }
+        } catch (err) {}
+        syncToCloud('zphs_notices', noticeList);
         renderNotices();
       }
     }
@@ -7577,9 +7740,8 @@ var currentTimetableClass = 'Class 10';
 
       try {
         localStorage.setItem('zphs_holidays', JSON.stringify(holidayList));
-      } catch (err) {
-        console.warn('Error saving holidays:', err);
-      }
+      } catch (err) {}
+      syncToCloud('zphs_holidays', holidayList);
       renderHolidays();
       closeModal('modal-holiday');
     }
@@ -7597,9 +7759,8 @@ var currentTimetableClass = 'Class 10';
         holidayList = holidayList.filter(item => item.id !== id);
         try {
           localStorage.setItem('zphs_holidays', JSON.stringify(holidayList));
-        } catch (err) {
-          console.warn('Error deleting holiday:', err);
-        }
+        } catch (err) {}
+        syncToCloud('zphs_holidays', holidayList);
         renderHolidays();
       }
     }
@@ -7614,6 +7775,7 @@ var currentTimetableClass = 'Class 10';
       if (confirm('Delete staff record?')) {
         staffList = staffList.filter(s => s.id !== id);
         localStorage.setItem('zphs_staff', JSON.stringify(staffList));
+        syncToCloud('zphs_staff', staffList);
         renderStaffTable();
         updateDashboardStats();
       }
