@@ -476,23 +476,23 @@
           <img src="school_building.jpg" alt="ZILLA PARISHAD GIRLS' HIGH SCHOOL, GAJWEL" class="w-full h-full object-cover">
         </div>
 
-        <!-- Language Switcher Button -->
-        <button onclick="toggleLanguage()" class="bg-white/15 hover:bg-white/25 text-white border border-white/35 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2 shadow-sm">
-          <i class="fa-solid fa-language text-xl text-sky-200"></i>
-          <span id="lang-btn-text">తెలుగు (Telugu)</span>
+        <!-- Language Switcher Button (Compact) -->
+        <button onclick="toggleLanguage()" class="bg-white/15 hover:bg-white/25 text-white border border-white/35 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Switch Language">
+          <i class="fa-solid fa-language text-sm text-sky-200"></i>
+          <span id="lang-btn-text">తెలుగు</span>
         </button>
 
-        <!-- Live Cloud Sync Status & Manual Sync Button -->
-        <button onclick="manualCloudSync()" id="header-cloud-sync-btn" class="bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Click to refresh and synchronize latest edits from Firebase Cloud Database">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="header-cloud-sync-text">Cloud Sync: Live</span>
+        <!-- Live Cloud Sync Status & Manual Sync Button (Compact) -->
+        <button onclick="manualCloudSync()" id="header-cloud-sync-btn" class="bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Click to refresh & sync with Cloud Database">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="header-cloud-sync-text">Live</span>
         </button>
 
-        <!-- Login / User Badge -->
+        <!-- Login / User Badge (Compact) -->
         <div id="auth-status-container" class="flex items-center">
-          <button onclick="openLoginModal()" class="bg-white hover:bg-sky-50 text-sky-950 font-extrabold px-4.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-md">
-            <i class="fa-solid fa-user-lock"></i>
-            <span id="login-btn-text">Admin Login</span>
+          <button onclick="openLoginModal()" class="bg-white hover:bg-sky-50 text-sky-950 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Admin Login">
+            <i class="fa-solid fa-user-lock text-[11px]"></i>
+            <span id="login-btn-text">Login</span>
           </button>
         </div>
       </div>
@@ -3523,13 +3523,13 @@
         console.warn('Language preference storage:', e);
       }
 
-      // Update button text and icon
+      // Update button text and icon (Short labels)
       var btnText = document.getElementById('lang-btn-text');
       if (btnText) {
         if (currentLang === 'en') {
-          btnText.innerText = 'తెలుగు (Telugu)';
+          btnText.innerText = 'తెలుగు';
         } else if (currentLang === 'te') {
-          btnText.innerText = 'اردو (Urdu)';
+          btnText.innerText = 'اردو';
         } else {
           btnText.innerText = 'English';
         }
@@ -4236,8 +4236,8 @@
 
       if (status === 'syncing') {
         if (headerBtn) {
-          headerBtn.className = 'bg-amber-500/25 hover:bg-amber-500/35 text-white border border-amber-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Syncing Cloud...') + '</span>';
+          headerBtn.className = 'bg-amber-500/25 hover:bg-amber-500/35 text-white border border-amber-300/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Syncing...') + '</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-300 px-2.5 py-1 rounded-full shadow-2xs transition';
@@ -4245,8 +4245,8 @@
         }
       } else if (status === 'error') {
         if (headerBtn) {
-          headerBtn.className = 'bg-rose-500/25 hover:bg-rose-500/35 text-white border border-rose-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400"></span> <span id="header-cloud-sync-text">' + (text || 'Cloud Offline') + '</span>';
+          headerBtn.className = 'bg-rose-500/25 hover:bg-rose-500/35 text-white border border-rose-300/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> <span id="header-cloud-sync-text">' + (text || 'Offline') + '</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-rose-800 bg-rose-50 border border-rose-300 px-2.5 py-1 rounded-full shadow-2xs transition';
@@ -4254,8 +4254,8 @@
         }
       } else if (status === 'success') {
         if (headerBtn) {
-          headerBtn.className = 'bg-emerald-500/30 hover:bg-emerald-500/40 text-white border border-emerald-300/50 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Cloud Synced') + '</span>';
+          headerBtn.className = 'bg-emerald-500/30 hover:bg-emerald-500/40 text-white border border-emerald-300/50 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Synced') + '</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full shadow-2xs transition';
@@ -4263,8 +4263,8 @@
         }
       } else {
         if (headerBtn) {
-          headerBtn.className = 'bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span id="header-cloud-sync-text">' + (text || 'Cloud Sync: Live') + '</span>';
+          headerBtn.className = 'bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> <span id="header-cloud-sync-text">' + (text || 'Live') + '</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs hover:bg-emerald-100 transition cursor-pointer';
@@ -5294,11 +5294,13 @@
 
       if (isAdmin && currentUser) {
         container.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-xs flex items-center gap-1.5 border border-sky-400">
-              <i class="fa-solid fa-shield"></i> <span>Admin (${escapeText(currentUser.code || '2133745')})</span>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-xs flex items-center gap-1.5 border border-sky-400 cursor-default" title="Admin Code: ${escapeText(currentUser.code || '2133745')}">
+              <i class="fa-solid fa-shield text-[11px]"></i> <span>Admin</span>
             </span>
-            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition shadow-xs">Logout</button>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span>Logout</span>
+            </button>
           </div>
         `;
         document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
@@ -5308,11 +5310,13 @@
         });
       } else if (currentUser && currentUser.role === 'staff') {
         container.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-xs flex items-center gap-1.5 border border-sky-400">
-              <i class="fa-solid fa-id-badge"></i> <span>${escapeText(currentUser.name)} (${escapeText(currentUser.code)})</span>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-xs flex items-center gap-1.5 border border-sky-400 cursor-default" title="${escapeText(currentUser.name)} (${escapeText(currentUser.code)})">
+              <i class="fa-solid fa-id-badge text-[11px]"></i> <span>Staff</span>
             </span>
-            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition shadow-xs">Logout</button>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span>Logout</span>
+            </button>
           </div>
         `;
         document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
@@ -5322,9 +5326,9 @@
         });
       } else {
         container.innerHTML = `
-          <button onclick="openLoginModal()" class="bg-white hover:bg-amber-50 text-orange-950 font-bold px-4 py-1.5 rounded-lg text-xs sm:text-sm transition flex items-center gap-2 shadow">
-            <i class="fa-solid fa-user-lock"></i>
-            <span id="login-btn-text">Admin Login</span>
+          <button onclick="openLoginModal()" class="bg-white hover:bg-amber-50 text-orange-950 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Admin Login">
+            <i class="fa-solid fa-user-lock text-[11px]"></i>
+            <span id="login-btn-text">Login</span>
           </button>
         `;
         document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
