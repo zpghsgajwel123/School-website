@@ -4283,11 +4283,18 @@
       });
     }
 
+    function getCloudUrl(path) {
+      var base = FIREBASE_DB_URL.replace(/\/+$/, '');
+      if (!path) return base + '/.json?t=' + Date.now();
+      return base + '/' + path.replace(/^\/+/, '') + '.json?t=' + Date.now();
+    }
+
     // Save a specific key to Firebase Realtime Database
     function syncToCloud(key, data) {
       if (!FIREBASE_DB_URL) return;
+      var url = FIREBASE_DB_URL.replace(/\/+$/, '') + '/' + key + '.json';
       setCloudSyncStatus('syncing', 'Saving ' + key.replace('zphs_', '') + '...');
-      fetch(FIREBASE_DB_URL + '/' + key + '.json', {
+      fetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -4313,7 +4320,7 @@
         return;
       }
       setCloudSyncStatus('syncing', 'Fetching Cloud Data...');
-      fetch(FIREBASE_DB_URL + '.json')
+      fetch(getCloudUrl())
       .then(function(res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
@@ -4391,7 +4398,7 @@
     // Seed initial dataset to Cloud if database is empty
     function checkAndSeedCloud() {
       if (!FIREBASE_DB_URL) return;
-      fetch(FIREBASE_DB_URL + '.json')
+      fetch(getCloudUrl())
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (!data) data = {};
@@ -4506,6 +4513,17 @@
         activeNav.classList.add('bg-theme-700', 'text-white');
         activeNav.classList.remove('text-slate-600', 'hover:bg-slate-100');
       }
+
+      // Re-render active section with latest data
+      if (tabId === 'notices') renderNotices();
+      else if (tabId === 'staff') renderStaffTable();
+      else if (tabId === 'students') renderStudentTable();
+      else if (tabId === 'yearwise-students') renderYearwiseTable();
+      else if (tabId === 'holidays') renderHolidays();
+      else if (tabId === 'activities') renderActivities();
+      else if (tabId === 'mdm') renderMDMTable();
+      else if (tabId === 'timetable') renderTimetable(currentTimetableClass || 'Class 10');
+      else if (tabId === 'home') renderNotices();
 
       var sidebarNav = document.getElementById('sidebar-nav');
       if (window.innerWidth < 768 && sidebarNav) {
