@@ -482,6 +482,12 @@
           <span id="lang-btn-text">తెలుగు (Telugu)</span>
         </button>
 
+        <!-- Live Cloud Sync Status & Manual Sync Button -->
+        <button onclick="manualCloudSync()" id="header-cloud-sync-btn" class="bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Click to refresh and synchronize latest edits from Firebase Cloud Database">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="header-cloud-sync-text">Cloud Sync: Live</span>
+        </button>
+
         <!-- Login / User Badge -->
         <div id="auth-status-container" class="flex items-center">
           <button onclick="openLoginModal()" class="bg-white hover:bg-sky-50 text-sky-950 font-extrabold px-4.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-md">
@@ -614,10 +620,10 @@
           <span data-en="Show Navigation Sidebar" data-te="నావిగేషన్ మెనూ చూపించు">Show Navigation Sidebar</span>
         </button>
         <!-- Real-time Cloud Sync Status Pill -->
-        <div id="cloud-sync-status-indicator" class="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs" title="Live Cloud Sync Active via Firebase">
+        <button onclick="manualCloudSync()" id="cloud-sync-status-indicator" class="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs hover:bg-emerald-100 transition cursor-pointer" title="Click to refresh and sync with Firebase Cloud Database">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span id="cloud-sync-status-text">Cloud Sync: Live</span>
-        </div>
+        </button>
       </div>
 
       <!-- SECTION 1: HOME DASHBOARD -->
@@ -3980,6 +3986,8 @@
           localStorage.setItem('zphs_academic_years', JSON.stringify(academicYearsList));
           localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore));
         } catch(e) {}
+        syncToCloud('zphs_academic_years', academicYearsList);
+        syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
         selectAcademicYear(newYear);
         alert('Academic Year ' + newYear + ' added successfully!');
       } else {
@@ -4065,6 +4073,7 @@
         try {
           localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore));
         } catch(e) {}
+        syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
         renderYearwiseTable();
       }
     }
@@ -4105,6 +4114,7 @@
           });
         }
         try { localStorage.setItem('zphs_students_portal_v3', JSON.stringify(studentList)); } catch(e) {}
+        syncToCloud('zphs_students_portal_v3', studentList);
         renderStudentTable();
       } else {
         // Save to yearwise archive store
@@ -4124,6 +4134,7 @@
           });
         }
         try { localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore)); } catch(e) {}
+        syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
       }
 
       closeModal('modal-old-student');
@@ -4210,27 +4221,72 @@
     // =========================================================================
     var FIREBASE_DB_URL = 'https://zpghs-gajwel-default-rtdb.firebaseio.com';
 
+    function extractArray(val) {
+      if (!val) return [];
+      if (Array.isArray(val)) return val.filter(Boolean);
+      if (typeof val === 'object') return Object.values(val).filter(Boolean);
+      return [];
+    }
+
     function setCloudSyncStatus(status, text) {
-      var ind = document.getElementById('cloud-sync-status-indicator');
-      var txt = document.getElementById('cloud-sync-status-text');
-      if (!ind || !txt) return;
+      var headerBtn = document.getElementById('header-cloud-sync-btn');
+      var headerTxt = document.getElementById('header-cloud-sync-text');
+      var vpInd = document.getElementById('cloud-sync-status-indicator');
+      var vpTxt = document.getElementById('cloud-sync-status-text');
 
       if (status === 'syncing') {
-        ind.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full shadow-2xs';
-        ind.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-600 text-[10px]"></i> <span id="cloud-sync-status-text">' + (text || 'Saving to Cloud...') + '</span>';
+        if (headerBtn) {
+          headerBtn.className = 'bg-amber-500/25 hover:bg-amber-500/35 text-white border border-amber-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Syncing Cloud...') + '</span>';
+        }
+        if (vpInd) {
+          vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-300 px-2.5 py-1 rounded-full shadow-2xs transition';
+          vpInd.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-600 text-[10px]"></i> <span id="cloud-sync-status-text">' + (text || 'Syncing Cloud...') + '</span>';
+        }
       } else if (status === 'error') {
-        ind.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-rose-800 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full shadow-2xs';
-        ind.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-500"></span> <span id="cloud-sync-status-text">' + (text || 'Offline (Local)') + '</span>';
+        if (headerBtn) {
+          headerBtn.className = 'bg-rose-500/25 hover:bg-rose-500/35 text-white border border-rose-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400"></span> <span id="header-cloud-sync-text">' + (text || 'Cloud Offline') + '</span>';
+        }
+        if (vpInd) {
+          vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-rose-800 bg-rose-50 border border-rose-300 px-2.5 py-1 rounded-full shadow-2xs transition';
+          vpInd.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-500"></span> <span id="cloud-sync-status-text">' + (text || 'Cloud Offline') + '</span>';
+        }
+      } else if (status === 'success') {
+        if (headerBtn) {
+          headerBtn.className = 'bg-emerald-500/30 hover:bg-emerald-500/40 text-white border border-emerald-300/50 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Cloud Synced') + '</span>';
+        }
+        if (vpInd) {
+          vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full shadow-2xs transition';
+          vpInd.innerHTML = '<i class="fa-solid fa-check text-emerald-600 text-[10px]"></i> <span id="cloud-sync-status-text">' + (text || 'Cloud Synced') + '</span>';
+        }
       } else {
-        ind.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs';
-        ind.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> <span id="cloud-sync-status-text">' + (text || 'Cloud Sync: Live') + '</span>';
+        if (headerBtn) {
+          headerBtn.className = 'bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
+          headerBtn.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span id="header-cloud-sync-text">' + (text || 'Cloud Sync: Live') + '</span>';
+        }
+        if (vpInd) {
+          vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs hover:bg-emerald-100 transition cursor-pointer';
+          vpInd.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> <span id="cloud-sync-status-text">' + (text || 'Cloud Sync: Live') + '</span>';
+        }
       }
+    }
+
+    // Manual Refresh & Cloud Synchronize trigger
+    function manualCloudSync() {
+      setCloudSyncStatus('syncing', 'Syncing...');
+      pullFromCloud(function() {
+        if (typeof renderAllViews === 'function') renderAllViews();
+        setCloudSyncStatus('success', 'Synced with Cloud');
+        setTimeout(function() { setCloudSyncStatus('live'); }, 2200);
+      });
     }
 
     // Save a specific key to Firebase Realtime Database
     function syncToCloud(key, data) {
       if (!FIREBASE_DB_URL) return;
-      setCloudSyncStatus('syncing', 'Syncing ' + key + '...');
+      setCloudSyncStatus('syncing', 'Saving ' + key.replace('zphs_', '') + '...');
       fetch(FIREBASE_DB_URL + '/' + key + '.json', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -4241,7 +4297,7 @@
         return res.json();
       })
       .then(function() {
-        setCloudSyncStatus('success', 'Cloud Synced');
+        setCloudSyncStatus('success', 'Saved to Cloud');
         setTimeout(function() { setCloudSyncStatus('live'); }, 2000);
       })
       .catch(function(err) {
@@ -4265,32 +4321,38 @@
       .then(function(cloudData) {
         if (cloudData && typeof cloudData === 'object') {
           // If cloud has data, update local arrays and storage
-          if (Array.isArray(cloudData.zphs_staff) && cloudData.zphs_staff.length > 0) {
-            staffList = cloudData.zphs_staff;
+          if (cloudData.zphs_staff !== undefined) {
+            var arr = extractArray(cloudData.zphs_staff);
+            if (arr.length > 0) staffList = arr;
             try { localStorage.setItem('zphs_staff', JSON.stringify(staffList)); } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_non_teaching) && cloudData.zphs_non_teaching.length > 0) {
-            nonTeachingList = cloudData.zphs_non_teaching;
+          if (cloudData.zphs_non_teaching !== undefined) {
+            var arr = extractArray(cloudData.zphs_non_teaching);
+            if (arr.length > 0) nonTeachingList = arr;
             try { localStorage.setItem('zphs_non_teaching', JSON.stringify(nonTeachingList)); } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_students_portal_v3) && cloudData.zphs_students_portal_v3.length > 0) {
-            studentList = cloudData.zphs_students_portal_v3;
-            try { localStorage.setItem('zphs_students_portal_v3', JSON.stringify(studentList)); } catch(e){}
+          if (cloudData.zphs_students_portal_v3 !== undefined) {
+            var arr = extractArray(cloudData.zphs_students_portal_v3);
+            if (arr.length > 0) studentList = arr;
+            try {
+              localStorage.setItem('zphs_students_portal_v3', JSON.stringify(studentList));
+              localStorage.setItem('zphs_students_portal_v2', JSON.stringify(studentList));
+            } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_notices) && cloudData.zphs_notices.length > 0) {
-            noticeList = cloudData.zphs_notices;
+          if (cloudData.zphs_notices !== undefined) {
+            noticeList = extractArray(cloudData.zphs_notices);
             try { localStorage.setItem('zphs_notices', JSON.stringify(noticeList)); } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_holidays) && cloudData.zphs_holidays.length > 0) {
-            holidayList = cloudData.zphs_holidays;
+          if (cloudData.zphs_holidays !== undefined) {
+            holidayList = extractArray(cloudData.zphs_holidays);
             try { localStorage.setItem('zphs_holidays', JSON.stringify(holidayList)); } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_mdm) && cloudData.zphs_mdm.length > 0) {
-            mdmList = cloudData.zphs_mdm;
+          if (cloudData.zphs_mdm !== undefined) {
+            mdmList = extractArray(cloudData.zphs_mdm);
             try { localStorage.setItem('zphs_mdm', JSON.stringify(mdmList)); } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_activities) && cloudData.zphs_activities.length > 0) {
-            activityList = cloudData.zphs_activities;
+          if (cloudData.zphs_activities !== undefined) {
+            activityList = extractArray(cloudData.zphs_activities);
             try { localStorage.setItem('zphs_activities', JSON.stringify(activityList)); } catch(e){}
           }
           if (cloudData.zphs_timetables_v3 && typeof cloudData.zphs_timetables_v3 === 'object') {
@@ -4305,12 +4367,14 @@
             yearwiseStudentsStore = cloudData.zphs_yearwise_students;
             try { localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore)); } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_academic_years) && cloudData.zphs_academic_years.length > 0) {
-            academicYears = cloudData.zphs_academic_years;
-            try { localStorage.setItem('zphs_academic_years', JSON.stringify(academicYears)); } catch(e){}
+          if (cloudData.zphs_academic_years !== undefined) {
+            var arr = extractArray(cloudData.zphs_academic_years);
+            if (arr.length > 0) academicYearsList = arr;
+            try { localStorage.setItem('zphs_academic_years', JSON.stringify(academicYearsList)); } catch(e){}
           }
-          if (Array.isArray(cloudData.zphs_gallery_photos) && cloudData.zphs_gallery_photos.length > 0) {
-            galleryPhotos = cloudData.zphs_gallery_photos;
+          if (cloudData.zphs_gallery_photos !== undefined) {
+            var arr = extractArray(cloudData.zphs_gallery_photos);
+            if (arr.length > 0) galleryPhotos = arr;
             try { localStorage.setItem('zphs_gallery_photos', JSON.stringify(galleryPhotos)); } catch(e){}
           }
         }
@@ -4327,26 +4391,49 @@
     // Seed initial dataset to Cloud if database is empty
     function checkAndSeedCloud() {
       if (!FIREBASE_DB_URL) return;
-      fetch(FIREBASE_DB_URL + '/zphs_staff.json')
+      fetch(FIREBASE_DB_URL + '.json')
       .then(function(res) { return res.json(); })
       .then(function(data) {
-        if (!data || (Array.isArray(data) && data.length === 0)) {
-          console.log('Firebase Database empty, seeding initial baseline records...');
-          syncToCloud('zphs_staff', staffList);
-          syncToCloud('zphs_non_teaching', nonTeachingList);
-          syncToCloud('zphs_students_portal_v3', studentList);
-          syncToCloud('zphs_notices', noticeList);
-          syncToCloud('zphs_holidays', holidayList);
-          syncToCloud('zphs_mdm', mdmList);
-          syncToCloud('zphs_activities', activityList);
-          syncToCloud('zphs_timetables_v3', timetableStore);
-          syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
-          syncToCloud('zphs_exam_marks', examMarksRegistry);
-        }
+        if (!data) data = {};
+        if (!data.zphs_staff || extractArray(data.zphs_staff).length === 0) syncToCloud('zphs_staff', staffList);
+        if (!data.zphs_non_teaching || extractArray(data.zphs_non_teaching).length === 0) syncToCloud('zphs_non_teaching', nonTeachingList);
+        if (!data.zphs_students_portal_v3 || extractArray(data.zphs_students_portal_v3).length === 0) syncToCloud('zphs_students_portal_v3', studentList);
+        if (!data.zphs_notices || extractArray(data.zphs_notices).length === 0) syncToCloud('zphs_notices', noticeList);
+        if (!data.zphs_holidays || extractArray(data.zphs_holidays).length === 0) syncToCloud('zphs_holidays', holidayList);
+        if (!data.zphs_mdm || extractArray(data.zphs_mdm).length === 0) syncToCloud('zphs_mdm', mdmList);
+        if (!data.zphs_activities || extractArray(data.zphs_activities).length === 0) syncToCloud('zphs_activities', activityList);
+        if (!data.zphs_timetables_v3) syncToCloud('zphs_timetables_v3', timetableStore);
+        if (!data.zphs_yearwise_students) syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
+        if (!data.zphs_academic_years) syncToCloud('zphs_academic_years', academicYearsList);
+        if (!data.zphs_gallery_photos) syncToCloud('zphs_gallery_photos', galleryPhotos);
+        if (!data.zphs_exam_marks) syncToCloud('zphs_exam_marks', examMarksRegistry);
       })
       .catch(function() {});
     }
 
+    // Render all application views with current data
+    function renderAllViews() {
+      if (!staffList || staffList.length === 0) staffList = defaultStaff;
+      if (!nonTeachingList || nonTeachingList.length === 0) nonTeachingList = defaultNonTeachingStaff;
+      if (!studentList || studentList.length === 0) studentList = defaultStudents;
+
+      updateUIAuthStatus();
+      renderStaffTable();
+      renderStudentTable();
+      renderYearTabs();
+      renderYearwiseTable();
+      renderCertificatesTable();
+      renderMDMTable();
+      renderMarksTable();
+      renderNotices();
+      renderHolidays();
+      renderActivities();
+      renderTimetable(currentTimetableClass || 'Class 10');
+      updateDashboardStats();
+      initGallery();
+      initBannerFlashRotator();
+    }
+    window.renderAllViews = renderAllViews;
 
     function initPortal() {
       // Initialize saved language preference
@@ -4358,28 +4445,6 @@
       } catch (e) {}
       setLanguage(currentLang);
 
-      function renderAllViews() {
-        if (!staffList || staffList.length === 0) staffList = defaultStaff;
-        if (!nonTeachingList || nonTeachingList.length === 0) nonTeachingList = defaultNonTeachingStaff;
-        if (!studentList || studentList.length === 0) studentList = defaultStudents;
-
-        updateUIAuthStatus();
-        renderStaffTable();
-        renderStudentTable();
-        renderYearTabs();
-        renderYearwiseTable();
-        renderCertificatesTable();
-        renderMDMTable();
-        renderMarksTable();
-        renderNotices();
-        renderHolidays();
-        renderActivities();
-        renderTimetable(currentTimetableClass || 'Class 10');
-        updateDashboardStats();
-        initGallery();
-        initBannerFlashRotator();
-      }
-
       // Render local views immediately
       renderAllViews();
 
@@ -4387,6 +4452,11 @@
       pullFromCloud(function() {
         renderAllViews();
         checkAndSeedCloud();
+      });
+
+      // Synchronize whenever the window regains focus (e.g. returning from another tab or device)
+      window.addEventListener('focus', function() {
+        pullFromCloud(renderAllViews);
       });
     }
 
@@ -5201,6 +5271,7 @@
         localStorage.setItem('zphs_is_admin', 'true');
         updateUIAuthStatus();
         closeModal('modal-login');
+        pullFromCloud(renderAllViews);
         return;
       }
 
@@ -6514,6 +6585,7 @@
       } catch (err) {
         console.warn('Error saving activity:', err);
       }
+      syncToCloud('zphs_activities', activityList);
 
       closeModal('modal-activity');
       renderActivities();
@@ -7106,6 +7178,7 @@ var currentTimetableClass = 'Class 10';
         } catch (err) {
           console.warn('Error deleting timetable schedule:', err);
         }
+        syncToCloud('zphs_timetables_v3', timetableStore);
         renderTimetable(currentTimetableClass);
       }
     }
@@ -7790,8 +7863,13 @@ var currentTimetableClass = 'Class 10';
 
       if (confirm('Delete student record?')) {
         studentList = studentList.filter(s => s.id !== id);
-        localStorage.setItem('zphs_students_portal_v2', JSON.stringify(studentList));
+        try {
+          localStorage.setItem('zphs_students_portal_v3', JSON.stringify(studentList));
+          localStorage.setItem('zphs_students_portal_v2', JSON.stringify(studentList));
+        } catch(e) {}
+        syncToCloud('zphs_students_portal_v3', studentList);
         renderStudentTable();
+        renderCertificatesTable();
         updateDashboardStats();
       }
     }
@@ -8356,6 +8434,7 @@ var currentTimetableClass = 'Class 10';
       } catch (err) {
         console.warn('Error saving MDM:', err);
       }
+      syncToCloud('zphs_mdm', mdmList);
       renderMDMTable();
       closeModal('modal-mdm');
     }
@@ -8376,6 +8455,7 @@ var currentTimetableClass = 'Class 10';
         } catch (err) {
           console.warn('Error deleting MDM:', err);
         }
+        syncToCloud('zphs_mdm', mdmList);
         renderMDMTable();
       }
     }
@@ -8693,6 +8773,7 @@ var currentTimetableClass = 'Class 10';
       } catch (err) {
         console.warn('Error saving gallery photos:', err);
       }
+      syncToCloud('zphs_gallery_photos', galleryPhotos);
 
       closeModal('modal-gallery-photo');
       renderGalleryThumbs();
@@ -8732,6 +8813,7 @@ var currentTimetableClass = 'Class 10';
         } catch (err) {
           console.warn('Error deleting gallery photo:', err);
         }
+        syncToCloud('zphs_gallery_photos', galleryPhotos);
         renderGalleryThumbs();
         showGallerySlide(currentGalleryIndex);
         resetGalleryTimer();
@@ -9145,8 +9227,10 @@ var currentTimetableClass = 'Class 10';
             try {
               if (currentServiceCertStaffType === 'non-teaching') {
                 localStorage.setItem('zphs_non_teaching', JSON.stringify(nonTeachingList));
+                syncToCloud('zphs_non_teaching', nonTeachingList);
               } else {
                 localStorage.setItem('zphs_staff', JSON.stringify(staffList));
+                syncToCloud('zphs_staff', staffList);
               }
             } catch(e) {}
             if (typeof renderStaffTable === 'function') renderStaffTable();
