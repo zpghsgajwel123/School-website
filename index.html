@@ -244,34 +244,64 @@
         color: #000 !important;
       }
 
-      /* Matched Progress Card print tables typography (matching Bonafide letter size) */
-      .prog-print-table {
+      /* Progress Card Official Full A4 Sheet Print Styles */
+      .progress-a4-sheet {
+        display: block !important;
+        visibility: visible !important;
+        box-shadow: none !important;
+        border: 2.5px solid #000 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        max-width: 196mm !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 7mm 9mm !important;
+        box-sizing: border-box !important;
+        background: #fff !important;
+        position: relative !important;
+      }
+
+      body.printing-progress-card .progress-a4-sheet {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        min-height: 274mm !important;
+        height: 274mm !important;
+      }
+
+      body.printing-progress-card .prog-student-info-table {
+        font-size: 10pt !important;
+        border-collapse: collapse !important;
+        width: 100% !important;
+        margin-bottom: 6px !important;
+      }
+      body.printing-progress-card .prog-student-info-table td {
+        font-size: 10pt !important;
+        padding: 3.5px 6px !important;
+        border: 1px solid #000 !important;
+      }
+
+      body.printing-progress-card #print-prog-curricular-table table,
+      body.printing-progress-card #print-prog-cocurricular-table table {
         font-size: 9.5pt !important;
         border-collapse: collapse !important;
         width: 100% !important;
       }
-      .prog-print-table th {
+      body.printing-progress-card #print-prog-curricular-table th,
+      body.printing-progress-card #print-prog-cocurricular-table th {
         font-size: 9.5pt !important;
         font-weight: 800 !important;
-        padding: 3px 4px !important;
+        padding: 4px 6px !important;
         color: #000 !important;
         border: 1px solid #000 !important;
       }
-      .prog-print-table td {
+      body.printing-progress-card #print-prog-curricular-table td,
+      body.printing-progress-card #print-prog-cocurricular-table td {
         font-size: 9.5pt !important;
-        padding: 3px 4px !important;
+        padding: 4px 6px !important;
         color: #000 !important;
-        border: 1px solid #000 !important;
-      }
-      .prog-student-info-table {
-        font-size: 9.5pt !important;
-        border-collapse: collapse !important;
-        width: 100% !important;
-        margin-bottom: 4px !important;
-      }
-      .prog-student-info-table td {
-        font-size: 9.5pt !important;
-        padding: 2.5px 5px !important;
         border: 1px solid #000 !important;
       }
 
@@ -630,7 +660,7 @@
       <section id="section-home" class="content-section space-y-6">
         
         <!-- Dashboard Stats Grid (Soft Pastel Colors) -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="bg-sky-50 border border-sky-100 rounded-xl p-4 flex items-center justify-between shadow-sm">
             <div>
               <p class="text-xs font-semibold text-sky-800/80 uppercase" data-en="Total Students" data-te="మొత్తం విద్యార్థులు">Total Students</p>
@@ -658,16 +688,6 @@
             </div>
             <div class="w-10 h-10 rounded-lg bg-amber-200/60 text-amber-700 flex items-center justify-center font-bold text-lg">
               <i class="fa-solid fa-book-open"></i>
-            </div>
-          </div>
-
-          <div class="bg-purple-50 border border-purple-100 rounded-xl p-4 flex items-center justify-between shadow-sm">
-            <div>
-              <p class="text-xs font-semibold text-purple-800/80 uppercase" data-en="Next Exam" data-te="తదుపరి పరీక్ష">Next Exam</p>
-              <h3 class="text-lg font-bold text-purple-950 mt-1">Summative-I</h3>
-            </div>
-            <div class="w-10 h-10 rounded-lg bg-purple-200/60 text-purple-700 flex items-center justify-center font-bold text-lg">
-              <i class="fa-solid fa-calendar-check"></i>
             </div>
           </div>
         </div>
@@ -2561,7 +2581,7 @@
         </div>
         <div>
           <h3 class="text-lg font-bold text-slate-900 leading-tight">Student Progress Report & Cumulative Record Generator</h3>
-          <p class="text-xs text-slate-500">Official Government of Telangana High School Progress Card • Formatted for Half-A4 Paper Print</p>
+          <p class="text-xs text-slate-500">Official Government of Telangana High School Progress Card • Formatted for Full A4 Paper Print</p>
         </div>
       </div>
 
@@ -2703,14 +2723,14 @@
       <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200">
         <div class="text-[11px] text-slate-500 flex items-center gap-1.5">
           <i class="fa-solid fa-circle-info text-sky-500"></i>
-          <span>Clicking <strong>Print Half-A4 (PDF)</strong> generates a certified Half-A4 Progress Report!</span>
+          <span>Clicking <strong>Print A4 Size (PDF)</strong> generates a certified Full A4 size Progress Report!</span>
         </div>
         <div class="flex items-center gap-2">
           <button type="button" onclick="closeModal('modal-progress-card')" class="px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-300">
             Cancel
           </button>
           <button type="button" onclick="printProgressCardHalfA4()" class="bg-sky-600 hover:bg-sky-700 text-white px-5 py-2 text-xs font-bold rounded-lg shadow-sm flex items-center gap-2 transition">
-            <i class="fa-solid fa-print"></i> <span>Print Half-A4 (PDF)</span>
+            <i class="fa-solid fa-print"></i> <span>Print A4 Size (PDF)</span>
           </button>
         </div>
       </div>
@@ -6422,7 +6442,7 @@
                   <i class="fa-solid fa-minus text-[9px] text-slate-400"></i> N/A (Left Student)
                 </span>
               ` : `
-                <button onclick="openProgressCardModal(${st.id})" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-lg font-semibold inline-flex items-center gap-1.5 transition shadow-2xs" title="Issue Half-A4 Progress Card">
+                <button onclick="openProgressCardModal(${st.id})" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-lg font-semibold inline-flex items-center gap-1.5 transition shadow-2xs" title="Issue A4 Progress Card">
                   <i class="fa-solid fa-file-arrow-down text-emerald-600 text-xs"></i> <span>Progress Card</span>
                 </button>
               `}
@@ -9867,106 +9887,108 @@ var currentTimetableClass = 'Class 10';
   </div>
 
 
-  <!-- PROGRESS CARD HALF-A4 PRINT CONTAINER (DIRECT CHILD OF BODY) -->
+  <!-- PROGRESS CARD FULL A4 PRINT CONTAINER (DIRECT CHILD OF BODY) -->
   <div id="progress-card-print-container" class="print-only hidden">
-    <div class="half-a4-sheet max-w-2xl mx-auto p-4 border-[2.5px] border-black bg-white text-black font-sans leading-normal relative">
+    <div class="progress-a4-sheet max-w-3xl mx-auto p-6 border-[2.5px] border-black bg-white text-black font-sans leading-normal relative">
       <!-- Watermark / Background Crest -->
       <div class="absolute inset-0 flex items-center justify-center opacity-[0.06] pointer-events-none z-0">
-        <img src="school_crest_logo.png" alt="Watermark" class="w-64 h-64 object-contain">
+        <img src="school_crest_logo.png" alt="Watermark" class="w-80 h-80 object-contain">
       </div>
 
-      <div class="relative z-10">
-        <!-- Header with Dual Logos -->
-        <div class="flex items-center justify-between border-b-2 border-black pb-2 mb-2">
-          <img src="ts_govt_logo.png" alt="Govt of Telangana" class="w-[74px] h-[74px] object-contain shrink-0">
-          <div class="text-center flex-1 px-3">
-            <h1 class="cert-title-heading text-sm font-extrabold uppercase tracking-wide text-black">ZILLA PARISHAD HIGH SCHOOL (GIRLS): GAJWEL</h1>
-            <p class="cert-sub-heading text-[10px] font-bold text-black mt-0.5">GAJWEL MANDAL, SIDDIPET DIST, TELANGANA STATE, 502278.</p>
-            <p class="cert-udise text-[9px] font-mono font-bold text-black mt-0.5">U-DISE Code: <span class="font-extrabold">36181802720</span> • Medium: English / Telugu / Urdu</p>
+      <div class="relative z-10 flex-1 flex flex-col justify-between">
+        <div>
+          <!-- Header with Dual Logos -->
+          <div class="flex items-center justify-between border-b-2 border-black pb-2.5 mb-3">
+            <img src="ts_govt_logo.png" alt="Govt of Telangana" class="w-[82px] h-[82px] object-contain shrink-0">
+            <div class="text-center flex-1 px-3">
+              <h1 class="cert-title-heading text-base font-extrabold uppercase tracking-wide text-black">ZILLA PARISHAD HIGH SCHOOL (GIRLS): GAJWEL</h1>
+              <p class="cert-sub-heading text-xs font-bold text-black mt-0.5">GAJWEL MANDAL, SIDDIPET DIST, TELANGANA STATE, 502278.</p>
+              <p class="cert-udise text-[10px] font-mono font-bold text-black mt-0.5">U-DISE Code: <span class="font-extrabold">36181802720</span> • Medium: English / Telugu / Urdu</p>
+            </div>
+            <img src="school_crest_logo.png" alt="School Crest" class="w-[80px] h-[80px] object-contain shrink-0">
           </div>
-          <img src="school_crest_logo.png" alt="School Crest" class="w-[72px] h-[72px] object-contain shrink-0">
-        </div>
 
-        <!-- Certificate Title & Exam -->
-        <div class="text-center my-1.5">
-          <h2 class="cert-badge-title text-xs font-black uppercase tracking-wider inline-block px-3 py-0.5 border-2 border-black rounded-xs bg-slate-100">
-            STUDENT PROGRESS REPORT / CUMULATIVE RECORD
-          </h2>
-        </div>
-        <div class="flex justify-between items-center text-[10px] font-bold mb-2">
-          <span>Assessment: <span id="print-prog-exam" class="uppercase underline">SA-1</span></span>
-          <span>Academic Year: 2026-27 | Date: <span id="print-prog-date" class="font-mono underline pb-0.5">--/--/----</span></span>
-        </div>
+          <!-- Certificate Title & Exam -->
+          <div class="text-center my-2">
+            <h2 class="cert-badge-title text-sm font-black uppercase tracking-wider inline-block px-4 py-1 border-2 border-black rounded-xs bg-slate-100">
+              STUDENT PROGRESS REPORT / CUMULATIVE RECORD
+            </h2>
+          </div>
+          <div class="flex justify-between items-center text-xs font-bold mb-3">
+            <span>Assessment: <span id="print-prog-exam" class="uppercase underline">SA-1</span></span>
+            <span>Academic Year: 2026-27 | Date: <span id="print-prog-date" class="font-mono underline pb-0.5">--/--/----</span></span>
+          </div>
 
-        <!-- Student Profile Table -->
-        <table class="prog-student-info-table w-full border-collapse border border-black mb-2 text-xs">
-          <tr>
-            <td class="border border-black p-1 bg-slate-50 font-bold w-1/6">Student Name:</td>
-            <td class="border border-black p-1 font-bold uppercase w-2/6" id="print-prog-name">-</td>
-            <td class="border border-black p-1 bg-slate-50 font-bold w-1/6">Class & Sec:</td>
-            <td class="border border-black p-1 font-bold w-1/6" id="print-prog-class-sec">-</td>
-            <td class="border border-black p-1 bg-slate-50 font-bold w-1/12">Medium:</td>
-            <td class="border border-black p-1 font-bold text-center w-1/12" id="print-prog-medium">English</td>
-            <td rowspan="4" class="border border-black p-1 w-20 text-center align-middle bg-white">
-              <div class="w-18 h-22 mx-auto flex items-center justify-center overflow-hidden border border-slate-300" id="print-prog-photo-container">
-                <img id="print-prog-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
-                <span id="print-prog-photo-placeholder" class="text-[8px] text-slate-500 leading-tight">Student Photo</span>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="border border-black p-1 bg-slate-50 font-bold">Admission No:</td>
-            <td class="border border-black p-1 font-mono font-bold" id="print-prog-adm">-</td>
-            <td class="border border-black p-1 bg-slate-50 font-bold">Student PEN:</td>
-            <td class="border border-black p-1 font-mono font-bold" colspan="3" id="print-prog-pen">-</td>
-          </tr>
-          <tr>
-            <td class="border border-black p-1 bg-slate-50 font-bold">Father's Name:</td>
-            <td class="border border-black p-1 font-bold" id="print-prog-father">-</td>
-            <td class="border border-black p-1 bg-slate-50 font-bold">Mother's Name:</td>
-            <td class="border border-black p-1 font-bold" colspan="3" id="print-prog-mother">-</td>
-          </tr>
-          <tr>
-            <td class="border border-black p-1 bg-slate-50 font-bold">Date of Birth:</td>
-            <td class="border border-black p-1 font-mono font-bold" id="print-prog-dob">-</td>
-            <td class="border border-black p-1 bg-slate-50 font-bold">Roll No:</td>
-            <td class="border border-black p-1 font-mono font-bold" colspan="3" id="print-prog-roll">-</td>
-          </tr>
-        </table>
+          <!-- Student Profile Table -->
+          <table class="prog-student-info-table w-full border-collapse border border-black mb-3 text-xs">
+            <tr>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold w-1/6">Student Name:</td>
+              <td class="border border-black p-1.5 font-bold uppercase w-2/6" id="print-prog-name">-</td>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold w-1/6">Class & Sec:</td>
+              <td class="border border-black p-1.5 font-bold w-1/6" id="print-prog-class-sec">-</td>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold w-1/12">Medium:</td>
+              <td class="border border-black p-1.5 font-bold text-center w-1/12" id="print-prog-medium">English</td>
+              <td rowspan="4" class="border border-black p-1.5 w-24 text-center align-middle bg-white">
+                <div class="w-20 h-26 mx-auto flex items-center justify-center overflow-hidden border border-slate-300" id="print-prog-photo-container">
+                  <img id="print-prog-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
+                  <span id="print-prog-photo-placeholder" class="text-[9px] text-slate-500 leading-tight">Student Photo</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold">Admission No:</td>
+              <td class="border border-black p-1.5 font-mono font-bold" id="print-prog-adm">-</td>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold">Student PEN:</td>
+              <td class="border border-black p-1.5 font-mono font-bold" colspan="3" id="print-prog-pen">-</td>
+            </tr>
+            <tr>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold">Father's Name:</td>
+              <td class="border border-black p-1.5 font-bold" id="print-prog-father">-</td>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold">Mother's Name:</td>
+              <td class="border border-black p-1.5 font-bold" colspan="3" id="print-prog-mother">-</td>
+            </tr>
+            <tr>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold">Date of Birth:</td>
+              <td class="border border-black p-1.5 font-mono font-bold" id="print-prog-dob">-</td>
+              <td class="border border-black p-1.5 bg-slate-50 font-bold">Roll No:</td>
+              <td class="border border-black p-1.5 font-mono font-bold" colspan="3" id="print-prog-roll">-</td>
+            </tr>
+          </table>
 
-        <!-- Curricular Marks Table -->
-        <div class="mb-2">
-          <p class="font-bold text-[10pt] uppercase mb-0.5 text-black">I. Curricular Areas (Subject-wise Performance):</p>
-          <div id="print-prog-curricular-table"></div>
-        </div>
+          <!-- Curricular Marks Table -->
+          <div class="mb-3">
+            <p class="font-bold text-[10.5pt] uppercase mb-1 text-black">I. Curricular Areas (Subject-wise Performance):</p>
+            <div id="print-prog-curricular-table"></div>
+          </div>
 
-        <!-- Co-Curricular Areas Table -->
-        <div class="mb-2" id="print-prog-cocurricular-block">
-          <p class="font-bold text-[10pt] uppercase mb-0.5 text-black">II. Co-Curricular Areas (Grading A+ to C):</p>
-          <div id="print-prog-cocurricular-table"></div>
-        </div>
+          <!-- Co-Curricular Areas Table -->
+          <div class="mb-3" id="print-prog-cocurricular-block">
+            <p class="font-bold text-[10.5pt] uppercase mb-1 text-black">II. Co-Curricular Areas (Grading A+ to C):</p>
+            <div id="print-prog-cocurricular-table"></div>
+          </div>
 
-        <!-- Remarks -->
-        <div class="text-[9.5pt] border border-black p-1 mb-2 bg-slate-50/50">
-          <strong>Remarks:</strong> Passed with commendable academic performance. Promoted / Recommended for higher achievements.
+          <!-- Remarks -->
+          <div class="text-[10pt] border border-black p-2 mb-3 bg-slate-50/50">
+            <strong>Remarks:</strong> Passed with commendable academic performance. Promoted / Recommended for higher achievements.
+          </div>
         </div>
 
         <!-- Signatures Footer -->
-        <div class="mt-4 pt-2 flex items-end justify-between text-xs font-sans cert-sig-text">
+        <div class="mt-6 pt-3 flex items-end justify-between text-xs font-sans cert-sig-text">
           <div class="text-center">
-            <div class="w-36 border-b-2 border-black mb-1"></div>
+            <div class="w-40 border-b-2 border-black mb-1.5"></div>
             <p class="font-bold text-black cert-sig-text">Class Teacher / Incharge</p>
-            <p class="text-[8pt] font-mono font-bold text-black mt-0.5" id="print-prog-clerk-info">
+            <p class="text-[8.5pt] font-mono font-bold text-black mt-0.5" id="print-prog-clerk-info">
               Emp Code: 1782341 (P RAJA KUMARASWAMY)
             </p>
           </div>
           <div class="text-center">
-            <div class="w-20 h-10 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[9px] font-bold text-slate-600 mb-1">
+            <div class="w-24 h-12 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[10px] font-bold text-slate-600 mb-1.5">
               School Seal
             </div>
           </div>
           <div class="text-center">
-            <div class="w-40 border-b-2 border-black mb-1"></div>
+            <div class="w-44 border-b-2 border-black mb-1.5"></div>
             <p class="font-black text-black leading-tight text-xs">Headmistress,</p>
             <p class="text-[10px] font-bold text-black">ZPGHS Gajwel.</p>
           </div>
