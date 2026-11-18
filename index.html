@@ -2311,12 +2311,17 @@
         </div>
 
         <!-- Student & Detail Inputs -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Select Student:</label>
             <select id="cert-student-select" onchange="onCertStudentSelectChange()" class="w-full border border-slate-300 rounded-lg p-2 bg-white font-medium outline-none focus:ring-2 focus:ring-orange-500">
               <!-- Dynamically populated -->
             </select>
+          </div>
+          <!-- Date of Admission -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Date of Admission (DOA):</label>
+            <input type="text" id="cert-input-doa" value="12/06/2024" oninput="updateBonafidePreview()" class="w-full border border-slate-300 rounded-lg p-2 bg-white font-bold text-slate-800 outline-none focus:ring-2 focus:ring-orange-500 text-xs" placeholder="DD/MM/YYYY">
           </div>
           <!-- Purpose of Certificate -->
           <div>
@@ -2387,8 +2392,8 @@
               <span class="text-[11px] text-amber-700 italic">Enter or edit student particulars below to update certificate immediately</span>
             </div>
 
-            <!-- Custom Editable Fields for the 7 Particulars -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-7 gap-2 pt-1">
+            <!-- Custom Editable Fields for the 8 Particulars -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-8 gap-2 pt-1">
               <div>
                 <label class="block text-[11px] font-bold text-amber-950 mb-0.5">Adm No:</label>
                 <input type="text" id="cert-left-adm" oninput="updateBonafidePreview()" placeholder="Adm No" class="w-full border border-amber-300 rounded-md p-1.5 bg-white font-bold text-xs text-orange-900 outline-none focus:ring-2 focus:ring-orange-500 font-mono">
@@ -2408,6 +2413,10 @@
               <div>
                 <label class="block text-[11px] font-bold text-amber-950 mb-0.5">Date of Birth:</label>
                 <input type="text" id="cert-left-dob" oninput="updateBonafidePreview()" placeholder="DD/MM/YYYY" class="w-full border border-amber-300 rounded-md p-1.5 bg-white font-bold text-xs text-slate-900 outline-none focus:ring-2 focus:ring-orange-500">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-amber-950 mb-0.5">Date of Adm:</label>
+                <input type="text" id="cert-left-doa" oninput="updateBonafidePreview()" placeholder="DD/MM/YYYY" class="w-full border border-amber-300 rounded-md p-1.5 bg-white font-bold text-xs text-slate-900 outline-none focus:ring-2 focus:ring-orange-500">
               </div>
               <div>
                 <label class="block text-[11px] font-bold text-amber-950 mb-0.5">Aadhaar No:</label>
@@ -2442,14 +2451,20 @@
               <img src="school_crest_logo.png" alt="School Crest" class="w-[70px] h-[70px] object-contain shrink-0 drop-shadow-xs">
             </div>
 
-            <!-- Certificate Title & Date -->
-            <div class="text-center my-1.5">
-              <h2 class="text-xs font-bold uppercase tracking-wider inline-block px-3 py-0.5 border border-slate-900 rounded-xs bg-slate-100 font-sans">
-                BONAFIDE AND STUDY CERTIFICATE
-              </h2>
-            </div>
-            <div class="flex justify-end text-[11px] font-semibold mb-2">
-              <span>Date: <span id="preview-cert-date" class="font-mono underline underline-offset-2">--/--/----</span></span>
+            <!-- Certificate Title, Date & Student Photo -->
+            <div class="flex items-start justify-between my-1.5 gap-2">
+              <div class="text-[11px] font-semibold pt-1">
+                <span>Date: <span id="preview-cert-date" class="font-mono underline underline-offset-2">--/--/----</span></span>
+              </div>
+              <div class="text-center flex-1">
+                <h2 class="text-xs font-bold uppercase tracking-wider inline-block px-3 py-1 border border-slate-900 rounded-xs bg-slate-100 font-sans">
+                  BONAFIDE AND STUDY CERTIFICATE
+                </h2>
+              </div>
+              <div class="w-20 h-24 border border-black bg-slate-50 rounded-xs flex items-center justify-center overflow-hidden shrink-0 shadow-2xs" id="preview-cert-photo-container">
+                <img id="preview-cert-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
+                <span id="preview-cert-photo-placeholder" class="text-[9px] text-center text-slate-500 font-sans p-1 leading-tight">Affix Student Photo</span>
+              </div>
             </div>
 
             <!-- Body Certificate Paragraph -->
@@ -2477,6 +2492,7 @@
               </p>
               <p>
                 His/ Her Admission Number is <span id="preview-cert-adm" class="font-extrabold font-mono border-b-2 border-black px-1.5 bg-amber-50 text-black">____________</span>, 
+                Date of Admission is <span id="preview-cert-doa" class="font-extrabold font-mono border-b-2 border-black px-1.5 bg-amber-50 text-black">____________</span>, 
                 PEN is <span id="preview-cert-pen" class="font-extrabold font-mono border-b-2 border-black px-1.5 bg-amber-50 text-black">____________</span>, 
                 Aadhaar Number is <span id="preview-cert-aadhaar" class="font-extrabold font-mono border-b-2 border-black px-1.5 bg-amber-50 text-black">________________</span> 
                 and Date of Birth is <span id="preview-cert-dob" class="font-extrabold font-mono border-b-2 border-black px-1.5 bg-amber-50 text-black">____________</span> 
@@ -2620,17 +2636,23 @@
               <span>Academic Year: <span class="font-bold">2026-27</span> | Date: <span id="preview-prog-date" class="font-mono">--/--/----</span></span>
             </div>
 
-            <!-- Student Bio Profile Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 bg-slate-50/80 p-2 border border-slate-300 rounded text-[11px] font-sans mb-3">
-              <div><span class="text-slate-500 block text-[10px]">Student Name:</span> <strong id="preview-prog-name" class="uppercase text-slate-950 text-xs">-</strong></div>
-              <div><span class="text-slate-500 block text-[10px]">Class & Sec:</span> <strong id="preview-prog-class-sec" class="text-slate-950">-</strong></div>
-              <div><span class="text-slate-500 block text-[10px]">Medium:</span> <strong id="preview-prog-medium" class="text-sky-900 font-extrabold">English</strong></div>
-              <div><span class="text-slate-500 block text-[10px]">Admission No:</span> <strong id="preview-prog-adm" class="font-mono text-slate-950">-</strong></div>
-              <div><span class="text-slate-500 block text-[10px]">Student PEN:</span> <strong id="preview-prog-pen" class="font-mono text-sky-900">-</strong></div>
-              <div><span class="text-slate-500 block text-[10px]">Father's Name:</span> <strong id="preview-prog-father" class="text-slate-950">-</strong></div>
-              <div><span class="text-slate-500 block text-[10px]">Mother's Name:</span> <strong id="preview-prog-mother" class="text-slate-950">-</strong></div>
-              <div><span class="text-slate-500 block text-[10px]">Date of Birth:</span> <strong id="preview-prog-dob" class="font-mono text-slate-950">-</strong></div>
-              <div class="sm:col-span-2"><span class="text-slate-500 block text-[10px]">Roll No:</span> <strong id="preview-prog-roll" class="font-mono text-slate-950">-</strong></div>
+            <!-- Student Bio Profile Grid with Photo -->
+            <div class="flex items-center gap-2 bg-slate-50/80 p-2 border border-slate-300 rounded text-[11px] font-sans mb-3">
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 flex-1">
+                <div><span class="text-slate-500 block text-[10px]">Student Name:</span> <strong id="preview-prog-name" class="uppercase text-slate-950 text-xs">-</strong></div>
+                <div><span class="text-slate-500 block text-[10px]">Class & Sec:</span> <strong id="preview-prog-class-sec" class="text-slate-950">-</strong></div>
+                <div><span class="text-slate-500 block text-[10px]">Medium:</span> <strong id="preview-prog-medium" class="text-sky-900 font-extrabold">English</strong></div>
+                <div><span class="text-slate-500 block text-[10px]">Admission No:</span> <strong id="preview-prog-adm" class="font-mono text-slate-950">-</strong></div>
+                <div><span class="text-slate-500 block text-[10px]">Student PEN:</span> <strong id="preview-prog-pen" class="font-mono text-sky-900">-</strong></div>
+                <div><span class="text-slate-500 block text-[10px]">Father's Name:</span> <strong id="preview-prog-father" class="text-slate-950">-</strong></div>
+                <div><span class="text-slate-500 block text-[10px]">Mother's Name:</span> <strong id="preview-prog-mother" class="text-slate-950">-</strong></div>
+                <div><span class="text-slate-500 block text-[10px]">Date of Birth:</span> <strong id="preview-prog-dob" class="font-mono text-slate-950">-</strong></div>
+                <div class="sm:col-span-2"><span class="text-slate-500 block text-[10px]">Roll No:</span> <strong id="preview-prog-roll" class="font-mono text-slate-950">-</strong></div>
+              </div>
+              <div class="w-16 h-20 border border-slate-400 bg-white rounded flex items-center justify-center shrink-0 overflow-hidden shadow-2xs" id="preview-prog-photo-container">
+                <img id="preview-prog-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
+                <span id="preview-prog-photo-placeholder" class="text-[9px] text-center text-slate-400 p-1">Photo</span>
+              </div>
             </div>
 
             <!-- Curricular Marks Table Container -->
@@ -2703,8 +2725,9 @@
       </button>
 
       <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
-        <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xl font-bold border border-orange-200 shrink-0">
-          <i class="fa-solid fa-user-graduate"></i>
+        <div class="w-14 h-14 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-xl font-bold border border-orange-200 shrink-0 overflow-hidden" id="view-student-avatar-box">
+          <img id="view-student-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
+          <i id="view-student-icon" class="fa-solid fa-user-graduate"></i>
         </div>
         <div>
           <h3 class="text-lg font-bold text-slate-900 leading-tight" id="view-student-name">Student Profile</h3>
@@ -2730,8 +2753,12 @@
           <span class="text-sm font-bold text-slate-900" id="view-student-class-sec">-</span>
         </div>
         <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-          <span class="text-slate-500 font-medium block">Date of Birth</span>
+          <span class="text-slate-500 font-medium block">Date of Birth (DOB)</span>
           <span class="text-sm font-bold text-slate-900" id="view-student-dob">-</span>
+        </div>
+        <div class="p-3 bg-emerald-50/70 rounded-lg border border-emerald-200">
+          <span class="text-emerald-800 font-medium block">Date of Admission (DOA)</span>
+          <span class="text-sm font-bold text-emerald-950" id="view-student-doa">-</span>
         </div>
         <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
           <span class="text-slate-500 font-medium block">Father's Name</span>
@@ -2908,6 +2935,34 @@
 
       <form onsubmit="saveStudent(event)" class="space-y-3.5 text-xs">
         <input type="hidden" id="student-id">
+        <input type="hidden" id="student-photo-data" value="">
+
+        <!-- Student Photo Upload & Preview Section -->
+        <div class="bg-indigo-50/60 border border-indigo-200/80 rounded-xl p-3 flex flex-col sm:flex-row items-center gap-4">
+          <div class="relative shrink-0">
+            <div id="student-photo-preview-box" class="w-20 h-24 rounded-lg border-2 border-indigo-400 bg-white overflow-hidden shadow-inner flex items-center justify-center text-slate-400 text-3xl font-bold">
+              <img id="student-photo-preview-img" src="" alt="Student Photo Preview" class="w-full h-full object-cover hidden">
+              <span id="student-photo-preview-placeholder"><i class="fa-solid fa-user-graduate text-indigo-300 text-2xl"></i></span>
+            </div>
+            <button type="button" id="student-photo-remove-btn" onclick="removeStudentPhoto()" class="hidden absolute -bottom-1 -right-1 bg-rose-600 hover:bg-rose-700 text-white w-6 h-6 rounded-full flex items-center justify-center shadow-md transition" title="Remove Photo">
+              <i class="fa-solid fa-trash text-[10px]"></i>
+            </button>
+          </div>
+          <div class="flex-1 text-center sm:text-left space-y-1">
+            <label class="block font-bold text-slate-800 text-xs">Student Photograph</label>
+            <p class="text-[11px] text-slate-500">Upload passport size photo (JPG/PNG). Image is auto-optimized for Bonafide Certificates & Progress Cards.</p>
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
+              <label class="cursor-pointer bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-300 hover:border-indigo-400 font-semibold px-3 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-camera text-indigo-600"></i>
+                <span id="student-photo-btn-text">Upload Photo</span>
+                <input type="file" id="student-photo-input" accept="image/*" class="hidden" onchange="handleStudentPhotoUpload(event)">
+              </label>
+              <button type="button" onclick="removeStudentPhoto()" class="text-rose-600 hover:text-rose-800 font-medium text-xs px-2 py-1 transition" id="student-photo-clear-text" style="display:none;">
+                <i class="fa-solid fa-xmark"></i> Remove Photo
+              </button>
+            </div>
+          </div>
+        </div>
         
         <!-- Admission, PEN, Roll & Name -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -2936,8 +2991,8 @@
           </div>
         </div>
 
-        <!-- Class, Section, DOB -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <!-- Class, Section, DOB, Date of Admission -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Class</label>
             <select id="student-class" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold outline-none focus:ring-2 focus:ring-theme-600">
@@ -2959,6 +3014,10 @@
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Date of Birth (DOB)</label>
             <input type="text" id="student-dob" placeholder="DD/MM/YYYY" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-theme-600">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Date of Admission (DOA)</label>
+            <input type="text" id="student-doa" placeholder="DD/MM/YYYY" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-semibold outline-none focus:ring-2 focus:ring-theme-600">
           </div>
         </div>
 
@@ -4638,6 +4697,84 @@
       setStaffPhotoPreview('');
     }
 
+    // --- Student Photo Management Helpers ---
+    function handleStudentPhotoUpload(event) {
+      var file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          // Resize and compress via canvas to avoid storage bloat
+          var canvas = document.createElement('canvas');
+          var maxDim = 300;
+          var width = img.width;
+          var height = img.height;
+
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convert to JPEG dataURL with 0.85 quality
+          var compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          setStudentPhotoPreview(compressedDataUrl);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function setStudentPhotoPreview(dataUrl) {
+      var hiddenInput = document.getElementById('student-photo-data');
+      var previewImg = document.getElementById('student-photo-preview-img');
+      var placeholder = document.getElementById('student-photo-preview-placeholder');
+      var removeBtn = document.getElementById('student-photo-remove-btn');
+      var clearText = document.getElementById('student-photo-clear-text');
+      var btnText = document.getElementById('student-photo-btn-text');
+
+      if (hiddenInput) hiddenInput.value = dataUrl || '';
+
+      if (dataUrl) {
+        if (previewImg) {
+          previewImg.src = dataUrl;
+          previewImg.classList.remove('hidden');
+        }
+        if (placeholder) placeholder.classList.add('hidden');
+        if (removeBtn) removeBtn.classList.remove('hidden');
+        if (clearText) clearText.style.display = 'inline-flex';
+        if (btnText) btnText.innerText = 'Change Photo';
+      } else {
+        if (previewImg) {
+          previewImg.src = '';
+          previewImg.classList.add('hidden');
+        }
+        if (placeholder) placeholder.classList.remove('hidden');
+        if (removeBtn) removeBtn.classList.add('hidden');
+        if (clearText) clearText.style.display = 'none';
+        if (btnText) btnText.innerText = 'Upload Photo';
+      }
+    }
+
+    function removeStudentPhoto() {
+      var fileInput = document.getElementById('student-photo-input');
+      if (fileInput) fileInput.value = '';
+      setStudentPhotoPreview('');
+    }
+
     function openStaffModal(forcedType, staffId) {
       if (!isAdmin) {
         alert('Access Denied: Only administrators have permission to make changes.');
@@ -4721,6 +4858,11 @@
       document.getElementById('student-class').value = student ? (student.classVal || 'Class VI') : 'Class VI';
       document.getElementById('student-section').value = student ? (student.section || 'A') : 'A';
       document.getElementById('student-dob').value = student ? (student.dob || '') : '';
+
+      var doaEl = document.getElementById('student-doa');
+      if (doaEl) doaEl.value = student ? (student.doa || '') : '';
+
+      setStudentPhotoPreview(student ? (student.photo || '') : '');
       
       var aadhaarEl = document.getElementById('student-aadhaar');
       if (aadhaarEl) aadhaarEl.value = student ? (student.aadhaar && student.aadhaar !== 'Not Available' ? student.aadhaar : '') : '';
@@ -4758,6 +4900,24 @@
       document.getElementById('view-student-roll').innerText = student.rollNo || '-';
       document.getElementById('view-student-class-sec').innerText = (student.classVal || '-') + ' - Section ' + (student.section || '-');
       document.getElementById('view-student-dob').innerText = student.dob || '01/01/2014';
+
+      var vDoaEl = document.getElementById('view-student-doa');
+      if (vDoaEl) vDoaEl.innerText = student.doa || '-';
+
+      var vPhotoEl = document.getElementById('view-student-photo');
+      var vIconEl = document.getElementById('view-student-icon');
+      if (vPhotoEl && vIconEl) {
+        if (student.photo) {
+          vPhotoEl.src = student.photo;
+          vPhotoEl.classList.remove('hidden');
+          vIconEl.classList.add('hidden');
+        } else {
+          vPhotoEl.src = '';
+          vPhotoEl.classList.add('hidden');
+          vIconEl.classList.remove('hidden');
+        }
+      }
+
       document.getElementById('view-student-father').innerText = student.fatherName || 'Not recorded';
       document.getElementById('view-student-mother').innerText = student.motherName || 'Not recorded';
       document.getElementById('view-student-category').innerText = student.category || 'General';
@@ -5466,6 +5626,7 @@
       var fatherEl = document.getElementById('cert-left-father');
       var motherEl = document.getElementById('cert-left-mother');
       var dobEl = document.getElementById('cert-left-dob');
+      var doaEl = document.getElementById('cert-left-doa');
       var aadhaarEl = document.getElementById('cert-left-aadhaar');
       var penEl = document.getElementById('cert-left-pen');
 
@@ -5473,6 +5634,7 @@
       if (fatherEl) fatherEl.value = (student.fatherName && student.fatherName !== 'Not recorded') ? student.fatherName : '';
       if (motherEl) motherEl.value = (student.motherName && student.motherName !== 'Not recorded') ? student.motherName : '';
       if (dobEl) dobEl.value = student.dob || '01/01/2014';
+      if (doaEl) doaEl.value = student.doa || '12/06/2024';
       if (aadhaarEl) aadhaarEl.value = (student.aadhaar && student.aadhaar !== 'Not Available') ? student.aadhaar : '';
       if (penEl) penEl.value = (student.pen && student.pen !== 'NA') ? student.pen : '';
     }
@@ -5692,6 +5854,10 @@
 
       var stObj = findStudentByIdAndYear(targetId, currentAY);
       if (stObj) {
+        var certDoaInput = document.getElementById('cert-input-doa');
+        if (certDoaInput) {
+          certDoaInput.value = stObj.doa || '12/06/2024';
+        }
         if (currentCertType === 'left') {
           syncLeftStudentFullDetails(stObj, currentAY);
         } else {
@@ -5723,6 +5889,10 @@
       var stObj = findStudentByIdAndYear(currentCertStudentId, currentAY);
 
       if (stObj) {
+        var certDoaInput = document.getElementById('cert-input-doa');
+        if (certDoaInput) {
+          certDoaInput.value = stObj.doa || '12/06/2024';
+        }
         if (currentCertType === 'left') {
           syncLeftStudentFullDetails(stObj, currentAY);
         } else {
@@ -5747,7 +5917,7 @@
       }
       if (!student && studentList && studentList.length > 0) student = studentList[0];
       if (!student) {
-        student = { id: 0, name: '', fatherName: '', motherName: '', admNo: '', dob: '', aadhaar: '', pen: '', classVal: 'Class X', section: 'A' };
+        student = { id: 0, name: '', fatherName: '', motherName: '', admNo: '', dob: '', doa: '', aadhaar: '', pen: '', classVal: 'Class X', section: 'A' };
       }
 
       var ay = document.getElementById('cert-input-ay')?.value.trim() || '2026-27';
@@ -5770,17 +5940,20 @@
       var motherName = (student.motherName && student.motherName !== 'Not recorded' ? student.motherName : '____________________');
       var admVal = student.admNo || '-';
       var dobVal = student.dob || '01/01/2014';
+      var inputDoa = document.getElementById('cert-input-doa')?.value.trim();
+      var doaVal = inputDoa || student.doa || '12/06/2024';
       var aadhaarVal = student.aadhaar || 'Not Available';
       var penVal = student.pen || 'NA';
       var bonafideVerb = (currentCertType === 'left') ? 'was' : 'is';
 
-      // If Left Student Bonafide is selected, allow override from the 7 customizable inputs
+      // If Left Student Bonafide is selected, allow override from the 8 customizable inputs
       if (currentCertType === 'left') {
         var ovAdm = document.getElementById('cert-left-adm')?.value.trim();
         var ovName = document.getElementById('cert-left-name')?.value.trim();
         var ovFather = document.getElementById('cert-left-father')?.value.trim();
         var ovMother = document.getElementById('cert-left-mother')?.value.trim();
         var ovDob = document.getElementById('cert-left-dob')?.value.trim();
+        var ovDoa = document.getElementById('cert-left-doa')?.value.trim();
         var ovAadhaar = document.getElementById('cert-left-aadhaar')?.value.trim();
         var ovPen = document.getElementById('cert-left-pen')?.value.trim();
 
@@ -5789,6 +5962,7 @@
         if (ovFather) fatherName = ovFather;
         if (ovMother) motherName = ovMother;
         if (ovDob) dobVal = ovDob;
+        if (ovDoa) doaVal = ovDoa;
         if (ovAadhaar) aadhaarVal = ovAadhaar;
         if (ovPen) penVal = ovPen;
       }
@@ -5828,12 +6002,43 @@
       var elSection = document.getElementById('preview-cert-section'); if (elSection) elSection.innerText = student.section || 'A';
       var elAY = document.getElementById('preview-cert-ay'); if (elAY) elAY.innerText = ay;
       var elAdm = document.getElementById('preview-cert-adm'); if (elAdm) elAdm.innerText = admVal;
+      var elDOA = document.getElementById('preview-cert-doa'); if (elDOA) elDOA.innerText = doaVal;
       var elVerb = document.getElementById('preview-cert-verb-bonafide'); if (elVerb) elVerb.innerText = bonafideVerb;
       var elPEN = document.getElementById('preview-cert-pen'); if (elPEN) elPEN.innerText = penVal;
       var elAadhaar = document.getElementById('preview-cert-aadhaar'); if (elAadhaar) elAadhaar.innerText = aadhaarVal;
       var elDOB = document.getElementById('preview-cert-dob'); if (elDOB) elDOB.innerText = dobVal;
       var elDOBWords = document.getElementById('preview-cert-dob-words'); if (elDOBWords) elDOBWords.innerText = dobWords;
       var elPurpose = document.getElementById('preview-cert-purpose'); if (elPurpose) elPurpose.innerText = purpose;
+
+      // Update Student Photo in Bonafide Certificate (Preview & Print)
+      var photoUrl = student.photo || '';
+      var prevPhoto = document.getElementById('preview-cert-photo');
+      var prevPlaceholder = document.getElementById('preview-cert-photo-placeholder');
+      if (prevPhoto && prevPlaceholder) {
+        if (photoUrl) {
+          prevPhoto.src = photoUrl;
+          prevPhoto.classList.remove('hidden');
+          prevPlaceholder.classList.add('hidden');
+        } else {
+          prevPhoto.src = '';
+          prevPhoto.classList.add('hidden');
+          prevPlaceholder.classList.remove('hidden');
+        }
+      }
+
+      var printPhoto = document.getElementById('print-cert-photo');
+      var printPlaceholder = document.getElementById('print-cert-photo-placeholder');
+      if (printPhoto && printPlaceholder) {
+        if (photoUrl) {
+          printPhoto.src = photoUrl;
+          printPhoto.classList.remove('hidden');
+          printPlaceholder.classList.add('hidden');
+        } else {
+          printPhoto.src = '';
+          printPhoto.classList.add('hidden');
+          printPlaceholder.classList.remove('hidden');
+        }
+      }
 
       // Update Medium in Preview & Print
       var medText = currentCertMedium || 'English';
@@ -5858,6 +6063,7 @@
       var pSection = document.getElementById('print-cert-section'); if (pSection) pSection.innerText = student.section || 'A';
       var pAY = document.getElementById('print-cert-ay'); if (pAY) pAY.innerText = ay;
       var pAdm = document.getElementById('print-cert-adm'); if (pAdm) pAdm.innerText = admVal;
+      var pDOA = document.getElementById('print-cert-doa'); if (pDOA) pDOA.innerText = doaVal;
       var prVerb = document.getElementById('print-cert-verb-bonafide'); if (prVerb) prVerb.innerText = bonafideVerb;
       var pPEN = document.getElementById('print-cert-pen'); if (pPEN) pPEN.innerText = penVal;
       var pAadhaar = document.getElementById('print-cert-aadhaar'); if (pAadhaar) pAadhaar.innerText = aadhaarVal;
@@ -6252,7 +6458,12 @@
           <td class="p-3 font-medium text-slate-800">${escapeText(st.rollNo)}</td>
           <td class="p-3 font-bold text-pista-800">${escapeText(st.admNo)}</td>
           <td class="p-3 font-mono text-xs text-indigo-700 font-semibold">${escapeText(st.pen || 'NA')}</td>
-          <td class="p-3 font-semibold text-slate-900 whitespace-nowrap">${escapeText(st.name)}</td>
+          <td class="p-3 font-semibold text-slate-900 whitespace-nowrap">
+            <div class="flex items-center gap-2">
+              ${st.photo ? `<img src="${st.photo}" class="w-7 h-7 rounded-full object-cover border border-slate-300 shrink-0">` : `<div class="w-7 h-7 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-[10px] font-bold shrink-0"><i class="fa-solid fa-user-graduate"></i></div>`}
+              <span>${escapeText(st.name)}</span>
+            </div>
+          </td>
           <td class="p-3 font-medium">${escapeText(st.classVal)}</td>
           <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">Section ${escapeText(st.section)}</span></td>
           <td class="p-3 text-slate-600">${escapeText(st.dob || '01/01/2014')}</td>
@@ -7620,6 +7831,11 @@ var currentTimetableClass = 'Class 10';
       var classVal = document.getElementById('student-class').value;
       var section = document.getElementById('student-section').value;
       var dob = document.getElementById('student-dob').value.trim() || '01/01/2014';
+      var doaInput = document.getElementById('student-doa');
+      var doa = (doaInput && doaInput.value.trim()) ? doaInput.value.trim() : '';
+
+      var photoInput = document.getElementById('student-photo-data');
+      var photo = (photoInput && photoInput.value.trim()) ? photoInput.value.trim() : '';
       
       var aadhaarInput = document.getElementById('student-aadhaar');
       var aadhaar = (aadhaarInput && aadhaarInput.value.trim()) ? aadhaarInput.value.trim() : 'Not Available';
@@ -7640,13 +7856,13 @@ var currentTimetableClass = 'Class 10';
         var idx = studentList.findIndex(s => (s.id === targetId || s.id == idVal));
         if (idx !== -1) {
           studentList[idx] = Object.assign({}, studentList[idx], {
-            admNo, pen, rollNo, name, classVal, section, dob, aadhaar, fatherName, motherName, category, contact
+            admNo, pen, rollNo, name, classVal, section, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
           });
         }
       } else {
         var newId = (studentList.length > 0) ? (Math.max(...studentList.map(s => s.id)) + 1) : 1;
         studentList.push({
-          id: newId, admNo, pen, rollNo, name, classVal, section, dob, aadhaar, fatherName, motherName, category, contact
+          id: newId, admNo, pen, rollNo, name, classVal, section, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
         });
       }
 
@@ -8037,9 +8253,25 @@ var currentTimetableClass = 'Class 10';
         var elPEN = document.getElementById(prefix + '-prog-pen'); if (elPEN) elPEN.innerText = student.pen || 'NA';
         var elFather = document.getElementById(prefix + '-prog-father'); if (elFather) elFather.innerText = fatherName;
         var elMother = document.getElementById(prefix + '-prog-mother'); if (elMother) elMother.innerText = motherName;
-        var elDOB = document.getElementById(prefix + '-prog-dob'); if (elDOB) elDOB.innerText = student.dob || '01/01/2014';
+        var elDOB = document.getElementById('print-prog-dob'); if (elDOB && prefix === 'print') elDOB.innerText = student.dob || '01/01/2014';
+        var prevDOB = document.getElementById('preview-prog-dob'); if (prevDOB && prefix === 'preview') prevDOB.innerText = student.dob || '01/01/2014';
         var elRoll = document.getElementById(prefix + '-prog-roll'); if (elRoll) elRoll.innerText = student.rollNo || '-';
         var elMed = document.getElementById(prefix + '-prog-medium'); if (elMed) elMed.innerText = currentProgressMedium || 'English';
+
+        // Student Photo in Progress Card (Preview & Print)
+        var elPhoto = document.getElementById(prefix + '-prog-photo');
+        var elPhotoPlc = document.getElementById(prefix + '-prog-photo-placeholder');
+        if (elPhoto && elPhotoPlc) {
+          if (student.photo) {
+            elPhoto.src = student.photo;
+            elPhoto.classList.remove('hidden');
+            elPhotoPlc.classList.add('hidden');
+          } else {
+            elPhoto.src = '';
+            elPhoto.classList.add('hidden');
+            elPhotoPlc.classList.remove('hidden');
+          }
+        }
       });
 
       // Curricular subjects table generation
@@ -9556,14 +9788,20 @@ var currentTimetableClass = 'Class 10';
           <img src="school_crest_logo.png" alt="School Crest" class="w-[74px] h-[74px] object-contain shrink-0">
         </div>
 
-        <!-- Certificate Title & Date -->
-        <div class="text-center my-2">
-          <h2 class="cert-badge-title text-xs font-black uppercase tracking-wider inline-block px-4 py-1 border-2 border-black rounded-xs bg-slate-100">
-            BONAFIDE AND STUDY CERTIFICATE
-          </h2>
-        </div>
-        <div class="flex justify-end text-xs font-bold mb-2.5 cert-date-text">
-          <span>Date: <span id="print-cert-date" class="font-mono font-bold border-b border-black pb-0.5">--/--/----</span></span>
+        <!-- Certificate Title, Date & Student Photo -->
+        <div class="flex items-start justify-between my-2 gap-2">
+          <div class="text-xs font-bold cert-date-text pt-1">
+            <span>Date: <span id="print-cert-date" class="font-mono font-bold border-b border-black pb-0.5">--/--/----</span></span>
+          </div>
+          <div class="text-center flex-1">
+            <h2 class="cert-badge-title text-xs font-black uppercase tracking-wider inline-block px-4 py-1 border-2 border-black rounded-xs bg-slate-100">
+              BONAFIDE AND STUDY CERTIFICATE
+            </h2>
+          </div>
+          <div class="w-20 h-24 border-2 border-black bg-white flex items-center justify-center overflow-hidden shrink-0" id="print-cert-photo-container">
+            <img id="print-cert-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
+            <span id="print-cert-photo-placeholder" class="text-[9px] font-bold text-center text-slate-600 p-1 leading-tight">Affix Student Photo</span>
+          </div>
         </div>
 
         <!-- Body Certificate Paragraph -->
@@ -9591,6 +9829,7 @@ var currentTimetableClass = 'Class 10';
           </p>
           <p>
             His/ Her Admission Number is <span id="print-cert-adm" class="cert-value-fill font-mono">____________</span>, 
+            Date of Admission is <span id="print-cert-doa" class="cert-value-fill font-mono">____________</span>, 
             PEN is <span id="print-cert-pen" class="cert-value-fill font-mono">____________</span>, 
             Aadhaar Number is <span id="print-cert-aadhaar" class="cert-value-fill font-mono">________________</span> 
             and Date of Birth is <span id="print-cert-dob" class="cert-value-fill font-mono">____________</span> 
@@ -9668,6 +9907,12 @@ var currentTimetableClass = 'Class 10';
             <td class="border border-black p-1 font-bold w-1/6" id="print-prog-class-sec">-</td>
             <td class="border border-black p-1 bg-slate-50 font-bold w-1/12">Medium:</td>
             <td class="border border-black p-1 font-bold text-center w-1/12" id="print-prog-medium">English</td>
+            <td rowspan="4" class="border border-black p-1 w-20 text-center align-middle bg-white">
+              <div class="w-18 h-22 mx-auto flex items-center justify-center overflow-hidden border border-slate-300" id="print-prog-photo-container">
+                <img id="print-prog-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
+                <span id="print-prog-photo-placeholder" class="text-[8px] text-slate-500 leading-tight">Student Photo</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td class="border border-black p-1 bg-slate-50 font-bold">Admission No:</td>
