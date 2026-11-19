@@ -4242,8 +4242,144 @@
       localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore));
     } catch(e) {}
 
+    // --- Automatic Synchronization: Present Year (2026-27) -> Previous Years by PEN ---
+    function normalizePen(pen) {
+      if (!pen) return '';
+      return String(pen).trim().replace(/\s+/g, '');
+    }
+
+    function syncStudentToPastYearsByPEN(student) {
+      if (!student || !student.pen) return 0;
+      var cleanPen = normalizePen(student.pen);
+      if (!cleanPen || cleanPen === 'NA' || cleanPen === '-' || cleanPen.length < 5) return 0;
+
+      var updatedCount = 0;
+      if (yearwiseStudentsStore) {
+        for (var yr in yearwiseStudentsStore) {
+          if (yr === '2026-27') continue; // Only synchronize historical / previous academic sessions
+          var list = yearwiseStudentsStore[yr];
+          if (Array.isArray(list)) {
+            list.forEach(function(past) {
+              if (past && past.pen && normalizePen(past.pen) === cleanPen) {
+                if (student.name) past.name = student.name;
+                if (student.fatherName) past.fatherName = student.fatherName;
+                if (student.motherName) past.motherName = student.motherName;
+                if (student.dob) past.dob = student.dob;
+                if (student.doa) past.doa = student.doa;
+                if (student.photo) past.photo = student.photo;
+                if (student.aadhaar && student.aadhaar !== 'Not Available') past.aadhaar = student.aadhaar;
+                if (student.gender) past.gender = student.gender;
+                if (student.category) past.category = student.category;
+                if (student.contact) past.contact = student.contact;
+                if (student.admNo) past.admNo = student.admNo;
+                updatedCount++;
+              }
+            });
+          }
+        }
+      }
+
+      // Also keep officialStudents2025_26 in sync
+      if (typeof officialStudents2025_26 !== 'undefined' && Array.isArray(officialStudents2025_26)) {
+        officialStudents2025_26.forEach(function(past) {
+          if (past && past.pen && normalizePen(past.pen) === cleanPen) {
+            if (student.name) past.name = student.name;
+            if (student.fatherName) past.fatherName = student.fatherName;
+            if (student.motherName) past.motherName = student.motherName;
+            if (student.dob) past.dob = student.dob;
+            if (student.doa) past.doa = student.doa;
+            if (student.photo) past.photo = student.photo;
+            if (student.aadhaar && student.aadhaar !== 'Not Available') past.aadhaar = student.aadhaar;
+            if (student.gender) past.gender = student.gender;
+            if (student.category) past.category = student.category;
+            if (student.contact) past.contact = student.contact;
+            if (student.admNo) past.admNo = student.admNo;
+          }
+        });
+      }
+
+      if (updatedCount > 0) {
+        try {
+          localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore));
+        } catch(e) {}
+        syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
+        if (typeof renderYearwiseTable === 'function') renderYearwiseTable();
+        if (typeof renderCertificatesTable === 'function') renderCertificatesTable();
+        console.log(`[PEN Auto-Sync] Updated ${updatedCount} past year record(s) matching PEN: ${cleanPen}`);
+      }
+      return updatedCount;
+    }
+
+    function syncAllPresentStudentsToPastYears() {
+      if (!studentList || !Array.isArray(studentList) || studentList.length === 0) return 0;
+      var totalSynced = 0;
+      var hasChanges = false;
+
+      studentList.forEach(function(st) {
+        if (!st || !st.pen) return;
+        var cleanPen = normalizePen(st.pen);
+        if (!cleanPen || cleanPen === 'NA' || cleanPen === '-' || cleanPen.length < 5) return;
+
+        if (yearwiseStudentsStore) {
+          for (var yr in yearwiseStudentsStore) {
+            if (yr === '2026-27') continue;
+            var list = yearwiseStudentsStore[yr];
+            if (Array.isArray(list)) {
+              list.forEach(function(past) {
+                if (past && past.pen && normalizePen(past.pen) === cleanPen) {
+                  var changed = false;
+                  if (st.name && past.name !== st.name) { past.name = st.name; changed = true; }
+                  if (st.fatherName && past.fatherName !== st.fatherName) { past.fatherName = st.fatherName; changed = true; }
+                  if (st.motherName && past.motherName !== st.motherName) { past.motherName = st.motherName; changed = true; }
+                  if (st.dob && past.dob !== st.dob) { past.dob = st.dob; changed = true; }
+                  if (st.doa && past.doa !== st.doa) { past.doa = st.doa; changed = true; }
+                  if (st.photo && past.photo !== st.photo) { past.photo = st.photo; changed = true; }
+                  if (st.aadhaar && st.aadhaar !== 'Not Available' && past.aadhaar !== st.aadhaar) { past.aadhaar = st.aadhaar; changed = true; }
+                  if (st.gender && past.gender !== st.gender) { past.gender = st.gender; changed = true; }
+                  if (st.category && past.category !== st.category) { past.category = st.category; changed = true; }
+                  if (st.contact && past.contact !== st.contact) { past.contact = st.contact; changed = true; }
+                  if (st.admNo && past.admNo !== st.admNo) { past.admNo = st.admNo; changed = true; }
+                  if (changed) {
+                    hasChanges = true;
+                    totalSynced++;
+                  }
+                }
+              });
+            }
+          }
+        }
+
+        if (typeof officialStudents2025_26 !== 'undefined' && Array.isArray(officialStudents2025_26)) {
+          officialStudents2025_26.forEach(function(past) {
+            if (past && past.pen && normalizePen(past.pen) === cleanPen) {
+              if (st.name && past.name !== st.name) past.name = st.name;
+              if (st.fatherName && past.fatherName !== st.fatherName) past.fatherName = st.fatherName;
+              if (st.motherName && past.motherName !== st.motherName) past.motherName = st.motherName;
+              if (st.dob && past.dob !== st.dob) past.dob = st.dob;
+              if (st.doa && past.doa !== st.doa) past.doa = st.doa;
+              if (st.photo && past.photo !== st.photo) past.photo = st.photo;
+              if (st.aadhaar && st.aadhaar !== 'Not Available' && past.aadhaar !== st.aadhaar) past.aadhaar = st.aadhaar;
+              if (st.gender && past.gender !== st.gender) past.gender = st.gender;
+              if (st.category && past.category !== st.category) past.category = st.category;
+              if (st.contact && past.contact !== st.contact) past.contact = st.contact;
+              if (st.admNo && past.admNo !== st.admNo) past.admNo = st.admNo;
+            }
+          });
+        }
+      });
+
+      if (hasChanges) {
+        try {
+          localStorage.setItem('zphs_yearwise_students', JSON.stringify(yearwiseStudentsStore));
+        } catch(e) {}
+        syncToCloud('zphs_yearwise_students', yearwiseStudentsStore);
+        console.log(`[PEN Auto-Sync] Full sync complete: updated ${totalSynced} past year record(s) based on present year data.`);
+      }
+      return totalSynced;
+    }
+
     function getStudentsForYear(year) {
-      if (year === '2026-27') {
+      if (year === '2026-27' || !year) {
         // Current active students from primary registry
         return (studentList || []).map(s => Object.assign({}, s, { academicYear: '2026-27', status: s.status || 'Active / Regular' }));
       }
@@ -4497,6 +4633,7 @@
 
       if (year === '2026-27') {
         // Save to current primary studentList
+        var savedCurrent = null;
         if (isEdit) {
           var targetId = parseInt(idVal, 10);
           var idx = studentList.findIndex(s => s.id === targetId);
@@ -4504,13 +4641,18 @@
             studentList[idx] = Object.assign({}, studentList[idx], {
               admNo, pen, rollNo, name, aadhaar, classVal, section, dob, fatherName, motherName
             });
+            savedCurrent = studentList[idx];
           }
         } else {
           var newId = (studentList.length > 0) ? (Math.max(...studentList.map(s => s.id)) + 1) : 1;
-          studentList.push({
+          savedCurrent = {
             id: newId, admNo, pen, rollNo, name, aadhaar, classVal, section, dob, fatherName, motherName,
             gender: 'Female', category: 'General', contact: '+91 9848011220'
-          });
+          };
+          studentList.push(savedCurrent);
+        }
+        if (savedCurrent && savedCurrent.pen) {
+          syncStudentToPastYearsByPEN(savedCurrent);
         }
         try { localStorage.setItem('zphs_students_portal_v3', JSON.stringify(studentList)); } catch(e) {}
         syncToCloud('zphs_students_portal_v3', studentList);
@@ -4783,6 +4925,9 @@
             if (arr.length > 0) galleryPhotos = arr;
             try { localStorage.setItem('zphs_gallery_photos', JSON.stringify(galleryPhotos)); } catch(e){}
           }
+          if (typeof syncAllPresentStudentsToPastYears === 'function') {
+            syncAllPresentStudentsToPastYears();
+          }
         }
         setCloudSyncStatus('live');
         if (callback) callback();
@@ -4822,6 +4967,11 @@
       if (!staffList || staffList.length === 0) staffList = defaultStaff;
       if (!nonTeachingList || nonTeachingList.length === 0) nonTeachingList = defaultNonTeachingStaff;
       if (!studentList || studentList.length === 0) studentList = defaultStudents;
+
+      // Automatically propagate any present year student updates into previous year records by PEN
+      if (typeof syncAllPresentStudentsToPastYears === 'function') {
+        syncAllPresentStudentsToPastYears();
+      }
 
       updateUIAuthStatus();
       renderStaffTable();
@@ -6339,11 +6489,11 @@
 
     function getStudentsForYear(year) {
       var cleanYear = (year || document.getElementById('cert-input-ay')?.value || '2026-27').trim();
-      if (yearwiseStudentsStore && yearwiseStudentsStore[cleanYear] && yearwiseStudentsStore[cleanYear].length > 0) {
-        return yearwiseStudentsStore[cleanYear];
-      }
       if (cleanYear === '2026-27' || !cleanYear) {
         return studentList || [];
+      }
+      if (yearwiseStudentsStore && yearwiseStudentsStore[cleanYear] && yearwiseStudentsStore[cleanYear].length > 0) {
+        return yearwiseStudentsStore[cleanYear];
       }
       if (cleanYear === '2025-26' && typeof officialStudents2025_26 !== 'undefined' && officialStudents2025_26.length > 0) {
         return officialStudents2025_26;
@@ -8630,6 +8780,7 @@ var currentTimetableClass = 'Class 10';
 
       var contact = document.getElementById('student-contact').value.trim() || '+91 9848011220';
 
+      var savedStudent = null;
       if (isEdit) {
         var targetId = parseInt(idVal, 10);
         var idx = studentList.findIndex(s => (s.id === targetId || s.id == idVal));
@@ -8637,12 +8788,19 @@ var currentTimetableClass = 'Class 10';
           studentList[idx] = Object.assign({}, studentList[idx], {
             admNo, pen, rollNo, name, classVal, section, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
           });
+          savedStudent = studentList[idx];
         }
       } else {
         var newId = (studentList.length > 0) ? (Math.max(...studentList.map(s => s.id)) + 1) : 1;
-        studentList.push({
+        savedStudent = {
           id: newId, admNo, pen, rollNo, name, classVal, section, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
-        });
+        };
+        studentList.push(savedStudent);
+      }
+
+      // Automatically sync updated student particulars to all previous years based on PEN number
+      if (savedStudent && savedStudent.pen) {
+        syncStudentToPastYearsByPEN(savedStudent);
       }
 
       try {
