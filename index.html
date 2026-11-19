@@ -599,6 +599,16 @@
           <i class="fa-solid fa-user-graduate w-5 text-center"></i>
           <span data-en="Students Details" data-te="విద్యార్థుల వివరాలు">Students Details</span>
         </a>
+        <!-- Sub-section: Class-Wise Students -->
+        <a href="#students-classwise" onclick="switchTab('students-classwise')" id="nav-students-classwise" class="nav-item admin-section-nav hidden flex items-center gap-2.5 px-3 py-2 ml-4 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+          <i class="fa-solid fa-layer-group text-sky-600 w-4 text-center"></i>
+          <span data-en="Class-Wise Students" data-te="తరగతుల వారీగా విద్యార్థులు">Class-Wise Students</span>
+        </a>
+        <!-- Dedicated Student Profile Nav (Visible when student logged in) -->
+        <a href="#student-portal" onclick="switchTab('student-portal')" id="nav-student-portal" class="nav-item hidden flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 transition border border-emerald-300 shadow-2xs">
+          <i class="fa-solid fa-id-card-clip w-5 text-center text-emerald-600 text-base"></i>
+          <span data-en="My Student Profile" data-te="నా విద్యార్థి ప్రొఫైల్">My Student Profile</span>
+        </a>
         <a href="#yearwise-students" onclick="switchTab('yearwise-students')" id="nav-yearwise-students" class="nav-item admin-section-nav hidden flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
           <i class="fa-solid fa-calendar-check w-5 text-center text-amber-600"></i>
           <span data-en="Year-Wise Student Data" data-te="సంవత్సరాల వారీగా విద్యార్థుల డేటా">Year-Wise Student Data</span>
@@ -633,10 +643,16 @@
           <i class="fa-solid fa-bullhorn w-5 text-center"></i>
           <span data-en="Notices & Circulars" data-te="ప్రకటనలు & సర్క్యులర్లు">Notices & Circulars</span>
         </a>
-        <a href="#login-view" onclick="openLoginModal()" id="nav-login" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-amber-800 bg-amber-50 hover:bg-amber-100 transition mt-4 border border-amber-200">
-          <i class="fa-solid fa-key w-5 text-center"></i>
-          <span data-en="Admin Portal" data-te="అడ్మిన్ పోర్టల్">Admin Portal</span>
-        </a>
+        <div id="sidebar-auth-nav" class="pt-3 space-y-1.5 border-t border-slate-200 mt-3">
+          <a href="#login-view" onclick="openLoginModal('staff')" id="nav-login" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-amber-900 bg-amber-50 hover:bg-amber-100 transition border border-amber-200">
+            <i class="fa-solid fa-user-shield w-5 text-center text-amber-700"></i>
+            <span data-en="Admin Portal" data-te="అడ్మిన్ పోర్టల్">Admin Portal</span>
+          </a>
+          <a href="#login-view" onclick="openLoginModal('student')" id="nav-student-login" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 transition border border-emerald-200">
+            <i class="fa-solid fa-graduation-cap w-5 text-center text-emerald-700"></i>
+            <span data-en="Student Portal Login" data-te="విద్యార్థి పోర్టల్ లాగిన్">Student Portal Login</span>
+          </a>
+        </div>
       </nav>
     </aside>
 
@@ -982,6 +998,16 @@
 
       <!-- SECTION 3: STUDENTS DETAILS -->
       <section id="section-students" class="content-section hidden space-y-4">
+        <!-- Sub-section Switcher Tabs: All Students vs Class-Wise -->
+        <div class="flex items-center gap-2 p-1 bg-slate-100 rounded-xl w-fit border border-slate-200">
+          <button type="button" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white text-slate-800 shadow-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-users text-theme-600"></i> <span>All Students Directory</span>
+          </button>
+          <button type="button" onclick="switchTab('students-classwise')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-layer-group text-sky-600"></i> <span>Class-Wise Sub-Section</span>
+          </button>
+        </div>
+
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
           <div>
             <h2 class="text-xl font-bold text-slate-800" data-en="Students Details" data-te="విద్యార్థుల వివరాలు">Students Details</h2>
@@ -1054,6 +1080,269 @@
             <span class="text-xs text-slate-500 font-medium">Add a new student admission record directly into the register</span>
             <button onclick="openStudentModal()" class="bg-theme-700 hover:bg-theme-800 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition shadow-2xs flex items-center gap-1.5">
               <i class="fa-solid fa-plus-circle"></i> <span>+ Add Row / New Student</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUB-SECTION: CLASS-WISE STUDENT DETAILS -->
+      <section id="section-students-classwise" class="content-section hidden space-y-4">
+        <!-- Sub-section Switcher Tabs: All Students vs Class-Wise -->
+        <div class="flex items-center gap-2 p-1 bg-slate-100 rounded-xl w-fit border border-slate-200">
+          <button type="button" onclick="switchTab('students')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-users text-theme-600"></i> <span>All Students Directory</span>
+          </button>
+          <button type="button" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white text-sky-900 shadow-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-layer-group text-sky-600"></i> <span>Class-Wise Sub-Section</span>
+          </button>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold uppercase bg-sky-100 text-sky-900 border border-sky-300">Classwise Sub-Section</span>
+              <h2 class="text-xl font-bold text-slate-800" data-en="Class-Wise Students Details" data-te="తరగతుల వారీగా విద్యార్థుల వివరాలు">Class-Wise Students Details</h2>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">Explore, search, and issue certificates for students grouped by class (Class VI to Class X)</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="exportClasswiseCSV()" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-file-excel text-emerald-600"></i> Export Class CSV
+            </button>
+            <button onclick="openStudentModal()" class="admin-only bg-theme-700 hover:bg-theme-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-plus"></i> <span data-en="Add Student" data-te="విద్యార్థిని చేర్చండి">Add Student</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Class Selector Pills Bar -->
+        <div class="bg-sky-50/60 p-3 rounded-xl border border-sky-100 shadow-2xs">
+          <div class="flex flex-wrap items-center gap-2" id="classwise-class-pills">
+            <!-- Dynamic Class VI, VII, VIII, IX, X buttons -->
+          </div>
+        </div>
+
+        <!-- Class Summary Stats Bar (Pastel Cards) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+            <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Class Enrolment</p>
+            <h4 class="text-lg font-black text-slate-900 mt-0.5" id="cw-stat-total">0</h4>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+            <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Sections</p>
+            <h4 class="text-xs font-bold text-slate-800 mt-1" id="cw-stat-sections">-</h4>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+            <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Mediums</p>
+            <h4 class="text-xs font-bold text-slate-800 mt-1" id="cw-stat-mediums">English / Telugu / Urdu</h4>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+            <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Verified Records</p>
+            <h4 class="text-lg font-black text-emerald-700 mt-0.5" id="cw-stat-verified">100%</h4>
+          </div>
+        </div>
+
+        <!-- Filters: Section Filter & Search within Class -->
+        <div class="flex flex-col sm:flex-row gap-3 items-center justify-between bg-slate-50 p-3 rounded-lg border border-slate-200">
+          <div class="relative w-full sm:w-64">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+            <input type="text" id="classwise-student-search" onkeyup="renderClasswiseStudentsTable()" placeholder="Search this class by name, adm no, pen..." class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-600 outline-none bg-white">
+          </div>
+          <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <label class="text-xs font-semibold text-slate-700">Filter Section:</label>
+            <select id="classwise-section-filter" onchange="renderClasswiseStudentsTable()" class="border border-slate-300 rounded-lg px-3 py-1.5 text-xs outline-none focus:ring-2 focus:ring-sky-600 bg-white font-medium">
+              <option value="All">All Sections (A, B, C)</option>
+              <option value="A">Section A</option>
+              <option value="B">Section B</option>
+              <option value="C">Section C</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Result count -->
+        <div class="flex justify-between items-center text-xs text-slate-500 px-1">
+          <span id="classwise-result-count">Showing 0 students</span>
+        </div>
+
+        <!-- Classwise Table -->
+        <div class="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-2xs">
+          <table class="w-full text-left text-sm" id="classwise-students-table">
+            <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 text-xs">
+              <tr>
+                <th class="p-3">Sl.No.</th>
+                <th class="p-3">Roll No</th>
+                <th class="p-3">Adm No</th>
+                <th class="p-3">Student PEN</th>
+                <th class="p-3">Student Name</th>
+                <th class="p-3">Section</th>
+                <th class="p-3">Medium</th>
+                <th class="p-3">DOB</th>
+                <th class="p-3">Father's Name</th>
+                <th class="p-3">Contact</th>
+                <th class="p-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="classwise-students-table-body" class="divide-y divide-slate-200 text-xs">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION: STUDENT PORTAL (VIEW-ONLY PERSONAL ACCESS) -->
+      <section id="section-student-portal" class="content-section hidden space-y-6">
+        <!-- Student Hero Banner -->
+        <div class="bg-gradient-to-r from-emerald-800 via-teal-800 to-sky-900 rounded-2xl p-5 sm:p-6 text-white shadow-md relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+            <i class="fa-solid fa-graduation-cap text-9xl"></i>
+          </div>
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-md p-1 border-2 border-emerald-300/50 shadow-inner overflow-hidden shrink-0 flex items-center justify-center">
+                <img id="sp-hero-photo" src="" class="w-full h-full object-cover rounded-xl hidden" alt="Student Photo">
+                <i id="sp-hero-icon" class="fa-solid fa-user-graduate text-3xl text-emerald-200"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-400 text-emerald-950">Active Student Session</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-white/20 text-white flex items-center gap-1">
+                    <i class="fa-solid fa-lock text-[9px]"></i> View-Only Access
+                  </span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black mt-1" id="sp-hero-name">Student Name</h2>
+                <p class="text-xs sm:text-sm text-emerald-100 font-medium mt-0.5" id="sp-hero-meta">
+                  Class VI - Section A • Academic Year: 2026-27
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="openMyProgressCard()" class="bg-white hover:bg-emerald-50 text-emerald-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-chart-line text-emerald-700"></i>
+                <span>My Progress Card (Full A4)</span>
+              </button>
+              <button onclick="openMyBonafide()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm flex items-center gap-2 border border-emerald-400/40 cursor-pointer">
+                <i class="fa-solid fa-file-signature text-amber-300"></i>
+                <span>My Bonafide</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security / View-Only Notice -->
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-start gap-3 text-xs text-amber-950">
+          <i class="fa-solid fa-shield-halved text-amber-700 text-base mt-0.5 shrink-0"></i>
+          <div>
+            <p class="font-bold">Official Student Integrity & View-Only Policy:</p>
+            <p class="text-amber-800 mt-0.5">
+              You are signed in to your institutional personal profile. In accordance with government school record guidelines, student accounts have strict <strong>read-only permissions</strong>. You can only view your own records, progress card, and timetable. Editing or deleting any data is strictly restricted. For updates or corrections, please contact your Class Teacher.
+            </p>
+          </div>
+        </div>
+
+        <!-- Student Details 2-Column Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Academic Identifiers -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+            <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100">
+              <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-id-card"></i>
+              </div>
+              <h3 class="font-bold text-slate-800 text-sm">Academic Identifiers</h3>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Student PEN Number</span>
+                <span class="text-sm font-black font-mono text-indigo-900 mt-0.5 block" id="sp-detail-pen">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Admission Number</span>
+                <span class="text-sm font-bold text-slate-800 mt-0.5 block" id="sp-detail-adm">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Roll Number</span>
+                <span class="text-sm font-bold text-slate-800 mt-0.5 block" id="sp-detail-roll">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Class & Section</span>
+                <span class="text-sm font-bold text-slate-800 mt-0.5 block" id="sp-detail-class-sec">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Medium of Instruction</span>
+                <span class="text-sm font-bold text-emerald-800 mt-0.5 block" id="sp-detail-medium">English</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Date of Admission (DOA)</span>
+                <span class="text-sm font-bold font-mono text-slate-800 mt-0.5 block" id="sp-detail-doa">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal & Demographics Record -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+            <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100">
+              <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <h3 class="font-bold text-slate-800 text-sm">Personal & Guardian Details</h3>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Date of Birth (DOB)</span>
+                <span class="text-sm font-black font-mono text-sky-950 mt-0.5 block" id="sp-detail-dob">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Gender</span>
+                <span class="text-sm font-bold text-slate-800 mt-0.5 block" id="sp-detail-gender">Female</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Father's Name</span>
+                <span class="text-sm font-bold text-slate-800 mt-0.5 block" id="sp-detail-father">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Mother's Name</span>
+                <span class="text-sm font-bold text-slate-800 mt-0.5 block" id="sp-detail-mother">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Social Category</span>
+                <span class="text-sm font-bold text-slate-800 mt-0.5 block" id="sp-detail-category">-</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-lg">
+                <span class="text-slate-500 font-medium block">Registered Contact</span>
+                <span class="text-sm font-bold font-mono text-slate-800 mt-0.5 block" id="sp-detail-contact">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Performance & Progress Card Shortcut -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-800 text-sm">Official Academic Performance Card</h3>
+                <p class="text-[11px] text-slate-500">Certified Full A4 Progress Report with Curricular & Co-Curricular Marks</p>
+              </div>
+            </div>
+            <button onclick="openMyProgressCard()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-print"></i> <span>View Full A4 Report</span>
+            </button>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center text-xl shrink-0 font-bold">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm">Student Progress Report / Cumulative Record</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Government of Telangana format with subject-wise grades, GPA and teacher remarks</p>
+              </div>
+            </div>
+            <button onclick="openMyProgressCard()" class="bg-white hover:bg-sky-50 text-sky-900 font-bold px-4 py-2 rounded-lg text-xs border border-sky-300 transition flex items-center gap-2 shadow-2xs">
+              <i class="fa-solid fa-eye text-sky-600"></i>
+              <span>Open Progress Card</span>
             </button>
           </div>
         </div>
@@ -1847,30 +2136,61 @@
 
   <!-- MODAL: LOGIN / AUTHENTICATION -->
   <div id="modal-login" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
-    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-sm w-full p-6 space-y-4 relative">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-md w-full p-6 space-y-4 relative">
       <button onclick="closeModal('modal-login')" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
       <div class="text-center">
         <div class="w-12 h-12 rounded-full bg-theme-700 text-amber-300 mx-auto flex items-center justify-center text-xl font-bold mb-2">
-          <i class="fa-solid fa-lock"></i>
+          <i class="fa-solid fa-shield-halved"></i>
         </div>
-        <h3 class="text-lg font-bold text-slate-800" data-en="Administrator Portal Login" data-te="అడ్మినిస్ట్రేటర్ పోర్టల్ లాగిన్">Administrator Portal Login</h3>
-        <p class="text-xs text-slate-500" data-en="Authorized administrative access only." data-te="అధీకృత పరిపాలనా సిబ్బందికి మాత్రమే.">Authorized administrative access only.</p>
+        <h3 class="text-lg font-bold text-slate-800" data-en="ZPGHS Portal Authentication" data-te="పోర్టల్ లాగిన్">ZPGHS Portal Authentication</h3>
+        <p class="text-xs text-slate-500">Sign in to access your authorized records</p>
       </div>
 
-      <form onsubmit="handleLogin(event)" class="space-y-3">
+      <!-- Role Selector Tabs: Staff/Admin vs Student -->
+      <div class="flex rounded-xl bg-slate-100 p-1 text-xs font-bold border border-slate-200">
+        <button type="button" id="tab-login-staff" onclick="setLoginRoleTab('staff')" class="flex-1 py-2 rounded-lg transition bg-white text-theme-900 shadow-xs flex items-center justify-center gap-1.5 font-bold">
+          <i class="fa-solid fa-chalkboard-user text-theme-600"></i> <span>Staff / Admin</span>
+        </button>
+        <button type="button" id="tab-login-student" onclick="setLoginRoleTab('student')" class="flex-1 py-2 rounded-lg transition text-slate-600 hover:text-slate-800 flex items-center justify-center gap-1.5 font-semibold">
+          <i class="fa-solid fa-graduation-cap text-emerald-600"></i> <span>Student Login</span>
+        </button>
+      </div>
+
+      <!-- Staff / Admin Form -->
+      <form id="form-login-staff" onsubmit="handleLogin(event)" class="space-y-3">
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1" data-en="Employee ID / Username" data-te="ఉద్యోగి ఐడి / యూజర్ నేమ్">Employee ID / Username</label>
-          <input type="text" id="login-username" placeholder="Enter Employee ID" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-theme-600 outline-none">
+          <input type="text" id="login-username" placeholder="e.g. 1808557 or 2133745" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-theme-600 outline-none">
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1" data-en="Password" data-te="పాస్‌వర్డ్">Password</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1" data-en="Master Password" data-te="పాస్‌వర్డ్">Master Password</label>
           <input type="password" id="login-password" placeholder="••••••••" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-theme-600 outline-none">
         </div>
-        <button type="submit" class="w-full bg-theme-700 hover:bg-theme-800 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm" data-en="Sign In" data-te="లాగిన్ అవ్వండి">
-          Sign In
+        <button type="submit" class="w-full bg-theme-700 hover:bg-theme-800 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm" data-en="Sign In as Staff / Admin" data-te="లాగిన్ అవ్వండి">
+          Sign In as Admin
+        </button>
+      </form>
+
+      <!-- Student Login Form -->
+      <form id="form-login-student" onsubmit="handleStudentLogin(event)" class="space-y-3 hidden">
+        <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-xs flex items-start gap-2">
+          <i class="fa-solid fa-circle-info text-emerald-600 mt-0.5 shrink-0"></i>
+          <span>Students can view their own details, progress card and attendance. Editing or deleting is restricted.</span>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Login ID (Student PEN Number)</label>
+          <input type="text" id="login-student-pen" placeholder="Enter your 11-digit Student PEN" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-600 outline-none font-mono">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Password (DOB as DDMMYYYY)</label>
+          <input type="password" id="login-student-dob" placeholder="e.g. 02022014 for 02/02/2014" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-600 outline-none font-mono">
+          <p class="text-[11px] text-slate-500 mt-1">Example: If DOB is 05/08/2013, enter <strong>05082013</strong></p>
+        </div>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm">
+          Sign In as Student
         </button>
       </form>
     </div>
@@ -4515,6 +4835,8 @@
       renderHolidays();
       renderActivities();
       renderTimetable(currentTimetableClass || 'Class 10');
+      if (typeof renderClasswiseStudents === 'function') renderClasswiseStudents();
+      if (currentUser && currentUser.role === 'student' && typeof renderStudentPortalView === 'function') renderStudentPortalView();
       updateDashboardStats();
       initGallery();
       initBannerFlashRotator();
@@ -4551,11 +4873,16 @@
     // Navigation & Tab Switcher
     function switchTab(tabId) {
       // Access control guard: Protected sections require Administrator account
-      var adminOnlyTabs = ['students', 'staff', 'certificates', 'exams', 'mdm', 'yearwise-students'];
+      var adminOnlyTabs = ['students', 'students-classwise', 'staff', 'certificates', 'exams', 'mdm', 'yearwise-students'];
       if (adminOnlyTabs.includes(tabId) && !isAdmin) {
-        alert('Access Restricted: Please log in with an authorized Administrator account to access ' + tabId.replace('-', ' ') + '.');
-        openLoginModal();
-        switchTab('home');
+        if (currentUser && currentUser.role === 'student') {
+          alert('Access Restricted: As a student, you can only view your own student profile and records.');
+          switchTab('student-portal');
+        } else {
+          alert('Access Restricted: Please log in with an authorized Administrator account to access ' + tabId.replace('-', ' ') + '.');
+          openLoginModal('staff');
+          switchTab('home');
+        }
         return;
       }
 
@@ -4597,6 +4924,8 @@
       if (tabId === 'notices') renderNotices();
       else if (tabId === 'staff') renderStaffTable();
       else if (tabId === 'students') renderStudentTable();
+      else if (tabId === 'students-classwise') renderClasswiseStudents();
+      else if (tabId === 'student-portal') renderStudentPortalView();
       else if (tabId === 'yearwise-students') renderYearwiseTable();
       else if (tabId === 'holidays') renderHolidays();
       else if (tabId === 'activities') renderActivities();
@@ -4634,8 +4963,44 @@
     }
 
     // Modal Controls
-    function openLoginModal() {
+    function setLoginRoleTab(tab) {
+      var staffTab = document.getElementById('tab-login-staff');
+      var studentTab = document.getElementById('tab-login-student');
+      var staffForm = document.getElementById('form-login-staff');
+      var studentForm = document.getElementById('form-login-student');
+
+      if (tab === 'student') {
+        if (studentTab) {
+          studentTab.className = 'flex-1 py-2 rounded-lg transition bg-white text-emerald-900 shadow-xs flex items-center justify-center gap-1.5 font-bold';
+        }
+        if (staffTab) {
+          staffTab.className = 'flex-1 py-2 rounded-lg transition text-slate-600 hover:text-slate-800 flex items-center justify-center gap-1.5 font-semibold';
+        }
+        if (studentForm) studentForm.classList.remove('hidden');
+        if (staffForm) staffForm.classList.add('hidden');
+        var penInp = document.getElementById('login-student-pen');
+        if (penInp) penInp.focus();
+      } else {
+        if (staffTab) {
+          staffTab.className = 'flex-1 py-2 rounded-lg transition bg-white text-theme-900 shadow-xs flex items-center justify-center gap-1.5 font-bold';
+        }
+        if (studentTab) {
+          studentTab.className = 'flex-1 py-2 rounded-lg transition text-slate-600 hover:text-slate-800 flex items-center justify-center gap-1.5 font-semibold';
+        }
+        if (staffForm) staffForm.classList.remove('hidden');
+        if (studentForm) studentForm.classList.add('hidden');
+        var uInp = document.getElementById('login-username');
+        if (uInp) uInp.focus();
+      }
+    }
+
+    function openLoginModal(role) {
       document.getElementById('modal-login').classList.remove('hidden');
+      if (role === 'student') {
+        setLoginRoleTab('student');
+      } else {
+        setLoginRoleTab('staff');
+      }
     }
 
     
@@ -5483,6 +5848,78 @@
       alert('Invalid Employee ID! No employee found with the entered ID.');
     }
 
+    // Helper: Normalize DOB to 8-digit DDMMYYYY string
+    function normalizeDobToDDMMYYYY(dobStr) {
+      if (!dobStr) return '';
+      var cleaned = String(dobStr).trim();
+      // If YYYY-MM-DD
+      var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(cleaned);
+      if (iso) return iso[3] + iso[2] + iso[1];
+      // If DD/MM/YYYY or DD-MM-YYYY or DD.MM.YYYY
+      var dmy = /^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})/.exec(cleaned);
+      if (dmy) {
+        var d = dmy[1].padStart(2, '0');
+        var m = dmy[2].padStart(2, '0');
+        var y = dmy[3];
+        return d + m + y;
+      }
+      // Only digits
+      var digits = cleaned.replace(/\D/g, '');
+      return digits;
+    }
+
+    // Student Authentication Handler
+    function handleStudentLogin(e) {
+      if (e) e.preventDefault();
+      var inputPen = (document.getElementById('login-student-pen')?.value || '').trim();
+      var inputDob = (document.getElementById('login-student-dob')?.value || '').trim();
+
+      if (!inputPen || !inputDob) {
+        alert('Please enter both your Student PEN Number and Date of Birth (DDMMYYYY).');
+        return;
+      }
+
+      var normalizedInputDob = normalizeDobToDDMMYYYY(inputDob);
+      var cleanTarget = inputPen.replace(/\s+/g, '').toLowerCase();
+
+      var matchedStudent = (studentList || []).find(function(st) {
+        var penClean = String(st.pen || '').replace(/\s+/g, '').toLowerCase();
+        var admClean = String(st.admNo || '').replace(/\s+/g, '').toLowerCase();
+        var penMatches = (penClean === cleanTarget) || (admClean === cleanTarget);
+        if (!penMatches) return false;
+
+        var stDobNorm = normalizeDobToDDMMYYYY(st.dob);
+        return stDobNorm === normalizedInputDob;
+      });
+
+      if (!matchedStudent) {
+        alert('Invalid Login Credentials!\n\n1. Login ID: Your official 11-digit Student PEN Number (e.g. 20006556895)\n2. Password: Your Date of Birth as DDMMYYYY (e.g. 02022014 for 02/02/2014)\n\nPlease verify your details or contact your Class Teacher.');
+        return;
+      }
+
+      isAdmin = false;
+      currentUser = {
+        role: 'student',
+        id: matchedStudent.id,
+        name: matchedStudent.name,
+        pen: matchedStudent.pen,
+        admNo: matchedStudent.admNo,
+        classVal: matchedStudent.classVal,
+        section: matchedStudent.section,
+        studentData: matchedStudent
+      };
+
+      try {
+        localStorage.setItem('zphs_current_user', JSON.stringify(currentUser));
+        localStorage.setItem('zphs_is_admin', 'false');
+      } catch (err) {}
+
+      updateUIAuthStatus();
+      closeModal('modal-login');
+      renderStudentPortalView();
+      switchTab('student-portal');
+    }
+
     function handleLogout() {
       isAdmin = false;
       currentUser = null;
@@ -5494,17 +5931,19 @@
 
     function updateUIAuthStatus() {
       var container = document.getElementById('auth-status-container');
-      var protectedNavs = ['nav-staff', 'nav-students', 'nav-yearwise-students', 'nav-certificates', 'nav-mdm', 'nav-exams'];
-      var protectedTabs = ['staff', 'students', 'yearwise-students', 'certificates', 'mdm', 'exams'];
+      var protectedNavs = ['nav-staff', 'nav-students', 'nav-students-classwise', 'nav-yearwise-students', 'nav-certificates', 'nav-mdm', 'nav-exams'];
+      var protectedTabs = ['staff', 'students', 'students-classwise', 'yearwise-students', 'certificates', 'mdm', 'exams'];
+      var studentNav = document.getElementById('nav-student-portal');
+      var sidebarAuth = document.getElementById('sidebar-auth-nav');
 
       if (isAdmin && currentUser) {
         container.innerHTML = `
           <div class="flex items-center gap-1.5">
-            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-xs flex items-center gap-1.5 border border-sky-400 cursor-default" title="Admin Code: ${escapeText(currentUser.code || '2133745')}">
+            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border border-sky-400 cursor-default" title="Admin Code: ${escapeText(currentUser.code || '2133745')}">
               <i class="fa-solid fa-shield text-[11px]"></i> <span>Admin</span>
             </span>
-            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
-              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span>Logout</span>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span class="hidden sm:inline">Logout</span>
             </button>
           </div>
         `;
@@ -5513,14 +5952,16 @@
           var el = document.getElementById(id);
           if (el) el.classList.remove('hidden');
         });
-      } else if (currentUser && currentUser.role === 'staff') {
+        if (studentNav) studentNav.classList.add('hidden');
+        if (sidebarAuth) sidebarAuth.classList.add('hidden');
+      } else if (currentUser && currentUser.role === 'student') {
         container.innerHTML = `
           <div class="flex items-center gap-1.5">
-            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg shadow-xs flex items-center gap-1.5 border border-sky-400 cursor-default" title="${escapeText(currentUser.name)} (${escapeText(currentUser.code)})">
-              <i class="fa-solid fa-id-badge text-[11px]"></i> <span>Staff</span>
+            <span class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border border-emerald-500 cursor-default" title="Student PEN: ${escapeText(currentUser.pen || 'NA')}">
+              <i class="fa-solid fa-graduation-cap text-[11px]"></i> <span class="max-w-[80px] sm:max-w-[120px] truncate">${escapeText(currentUser.name)}</span>
             </span>
-            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
-              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span>Logout</span>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span class="hidden sm:inline">Logout</span>
             </button>
           </div>
         `;
@@ -5529,9 +5970,29 @@
           var el = document.getElementById(id);
           if (el) el.classList.add('hidden');
         });
+        if (studentNav) studentNav.classList.remove('hidden');
+        if (sidebarAuth) sidebarAuth.classList.add('hidden');
+      } else if (currentUser && currentUser.role === 'staff') {
+        container.innerHTML = `
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border border-sky-400 cursor-default" title="${escapeText(currentUser.name)} (${escapeText(currentUser.code)})">
+              <i class="fa-solid fa-id-badge text-[11px]"></i> <span>Staff</span>
+            </span>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span class="hidden sm:inline">Logout</span>
+            </button>
+          </div>
+        `;
+        document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
+        protectedNavs.forEach(id => {
+          var el = document.getElementById(id);
+          if (el) el.classList.add('hidden');
+        });
+        if (studentNav) studentNav.classList.add('hidden');
+        if (sidebarAuth) sidebarAuth.classList.add('hidden');
       } else {
         container.innerHTML = `
-          <button onclick="openLoginModal()" class="bg-white hover:bg-amber-50 text-orange-950 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Admin Login">
+          <button onclick="openLoginModal()" class="bg-white hover:bg-amber-50 text-orange-950 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Login Portal">
             <i class="fa-solid fa-user-lock text-[11px]"></i>
             <span id="login-btn-text">Login</span>
           </button>
@@ -5541,6 +6002,8 @@
           var el = document.getElementById(id);
           if (el) el.classList.add('hidden');
         });
+        if (studentNav) studentNav.classList.add('hidden');
+        if (sidebarAuth) sidebarAuth.classList.remove('hidden');
       }
 
       // If user is not admin, ensure they are not viewing a protected section
@@ -5550,7 +6013,11 @@
           return sec && !sec.classList.contains('hidden');
         });
         if (isCurrentTabProtected) {
-          switchTab('home');
+          if (currentUser && currentUser.role === 'student') {
+            switchTab('student-portal');
+          } else {
+            switchTab('home');
+          }
         }
       }
 
@@ -5563,12 +6030,217 @@
       if (typeof renderMarksTable === 'function') renderMarksTable();
       if (typeof renderStaffTable === 'function') renderStaffTable();
       if (typeof renderStudentTable === 'function') renderStudentTable();
+      if (typeof renderClasswiseStudents === 'function') renderClasswiseStudents();
       if (typeof renderYearwiseTable === 'function') renderYearwiseTable();
-
-      updateBonafidePreview();
+      if (currentUser && currentUser.role === 'student' && typeof renderStudentPortalView === 'function') {
+        renderStudentPortalView();
+      }
     }
 
-    
+    // --- Student Portal View Renderer & Actions ---
+    function renderStudentPortalView() {
+      if (!currentUser || currentUser.role !== 'student') return;
+      var st = (studentList || []).find(s => s.id === currentUser.id) || currentUser.studentData;
+      if (!st) return;
+
+      var heroName = document.getElementById('sp-hero-name');
+      if (heroName) heroName.textContent = st.name || 'Student';
+
+      var heroMeta = document.getElementById('sp-hero-meta');
+      if (heroMeta) {
+        heroMeta.textContent = `${st.classVal || 'Class VI'} - Section ${st.section || 'A'} • Academic Year: 2026-27 • PEN: ${st.pen || 'NA'}`;
+      }
+
+      var heroPhoto = document.getElementById('sp-hero-photo');
+      var heroIcon = document.getElementById('sp-hero-icon');
+      if (heroPhoto && heroIcon) {
+        if (st.photo) {
+          heroPhoto.src = st.photo;
+          heroPhoto.classList.remove('hidden');
+          heroIcon.classList.add('hidden');
+        } else {
+          heroPhoto.src = '';
+          heroPhoto.classList.add('hidden');
+          heroIcon.classList.remove('hidden');
+        }
+      }
+
+      var setVal = function(id, val) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = val || '-';
+      };
+
+      setVal('sp-detail-pen', st.pen || 'NA');
+      setVal('sp-detail-adm', st.admNo || '-');
+      setVal('sp-detail-roll', st.rollNo || '-');
+      setVal('sp-detail-class-sec', `${st.classVal || '-'} (Section ${st.section || '-'})`);
+      setVal('sp-detail-medium', st.medium || 'English');
+      setVal('sp-detail-doa', formatDisplayDateDDMMYYYY(st.doa || '12/06/2024'));
+      setVal('sp-detail-dob', formatDisplayDateDDMMYYYY(st.dob || '-'));
+      setVal('sp-detail-gender', st.gender || 'Female');
+      setVal('sp-detail-father', st.fatherName || '-');
+      setVal('sp-detail-mother', st.motherName || '-');
+      setVal('sp-detail-category', st.category || 'General');
+      setVal('sp-detail-contact', st.contact || '+91 9848011220');
+    }
+
+    function openMyProgressCard() {
+      if (!currentUser || currentUser.role !== 'student') return;
+      openProgressCardModal(currentUser.id);
+    }
+
+    function openMyBonafide() {
+      if (!currentUser || currentUser.role !== 'student') return;
+      openBonafideModal(currentUser.id);
+    }
+
+    // --- Class-Wise Student Sub-Section Functions ---
+    var currentClasswiseClass = 'Class VI';
+    var currentClasswiseSection = 'All';
+
+    function setClasswiseClass(cls) {
+      currentClasswiseClass = cls;
+      currentClasswiseSection = 'All';
+      var secFilter = document.getElementById('classwise-section-filter');
+      if (secFilter) secFilter.value = 'All';
+      renderClasswiseStudents();
+    }
+
+    function renderClasswiseStudents() {
+      var pillsContainer = document.getElementById('classwise-class-pills');
+      var classesList = ['Class VI', 'Class VII', 'Class VIII', 'Class IX', 'Class X'];
+
+      if (pillsContainer) {
+        pillsContainer.innerHTML = classesList.map(function(cls) {
+          var count = (studentList || []).filter(s => s.classVal === cls).length;
+          var isActive = (cls === currentClasswiseClass);
+          return `
+            <button onclick="setClasswiseClass('${cls}')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${isActive ? 'bg-theme-700 text-white shadow-sm ring-2 ring-theme-400' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'}">
+              <span>${cls}</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-black ${isActive ? 'bg-white/25 text-white' : 'bg-sky-100 text-sky-800'}">${count}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      renderClasswiseStudentsTable();
+    }
+
+    function renderClasswiseStudentsTable() {
+      var tbody = document.getElementById('classwise-students-table-body');
+      if (!tbody) return;
+
+      var secFilter = document.getElementById('classwise-section-filter')?.value || currentClasswiseSection || 'All';
+      currentClasswiseSection = secFilter;
+      var query = (document.getElementById('classwise-student-search')?.value || '').trim().toLowerCase();
+
+      var classStudents = (studentList || []).filter(s => s.classVal === currentClasswiseClass);
+
+      // Compute statistics for active class
+      var statTotal = document.getElementById('cw-stat-total');
+      if (statTotal) statTotal.textContent = `${classStudents.length} Students`;
+
+      var statSections = document.getElementById('cw-stat-sections');
+      if (statSections) {
+        var secCounts = {};
+        classStudents.forEach(s => {
+          var sc = s.section || 'A';
+          secCounts[sc] = (secCounts[sc] || 0) + 1;
+        });
+        statSections.textContent = Object.keys(secCounts).sort().map(k => `Sec ${k}: ${secCounts[k]}`).join(' • ') || 'Sec A';
+      }
+
+      var filtered = classStudents.filter(function(st) {
+        var matchesSec = (secFilter === 'All' || st.section === secFilter);
+        var haystack = [st.name, st.admNo, st.pen || '', st.rollNo, st.fatherName || '', st.contact || ''].join(' ').toLowerCase();
+        return matchesSec && haystack.includes(query);
+      });
+
+      var countLabel = document.getElementById('classwise-result-count');
+      if (countLabel) countLabel.textContent = `Showing ${filtered.length} of ${classStudents.length} students in ${currentClasswiseClass}`;
+
+      tbody.innerHTML = filtered.map(function(st, idx) {
+        return `
+          <tr class="hover:bg-sky-50/40 text-slate-700 text-xs transition">
+            <td class="p-3 font-semibold text-slate-500">${idx + 1}</td>
+            <td class="p-3 font-bold text-slate-800">${escapeText(st.rollNo)}</td>
+            <td class="p-3 font-bold text-sky-900">${escapeText(st.admNo)}</td>
+            <td class="p-3 font-mono text-xs text-indigo-700 font-semibold">${escapeText(st.pen || 'NA')}</td>
+            <td class="p-3 font-semibold text-slate-900 whitespace-nowrap">
+              <div class="flex items-center gap-2">
+                ${st.photo ? `<img src="${st.photo}" class="w-7 h-7 rounded-full object-cover border border-slate-300 shrink-0">` : `<div class="w-7 h-7 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-[10px] font-bold shrink-0"><i class="fa-solid fa-user-graduate"></i></div>`}
+                <span>${escapeText(st.name)}</span>
+              </div>
+            </td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">Sec ${escapeText(st.section)}</span></td>
+            <td class="p-3 text-slate-600 font-medium">${escapeText(st.medium || 'English')}</td>
+            <td class="p-3 font-mono text-slate-600">${escapeText(formatDisplayDateDDMMYYYY(st.dob) || '01/01/2014')}</td>
+            <td class="p-3 text-slate-600">${escapeText(st.fatherName || '-')}</td>
+            <td class="p-3 text-slate-600 font-mono">${escapeText(st.contact || '+91 9848011220')}</td>
+            <td class="p-3 text-right whitespace-nowrap">
+              <div class="inline-flex items-center gap-1.5 justify-end">
+                <button onclick="viewStudent(${st.id})" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="View Full Profile">
+                  <i class="fa-solid fa-eye text-[11px]"></i> <span>View</span>
+                </button>
+                <button onclick="openProgressCardModal(${st.id})" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="Issue Progress Card">
+                  <i class="fa-solid fa-file-lines text-emerald-600 text-[11px]"></i> <span>Progress</span>
+                </button>
+                <button onclick="openBonafideModal(${st.id})" class="bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="Issue Bonafide Certificate">
+                  <i class="fa-solid fa-certificate text-orange-600 text-[11px]"></i> <span>Bonafide</span>
+                </button>
+                ${isAdmin ? `
+                <button onclick="openStudentModal(${st.id})" class="admin-only bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="Edit Student Record">
+                  <i class="fa-solid fa-pen-to-square text-[11px] text-blue-600"></i>
+                </button>
+                <button onclick="deleteStudent(${st.id})" class="admin-only text-rose-600 hover:text-rose-800 p-1 rounded hover:bg-rose-50 transition" title="Delete Student">
+                  <i class="fa-solid fa-trash text-xs"></i>
+                </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('') || `<tr><td colspan="11" class="p-6 text-center text-slate-500 font-semibold">No students found in ${currentClasswiseClass} matching current filter.</td></tr>`;
+    }
+
+    function exportClasswiseCSV() {
+      var classStudents = (studentList || []).filter(s => s.classVal === currentClasswiseClass);
+      var secFilter = currentClasswiseSection || 'All';
+      if (secFilter !== 'All') {
+        classStudents = classStudents.filter(s => s.section === secFilter);
+      }
+      if (!classStudents || classStudents.length === 0) {
+        alert('No students to export in ' + currentClasswiseClass);
+        return;
+      }
+      var headers = ['Roll No', 'Admission No', 'Student PEN', 'Student Name', 'Class', 'Section', 'Medium', 'Date of Birth', 'Date of Admission', 'Gender', 'Father Name', 'Mother Name', 'Category', 'Contact'];
+      var rows = classStudents.map(s => [
+        s.rollNo,
+        s.admNo,
+        s.pen || 'NA',
+        `"${(s.name || '').replace(/"/g, '""')}"`,
+        s.classVal,
+        s.section,
+        s.medium || 'English',
+        formatDisplayDateDDMMYYYY(s.dob),
+        formatDisplayDateDDMMYYYY(s.doa || ''),
+        s.gender || 'Female',
+        `"${(s.fatherName || '').replace(/"/g, '""')}"`,
+        `"${(s.motherName || '').replace(/"/g, '""')}"`,
+        s.category || 'General',
+        s.contact || ''
+      ]);
+      var csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      var link = document.createElement('a');
+      var url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `${currentClasswiseClass}_Students_${secFilter}_ZPGHS_Gajwel.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
     // --- OFFICIAL BONAFIDE & STUDY CERTIFICATE (HALF-A4 FORMAT) ---
         // --- OFFICIAL BONAFIDE & STUDY CERTIFICATE (HALF-A4 FORMAT) ---
     var currentCertStudentId = null;
@@ -5831,7 +6503,15 @@
       var select = document.getElementById('cert-student-select');
 
       if (select) {
-        if (students && students.length > 0) {
+        if (currentUser && currentUser.role === 'student') {
+          var me = (studentList || []).find(s => s.id === currentUser.id) || currentUser.studentData;
+          if (me) {
+            currentCertStudentId = me.id;
+            select.innerHTML = `<option value="${me.id}" selected>${escapeText(me.name)} (${escapeText(me.classVal || 'Class X')} - ${escapeText(me.section || 'A')}, Adm: ${escapeText(me.admNo || '-')})</option>`;
+          }
+          select.disabled = true;
+        } else if (students && students.length > 0) {
+          select.disabled = false;
           var matched = students.find(s => s.id === selectedId);
           if (!matched) {
             matched = students[0];
@@ -5850,6 +6530,7 @@
             syncLeftStudentFullDetails(matched, currentAY);
           }
         } else {
+          select.disabled = false;
           select.innerHTML = `<option value="">-- No stored records for AY ${escapeText(currentAY)} (Enter details below manually) --</option>`;
           currentCertStudentId = null;
         }
@@ -8226,11 +8907,18 @@ var currentTimetableClass = 'Class 10';
     function populateProgressStudentSelect(selectedId) {
       var select = document.getElementById('progress-student-select');
       if (select) {
-        select.innerHTML = studentList.map(st => `
-          <option value="${st.id}" ${st.id === selectedId ? 'selected' : ''}>
-            ${escapeText(st.name)} (${escapeText(st.classVal)} - ${escapeText(st.section)}, Adm: ${escapeText(st.admNo)})
-          </option>
-        `).join('');
+        if (currentUser && currentUser.role === 'student') {
+          var me = (studentList || []).find(s => s.id === currentUser.id) || currentUser.studentData;
+          select.innerHTML = `<option value="${me.id}" selected>${escapeText(me.name)} (${escapeText(me.classVal)} - ${escapeText(me.section)}, Adm: ${escapeText(me.admNo)})</option>`;
+          select.disabled = true;
+        } else {
+          select.disabled = false;
+          select.innerHTML = studentList.map(st => `
+            <option value="${st.id}" ${st.id === selectedId ? 'selected' : ''}>
+              ${escapeText(st.name)} (${escapeText(st.classVal)} - ${escapeText(st.section)}, Adm: ${escapeText(st.admNo)})
+            </option>
+          `).join('');
+        }
       }
 
       var staffSelect = document.getElementById('progress-staff-select');
