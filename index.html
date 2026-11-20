@@ -842,7 +842,12 @@
 
             <!-- Gradient Overlay for Caption -->
             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6 text-white pointer-events-none">
-              <span id="gallery-category" class="inline-block px-2.5 py-0.5 rounded bg-orange-500 text-white text-[11px] font-bold w-fit mb-1 shadow">Campus Life</span>
+              <div class="flex items-center gap-2 mb-1">
+                <span id="gallery-category" class="inline-block px-2.5 py-0.5 rounded bg-orange-500 text-white text-[11px] font-bold w-fit shadow">Campus Life</span>
+                <button id="gallery-activity-link" onclick="viewLinkedActivityDetails()" class="hidden pointer-events-auto cursor-pointer hover:bg-amber-400/30 transition px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 text-[11px] font-bold border border-amber-300/40 shadow-xs flex items-center gap-1" title="Click to view this activity details">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> <span data-en="View School Activity" data-te="కార్యక్రమ వివరాలు">View School Activity</span>
+                </button>
+              </div>
               <h4 id="gallery-title" class="text-base sm:text-xl font-bold tracking-tight">ZPHS Girls Gajwel Main School Building & Campus</h4>
               <p id="gallery-desc" class="text-xs sm:text-sm text-slate-200 mt-1 max-w-2xl line-clamp-2">Well-equipped academic building providing modern educational facilities and empowering education for girl students.</p>
             </div>
@@ -4055,7 +4060,8 @@
         title: 'Mandal Level Science Exhibition',
         titleTe: 'మండల స్థాయి సైన్స్ ఎగ్జిబిషన్',
         description: 'Students presented innovative solar energy and eco-friendly farming models.',
-        descriptionTe: 'విద్యార్థులు సౌర శక్తి మరియు పర్యావరణ వ్యవసాయ నమూనాలను ప్రదర్శించారు.'
+        descriptionTe: 'విద్యార్థులు సౌర శక్తి మరియు పర్యావరణ వ్యవసాయ నమూనాలను ప్రదర్శించారు.',
+        photo: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&h=600&q=80'
       },
       {
         id: 2,
@@ -4064,7 +4070,8 @@
         title: 'Annual District Athletics Tournament',
         titleTe: 'వార్షిక క్రీడా పోటీలు',
         description: 'ZPHS Girls - Gajwel Kabaddi team won 1st Place in Siddipet district finals.',
-        descriptionTe: 'జెడ్.పి.హెచ్.ఎస్ బాలికల పాఠశాల - గజ్వేల్ కబడ్డీ జట్టు సిద్దిపేట జిల్లా స్థాయిలో ప్రథమ స్థానం సాధించింది.'
+        descriptionTe: 'జెడ్.పి.హెచ్.ఎస్ బాలికల పాఠశాల - గజ్వేల్ కబడ్డీ జట్టు సిద్దిపేట జిల్లా స్థాయిలో ప్రథమ స్థానం సాధించింది.',
+        photo: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&h=600&q=80'
       },
       {
         id: 3,
@@ -4073,7 +4080,18 @@
         title: 'Telangana Haritha Haram Program',
         titleTe: 'తెలంగాణ హరితహారం కార్యక్రమం',
         description: 'Plantation of over 200 saplings in the school campus by Eco Club students.',
-        descriptionTe: 'పాఠశాల ఆవరణలో 200 కు పైగా మొక్కలను నాటిన ఈకో క్లబ్ విద్యార్థులు.'
+        descriptionTe: 'పాఠశాల ఆవరణలో 200 కు పైగా మొక్కలను నాటిన ఈకో క్లబ్ విద్యార్థులు.',
+        photo: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&h=600&q=80'
+      },
+      {
+        id: 4,
+        category: 'National Fest',
+        icon: 'fa-flag',
+        title: 'Independence Day & Republic Day Celebrations',
+        titleTe: 'స్వాతంత్ర్య దినోత్సవ వేడుకలు',
+        description: 'Patriotic parade, flag hoisting by Headmaster, and cultural dance performances by students.',
+        descriptionTe: 'దేశభక్తి కవాతు, ప్రధానోపాధ్యాయుల జాతీయ జెండా ఆవిష్కరణ, మరియు విద్యార్థుల సాంస్కృతిక నృత్యాలు.',
+        photo: 'https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=1200&h=600&q=80'
       }
     ];
 
@@ -4099,6 +4117,21 @@
     var holidayList = loadStorageArray('zphs_holidays', defaultHolidays);
     var mdmList = loadStorageArray('zphs_mdm', defaultMDMLogs);
     var activityList = loadStorageArray('zphs_activities', defaultActivities);
+
+    // Auto-backfill activity photos if missing from existing cached records
+    var defaultPhotosMap = {
+      1: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&h=600&q=80',
+      2: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&h=600&q=80',
+      3: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&h=600&q=80',
+      4: 'https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=1200&h=600&q=80'
+    };
+    var actUpdated = false;
+    activityList.forEach(function(act) {
+      if (!act.photo && defaultPhotosMap[act.id]) {
+        act.photo = defaultPhotosMap[act.id];
+        actUpdated = true;
+      }
+    });
 
     // Save active valid datasets to storage
     try {
@@ -7557,19 +7590,25 @@
         else if (catLower.includes('sport') || catLower.includes('tourn') || catLower.includes('athlet')) badgeClass = 'text-emerald-700 bg-emerald-50 border-emerald-200';
         else if (catLower.includes('environ') || catLower.includes('green') || catLower.includes('haritha')) badgeClass = 'text-teal-700 bg-teal-50 border-teal-200';
         else if (catLower.includes('cultur') || catLower.includes('arts') || catLower.includes('dance')) badgeClass = 'text-purple-700 bg-purple-50 border-purple-200';
+        else if (catLower.includes('national') || catLower.includes('republic') || catLower.includes('independence')) badgeClass = 'text-orange-700 bg-orange-50 border-orange-200';
 
         var photoMedia = act.photo 
-          ? `<img src="${act.photo}" alt="${title}" class="w-full h-full object-cover">`
+          ? `<img src="${act.photo}" alt="${title}" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="openActivityInGallery(${act.id})" title="Click to view full photo in Photo Gallery">`
           : `<i class="fa-solid ${icon} text-4xl"></i>`;
 
         return `
-          <div class="border border-slate-200 rounded-xl overflow-hidden shadow-xs bg-white flex flex-col justify-between hover:shadow-md transition">
+          <div id="activity-card-${act.id}" class="border border-slate-200 rounded-xl overflow-hidden shadow-xs bg-white flex flex-col justify-between hover:shadow-md transition">
             <div>
-              <div class="h-40 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-400 relative overflow-hidden">
+              <div class="h-44 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-400 relative overflow-hidden group">
                 ${photoMedia}
-                <span class="absolute top-2.5 left-2.5 text-[10px] uppercase font-bold px-2 py-0.5 rounded border shadow-2xs ${badgeClass}">
+                <span class="absolute top-2.5 left-2.5 text-[10px] uppercase font-bold px-2 py-0.5 rounded border shadow-2xs ${badgeClass} z-10 pointer-events-none">
                   ${cat}
                 </span>
+                ${act.photo ? `
+                <button type="button" onclick="openActivityInGallery(${act.id})" class="absolute bottom-2.5 right-2.5 text-[10px] font-bold px-2.5 py-1 rounded-md bg-black/70 hover:bg-black/90 text-white backdrop-blur-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer z-10" title="View in School Photo Gallery">
+                  <i class="fa-solid fa-images text-amber-300 text-[10px]"></i> <span>Gallery</span>
+                </button>
+                ` : ''}
               </div>
               <div class="p-4 space-y-1.5">
                 <h3 class="font-bold text-slate-800 text-sm leading-snug" data-en="${title}" data-te="${titleTe || title}">
@@ -7578,6 +7617,13 @@
                 <p class="text-xs text-slate-500 leading-relaxed" data-en="${desc}" data-te="${descTe || desc}">
                   ${desc}
                 </p>
+                ${act.photo ? `
+                <div class="pt-1">
+                  <button type="button" onclick="openActivityInGallery(${act.id})" class="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition cursor-pointer">
+                    <i class="fa-solid fa-camera-retro text-orange-500 text-[11px]"></i> <span>View in Photo Gallery &rarr;</span>
+                  </button>
+                </div>
+                ` : ''}
               </div>
             </div>
             
@@ -7594,6 +7640,26 @@
           </div>
         `;
       }).join('');
+    }
+
+    function openActivityInGallery(actId) {
+      if (typeof syncActivityPhotosToGallery === 'function') {
+        syncActivityPhotosToGallery();
+      }
+      var idx = galleryPhotos.findIndex(function(p) {
+        return (p.activityId && p.activityId === actId) || (p.src && actId && activityList.some(function(a) { return a.id === actId && a.photo === p.src; }));
+      });
+      switchTab('home');
+      setTimeout(function() {
+        if (idx !== -1) {
+          showGallerySlide(idx);
+          resetGalleryTimer();
+        }
+        var gEl = document.getElementById('gallery-current-img');
+        if (gEl) {
+          gEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 120);
     }
 
     function handleActivityPhotoUpload(event) {
@@ -7749,9 +7815,16 @@
       }
       syncToCloud('zphs_activities', activityList);
 
+      // Automatically link / sync activity photo to Picture Gallery
+      if (typeof syncActivityPhotosToGallery === 'function') {
+        syncActivityPhotosToGallery();
+        if (typeof renderGalleryThumbs === 'function') renderGalleryThumbs();
+        if (typeof renderGalleryDots === 'function') renderGalleryDots();
+      }
+
       closeModal('modal-activity');
       renderActivities();
-      alert('Activity successfully saved!');
+      alert('Activity successfully saved and photo linked to Gallery!');
     }
 
     function deleteActivity(id) {
@@ -7769,6 +7842,19 @@
           localStorage.setItem('zphs_activities', JSON.stringify(activityList));
         } catch (err) {}
         syncToCloud('zphs_activities', activityList);
+
+        // Remove linked photo from Gallery if present
+        if (typeof galleryPhotos !== 'undefined' && Array.isArray(galleryPhotos)) {
+          var gIdx = galleryPhotos.findIndex(function(p) { return p.activityId === id; });
+          if (gIdx !== -1) {
+            galleryPhotos.splice(gIdx, 1);
+            try { localStorage.setItem('zphs_gallery_photos', JSON.stringify(galleryPhotos)); } catch(e){}
+            if (typeof renderGalleryThumbs === 'function') renderGalleryThumbs();
+            if (typeof renderGalleryDots === 'function') renderGalleryDots();
+            if (typeof showGallerySlide === 'function') showGallerySlide(0);
+          }
+        }
+
         renderActivities();
       }
     }
@@ -9772,7 +9858,58 @@ var currentTimetableClass = 'Class 10';
     var currentGalleryIndex = 0;
     var galleryInterval = null;
 
+    // Dynamically link and synchronize School Activity photos into the Picture Gallery
+    function syncActivityPhotosToGallery() {
+      if (typeof activityList === 'undefined' || !Array.isArray(activityList) || !Array.isArray(galleryPhotos)) return;
+      var modified = false;
+      activityList.forEach(function(act) {
+        if (act && act.photo) {
+          var existingIdx = galleryPhotos.findIndex(function(p) {
+            return (p.activityId && p.activityId === act.id) || (p.src && p.src === act.photo);
+          });
+          var itemData = {
+            src: act.photo,
+            category: act.category || 'School Activity',
+            title: act.title || 'School Activity',
+            desc: act.description || 'School Activity at ZPHS Girls High School, Gajwel',
+            activityId: act.id
+          };
+          if (existingIdx !== -1) {
+            galleryPhotos[existingIdx].activityId = act.id;
+            galleryPhotos[existingIdx].category = act.category || galleryPhotos[existingIdx].category || 'School Activity';
+            galleryPhotos[existingIdx].title = act.title || galleryPhotos[existingIdx].title;
+            galleryPhotos[existingIdx].desc = act.description || galleryPhotos[existingIdx].desc;
+          } else {
+            galleryPhotos.push(itemData);
+            modified = true;
+          }
+        }
+      });
+      if (modified) {
+        try {
+          localStorage.setItem('zphs_gallery_photos', JSON.stringify(galleryPhotos));
+        } catch(e) {}
+      }
+    }
+
+    function viewLinkedActivityDetails() {
+      var actLink = document.getElementById('gallery-activity-link');
+      var actId = actLink ? parseInt(actLink.getAttribute('data-act-id'), 10) : null;
+      switchTab('activities');
+      if (actId) {
+        setTimeout(function() {
+          var targetCard = document.getElementById('activity-card-' + actId);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetCard.classList.add('ring-4', 'ring-amber-400');
+            setTimeout(function() { targetCard.classList.remove('ring-4', 'ring-amber-400'); }, 2000);
+          }
+        }, 150);
+      }
+    }
+
     function initGallery() {
+      syncActivityPhotosToGallery();
       renderGalleryThumbs();
       showGallerySlide(0);
       startGalleryAutoTimer();
@@ -9787,16 +9924,26 @@ var currentTimetableClass = 'Class 10';
       var catEl = document.getElementById('gallery-category');
       var titleEl = document.getElementById('gallery-title');
       var descEl = document.getElementById('gallery-desc');
+      var actLink = document.getElementById('gallery-activity-link');
 
       if (!imgEl) return;
 
       imgEl.style.opacity = '0.3';
       setTimeout(function() {
         var item = galleryPhotos[currentGalleryIndex];
+        if (!item) return;
         imgEl.src = item.src;
-        catEl.innerText = item.category;
-        titleEl.innerText = item.title;
-        descEl.innerText = item.desc;
+        catEl.innerText = item.category || 'Campus Life';
+        titleEl.innerText = item.title || '';
+        descEl.innerText = item.desc || '';
+        if (actLink) {
+          if (item.activityId) {
+            actLink.classList.remove('hidden');
+            actLink.setAttribute('data-act-id', item.activityId);
+          } else {
+            actLink.classList.add('hidden');
+          }
+        }
         imgEl.style.opacity = '1';
       }, 200);
 
