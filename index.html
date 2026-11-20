@@ -617,6 +617,10 @@
           <i class="fa-solid fa-file-signature w-5 text-center text-orange-600"></i>
           <span data-en="Student's Certificates and Documents" data-te="ధృవీకరణ పత్రాలు & సర్టిఫికేట్లు">Student's Certificates and Documents</span>
         </a>
+        <a href="#administration" onclick="switchTab('administration')" id="nav-administration" class="nav-item admin-section-nav hidden flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+          <i class="fa-solid fa-sliders w-5 text-center text-indigo-600"></i>
+          <span data-en="Administration" data-te="అడ్మినిస్ట్రేషన్ (పాలన)">Administration</span>
+        </a>
         <a href="#mdm" onclick="switchTab('mdm')" id="nav-mdm" class="nav-item admin-section-nav hidden flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
           <i class="fa-solid fa-bowl-rice w-5 text-center"></i>
           <span data-en="Mid Day Meal (MDM)" data-te="మధ్యాహ్న భోజన పథకం (MDM)">Mid Day Meal (MDM)</span>
@@ -1490,6 +1494,9 @@
               </select>
             </div>
 
+            <button onclick="switchTab('administration')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
+              <i class="fa-solid fa-clipboard-list text-indigo-200"></i> <span data-en="Bonafide Register (Admin)" data-te="బోనఫైడ్ రిజిస్టర్ (అడ్మిన్)">Bonafide Register (Admin)</span>
+            </button>
             <button onclick="switchTab('students')" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs">
               <i class="fa-solid fa-users text-orange-600"></i> <span data-en="Student Directory" data-te="విద్యార్థుల జాబితా">Student Directory</span>
             </button>
@@ -1510,8 +1517,10 @@
               </div>
             </div>
             <div class="mt-5 pt-4 border-t border-blue-200/60 flex items-center justify-between">
-              <span class="text-[11px] font-semibold text-blue-900 bg-blue-100/70 px-2.5 py-1 rounded-full">Half-A4 Print & PDF</span>
-              <button onclick="openBonafideModalForCurrentSectionYear()" class="bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-xs">
+              <button onclick="switchTab('administration')" class="text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer" title="View historical issue log with serial numbers">
+                <i class="fa-solid fa-list-ol text-[10px]"></i> <span>Issue Register</span>
+              </button>
+              <button onclick="openBonafideModalForCurrentSectionYear()" class="bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                 <i class="fa-solid fa-file-signature text-[11px]"></i> <span>Issue Bonafide</span>
               </button>
             </div>
@@ -1623,6 +1632,116 @@
             <button onclick="openBonafideModal()" class="text-orange-600 hover:text-orange-700 font-semibold flex items-center gap-1">
               <span>Open Certificate Generator Dialog</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
             </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: ADMINISTRATION -->
+      <section id="section-administration" class="content-section hidden space-y-6">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+              <h2 class="text-xl font-bold text-slate-800" data-en="Administration & Official Registers" data-te="అడ్మినిస్ట్రేషన్ & అధికారిక రిజిస్టర్లు">Administration & Official Registers</h2>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5" data-en="Official record registers, certificate audit trails, and administrative tracking." data-te="ధృవీకరణ పత్రాల అధికారిక రిజిస్టర్, జారీ వివరాలు మరియు అడ్మినిస్ట్రేటివ్ రికార్డులు.">Official record registers, certificate audit trails, and administrative tracking.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="exportBonafideRegisterToExcel()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Download Excel Sheet for Record Purpose">
+              <i class="fa-solid fa-file-excel text-emerald-200"></i>
+              <span>Download Excel Sheet</span>
+            </button>
+            <button onclick="openBonafideModal()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Issue new Bonafide Certificate">
+              <i class="fa-solid fa-file-signature text-orange-200"></i>
+              <span>Issue Bonafide</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI / Counter Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="bg-gradient-to-br from-indigo-50 to-indigo-100/60 p-3.5 rounded-xl border border-indigo-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-stamp"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-indigo-900 uppercase tracking-wider">Total Bonafide Issued</p>
+              <h3 class="text-lg font-extrabold text-indigo-950 font-mono" id="admin-stat-total">0</h3>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-amber-50 to-amber-100/60 p-3.5 rounded-xl border border-amber-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-calendar-day"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-amber-900 uppercase tracking-wider">Issued Today</p>
+              <h3 class="text-lg font-extrabold text-amber-950 font-mono" id="admin-stat-today">0</h3>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-sky-50 to-sky-100/60 p-3.5 rounded-xl border border-sky-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-sky-900 uppercase tracking-wider">Present Students</p>
+              <h3 class="text-lg font-extrabold text-sky-950 font-mono" id="admin-stat-present">0</h3>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-rose-50 to-rose-100/60 p-3.5 rounded-xl border border-rose-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-rose-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-user-clock"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-rose-900 uppercase tracking-wider">Left Students</p>
+              <h3 class="text-lg font-extrabold text-rose-950 font-mono" id="admin-stat-left">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bonafide Issue Register Section -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-3.5 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-clipboard-list text-indigo-700 text-base"></i>
+              <h3 class="font-bold text-sm text-slate-800">Bonafide Certificate Issue Register & Audit Log</h3>
+              <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-register-count-badge">0 Records</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+                <input type="text" id="admin-register-search" oninput="filterAdministrationRegister()" placeholder="Search serial, student, adm no, PEN..." class="pl-8 pr-3 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-indigo-500 w-56 sm:w-64">
+              </div>
+              <select id="admin-register-filter-type" onchange="filterAdministrationRegister()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                <option value="all">All Certificate Types</option>
+                <option value="Present Student">Present Student</option>
+                <option value="Left Student">Left Student</option>
+              </select>
+              <button onclick="exportBonafideRegisterToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1 shadow-2xs cursor-pointer" title="Export to Excel Spreadsheet">
+                <i class="fa-solid fa-file-excel"></i> <span>Excel (.csv)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-x-auto max-h-[550px] overflow-y-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200 z-10 select-none">
+                <tr>
+                  <th class="p-3 whitespace-nowrap">Serial No</th>
+                  <th class="p-3 whitespace-nowrap">Issue Date & Time</th>
+                  <th class="p-3 whitespace-nowrap">Student Particulars</th>
+                  <th class="p-3 whitespace-nowrap">Class & Medium</th>
+                  <th class="p-3 whitespace-nowrap">Parents</th>
+                  <th class="p-3 whitespace-nowrap">Type & Purpose</th>
+                  <th class="p-3 whitespace-nowrap">Prepared By / When</th>
+                  <th class="p-3 text-center whitespace-nowrap">Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-register-tbody" class="divide-y divide-slate-200">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -2794,7 +2913,8 @@
 
             <!-- Certificate Title, Date & Student Photo -->
             <div class="flex items-start justify-between my-1.5 gap-2">
-              <div class="text-[11px] font-semibold pt-1">
+              <div class="text-[11px] font-semibold pt-1 flex flex-col items-start gap-0.5">
+                <span>Sl. No: <span id="preview-cert-serial" class="font-mono font-bold text-orange-950 underline underline-offset-2">------</span></span>
                 <span>Date: <span id="preview-cert-date" class="font-mono underline underline-offset-2">--/--/----</span></span>
               </div>
               <div class="text-center flex-1">
@@ -4118,6 +4238,34 @@
     var mdmList = loadStorageArray('zphs_mdm', defaultMDMLogs);
     var activityList = loadStorageArray('zphs_activities', defaultActivities);
 
+    // Default Bonafide Issue Register for Administration section
+    var defaultBonafideRegister = [
+      {
+        serialNo: '201126-1',
+        issueDate: '20/11/2026',
+        issueTime: '07:00:00 AM',
+        dateTime: '20/11/2026, 07:00 AM',
+        studentName: 'CHITKULA ARCHANA',
+        admNo: '5421',
+        pen: '21398745612',
+        fatherName: 'CHITKULA RAMESH',
+        motherName: 'CHITKULA LAXMI',
+        classVal: 'Class X',
+        section: 'A',
+        medium: 'English',
+        academicYear: '2026-27',
+        doa: '12/06/2020',
+        dob: '14/05/2010',
+        aadhaar: '6543 2198 7654',
+        certType: 'Present Student',
+        purpose: 'Higher Education / Scholarship Verification',
+        preparedBy: '1782341 (P RAJA KUMARASWAMY)',
+        issuedByRole: 'Administrator',
+        timestamp: 1795129200000
+      }
+    ];
+    var bonafideRegister = loadStorageArray('zphs_bonafide_register', defaultBonafideRegister);
+
     // Auto-backfill activity photos if missing from existing cached records
     var defaultPhotosMap = {
       1: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&h=600&q=80',
@@ -4142,6 +4290,7 @@
       localStorage.setItem('zphs_holidays', JSON.stringify(holidayList));
       localStorage.setItem('zphs_mdm', JSON.stringify(mdmList));
       localStorage.setItem('zphs_activities', JSON.stringify(activityList));
+      localStorage.setItem('zphs_bonafide_register', JSON.stringify(bonafideRegister));
     } catch (e) {
       console.warn('Storage sync:', e);
     }
@@ -4958,6 +5107,11 @@
             if (arr.length > 0) galleryPhotos = arr;
             try { localStorage.setItem('zphs_gallery_photos', JSON.stringify(galleryPhotos)); } catch(e){}
           }
+          if (cloudData.zphs_bonafide_register !== undefined) {
+            var arr = extractArray(cloudData.zphs_bonafide_register);
+            if (arr.length > 0) bonafideRegister = arr;
+            try { localStorage.setItem('zphs_bonafide_register', JSON.stringify(bonafideRegister)); } catch(e){}
+          }
           if (typeof syncAllPresentStudentsToPastYears === 'function') {
             syncAllPresentStudentsToPastYears();
           }
@@ -4991,6 +5145,7 @@
         if (!data.zphs_academic_years) syncToCloud('zphs_academic_years', academicYearsList);
         if (!data.zphs_gallery_photos) syncToCloud('zphs_gallery_photos', galleryPhotos);
         if (!data.zphs_exam_marks) syncToCloud('zphs_exam_marks', examMarksRegistry);
+        if (!data.zphs_bonafide_register || extractArray(data.zphs_bonafide_register).length === 0) syncToCloud('zphs_bonafide_register', bonafideRegister);
       })
       .catch(function() {});
     }
@@ -4999,6 +5154,7 @@
     function renderAllViews() {
       if (!staffList || staffList.length === 0) staffList = defaultStaff;
       if (!nonTeachingList || nonTeachingList.length === 0) nonTeachingList = defaultNonTeachingStaff;
+      if (typeof renderAdministrationSection === 'function') renderAdministrationSection();
       if (!studentList || studentList.length === 0) studentList = defaultStudents;
 
       // Automatically propagate any present year student updates into previous year records by PEN
@@ -5056,7 +5212,7 @@
     // Navigation & Tab Switcher
     function switchTab(tabId) {
       // Access control guard: Protected sections require Administrator account
-      var adminOnlyTabs = ['students', 'students-classwise', 'staff', 'certificates', 'exams', 'mdm', 'yearwise-students'];
+      var adminOnlyTabs = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'exams', 'mdm', 'yearwise-students'];
       if (adminOnlyTabs.includes(tabId) && !isAdmin) {
         if (currentUser && currentUser.role === 'student') {
           alert('Access Restricted: As a student, you can only view your own student profile and records.');
@@ -5110,6 +5266,7 @@
       else if (tabId === 'students-classwise') renderClasswiseStudents();
       else if (tabId === 'student-portal') renderStudentPortalView();
       else if (tabId === 'yearwise-students') renderYearwiseTable();
+      else if (tabId === 'administration') renderAdministrationSection();
       else if (tabId === 'holidays') renderHolidays();
       else if (tabId === 'activities') renderActivities();
       else if (tabId === 'mdm') renderMDMTable();
@@ -6114,8 +6271,8 @@
 
     function updateUIAuthStatus() {
       var container = document.getElementById('auth-status-container');
-      var protectedNavs = ['nav-staff', 'nav-students', 'nav-students-classwise', 'nav-yearwise-students', 'nav-certificates', 'nav-mdm', 'nav-exams'];
-      var protectedTabs = ['staff', 'students', 'students-classwise', 'yearwise-students', 'certificates', 'mdm', 'exams'];
+      var protectedNavs = ['nav-staff', 'nav-students', 'nav-students-classwise', 'nav-yearwise-students', 'nav-certificates', 'nav-administration', 'nav-mdm', 'nav-exams'];
+      var protectedTabs = ['staff', 'students', 'students-classwise', 'yearwise-students', 'certificates', 'administration', 'mdm', 'exams'];
       var studentNav = document.getElementById('nav-student-portal');
       var sidebarAuth = document.getElementById('sidebar-auth-nav');
 
@@ -6889,6 +7046,8 @@
 
       // Update Modal Preview
       var elDate = document.getElementById('preview-cert-date'); if (elDate) elDate.innerText = today;
+      var upcomingSerial = getNextBonafideSerial();
+      var elPrevSerial = document.getElementById('preview-cert-serial'); if (elPrevSerial) elPrevSerial.innerText = upcomingSerial;
       var elName = document.getElementById('preview-cert-name'); if (elName) elName.innerText = studentName;
       var elFather = document.getElementById('preview-cert-father'); if (elFather) elFather.innerText = fatherName;
       var elMother = document.getElementById('preview-cert-mother'); if (elMother) elMother.innerText = motherName;
@@ -6950,6 +7109,7 @@
 
       // Update Print-Only Container
       var pDate = document.getElementById('print-cert-date'); if (pDate) pDate.innerText = today;
+      var elPrintSerial = document.getElementById('print-cert-serial'); if (elPrintSerial) elPrintSerial.innerText = upcomingSerial;
       var pName = document.getElementById('print-cert-name'); if (pName) pName.innerText = studentName;
       var pFather = document.getElementById('print-cert-father'); if (pFather) pFather.innerText = fatherName;
       var pMother = document.getElementById('print-cert-mother'); if (pMother) pMother.innerText = motherName;
@@ -7001,7 +7161,36 @@
       }
     }
 
-    function printBonafideHalfA4(studentId) {
+    // Serial Number Generation for Bonafide Certificates
+    // Format: DDMMYY + Serial Number starting from 1 for that date (e.g. 201126-1, 201126-2)
+    function getBonafideDatePrefix(d) {
+      var dateObj = d || new Date();
+      var day = String(dateObj.getDate()).padStart(2, '0');
+      var mon = String(dateObj.getMonth() + 1).padStart(2, '0');
+      var yr = String(dateObj.getFullYear()).slice(-2);
+      return day + mon + yr;
+    }
+
+    function getNextBonafideSerial() {
+      var prefix = getBonafideDatePrefix();
+      var maxCount = 0;
+      if (Array.isArray(bonafideRegister)) {
+        bonafideRegister.forEach(function(entry) {
+          if (entry && entry.serialNo) {
+            var match = entry.serialNo.match(new RegExp('^' + prefix + '-(\\d+)$'));
+            if (match) {
+              var num = parseInt(match[1], 10);
+              if (!isNaN(num) && num > maxCount) {
+                maxCount = num;
+              }
+            }
+          }
+        });
+      }
+      return prefix + '-' + (maxCount + 1);
+    }
+
+    function printBonafideHalfA4(studentId, isReprint) {
       if (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'student') {
         alert('Access Restricted: Bonafide certificate printing is restricted.');
         return;
@@ -7010,6 +7199,87 @@
         currentCertStudentId = studentId;
       }
       updateBonafidePreview();
+
+      var assignedSerial = '';
+      if (!isReprint) {
+        assignedSerial = getNextBonafideSerial();
+        var pSerial = document.getElementById('print-cert-serial'); if (pSerial) pSerial.innerText = assignedSerial;
+        var prevSerial = document.getElementById('preview-cert-serial'); if (prevSerial) prevSerial.innerText = assignedSerial;
+
+        // Capture full record for Administration Register & Excel Sheet
+        var now = new Date();
+        var day = String(now.getDate()).padStart(2, '0');
+        var mon = String(now.getMonth() + 1).padStart(2, '0');
+        var yyyy = now.getFullYear();
+        var issueDateStr = day + '/' + mon + '/' + yyyy;
+        var hours = now.getHours();
+        var minutes = String(now.getMinutes()).padStart(2, '0');
+        var seconds = String(now.getSeconds()).padStart(2, '0');
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        var formattedHours = hours % 12;
+        formattedHours = formattedHours ? formattedHours : 12;
+        var issueTimeStr = String(formattedHours).padStart(2, '0') + ':' + minutes + ':' + seconds + ' ' + ampm;
+
+        var preparedByInfo = '1782341 (P RAJA KUMARASWAMY)';
+        if (typeof currentUser !== 'undefined' && currentUser) {
+          if (currentUser.role === 'student') {
+            preparedByInfo = 'XXXXXXXXX';
+          } else {
+            var empCode = currentUser.code || '1808557';
+            var empName = currentUser.name || 'Admin';
+            preparedByInfo = empCode + ' (' + empName + ')';
+          }
+        }
+
+        var sName = document.getElementById('print-cert-name')?.innerText || document.getElementById('preview-cert-name')?.innerText || '';
+        var sAdm = document.getElementById('print-cert-adm')?.innerText || document.getElementById('preview-cert-adm')?.innerText || '';
+        var sPen = document.getElementById('print-cert-pen')?.innerText || document.getElementById('preview-cert-pen')?.innerText || '';
+        var sFather = document.getElementById('print-cert-father')?.innerText || document.getElementById('preview-cert-father')?.innerText || '';
+        var sMother = document.getElementById('print-cert-mother')?.innerText || document.getElementById('preview-cert-mother')?.innerText || '';
+        var sClass = document.getElementById('print-cert-class')?.innerText || document.getElementById('preview-cert-class')?.innerText || '';
+        var sSection = document.getElementById('print-cert-section')?.innerText || document.getElementById('preview-cert-section')?.innerText || '';
+        var sAY = document.getElementById('print-cert-ay')?.innerText || document.getElementById('preview-cert-ay')?.innerText || '2026-27';
+        var sDOA = document.getElementById('print-cert-doa')?.innerText || document.getElementById('preview-cert-doa')?.innerText || '';
+        var sDOB = document.getElementById('print-cert-dob')?.innerText || document.getElementById('preview-cert-dob')?.innerText || '';
+        var sAadhaar = document.getElementById('print-cert-aadhaar')?.innerText || document.getElementById('preview-cert-aadhaar')?.innerText || '';
+        var sPurpose = document.getElementById('print-cert-purpose')?.innerText || document.getElementById('preview-cert-purpose')?.innerText || '';
+        var sMedium = currentCertMedium || 'English';
+
+        var record = {
+          serialNo: assignedSerial,
+          issueDate: issueDateStr,
+          issueTime: issueTimeStr,
+          dateTime: issueDateStr + ', ' + issueTimeStr,
+          studentName: sName,
+          admNo: sAdm,
+          pen: sPen,
+          fatherName: sFather,
+          motherName: sMother,
+          classVal: sClass ? ('Class ' + sClass) : 'Class X',
+          section: sSection || 'A',
+          medium: sMedium,
+          academicYear: sAY,
+          doa: sDOA,
+          dob: sDOB,
+          aadhaar: sAadhaar,
+          certType: (currentCertType === 'left') ? 'Left Student' : 'Present Student',
+          purpose: sPurpose,
+          preparedBy: preparedByInfo,
+          issuedByRole: (typeof isAdmin !== 'undefined' && isAdmin) ? 'Administrator' : 'Staff',
+          timestamp: now.getTime()
+        };
+
+        if (!Array.isArray(bonafideRegister)) bonafideRegister = [];
+        bonafideRegister.unshift(record);
+        try {
+          localStorage.setItem('zphs_bonafide_register', JSON.stringify(bonafideRegister));
+        } catch(e) {}
+        syncToCloud('zphs_bonafide_register', bonafideRegister);
+
+        if (typeof renderAdministrationSection === 'function') {
+          renderAdministrationSection();
+        }
+      }
 
       // Clear all other print flags
       document.body.classList.remove('printing-progress-card', 'printing-id-card');
@@ -7021,6 +7291,235 @@
           document.body.classList.remove('printing-bonafide');
         }, 1500);
       }, 150);
+    }
+
+    // ==========================================
+    // ADMINISTRATION SECTION CONTROLS & EXCEL EXPORT
+    // ==========================================
+    function renderAdministrationSection() {
+      if (!Array.isArray(bonafideRegister)) bonafideRegister = [];
+
+      var total = bonafideRegister.length;
+      var todayPrefix = getBonafideDatePrefix();
+      var todayCount = bonafideRegister.filter(r => r.serialNo && r.serialNo.startsWith(todayPrefix)).length;
+      var presentCount = bonafideRegister.filter(r => r.certType === 'Present Student').length;
+      var leftCount = bonafideRegister.filter(r => r.certType === 'Left Student').length;
+
+      var statTotal = document.getElementById('admin-stat-total'); if (statTotal) statTotal.innerText = total;
+      var statToday = document.getElementById('admin-stat-today'); if (statToday) statToday.innerText = todayCount;
+      var statPresent = document.getElementById('admin-stat-present'); if (statPresent) statPresent.innerText = presentCount;
+      var statLeft = document.getElementById('admin-stat-left'); if (statLeft) statLeft.innerText = leftCount;
+
+      filterAdministrationRegister();
+    }
+
+    function filterAdministrationRegister() {
+      var searchInput = document.getElementById('admin-register-search');
+      var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      var typeSelect = document.getElementById('admin-register-filter-type');
+      var typeFilter = typeSelect ? typeSelect.value : 'all';
+      var tbody = document.getElementById('admin-register-tbody');
+      var badge = document.getElementById('admin-register-count-badge');
+      if (!tbody) return;
+
+      if (!Array.isArray(bonafideRegister) || bonafideRegister.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="p-8 text-center text-slate-500 bg-white">
+              <i class="fa-solid fa-clipboard-question text-3xl text-slate-300 mb-2 block"></i>
+              <p class="font-bold text-sm">No Bonafide Certificates issued yet.</p>
+              <p class="text-xs text-slate-400 mt-1">Certificates will automatically appear here with generated serial numbers and timestamps when printed.</p>
+            </td>
+          </tr>
+        `;
+        if (badge) badge.innerText = '0 Records';
+        return;
+      }
+
+      var filtered = bonafideRegister.filter(function(r) {
+        if (typeFilter !== 'all' && r.certType !== typeFilter) return false;
+        if (!query) return true;
+        var hay = [
+          r.serialNo, r.studentName, r.admNo, r.pen, r.fatherName, r.motherName,
+          r.classVal, r.section, r.medium, r.purpose, r.preparedBy, r.issueDate
+        ].join(' ').toLowerCase();
+        return hay.includes(query);
+      });
+
+      if (badge) badge.innerText = filtered.length + ' Record' + (filtered.length === 1 ? '' : 's');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="p-8 text-center text-slate-500 bg-white">
+              <i class="fa-solid fa-magnifying-glass text-3xl text-slate-300 mb-2 block"></i>
+              <p class="font-bold text-sm">No records match your search query "${escapeText(query)}".</p>
+              <button onclick="document.getElementById('admin-register-search').value=''; filterAdministrationRegister();" class="mt-2 text-xs text-indigo-600 hover:underline font-bold cursor-pointer">Clear Search Filter</button>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(r) {
+        var isLeft = r.certType === 'Left Student';
+        var badgeBg = isLeft ? 'bg-amber-100 text-amber-900 border-amber-300' : 'bg-emerald-100 text-emerald-900 border-emerald-300';
+        return `
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+            <td class="p-3 whitespace-nowrap">
+              <span class="font-mono font-bold text-xs text-orange-950 bg-orange-100/80 border border-orange-300 px-2 py-0.5 rounded shadow-2xs inline-block">
+                ${escapeText(r.serialNo)}
+              </span>
+            </td>
+            <td class="p-3 whitespace-nowrap">
+              <div class="font-bold text-slate-900 text-xs">${escapeText(r.issueDate)}</div>
+              <div class="text-[10px] text-slate-500 font-mono font-semibold">${escapeText(r.issueTime)}</div>
+            </td>
+            <td class="p-3">
+              <div class="font-bold text-slate-900 text-xs">${escapeText(r.studentName)}</div>
+              <div class="text-[10px] text-slate-500 font-mono">Adm: <span class="font-bold text-slate-700">${escapeText(r.admNo || '-')}</span> • PEN: <span class="font-bold text-slate-700">${escapeText(r.pen || '-')}</span></div>
+            </td>
+            <td class="p-3 whitespace-nowrap">
+              <div class="font-bold text-slate-800 text-xs">${escapeText(r.classVal || '')} - ${escapeText(r.section || '')}</div>
+              <span class="text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-1.5 py-0.5 rounded">${escapeText(r.medium || 'English')} Medium</span>
+            </td>
+            <td class="p-3">
+              <div class="text-xs text-slate-800 font-medium"><span class="text-slate-400 font-bold">F:</span> ${escapeText(r.fatherName || '-')}</div>
+              <div class="text-[10px] text-slate-500"><span class="text-slate-400 font-bold">M:</span> ${escapeText(r.motherName || '-')}</div>
+            </td>
+            <td class="p-3">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${badgeBg} inline-block mb-1">
+                ${escapeText(r.certType)}
+              </span>
+              <div class="text-[11px] text-slate-600 truncate max-w-[140px]" title="${escapeText(r.purpose || '')}">
+                ${escapeText(r.purpose || 'Verification')}
+              </div>
+            </td>
+            <td class="p-3 whitespace-nowrap">
+              <div class="text-xs font-bold font-mono text-slate-900">${escapeText(r.preparedBy || '-')}</div>
+              <div class="text-[10px] text-slate-500 font-medium">AY: ${escapeText(r.academicYear || '2026-27')}</div>
+            </td>
+            <td class="p-3 text-center whitespace-nowrap">
+              <button onclick="reprintBonafideFromRecord('${escapeText(r.serialNo)}')" class="bg-orange-50 hover:bg-orange-100 text-orange-800 border border-orange-300 px-2.5 py-1 rounded-md text-xs font-bold transition flex items-center gap-1 shadow-2xs mx-auto cursor-pointer" title="Re-print Bonafide Certificate with original Serial No ${escapeText(r.serialNo)}">
+                <i class="fa-solid fa-print text-orange-600"></i>
+                <span>Re-print</span>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function reprintBonafideFromRecord(serialNo) {
+      if (!Array.isArray(bonafideRegister)) return;
+      var record = bonafideRegister.find(r => r.serialNo === serialNo);
+      if (!record) {
+        alert('Record not found for serial number ' + serialNo);
+        return;
+      }
+
+      var pSerial = document.getElementById('print-cert-serial'); if (pSerial) pSerial.innerText = record.serialNo;
+      var prevSerial = document.getElementById('preview-cert-serial'); if (prevSerial) prevSerial.innerText = record.serialNo;
+      var pDate = document.getElementById('print-cert-date'); if (pDate) pDate.innerText = record.issueDate;
+      var pName = document.getElementById('print-cert-name'); if (pName) pName.innerText = record.studentName;
+      var pFather = document.getElementById('print-cert-father'); if (pFather) pFather.innerText = record.fatherName;
+      var pMother = document.getElementById('print-cert-mother'); if (pMother) pMother.innerText = record.motherName;
+      var pClass = document.getElementById('print-cert-class'); if (pClass) pClass.innerText = (record.classVal || 'Class X').replace('Class ', '');
+      var pSection = document.getElementById('print-cert-section'); if (pSection) pSection.innerText = record.section || 'A';
+      var pAY = document.getElementById('print-cert-ay'); if (pAY) pAY.innerText = record.academicYear || '2026-27';
+      var pAdm = document.getElementById('print-cert-adm'); if (pAdm) pAdm.innerText = record.admNo || '-';
+      var pDOA = document.getElementById('print-cert-doa'); if (pDOA) pDOA.innerText = record.doa || '-';
+      var prVerb = document.getElementById('print-cert-verb-bonafide'); if (prVerb) prVerb.innerText = (record.certType === 'Left Student') ? 'was' : 'is';
+      var pPEN = document.getElementById('print-cert-pen'); if (pPEN) pPEN.innerText = record.pen || 'NA';
+      var pAadhaar = document.getElementById('print-cert-aadhaar'); if (pAadhaar) pAadhaar.innerText = record.aadhaar || 'Not Available';
+      var pDOB = document.getElementById('print-cert-dob'); if (pDOB) pDOB.innerText = record.dob || '-';
+      var pDOBWords = document.getElementById('print-cert-dob-words'); if (pDOBWords) pDOBWords.innerText = dateToEnglishWords(record.dob);
+      var pPurpose = document.getElementById('print-cert-purpose'); if (pPurpose) pPurpose.innerText = record.purpose || '';
+      var prMedPres = document.getElementById('print-cert-medium-present'); if (prMedPres) prMedPres.innerText = record.medium || 'English';
+      var prMedLeft = document.getElementById('print-cert-medium-left'); if (prMedLeft) prMedLeft.innerText = record.medium || 'English';
+      var printClerk = document.getElementById('print-cert-clerk-info'); if (printClerk) printClerk.innerText = 'Emp Code: ' + record.preparedBy;
+
+      var printBlockPresent = document.getElementById('print-block-present');
+      var printBlockLeft = document.getElementById('print-block-left');
+      if (record.certType === 'Left Student') {
+        if (printBlockPresent) printBlockPresent.classList.add('hidden');
+        if (printBlockLeft) printBlockLeft.classList.remove('hidden');
+      } else {
+        if (printBlockPresent) printBlockPresent.classList.remove('hidden');
+        if (printBlockLeft) printBlockLeft.classList.add('hidden');
+      }
+
+      printBonafideHalfA4(null, true);
+    }
+
+    // Export Bonafide Certificate Issue Register to native Excel-compatible CSV with UTF-8 BOM
+    function exportBonafideRegisterToExcel() {
+      if (!Array.isArray(bonafideRegister) || bonafideRegister.length === 0) {
+        alert('No bonafide certificate records found to export.');
+        return;
+      }
+
+      var headers = [
+        "Serial Number",
+        "Issue Date",
+        "Issue Time",
+        "Student Name",
+        "Admission No",
+        "PEN Number",
+        "Father's Name",
+        "Mother's Name",
+        "Class",
+        "Section",
+        "Medium",
+        "Academic Year",
+        "Date of Admission",
+        "Date of Birth",
+        "Aadhaar Number",
+        "Certificate Type",
+        "Purpose of Issue",
+        "Prepared By / Issued By",
+        "Date and Time"
+      ];
+
+      var csvRows = [];
+      csvRows.push(headers.map(h => `"${h.replace(/"/g, '""')}"`).join(","));
+
+      bonafideRegister.forEach(function(row) {
+        var values = [
+          row.serialNo || '',
+          row.issueDate || '',
+          row.issueTime || '',
+          row.studentName || '',
+          row.admNo || '',
+          row.pen || '',
+          row.fatherName || '',
+          row.motherName || '',
+          row.classVal || '',
+          row.section || '',
+          row.medium || '',
+          row.academicYear || '',
+          row.doa || '',
+          row.dob || '',
+          row.aadhaar || '',
+          row.certType || '',
+          row.purpose || '',
+          row.preparedBy || '',
+          row.dateTime || ''
+        ];
+        csvRows.push(values.map(v => `"${String(v).replace(/"/g, '""')}"`).join(","));
+      });
+
+      var csvString = "\uFEFF" + csvRows.join("\r\n");
+      var blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement("a");
+      var dStr = getBonafideDatePrefix();
+      link.setAttribute("href", url);
+      link.setAttribute("download", `ZPGHS_Gajwel_Bonafide_Certificate_Register_${dStr}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
 
 
@@ -10921,7 +11420,8 @@ var currentTimetableClass = 'Class 10';
 
         <!-- Certificate Title, Date & Student Photo -->
         <div class="flex items-start justify-between my-2 gap-2">
-          <div class="text-xs font-bold cert-date-text pt-1">
+          <div class="text-xs font-bold cert-date-text pt-1 flex flex-col items-start gap-1">
+            <span>Sl. No: <span id="print-cert-serial" class="font-mono font-bold border-b border-black pb-0.5">--------</span></span>
             <span>Date: <span id="print-cert-date" class="font-mono font-bold border-b border-black pb-0.5">--/--/----</span></span>
           </div>
           <div class="text-center flex-1">
