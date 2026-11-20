@@ -2547,7 +2547,7 @@
               <i class="fa-solid fa-eye text-xs"></i>
             </button>
           </div>
-          <p class="text-[11px] text-slate-500 mt-1">Default password: <strong>Gajwel@123</strong> (or your updated password)</p>
+          <p class="text-[11px] text-slate-500 mt-1">Default password: <strong>Gajwel@123</strong> (if changed, use your new password)</p>
         </div>
         <button type="submit" class="w-full bg-theme-700 hover:bg-theme-800 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm cursor-pointer" data-en="Sign In as Staff / Admin" data-te="లాగిన్ అవ్వండి">
           Sign In as Staff / Admin
@@ -2603,7 +2603,7 @@
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Current Password</label>
           <div class="relative">
-            <input type="password" id="change-pass-current" required class="w-full border border-slate-300 rounded-lg pl-3 pr-9 py-2 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Enter current password (default Gajwel@123)">
+            <input type="password" id="change-pass-current" required class="w-full border border-slate-300 rounded-lg pl-3 pr-9 py-2 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Enter current active password (or default Gajwel@123)">
             <button type="button" onclick="togglePasswordVisibility('change-pass-current')" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer" title="Show / Hide Password">
               <i class="fa-solid fa-eye text-xs"></i>
             </button>
@@ -6872,8 +6872,8 @@
       var staffCode = found.member.stateStaffCode || found.member.nationalCode || code;
       var existingPass = (staffPasswordStore && staffPasswordStore[staffCode]) ? staffPasswordStore[staffCode] : 'Gajwel@123';
 
-      if (currentPass !== existingPass && currentPass !== 'Gajwel@123') {
-        alert('Incorrect Current Password! Please enter your current active password (or default Gajwel@123).');
+      if (currentPass !== existingPass) {
+        alert('Incorrect Current Password! Please enter your currently active password.\n\nNote: If you have already changed your password previously, the old default password is deactivated.');
         return;
       }
 
@@ -7233,9 +7233,9 @@
       var staffCode = s.stateStaffCode || s.nationalCode || user;
       var storedPass = (staffPasswordStore && staffPasswordStore[staffCode]) ? staffPasswordStore[staffCode] : 'Gajwel@123';
 
-      // Verify custom or master password
-      if (pass !== storedPass && pass !== 'Gajwel@123') {
-        alert('Invalid Password! Please enter your correct staff password (or default Gajwel@123).');
+      // Verify strictly against the active password (custom password if changed, or Gajwel@123 if on default)
+      if (pass !== storedPass) {
+        alert('Invalid Password! Please enter your correct staff password.\n\nNote: If you have changed your password, the old default password is deactivated and only your new password is valid.\n(If you forgot your password, please contact the Headmaster to reset it back to default).');
         return;
       }
 
