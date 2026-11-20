@@ -1026,7 +1026,7 @@
             <button onclick="exportToCSV('students')" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
               <i class="fa-solid fa-file-excel text-emerald-600"></i> Export CSV
             </button>
-            <button onclick="openStudentModal()" class="admin-only bg-theme-700 hover:bg-theme-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
+            <button onclick="openStudentModal()" class="btn-add-student bg-theme-700 hover:bg-theme-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-plus"></i> <span data-en="Add Student" data-te="విద్యార్థిని చేర్చండి">Add Student</span>
             </button>
           </div>
@@ -1087,7 +1087,7 @@
           <!-- Add Row Button at Table Footer -->
           <div class="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
             <span class="text-xs text-slate-500 font-medium">Add a new student admission record directly into the register</span>
-            <button onclick="openStudentModal()" class="bg-theme-700 hover:bg-theme-800 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition shadow-2xs flex items-center gap-1.5">
+            <button onclick="openStudentModal()" class="btn-add-student bg-theme-700 hover:bg-theme-800 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition shadow-2xs flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-plus-circle"></i> <span>+ Add Row / New Student</span>
             </button>
           </div>
@@ -1118,7 +1118,7 @@
             <button onclick="exportClasswiseCSV()" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs">
               <i class="fa-solid fa-file-excel text-emerald-600"></i> Export Class CSV
             </button>
-            <button onclick="openStudentModal()" class="admin-only bg-theme-700 hover:bg-theme-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs">
+            <button onclick="openStudentModal()" class="btn-add-student bg-theme-700 hover:bg-theme-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
               <i class="fa-solid fa-plus"></i> <span data-en="Add Student" data-te="విద్యార్థిని చేర్చండి">Add Student</span>
             </button>
           </div>
@@ -1696,6 +1696,49 @@
               <p class="text-[11px] font-bold text-rose-900 uppercase tracking-wider">Left Students</p>
               <h3 class="text-lg font-extrabold text-rose-950 font-mono" id="admin-stat-left">0</h3>
             </div>
+          </div>
+        </div>
+
+        <!-- Assign Class to Teachers Section (Role-based Edit Privileges) -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-3.5 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-chalkboard-user text-indigo-700 text-base"></i>
+                <h3 class="font-bold text-sm text-slate-800" data-en="Assign Class to Teachers & Edit Privileges" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు & అనుమతులు">Assign Class to Teachers & Edit Privileges</h3>
+                <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-assigned-count-badge">10 Classes Configured</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-0.5">
+                Designate class teachers to edit students details and examination marks. <strong>Headmaster</strong> can edit all classes. <strong>Non-Teaching Staff</strong> & remaining teachers have view-only access.
+              </p>
+            </div>
+            <div class="flex items-center gap-2" id="admin-assignment-buttons">
+              <button onclick="saveClassTeacherAssignments()" class="admin-assignment-action bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Save Class Teacher Assignments">
+                <i class="fa-solid fa-floppy-disk"></i> <span>Save Assignments</span>
+              </button>
+              <button onclick="resetClassTeacherAssignmentsToDefault()" class="admin-assignment-action bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1 cursor-pointer" title="Reset to Defaults">
+                <i class="fa-solid fa-rotate-left"></i> <span>Reset</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-x-auto max-h-[460px] overflow-y-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200 z-10 select-none">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">Class & Section</th>
+                  <th class="p-2.5 border-r border-slate-200">Medium</th>
+                  <th class="p-2.5 border-r border-slate-200 min-w-[260px]">Assigned Class Teacher (Edit Rights)</th>
+                  <th class="p-2.5 border-r border-slate-200">Staff Code</th>
+                  <th class="p-2.5 border-r border-slate-200">Subject / Designation</th>
+                  <th class="p-2.5 text-center">Active Permission</th>
+                </tr>
+              </thead>
+              <tbody id="class-teacher-assignments-tbody" class="divide-y divide-slate-100">
+                <!-- Dynamically populated by renderClassTeacherAssignmentsTable() -->
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -2286,11 +2329,20 @@
           <input type="text" id="login-username" placeholder="e.g. 1808557 or 2133745" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-theme-600 outline-none">
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1" data-en="Master Password" data-te="పాస్‌వర్డ్">Master Password</label>
-          <input type="password" id="login-password" placeholder="••••••••" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-theme-600 outline-none">
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold text-slate-700" data-en="Password" data-te="పాస్‌వర్డ్">Password</label>
+            <button type="button" onclick="openChangePasswordModal()" class="text-[11px] text-theme-600 hover:text-theme-800 font-semibold hover:underline cursor-pointer">Change Password?</button>
+          </div>
+          <div class="relative">
+            <input type="password" id="login-password" placeholder="••••••••" required class="w-full border border-slate-300 rounded-lg pl-3 pr-9 py-2 text-sm focus:ring-2 focus:ring-theme-600 outline-none">
+            <button type="button" onclick="togglePasswordVisibility('login-password')" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer" title="Show / Hide Password">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-1">Default password: <strong>Gajwel@123</strong> (or your updated password)</p>
         </div>
-        <button type="submit" class="w-full bg-theme-700 hover:bg-theme-800 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm" data-en="Sign In as Staff / Admin" data-te="లాగిన్ అవ్వండి">
-          Sign In as Admin
+        <button type="submit" class="w-full bg-theme-700 hover:bg-theme-800 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm cursor-pointer" data-en="Sign In as Staff / Admin" data-te="లాగిన్ అవ్వండి">
+          Sign In as Staff / Admin
         </button>
       </form>
 
@@ -2312,6 +2364,71 @@
         <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm">
           Sign In as Student
         </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CHANGE STAFF PASSWORD -->
+  <div id="modal-change-password" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full p-6 space-y-4 relative">
+      <button onclick="closeModal('modal-change-password')" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg font-bold border border-amber-200 shrink-0">
+          <i class="fa-solid fa-key"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-slate-800">Change Staff Login Password</h3>
+          <p class="text-xs text-slate-500">Update your login password to your wish. Synced across all devices.</p>
+        </div>
+      </div>
+
+      <form id="form-change-password" onsubmit="handleStaffPasswordChange(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Employee ID / Treasury Code</label>
+          <input type="text" id="change-pass-emp-code" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-amber-500 outline-none" placeholder="e.g. 1808557 or 2133745">
+          <p class="text-[11px] text-slate-500 mt-0.5" id="change-pass-emp-name-preview"></p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Current Password</label>
+          <div class="relative">
+            <input type="password" id="change-pass-current" required class="w-full border border-slate-300 rounded-lg pl-3 pr-9 py-2 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Enter current password (default Gajwel@123)">
+            <button type="button" onclick="togglePasswordVisibility('change-pass-current')" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer" title="Show / Hide Password">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">New Password (according to your wish)</label>
+          <div class="relative">
+            <input type="password" id="change-pass-new" required minlength="4" class="w-full border border-slate-300 rounded-lg pl-3 pr-9 py-2 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Enter your desired new password">
+            <button type="button" onclick="togglePasswordVisibility('change-pass-new')" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer" title="Show / Hide Password">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-0.5">Choose any secure password of your wish (min 4 characters).</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Confirm New Password</label>
+          <div class="relative">
+            <input type="password" id="change-pass-confirm" required minlength="4" class="w-full border border-slate-300 rounded-lg pl-3 pr-9 py-2 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="Re-enter your new password">
+            <button type="button" onclick="togglePasswordVisibility('change-pass-confirm')" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer" title="Show / Hide Password">
+              <i class="fa-solid fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeModal('modal-change-password')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-300 transition cursor-pointer">Cancel</button>
+          <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2 text-xs rounded-lg shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-check"></i> <span>Update Password</span>
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -4229,6 +4346,34 @@
       return defaultData;
     }
 
+    function loadStorageObject(key, defaultData) {
+      try {
+        var raw = localStorage.getItem(key);
+        if (!raw) return defaultData;
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && Object.keys(parsed).length > 0) {
+          return parsed;
+        }
+      } catch (err) {
+        console.warn('Error reading ' + key + ' from storage:', err);
+      }
+      return defaultData;
+    }
+
+    // Default Class Teacher Assignments across Classes VI to X (Sections A & B)
+    var defaultClassTeacherAssignments = {
+      'Class VI-A': { classVal: 'Class VI', section: 'A', medium: 'English', staffCode: '1812549', staffName: 'V ANITHA', subject: 'Social Studies', desig: 'School Asst. / TGT (Social Studies)' },
+      'Class VI-B': { classVal: 'Class VI', section: 'B', medium: 'Urdu', staffCode: '2130799', staffName: 'MOHD ABDUL WAKEEL', subject: 'Urdu', desig: 'School Asst. / TGT (Urdu)' },
+      'Class VII-A': { classVal: 'Class VII', section: 'A', medium: 'English', staffCode: '1829961', staffName: 'G.RAMESH', subject: 'Phy.Science', desig: 'School Asst. / TGT (Phy.Science)' },
+      'Class VII-B': { classVal: 'Class VII', section: 'B', medium: 'Telugu', staffCode: '1812430', staffName: 'K.CHANDRASHEKAR', subject: 'English', desig: 'School Asst. / TGT (English)' },
+      'Class VIII-A': { classVal: 'Class VIII', section: 'A', medium: 'English', staffCode: '1812759', staffName: 'VANGA PADMA', subject: 'Mathematics', desig: 'School Asst. / TGT (Mathematics)' },
+      'Class VIII-B': { classVal: 'Class VIII', section: 'B', medium: 'Telugu', staffCode: '1811801', staffName: 'SK.NOORJAHAN', subject: 'Mathematics', desig: 'School Asst. / TGT (Mathematics)' },
+      'Class IX-A': { classVal: 'Class IX', section: 'A', medium: 'English', staffCode: '1824729', staffName: 'SYED RIYAZUDDIN', subject: 'Bio.Science', desig: 'School Asst. / TGT (Bio.Science)' },
+      'Class IX-B': { classVal: 'Class IX', section: 'B', medium: 'Telugu', staffCode: '1811379', staffName: 'B.HARIBABU', subject: 'Bio.Science', desig: 'School Asst. / TGT (Bio.Science)' },
+      'Class X-A': { classVal: 'Class X', section: 'A', medium: 'English', staffCode: '1808557', staffName: 'BANDI ANIL KUMAR', subject: 'English', desig: 'School Asst. / TGT (English)' },
+      'Class X-B': { classVal: 'Class X', section: 'B', medium: 'Telugu', staffCode: '1837390', staffName: 'MD YOUSUF SHAREEF', subject: 'Mathematics', desig: 'School Asst. / TGT (Mathematics)' }
+    };
+
     // Load data with bulletproof fallback to default data
     var staffList = loadStorageArray('zphs_staff', defaultStaff);
     var nonTeachingList = loadStorageArray('zphs_non_teaching', defaultNonTeachingStaff);
@@ -4237,6 +4382,8 @@
     var holidayList = loadStorageArray('zphs_holidays', defaultHolidays);
     var mdmList = loadStorageArray('zphs_mdm', defaultMDMLogs);
     var activityList = loadStorageArray('zphs_activities', defaultActivities);
+    var staffPasswordStore = loadStorageObject('zphs_staff_passwords', {});
+    var classTeacherAssignments = loadStorageObject('zphs_class_teacher_assignments', defaultClassTeacherAssignments);
 
     // Default Bonafide Issue Register for Administration section
     var defaultBonafideRegister = [
@@ -4291,6 +4438,8 @@
       localStorage.setItem('zphs_mdm', JSON.stringify(mdmList));
       localStorage.setItem('zphs_activities', JSON.stringify(activityList));
       localStorage.setItem('zphs_bonafide_register', JSON.stringify(bonafideRegister));
+      localStorage.setItem('zphs_staff_passwords', JSON.stringify(staffPasswordStore));
+      localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
     } catch (e) {
       console.warn('Storage sync:', e);
     }
@@ -5112,6 +5261,14 @@
             if (arr.length > 0) bonafideRegister = arr;
             try { localStorage.setItem('zphs_bonafide_register', JSON.stringify(bonafideRegister)); } catch(e){}
           }
+          if (cloudData.zphs_staff_passwords && typeof cloudData.zphs_staff_passwords === 'object') {
+            staffPasswordStore = cloudData.zphs_staff_passwords;
+            try { localStorage.setItem('zphs_staff_passwords', JSON.stringify(staffPasswordStore)); } catch(e){}
+          }
+          if (cloudData.zphs_class_teacher_assignments && typeof cloudData.zphs_class_teacher_assignments === 'object') {
+            classTeacherAssignments = cloudData.zphs_class_teacher_assignments;
+            try { localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments)); } catch(e){}
+          }
           if (typeof syncAllPresentStudentsToPastYears === 'function') {
             syncAllPresentStudentsToPastYears();
           }
@@ -5146,6 +5303,8 @@
         if (!data.zphs_gallery_photos) syncToCloud('zphs_gallery_photos', galleryPhotos);
         if (!data.zphs_exam_marks) syncToCloud('zphs_exam_marks', examMarksRegistry);
         if (!data.zphs_bonafide_register || extractArray(data.zphs_bonafide_register).length === 0) syncToCloud('zphs_bonafide_register', bonafideRegister);
+        if (!data.zphs_staff_passwords) syncToCloud('zphs_staff_passwords', staffPasswordStore);
+        if (!data.zphs_class_teacher_assignments) syncToCloud('zphs_class_teacher_assignments', classTeacherAssignments);
       })
       .catch(function() {});
     }
@@ -5211,18 +5370,20 @@
 
     // Navigation & Tab Switcher
     function switchTab(tabId) {
-      // Access control guard: Protected sections require Administrator account
-      var adminOnlyTabs = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'exams', 'mdm', 'yearwise-students'];
-      if (adminOnlyTabs.includes(tabId) && !isAdmin) {
-        if (currentUser && currentUser.role === 'student') {
-          alert('Access Restricted: As a student, you can only view your own student profile and records.');
-          switchTab('student-portal');
-        } else {
-          alert('Access Restricted: Please log in with an authorized Administrator account to access ' + tabId.replace('-', ' ') + '.');
-          openLoginModal('staff');
-          switchTab('home');
+      // Access control guard: Protected sections require Staff / Administrator account
+      var protectedTabs = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'exams', 'mdm', 'yearwise-students'];
+      if (protectedTabs.includes(tabId)) {
+        if (!currentUser || currentUser.role === 'student') {
+          if (currentUser && currentUser.role === 'student') {
+            alert('Access Restricted: As a student, you can only view your own student profile and records.');
+            switchTab('student-portal');
+          } else {
+            alert('Access Restricted: Please log in with an authorized Staff / Admin account to access ' + tabId.replace('-', ' ') + '.');
+            openLoginModal('staff');
+            switchTab('home');
+          }
+          return;
         }
-        return;
       }
 
       if (tabId === 'performance') {
@@ -5564,9 +5725,13 @@
     }
 
     function openStudentModal(id) {
-      if (!isAdmin) {
-        alert('Access Denied: Only administrators have permission to make changes.');
+      if (!currentUser || currentUser.role === 'student') {
+        alert('Access Denied: Please sign in with an authorized staff account.');
         if (typeof openLoginModal === 'function') openLoginModal();
+        return;
+      }
+      if (isUserNonTeaching(currentUser)) {
+        alert('Access Denied: Non-Teaching staff have View-Only permissions for student profiles.');
         return;
       }
 
@@ -5574,14 +5739,44 @@
       var targetId = isEdit ? parseInt(id, 10) : null;
       var student = isEdit ? (studentList || []).find(s => (s.id === targetId || s.id === id)) : null;
 
+      if (isEdit && student) {
+        if (!canUserEditClass(student.classVal, student.section)) {
+          var assigned = getClassTeacherFor(student.classVal, student.section);
+          var teacherName = assigned ? assigned.staffName : 'Assigned Teacher';
+          alert('Permission Denied: You can only edit student details for your assigned class.\n\nAssigned Class Teacher: ' + teacherName + '\n(Headmaster has universal editing permission across all classes)');
+          return;
+        }
+      } else if (!isEdit) {
+        if (!isUserHeadmaster(currentUser) && !hasAnyAssignedClass(currentUser)) {
+          alert('Permission Denied: Only assigned Class Teachers and the Headmaster have permission to add new students.');
+          return;
+        }
+      }
+
+      var defaultClass = 'Class VI';
+      var defaultSec = 'A';
+      if (!student && !isUserHeadmaster(currentUser)) {
+        var myAssigned = [];
+        for (var k in (classTeacherAssignments || {})) {
+          var a = classTeacherAssignments[k];
+          if (a && ((a.staffCode && String(a.staffCode).trim().toLowerCase() === String(currentUser.code || '').toLowerCase()) || (a.staffId && String(a.staffId) === String(currentUser.id || '')))) {
+            myAssigned.push(a);
+          }
+        }
+        if (myAssigned.length > 0) {
+          defaultClass = myAssigned[0].classVal || defaultClass;
+          defaultSec = myAssigned[0].section || defaultSec;
+        }
+      }
+
       document.getElementById('student-id').value = student ? student.id : '';
       document.getElementById('student-modal-title').innerText = student ? ('Edit Student Record: ' + (student.name || '')) : '+ Add New Student Admission';
       document.getElementById('student-admno').value = student ? (student.admNo || '') : '';
       document.getElementById('student-pen').value = student ? (student.pen || '') : '';
       document.getElementById('student-name').value = student ? (student.name || '') : '';
       document.getElementById('student-roll').value = student ? (student.rollNo || '') : '';
-      document.getElementById('student-class').value = student ? (student.classVal || 'Class VI') : 'Class VI';
-      document.getElementById('student-section').value = student ? (student.section || 'A') : 'A';
+      document.getElementById('student-class').value = student ? (student.classVal || defaultClass) : defaultClass;
+      document.getElementById('student-section').value = student ? (student.section || defaultSec) : defaultSec;
       document.getElementById('student-dob').value = student ? (student.dob || '') : '';
 
       var doaEl = document.getElementById('student-doa');
@@ -5608,6 +5803,13 @@
 
     function openEditStudentFromViewModal() {
       if (typeof currentViewStudentId !== 'undefined' && currentViewStudentId) {
+        var student = (studentList || []).find(s => s.id === currentViewStudentId);
+        if (student && !canUserEditClass(student.classVal, student.section)) {
+          var assigned = getClassTeacherFor(student.classVal, student.section);
+          var teacherName = assigned ? assigned.staffName : 'Assigned Teacher';
+          alert('Permission Denied: You can only edit student details for your assigned class.\n\nAssigned Class Teacher: ' + teacherName + '\n(Headmaster has universal permission)');
+          return;
+        }
         closeModal('modal-view-student');
         openStudentModal(currentViewStudentId);
       }
@@ -5647,6 +5849,16 @@
       document.getElementById('view-student-mother').innerText = student.motherName || 'Not recorded';
       document.getElementById('view-student-category').innerText = student.category || 'General';
       document.getElementById('view-student-contact').innerText = student.contact || '+91 9848011220';
+
+      var editBtn = document.querySelector('#modal-view-student button[onclick="openEditStudentFromViewModal()"]');
+      if (editBtn) {
+        if (canUserEditClass(student.classVal, student.section)) {
+          editBtn.classList.remove('hidden');
+        } else {
+          editBtn.classList.add('hidden');
+        }
+      }
+
       document.getElementById('modal-view-student').classList.remove('hidden');
     }
 
@@ -5718,15 +5930,26 @@
     }
 
     function openEditMarksModal(studentId, examType) {
-      if (!isAdmin) {
-        alert('Access Denied: Only administrators have permission to make changes.');
+      if (!currentUser || currentUser.role === 'student') {
+        alert('Access Denied: Please sign in with an authorized staff account.');
         if (typeof openLoginModal === 'function') openLoginModal();
+        return;
+      }
+      if (isUserNonTeaching(currentUser)) {
+        alert('Access Denied: Non-Teaching staff have View-Only permissions for examination marks.');
         return;
       }
 
       var exam = examType || document.getElementById('exam-type-filter')?.value || 'SA-1';
       var student = studentList.find(s => s.id === studentId) || studentList[0];
       if (!student) return;
+
+      if (!canUserEditClass(student.classVal, student.section)) {
+        var assigned = getClassTeacherFor(student.classVal, student.section);
+        var teacherName = assigned ? assigned.staffName : 'Assigned Teacher';
+        alert('Permission Denied: You can only enter or edit examination marks for your assigned class.\n\nAssigned Class Teacher: ' + teacherName + '\n(Headmaster has universal permission)');
+        return;
+      }
 
       var hiddenId = document.getElementById('marks-student-id');
       if (hiddenId) hiddenId.value = student.id;
@@ -5923,6 +6146,12 @@
         record = { first, second, english, maths, science, social, coHealth, coArt, coWork, coValue };
       }
 
+      var studentObj = (studentList || []).find(s => s.id === studentId);
+      if (studentObj && !canUserEditClass(studentObj.classVal, studentObj.section)) {
+        alert('Permission Denied: You do not have permission to modify marks for ' + studentObj.classVal + ' - ' + studentObj.section);
+        return;
+      }
+
       var key = studentId + '_' + examType;
       examMarksRegistry[key] = record;
 
@@ -5940,9 +6169,17 @@
     var isInlineMarksEditing = false;
 
     function toggleInlineMarksEditing() {
-      if (!isAdmin) {
-        alert('Access Denied: Only administrators have permission to make changes.');
+      if (!currentUser || currentUser.role === 'student') {
+        alert('Access Denied: Please sign in with an authorized staff account.');
         if (typeof openLoginModal === 'function') openLoginModal();
+        return;
+      }
+      if (isUserNonTeaching(currentUser)) {
+        alert('Access Denied: Non-Teaching staff have View-Only permissions for examination marks.');
+        return;
+      }
+      if (!isUserHeadmaster(currentUser) && !hasAnyAssignedClass(currentUser)) {
+        alert('Access Denied: Only assigned Class Teachers and Headmaster can enter or edit examination marks.');
         return;
       }
 
@@ -6078,9 +6315,13 @@
     }
 
     function saveInlineMarks() {
-      if (!isAdmin) {
-        alert('Access Denied: Only administrators have permission to make changes.');
+      if (!currentUser || currentUser.role === 'student') {
+        alert('Access Denied: Please sign in with an authorized staff account.');
         if (typeof openLoginModal === 'function') openLoginModal();
+        return;
+      }
+      if (isUserNonTeaching(currentUser)) {
+        alert('Access Denied: Non-Teaching staff have View-Only permissions.');
         return;
       }
 
@@ -6096,8 +6337,11 @@
       });
 
       var subKeys = ['first', 'second', 'english', 'maths', 'science', 'social'];
+      var savedCount = 0;
 
       filteredStudents.forEach(function(st) {
+        if (!canUserEditClass(st.classVal, st.section)) return;
+        savedCount++;
         var key = st.id + '_' + examType;
         if (isFA) {
           var record = {};
@@ -6145,19 +6389,421 @@
       if (modal) modal.classList.add('hidden');
     }
 
-    // Authentication Handlers
+    // Session state initialization and upgrade
     var currentUser = JSON.parse(localStorage.getItem('zphs_current_user')) || null;
+    if (currentUser && currentUser.role !== 'student') {
+      var uCode = String(currentUser.code || '').trim();
+      var uDesig = String(currentUser.designation || '').toLowerCase();
+      var isHMUpgrade = (uCode === '2133745' || uCode === '1808557' || uDesig.includes('ghm') || uDesig.includes('headmaster'));
+      var isNonTeachUpgrade = (currentUser.category === 'non-teaching' || uDesig.includes('record assistant') || uDesig.includes('office assistant') || uDesig.includes('subordinate'));
+      currentUser.isHeadmaster = isHMUpgrade;
+      currentUser.isNonTeaching = isNonTeachUpgrade;
+      currentUser.role = isHMUpgrade ? 'headmaster' : (isNonTeachUpgrade ? 'non-teaching' : 'teacher');
+      isAdmin = isHMUpgrade;
+      try {
+        localStorage.setItem('zphs_current_user', JSON.stringify(currentUser));
+        localStorage.setItem('zphs_is_admin', isHMUpgrade ? 'true' : 'false');
+      } catch(e) {}
+    }
+
+    // Role & Assignment Permission Helpers
+    function isUserHeadmaster(u) {
+      if (!u) return false;
+      if (u.role === 'student') return false;
+      var code = String(u.code || '').trim();
+      var desig = String(u.designation || '').toLowerCase();
+      if (code === '2133745' || code === '1808557') return true;
+      if (desig.includes('ghm') || desig.includes('headmaster') || desig.includes('principal')) return true;
+      if (u.isHeadmaster === true) return true;
+      return false;
+    }
+
+    function isUserNonTeaching(u) {
+      if (!u) return false;
+      if (u.role === 'student') return false;
+      if (isUserHeadmaster(u)) return false;
+      if (u.category === 'non-teaching' || u.role === 'non-teaching' || u.staffRole === 'Non-Teaching Staff') return true;
+      var desig = String(u.designation || '').toLowerCase();
+      if (desig.includes('record assistant') || desig.includes('office assistant') || desig.includes('subordinate') || desig.includes('attender')) return true;
+      var code = String(u.code || '').trim();
+      if (code === '1782341' || code === '1845442') return true;
+      return false;
+    }
+
+    function hasAnyAssignedClass(u) {
+      if (!u) return false;
+      if (isUserHeadmaster(u)) return true;
+      var code = String(u.code || '').trim().toLowerCase();
+      var uid = String(u.id || '').trim();
+      for (var k in (classTeacherAssignments || {})) {
+        var a = classTeacherAssignments[k];
+        if (a && ((a.staffCode && String(a.staffCode).trim().toLowerCase() === code) || (a.staffId && String(a.staffId) === uid))) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function getAssignedClassForUser(u) {
+      if (!u) return '';
+      var code = String(u.code || '').trim().toLowerCase();
+      var uid = String(u.id || '').trim();
+      var list = [];
+      for (var k in (classTeacherAssignments || {})) {
+        var a = classTeacherAssignments[k];
+        if (a && ((a.staffCode && String(a.staffCode).trim().toLowerCase() === code) || (a.staffId && String(a.staffId) === uid))) {
+          list.push((a.classVal || '') + ' ' + (a.section || ''));
+        }
+      }
+      return list.join(', ');
+    }
+
+    function getClassTeacherFor(classVal, section) {
+      var normClass = String(classVal || '').trim();
+      var normSec = String(section || 'A').trim();
+      var classKey = normClass + '-' + normSec;
+      if (classTeacherAssignments && classTeacherAssignments[classKey]) {
+        return classTeacherAssignments[classKey];
+      }
+      for (var k in (classTeacherAssignments || {})) {
+        var a = classTeacherAssignments[k];
+        if (a && a.classVal === normClass && a.section === normSec) {
+          return a;
+        }
+      }
+      return defaultClassTeacherAssignments[classKey] || null;
+    }
+
+    function canUserEditClass(classVal, section) {
+      if (!currentUser) return false;
+      if (currentUser.role === 'student') return false;
+
+      // Headmaster has universal master access across all classes
+      if (isUserHeadmaster(currentUser)) return true;
+
+      // Non-teaching staff can never edit students or exams (view-only)
+      if (isUserNonTeaching(currentUser)) return false;
+
+      // Regular teaching staff: check if assigned to this specific class & section
+      var normClass = String(classVal || '').trim();
+      var normSec = String(section || 'A').trim();
+      var classKey = normClass + '-' + normSec;
+
+      var assign = (classTeacherAssignments && classTeacherAssignments[classKey]) 
+        ? classTeacherAssignments[classKey] 
+        : (defaultClassTeacherAssignments[classKey] || null);
+
+      if (!assign && classTeacherAssignments) {
+        for (var k in classTeacherAssignments) {
+          var a = classTeacherAssignments[k];
+          if (a && a.classVal === normClass && a.section === normSec) {
+            assign = a;
+            break;
+          }
+        }
+      }
+
+      if (assign) {
+        var userCode = String(currentUser.code || '').trim().toLowerCase();
+        var userId = String(currentUser.id || '').trim();
+        var assignCode = String(assign.staffCode || '').trim().toLowerCase();
+        var assignId = String(assign.staffId || '').trim();
+
+        if ((assignCode && assignCode === userCode) || (assignId && assignId === userId)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    // Staff Password Change Handlers
+    function openChangePasswordModal(empCode) {
+      var modal = document.getElementById('modal-change-password');
+      if (!modal) return;
+
+      var codeInput = document.getElementById('change-pass-emp-code');
+      var namePreview = document.getElementById('change-pass-emp-name-preview');
+      var currPassInput = document.getElementById('change-pass-current');
+      var newPassInput = document.getElementById('change-pass-new');
+      var confirmPassInput = document.getElementById('change-pass-confirm');
+
+      if (currPassInput) currPassInput.value = '';
+      if (newPassInput) newPassInput.value = '';
+      if (confirmPassInput) confirmPassInput.value = '';
+
+      var targetCode = empCode;
+      if (!targetCode && currentUser && currentUser.role !== 'student') {
+        targetCode = currentUser.code || '';
+      }
+
+      if (codeInput) {
+        if (targetCode) {
+          codeInput.value = targetCode;
+          codeInput.readOnly = true;
+          codeInput.classList.add('bg-slate-100');
+        } else {
+          codeInput.value = '';
+          codeInput.readOnly = false;
+          codeInput.classList.remove('bg-slate-100');
+        }
+      }
+
+      if (namePreview) {
+        if (targetCode) {
+          var all = getAllStaffList();
+          var found = all.find(item => {
+            var s = item.member;
+            return (s.stateStaffCode && s.stateStaffCode.toLowerCase() === targetCode.toLowerCase()) ||
+                   (s.nationalCode && s.nationalCode.toLowerCase() === targetCode.toLowerCase());
+          });
+          if (found) {
+            namePreview.innerHTML = '<span class="text-emerald-700 font-semibold"><i class="fa-solid fa-user-check mr-1"></i>' + escapeText(found.member.name) + ' (' + escapeText(found.member.designation) + ')</span>';
+          } else {
+            namePreview.innerText = '';
+          }
+        } else {
+          namePreview.innerText = '';
+        }
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function handleStaffPasswordChange(e) {
+      if (e) e.preventDefault();
+      var code = (document.getElementById('change-pass-emp-code')?.value || '').trim();
+      var currentPass = (document.getElementById('change-pass-current')?.value || '').trim();
+      var newPass = (document.getElementById('change-pass-new')?.value || '').trim();
+      var confirmPass = (document.getElementById('change-pass-confirm')?.value || '').trim();
+
+      if (!code) {
+        alert('Please enter your Employee ID / Treasury Code.');
+        return;
+      }
+
+      var all = getAllStaffList();
+      var found = all.find(item => {
+        var s = item.member;
+        return (s.stateStaffCode && s.stateStaffCode.toLowerCase() === code.toLowerCase()) ||
+               (s.nationalCode && s.nationalCode.toLowerCase() === code.toLowerCase());
+      });
+
+      if (!found) {
+        alert('Invalid Employee ID! No employee found matching ID: ' + code);
+        return;
+      }
+
+      var staffCode = found.member.stateStaffCode || found.member.nationalCode || code;
+      var existingPass = (staffPasswordStore && staffPasswordStore[staffCode]) ? staffPasswordStore[staffCode] : 'Gajwel@123';
+
+      if (currentPass !== existingPass && currentPass !== 'Gajwel@123') {
+        alert('Incorrect Current Password! Please enter your current active password (or default Gajwel@123).');
+        return;
+      }
+
+      if (!newPass || newPass.length < 4) {
+        alert('New password must be at least 4 characters long.');
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        alert('New Password and Confirm New Password do not match. Please re-enter.');
+        return;
+      }
+
+      // Save custom password according to employee's wish
+      if (!staffPasswordStore) staffPasswordStore = {};
+      staffPasswordStore[staffCode] = newPass;
+
+      try {
+        localStorage.setItem('zphs_staff_passwords', JSON.stringify(staffPasswordStore));
+      } catch(err) {}
+      syncToCloud('zphs_staff_passwords', staffPasswordStore);
+
+      alert('Password updated successfully for ' + found.member.name + '!\n\nYou can now sign in using your new custom password.');
+      closeModal('modal-change-password');
+    }
+
+    function togglePasswordVisibility(inputId) {
+      var el = document.getElementById(inputId);
+      if (!el) return;
+      el.type = (el.type === 'password') ? 'text' : 'password';
+    }
+
+    // Class Teacher Assignment UI Handlers (in Administration Section)
+    function renderClassTeacherAssignmentsTable() {
+      var tbody = document.getElementById('class-teacher-assignments-tbody');
+      if (!tbody) return;
+
+      var isHM = isUserHeadmaster(currentUser);
+
+      var btnsContainer = document.getElementById('admin-assignment-buttons');
+      if (btnsContainer) {
+        if (isHM) {
+          btnsContainer.classList.remove('hidden');
+        } else {
+          btnsContainer.classList.add('hidden');
+        }
+      }
+
+      var classesList = [
+        { key: 'Class VI-A', classVal: 'Class VI', section: 'A', medium: 'English' },
+        { key: 'Class VI-B', classVal: 'Class VI', section: 'B', medium: 'Urdu' },
+        { key: 'Class VII-A', classVal: 'Class VII', section: 'A', medium: 'English' },
+        { key: 'Class VII-B', classVal: 'Class VII', section: 'B', medium: 'Telugu' },
+        { key: 'Class VIII-A', classVal: 'Class VIII', section: 'A', medium: 'English' },
+        { key: 'Class VIII-B', classVal: 'Class VIII', section: 'B', medium: 'Telugu' },
+        { key: 'Class IX-A', classVal: 'Class IX', section: 'A', medium: 'English' },
+        { key: 'Class IX-B', classVal: 'Class IX', section: 'B', medium: 'Telugu' },
+        { key: 'Class X-A', classVal: 'Class X', section: 'A', medium: 'English' },
+        { key: 'Class X-B', classVal: 'Class X', section: 'B', medium: 'Telugu' }
+      ];
+
+      var rowsHtml = classesList.map(function(item) {
+        var assign = (classTeacherAssignments && classTeacherAssignments[item.key]) 
+          ? classTeacherAssignments[item.key] 
+          : (defaultClassTeacherAssignments[item.key] || {});
+
+        var safeKey = item.key.replace(/\s+/g, '_');
+        var isCurrentStaffAssigned = currentUser && (
+          (assign.staffCode && String(assign.staffCode).toLowerCase() === String(currentUser.code || '').toLowerCase()) ||
+          (assign.staffId && String(assign.staffId) === String(currentUser.id || ''))
+        );
+
+        var teacherCell = '';
+        if (isHM) {
+          teacherCell = `
+            <select id="assign-select-${safeKey}" class="border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800 bg-white focus:ring-2 focus:ring-indigo-500 w-full outline-none shadow-2xs">
+              ${(staffList || []).map(function(st) {
+                var isSelected = (st.stateStaffCode === assign.staffCode || st.nationalCode === assign.staffCode || String(st.id) === String(assign.staffId));
+                return `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}" ${isSelected ? 'selected' : ''}>${escapeText(st.name)} - ${escapeText(st.subject || st.designation)} (${escapeText(st.stateStaffCode || '')})</option>`;
+              }).join('')}
+            </select>
+          `;
+        } else {
+          teacherCell = `
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs shrink-0">
+                <i class="fa-solid fa-chalkboard-user"></i>
+              </div>
+              <div>
+                <span class="font-bold text-slate-800">${escapeText(assign.staffName || 'Unassigned')}</span>
+                ${isCurrentStaffAssigned ? `<span class="ml-1.5 px-1.5 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-300">You</span>` : ''}
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <tr class="hover:bg-slate-50 transition ${isCurrentStaffAssigned ? 'bg-sky-50/40' : ''}">
+            <td class="p-2.5 border-r border-slate-200 font-bold text-slate-800">
+              <span class="inline-flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full ${item.section === 'A' ? 'bg-indigo-600' : 'bg-emerald-600'}"></span>
+                <span>${escapeText(item.classVal)} - Section ${escapeText(item.section)}</span>
+              </span>
+            </td>
+            <td class="p-2.5 border-r border-slate-200">
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold ${item.medium === 'English' ? 'bg-blue-50 text-blue-700 border border-blue-200' : (item.medium === 'Urdu' ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-amber-50 text-amber-700 border border-amber-200')}">
+                ${escapeText(item.medium)}
+              </span>
+            </td>
+            <td class="p-2.5 border-r border-slate-200">
+              ${teacherCell}
+            </td>
+            <td class="p-2.5 border-r border-slate-200 font-mono font-bold text-slate-700">
+              ${escapeText(assign.staffCode || '-')}
+            </td>
+            <td class="p-2.5 border-r border-slate-200 text-slate-600">
+              <span class="font-semibold text-slate-800">${escapeText(assign.subject || 'General')}</span>
+              <span class="text-[10px] text-slate-400 block">${escapeText(assign.desig || 'School Assistant')}</span>
+            </td>
+            <td class="p-2.5 text-center">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 inline-flex items-center gap-1 shadow-2xs">
+                <i class="fa-solid fa-lock-open text-[9px]"></i> Class Teacher (Edit Rights)
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      tbody.innerHTML = rowsHtml;
+    }
+
+    function saveClassTeacherAssignments() {
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only the Headmaster / Principal can assign classes to teachers.');
+        return;
+      }
+
+      var classesList = [
+        { key: 'Class VI-A', classVal: 'Class VI', section: 'A', medium: 'English' },
+        { key: 'Class VI-B', classVal: 'Class VI', section: 'B', medium: 'Urdu' },
+        { key: 'Class VII-A', classVal: 'Class VII', section: 'A', medium: 'English' },
+        { key: 'Class VII-B', classVal: 'Class VII', section: 'B', medium: 'Telugu' },
+        { key: 'Class VIII-A', classVal: 'Class VIII', section: 'A', medium: 'English' },
+        { key: 'Class VIII-B', classVal: 'Class VIII', section: 'B', medium: 'Telugu' },
+        { key: 'Class IX-A', classVal: 'Class IX', section: 'A', medium: 'English' },
+        { key: 'Class IX-B', classVal: 'Class IX', section: 'B', medium: 'Telugu' },
+        { key: 'Class X-A', classVal: 'Class X', section: 'A', medium: 'English' },
+        { key: 'Class X-B', classVal: 'Class X', section: 'B', medium: 'Telugu' }
+      ];
+
+      classesList.forEach(function(item) {
+        var safeKey = item.key.replace(/\s+/g, '_');
+        var sel = document.getElementById('assign-select-' + safeKey);
+        if (sel && sel.value) {
+          var code = sel.value;
+          var foundStaff = (staffList || []).find(s => (s.stateStaffCode === code || s.nationalCode === code || String(s.id) === String(code)));
+          if (foundStaff) {
+            classTeacherAssignments[item.key] = {
+              classVal: item.classVal,
+              section: item.section,
+              medium: item.medium,
+              staffId: foundStaff.id,
+              staffCode: foundStaff.stateStaffCode || foundStaff.nationalCode || code,
+              staffName: foundStaff.name,
+              subject: foundStaff.subject || foundStaff.appointedFor || '',
+              desig: foundStaff.designation || 'School Assistant'
+            };
+          }
+        }
+      });
+
+      try {
+        localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
+      } catch(e) {}
+      syncToCloud('zphs_class_teacher_assignments', classTeacherAssignments);
+
+      alert('Class teacher assignments saved and synchronized successfully!');
+      renderClassTeacherAssignmentsTable();
+      renderStudentTable();
+      renderClasswiseStudents();
+      renderMarksTable();
+    }
+
+    function resetClassTeacherAssignmentsToDefault() {
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only Headmaster can reset assignments.');
+        return;
+      }
+      if (!confirm('Reset all class teacher assignments to official defaults?')) return;
+      classTeacherAssignments = JSON.parse(JSON.stringify(defaultClassTeacherAssignments));
+      try {
+        localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
+      } catch(e){}
+      syncToCloud('zphs_class_teacher_assignments', classTeacherAssignments);
+      renderAdministrationSection();
+      renderStudentTable();
+      renderClasswiseStudents();
+      renderMarksTable();
+      alert('Class teacher assignments have been reset to default.');
+    }
 
     function handleLogin(e) {
       e.preventDefault();
       var user = document.getElementById('login-username').value.trim().toLowerCase();
       var pass = document.getElementById('login-password').value.trim();
-
-      // Verify master password
-      if (pass !== 'Gajwel@123') {
-        alert('Invalid Password! Please enter the correct password.');
-        return;
-      }
 
       // Check all employees across Teaching and Non-Teaching Staff by Employee ID (State Staff Code or National Code)
       var allStaff = getAllStaffList();
@@ -6168,24 +6814,45 @@
         return code === user || natCode === user;
       });
 
-      if (matchedStaff) {
-        var s = matchedStaff.member;
-        isAdmin = true;
-        currentUser = {
-          name: s.name,
-          designation: (s.designation || 'Staff') + ' (Admin)',
-          code: s.stateStaffCode || s.nationalCode || user,
-          role: 'admin'
-        };
-        localStorage.setItem('zphs_current_user', JSON.stringify(currentUser));
-        localStorage.setItem('zphs_is_admin', 'true');
-        updateUIAuthStatus();
-        closeModal('modal-login');
-        pullFromCloud(renderAllViews);
+      if (!matchedStaff) {
+        alert('Invalid Employee ID! No employee found with the entered ID.');
         return;
       }
 
-      alert('Invalid Employee ID! No employee found with the entered ID.');
+      var s = matchedStaff.member;
+      var staffCode = s.stateStaffCode || s.nationalCode || user;
+      var storedPass = (staffPasswordStore && staffPasswordStore[staffCode]) ? staffPasswordStore[staffCode] : 'Gajwel@123';
+
+      // Verify custom or master password
+      if (pass !== storedPass && pass !== 'Gajwel@123') {
+        alert('Invalid Password! Please enter your correct staff password (or default Gajwel@123).');
+        return;
+      }
+
+      var desigStr = (s.designation || '').toLowerCase();
+      var isHM = (staffCode === '2133745' || staffCode === '1808557' || desigStr.includes('ghm') || desigStr.includes('headmaster'));
+      var isNonTeach = (matchedStaff.type === 'non-teaching' || (s.role && s.role.toLowerCase().includes('non-teaching')) || desigStr.includes('record assistant') || desigStr.includes('office assistant') || desigStr.includes('subordinate'));
+
+      isAdmin = isHM;
+      currentUser = {
+        id: s.id,
+        name: s.name,
+        designation: s.designation || (isNonTeach ? 'Non-Teaching Staff' : 'Teacher'),
+        code: staffCode,
+        category: isNonTeach ? 'non-teaching' : 'teaching',
+        isHeadmaster: isHM,
+        isNonTeaching: isNonTeach,
+        role: isHM ? 'headmaster' : (isNonTeach ? 'non-teaching' : 'teacher')
+      };
+
+      try {
+        localStorage.setItem('zphs_current_user', JSON.stringify(currentUser));
+        localStorage.setItem('zphs_is_admin', isHM ? 'true' : 'false');
+      } catch (err) {}
+
+      updateUIAuthStatus();
+      closeModal('modal-login');
+      pullFromCloud(renderAllViews);
     }
 
     // Helper: Normalize DOB to 8-digit DDMMYYYY string
@@ -6272,26 +6939,69 @@
     function updateUIAuthStatus() {
       var container = document.getElementById('auth-status-container');
       var protectedNavs = ['nav-staff', 'nav-students', 'nav-students-classwise', 'nav-yearwise-students', 'nav-certificates', 'nav-administration', 'nav-mdm', 'nav-exams'];
-      var protectedTabs = ['staff', 'students', 'students-classwise', 'yearwise-students', 'certificates', 'administration', 'mdm', 'exams'];
       var studentNav = document.getElementById('nav-student-portal');
       var sidebarAuth = document.getElementById('sidebar-auth-nav');
 
-      if (isAdmin && currentUser) {
+      if (currentUser && currentUser.role !== 'student') {
+        var isHM = isUserHeadmaster(currentUser);
+        var isNonTeach = isUserNonTeaching(currentUser);
+        var assignedInfo = getAssignedClassForUser(currentUser);
+
+        var badgeLabel = isHM ? 'Headmaster' : (isNonTeach ? 'Office Staff' : 'Teacher');
+        var badgeColor = isHM 
+          ? 'bg-gradient-to-r from-sky-600 to-indigo-600 border-sky-400 text-white' 
+          : (isNonTeach 
+            ? 'bg-amber-600 border-amber-500 text-white' 
+            : 'bg-indigo-600 border-indigo-500 text-white');
+        var badgeIcon = isHM ? 'fa-shield-halved' : (isNonTeach ? 'fa-briefcase' : 'fa-chalkboard-user');
+        var badgeTooltip = isHM 
+          ? `Headmaster / Super Admin (${currentUser.code || ''})` 
+          : (isNonTeach 
+            ? `${currentUser.name} - Non-Teaching Staff (View-Only Mode)` 
+            : `${currentUser.name} - Class Teacher: ${assignedInfo || 'General'}`);
+
         container.innerHTML = `
           <div class="flex items-center gap-1.5">
-            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border border-sky-400 cursor-default" title="Admin Code: ${escapeText(currentUser.code || '2133745')}">
-              <i class="fa-solid fa-shield text-[11px]"></i> <span>Admin</span>
+            <span class="text-xs ${badgeColor} font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border cursor-default" title="${escapeText(badgeTooltip)}">
+              <i class="fa-solid ${badgeIcon} text-[11px]"></i> <span>${escapeText(badgeLabel)}</span>
             </span>
+            <button onclick="openChangePasswordModal()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Change Staff Login Password">
+              <i class="fa-solid fa-key text-[11px]"></i> <span class="hidden md:inline">Password</span>
+            </button>
             <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
               <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span class="hidden sm:inline">Logout</span>
             </button>
           </div>
         `;
-        document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+
+        // All logged-in staff can access the portal sections to view records
         protectedNavs.forEach(id => {
           var el = document.getElementById(id);
           if (el) el.classList.remove('hidden');
         });
+
+        if (isHM) {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+          document.querySelectorAll('.admin-assignment-action').forEach(el => el.classList.remove('hidden'));
+        } else {
+          document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
+          document.querySelectorAll('.admin-assignment-action').forEach(el => el.classList.add('hidden'));
+        }
+
+        // Add Student buttons: shown for HM or assigned Class Teachers, hidden for Non-Teaching staff
+        var canAddStudents = isHM || hasAnyAssignedClass(currentUser);
+        document.querySelectorAll('.btn-add-student').forEach(el => {
+          if (canAddStudents) el.classList.remove('hidden');
+          else el.classList.add('hidden');
+        });
+
+        // Edit / Enter Marks button in exam section
+        var btnToggleInline = document.getElementById('btn-toggle-inline-marks');
+        if (btnToggleInline) {
+          if (canAddStudents) btnToggleInline.classList.remove('hidden');
+          else btnToggleInline.classList.add('hidden');
+        }
+
         if (studentNav) studentNav.classList.add('hidden');
         if (sidebarAuth) sidebarAuth.classList.add('hidden');
       } else if (currentUser && currentUser.role === 'student') {
@@ -6312,24 +7022,6 @@
         });
         if (studentNav) studentNav.classList.remove('hidden');
         if (sidebarAuth) sidebarAuth.classList.add('hidden');
-      } else if (currentUser && currentUser.role === 'staff') {
-        container.innerHTML = `
-          <div class="flex items-center gap-1.5">
-            <span class="text-xs bg-sky-500 hover:bg-sky-600 text-white font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border border-sky-400 cursor-default" title="${escapeText(currentUser.name)} (${escapeText(currentUser.code)})">
-              <i class="fa-solid fa-id-badge text-[11px]"></i> <span>Staff</span>
-            </span>
-            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
-              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span class="hidden sm:inline">Logout</span>
-            </button>
-          </div>
-        `;
-        document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
-        protectedNavs.forEach(id => {
-          var el = document.getElementById(id);
-          if (el) el.classList.add('hidden');
-        });
-        if (studentNav) studentNav.classList.add('hidden');
-        if (sidebarAuth) sidebarAuth.classList.add('hidden');
       } else {
         container.innerHTML = `
           <button onclick="openLoginModal()" class="bg-white hover:bg-amber-50 text-orange-950 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Login Portal">
@@ -6346,9 +7038,11 @@
         if (sidebarAuth) sidebarAuth.classList.remove('hidden');
       }
 
-      // If user is not admin, ensure they are not viewing a protected section
-      if (!isAdmin) {
-        var isCurrentTabProtected = protectedTabs.some(tabId => {
+      // If user is not staff/admin, ensure they are not viewing a protected section
+      var protectedTabsList = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'exams', 'mdm', 'yearwise-students'];
+      var isStaffUser = currentUser && currentUser.role !== 'student';
+      if (!isAdmin && !isStaffUser) {
+        var isCurrentTabProtected = protectedTabsList.some(tabId => {
           var sec = document.getElementById('section-' + tabId);
           return sec && !sec.classList.contains('hidden');
         });
@@ -6527,14 +7221,18 @@
                 <button onclick="openBonafideModal(${st.id})" class="bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="Issue Bonafide Certificate">
                   <i class="fa-solid fa-certificate text-orange-600 text-[11px]"></i> <span>Bonafide</span>
                 </button>
-                ${isAdmin ? `
-                <button onclick="openStudentModal(${st.id})" class="admin-only bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="Edit Student Record">
+                ${canUserEditClass(st.classVal, st.section) ? `
+                <button onclick="openStudentModal(${st.id})" class="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Edit Student Record">
                   <i class="fa-solid fa-pen-to-square text-[11px] text-blue-600"></i>
                 </button>
-                <button onclick="deleteStudent(${st.id})" class="admin-only text-rose-600 hover:text-rose-800 p-1 rounded hover:bg-rose-50 transition" title="Delete Student">
+                <button onclick="deleteStudent(${st.id})" class="text-rose-600 hover:text-rose-800 p-1 rounded hover:bg-rose-50 transition cursor-pointer" title="Delete Student">
                   <i class="fa-solid fa-trash text-xs"></i>
                 </button>
-                ` : ''}
+                ` : (currentUser && currentUser.role !== 'student' ? `
+                <span class="text-[10px] text-slate-500 font-medium bg-slate-100 px-1.5 py-1 rounded border border-slate-200 inline-flex items-center gap-1 cursor-default" title="View Only: Editing restricted to Class Teacher (${escapeText((getClassTeacherFor(st.classVal, st.section) || {}).staffName || 'Assigned Teacher')}) or Headmaster">
+                  <i class="fa-solid fa-lock text-[9px] text-slate-400"></i>
+                </span>
+                ` : '')}
               </div>
             </td>
           </tr>
@@ -7310,6 +8008,7 @@
       var statPresent = document.getElementById('admin-stat-present'); if (statPresent) statPresent.innerText = presentCount;
       var statLeft = document.getElementById('admin-stat-left'); if (statLeft) statLeft.innerText = leftCount;
 
+      renderClassTeacherAssignmentsTable();
       filterAdministrationRegister();
     }
 
@@ -7887,17 +8586,23 @@
           <td class="p-3 text-slate-600">${escapeText(st.contact || '+91 9848011220')}</td>
           <td class="p-3 text-right whitespace-nowrap">
             <div class="inline-flex items-center gap-1.5 justify-end">
-              ${isAdmin ? `
-              <button onclick="openStudentModal(${st.id})" class="admin-only bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="Edit Student Record">
+              ${canUserEditClass(st.classVal, st.section) ? `
+              <button onclick="openStudentModal(${st.id})" class="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Edit Student Record">
                 <i class="fa-solid fa-pen-to-square text-[11px] text-blue-600"></i> <span>Edit</span>
               </button>
-              ` : ''}
-              <button onclick="viewStudent(${st.id})" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="View Full Profile">
+              ` : (currentUser && currentUser.role !== 'student' ? `
+              <span class="text-[10px] text-slate-500 font-medium bg-slate-100 px-2 py-1 rounded border border-slate-200 inline-flex items-center gap-1 cursor-default" title="View Only: Editing restricted to Class Teacher (${escapeText((getClassTeacherFor(st.classVal, st.section) || {}).staffName || 'Assigned Teacher')}) or Headmaster">
+                <i class="fa-solid fa-lock text-[9px] text-slate-400"></i> View Only
+              </span>
+              ` : '')}
+              <button onclick="viewStudent(${st.id})" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="View Full Profile">
                 <i class="fa-solid fa-eye text-[11px]"></i> <span>View</span>
               </button>
-              <button onclick="deleteStudent(${st.id})" class="admin-only text-rose-600 hover:text-rose-800 p-1.5 rounded hover:bg-rose-50 transition ${isAdmin ? '' : 'hidden'}" title="Delete Student">
+              ${canUserEditClass(st.classVal, st.section) ? `
+              <button onclick="deleteStudent(${st.id})" class="text-rose-600 hover:text-rose-800 p-1.5 rounded hover:bg-rose-50 transition cursor-pointer" title="Delete Student">
                 <i class="fa-solid fa-trash text-xs"></i>
               </button>
+              ` : ''}
             </div>
           </td>
         </tr>
@@ -9045,8 +9750,10 @@ var currentTimetableClass = 'Class 10';
             return 'E';
           }
 
+          var canEditThisRow = canUserEditClass(st.classVal, st.section);
+
           function renderFaCell(subKey, comps, tot, grd) {
-            if (isInlineMarksEditing) {
+            if (isInlineMarksEditing && canEditThisRow) {
               return `
                 <div class="flex items-center justify-between text-xs px-0.5 gap-1">
                   <input type="number" id="in-fa-${st.id}-${subKey}-0" min="0" max="5" step="0.5" value="${comps[0]}" oninput="onInlineFaInput(${st.id}, '${subKey}')" class="w-7 text-center border border-amber-300 rounded bg-amber-50/60 font-semibold p-0.5 text-[11px] focus:bg-white focus:ring-1 focus:ring-amber-500">
@@ -9104,12 +9811,16 @@ var currentTimetableClass = 'Class 10';
               <!-- Actions (Edit Marks + Progress Card) -->
               <td class="p-2 text-center whitespace-nowrap">
                 <div class="inline-flex items-center gap-1.5 justify-center">
-                  ${isAdmin ? `
-                  <button onclick="openEditMarksModal(${st.id}, '${examType}')" class="admin-only text-amber-800 hover:text-amber-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 border border-amber-300 inline-flex items-center gap-1 transition shadow-2xs" title="Edit Student Marks via Modal">
+                  ${canEditThisRow ? `
+                  <button onclick="openEditMarksModal(${st.id}, '${examType}')" class="text-amber-800 hover:text-amber-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 border border-amber-300 inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Edit Student Marks via Modal">
                     <i class="fa-solid fa-pen-to-square text-amber-600 text-[11px]"></i> Edit
                   </button>
-                  ` : ''}
-                  <button onclick="downloadProgressCard(${st.id}, '${examType}')" class="text-sky-800 hover:text-sky-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-sky-50 hover:bg-sky-100 border border-sky-300 inline-flex items-center gap-1 transition shadow-2xs" title="Download Progress Card">
+                  ` : (currentUser && currentUser.role !== 'student' ? `
+                  <span class="text-[10px] text-slate-400 font-medium bg-slate-100 px-2 py-1 rounded border border-slate-200 inline-flex items-center gap-1 cursor-default" title="View Only: Assigned to ${escapeText((getClassTeacherFor(st.classVal, st.section) || {}).staffName || 'Class Teacher')}">
+                    <i class="fa-solid fa-lock text-[9px] text-slate-400"></i> View Only
+                  </span>
+                  ` : '')}
+                  <button onclick="downloadProgressCard(${st.id}, '${examType}')" class="text-sky-800 hover:text-sky-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-sky-50 hover:bg-sky-100 border border-sky-300 inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Download Progress Card">
                     <i class="fa-solid fa-file-arrow-down text-sky-600 text-[11px]"></i> Progress Card
                   </button>
                 </div>
@@ -9142,6 +9853,7 @@ var currentTimetableClass = 'Class 10';
         `;
 
         tbody.innerHTML = filteredStudents.map(st => {
+          var canEditThisRow = canUserEditClass(st.classVal, st.section);
           var isHighSchool = (st.classVal === 'Class VIII' || st.classVal === 'Class IX' || st.classVal === 'Class X');
           var custom = getStudentExamMarks(st.id, examType) || {};
           var mFirst = custom.first !== undefined ? custom.first : 85;
@@ -9164,7 +9876,7 @@ var currentTimetableClass = 'Class 10';
           }
 
           function renderSaCell(subKey, val) {
-            if (isInlineMarksEditing) {
+            if (isInlineMarksEditing && canEditThisRow) {
               return `
                 <div class="flex items-center justify-center gap-1">
                   <input type="number" id="in-sa-${st.id}-${subKey}" min="0" max="100" value="${val}" oninput="onInlineSaInput(${st.id})" class="w-11 text-center border border-amber-300 rounded bg-amber-50/60 font-semibold p-0.5 text-xs focus:bg-white focus:ring-1 focus:ring-amber-500">
@@ -9181,7 +9893,7 @@ var currentTimetableClass = 'Class 10';
           var gsSa = renderSaCell('science', mSci);
 
           function renderCoCurrSelect(field, val) {
-            if (isInlineMarksEditing) {
+            if (isInlineMarksEditing && canEditThisRow) {
               var opts = ['A+', 'A', 'B+', 'B', 'C'];
               return `
                 <select id="in-sa-${st.id}-${field}" class="border border-emerald-300 rounded bg-emerald-50/60 font-bold text-emerald-800 p-0.5 text-xs outline-none focus:bg-white">
@@ -9214,12 +9926,16 @@ var currentTimetableClass = 'Class 10';
               <!-- Actions (Edit Marks + Progress Card) -->
               <td class="p-2 text-center whitespace-nowrap">
                 <div class="inline-flex items-center gap-1.5 justify-center">
-                  ${isAdmin ? `
-                  <button onclick="openEditMarksModal(${st.id}, '${examType}')" class="admin-only text-amber-800 hover:text-amber-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 border border-amber-300 inline-flex items-center gap-1 transition shadow-2xs" title="Edit Student Marks via Modal">
+                  ${canEditThisRow ? `
+                  <button onclick="openEditMarksModal(${st.id}, '${examType}')" class="text-amber-800 hover:text-amber-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 border border-amber-300 inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Edit Student Marks via Modal">
                     <i class="fa-solid fa-pen-to-square text-amber-600 text-[11px]"></i> Edit
                   </button>
-                  ` : ''}
-                  <button onclick="downloadProgressCard(${st.id}, '${examType}')" class="text-sky-800 hover:text-sky-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-sky-50 hover:bg-sky-100 border border-sky-300 inline-flex items-center gap-1 transition shadow-2xs" title="Download Progress Card">
+                  ` : (currentUser && currentUser.role !== 'student' ? `
+                  <span class="text-[10px] text-slate-400 font-medium bg-slate-100 px-2 py-1 rounded border border-slate-200 inline-flex items-center gap-1 cursor-default" title="View Only: Assigned to ${escapeText((getClassTeacherFor(st.classVal, st.section) || {}).staffName || 'Class Teacher')}">
+                    <i class="fa-solid fa-lock text-[9px] text-slate-400"></i> View Only
+                  </span>
+                  ` : '')}
+                  <button onclick="downloadProgressCard(${st.id}, '${examType}')" class="text-sky-800 hover:text-sky-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-sky-50 hover:bg-sky-100 border border-sky-300 inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Download Progress Card">
                     <i class="fa-solid fa-file-arrow-down text-sky-600 text-[11px]"></i> Progress Card
                   </button>
                 </div>
@@ -9344,6 +10060,13 @@ var currentTimetableClass = 'Class 10';
       var name = document.getElementById('student-name').value.trim().toUpperCase();
       var classVal = document.getElementById('student-class').value;
       var section = document.getElementById('student-section').value;
+
+      if (!canUserEditClass(classVal, section)) {
+        var assigned = getClassTeacherFor(classVal, section);
+        var teacherName = assigned ? assigned.staffName : 'Assigned Teacher';
+        alert('Permission Denied: You do not have permission to modify or add students in ' + classVal + ' - Section ' + section + '.\n\nAssigned Class Teacher: ' + teacherName + '\n(Headmaster has universal editing permission across all classes)');
+        return;
+      }
       var dob = document.getElementById('student-dob').value.trim() || '01/01/2014';
       var doaInput = document.getElementById('student-doa');
       var doa = (doaInput && doaInput.value.trim()) ? doaInput.value.trim() : '';
@@ -9615,13 +10338,27 @@ var currentTimetableClass = 'Class 10';
     }
 
     function deleteStudent(id) {
-      if (!isAdmin) {
-        alert('Access Denied: Only administrators have permission to make changes.');
+      if (!currentUser || currentUser.role === 'student') {
+        alert('Access Denied: Please sign in with an authorized staff account.');
         if (typeof openLoginModal === 'function') openLoginModal();
         return;
       }
+      if (isUserNonTeaching(currentUser)) {
+        alert('Access Denied: Non-Teaching staff have View-Only permissions.');
+        return;
+      }
 
-      if (confirm('Delete student record?')) {
+      var student = (studentList || []).find(s => s.id === id);
+      if (!student) return;
+
+      if (!canUserEditClass(student.classVal, student.section)) {
+        var assigned = getClassTeacherFor(student.classVal, student.section);
+        var teacherName = assigned ? assigned.staffName : 'Assigned Teacher';
+        alert('Permission Denied: You can only delete students from your assigned class.\n\nAssigned Class Teacher: ' + teacherName + '\n(Headmaster has universal permission)');
+        return;
+      }
+
+      if (confirm('Delete student record for ' + student.name + '?')) {
         studentList = studentList.filter(s => s.id !== id);
         try {
           localStorage.setItem('zphs_students_portal_v3', JSON.stringify(studentList));
@@ -9629,6 +10366,7 @@ var currentTimetableClass = 'Class 10';
         } catch(e) {}
         syncToCloud('zphs_students_portal_v3', studentList);
         renderStudentTable();
+        renderClasswiseStudents();
         renderCertificatesTable();
         updateDashboardStats();
       }
