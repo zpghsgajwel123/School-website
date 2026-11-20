@@ -3601,6 +3601,10 @@
           <span class="text-slate-500 font-medium block">Class & Section</span>
           <span class="text-sm font-bold text-slate-900" id="view-student-class-sec">-</span>
         </div>
+        <div class="p-3 bg-blue-50/70 rounded-lg border border-blue-200">
+          <span class="text-blue-800 font-medium block">Medium of Instruction</span>
+          <span class="text-sm font-bold text-blue-950" id="view-student-medium">-</span>
+        </div>
         <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
           <span class="text-slate-500 font-medium block">Date of Birth (DOB)</span>
           <span class="text-sm font-bold text-slate-900" id="view-student-dob">-</span>
@@ -3840,11 +3844,11 @@
           </div>
         </div>
 
-        <!-- Class, Section, DOB, Date of Admission -->
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <!-- Class, Section, Medium, DOB, Date of Admission -->
+        <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Class</label>
-            <select id="student-class" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold outline-none focus:ring-2 focus:ring-theme-600">
+            <select id="student-class" onchange="autoSuggestMediumFromClassSection()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold outline-none focus:ring-2 focus:ring-theme-600">
               <option value="Class VI">Class VI</option>
               <option value="Class VII">Class VII</option>
               <option value="Class VIII">Class VIII</option>
@@ -3854,10 +3858,18 @@
           </div>
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Section</label>
-            <select id="student-section" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold outline-none focus:ring-2 focus:ring-theme-600">
+            <select id="student-section" onchange="autoSuggestMediumFromClassSection()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold outline-none focus:ring-2 focus:ring-theme-600">
               <option value="A">Section A</option>
               <option value="B">Section B</option>
               <option value="C">Section C</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Medium</label>
+            <select id="student-medium" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white font-semibold outline-none focus:ring-2 focus:ring-theme-600">
+              <option value="English">English</option>
+              <option value="Telugu">Telugu</option>
+              <option value="Urdu">Urdu</option>
             </select>
           </div>
           <div>
@@ -4220,27 +4232,38 @@
           </div>
         </div>
 
-        <!-- Activity Photo Upload Section -->
-        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-          <label class="block font-semibold text-slate-700">Activity Photograph (Optional)</label>
-          <div class="flex items-center gap-3">
-            <div id="activity-photo-preview-box" class="w-20 h-16 rounded-lg bg-slate-200 border border-slate-300 overflow-hidden flex items-center justify-center shrink-0">
-              <i class="fa-solid fa-image text-slate-400 text-xl" id="activity-photo-placeholder"></i>
-              <img id="activity-photo-preview" src="" alt="Activity Preview" class="w-full h-full object-cover hidden">
+        <!-- Activity Multi-Photo Upload & Manager Section -->
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div>
+              <label class="block font-semibold text-slate-800">Activity Photographs (Add One or Multiple)</label>
+              <p class="text-[11px] text-slate-500" id="activity-photos-count">0 photos attached</p>
             </div>
-            <div class="flex-1 space-y-1">
-              <input type="hidden" id="activity-photo-data">
-              <div class="flex items-center gap-2">
-                <label for="activity-photo-file" class="cursor-pointer bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
-                  <i class="fa-solid fa-cloud-arrow-up text-theme-600"></i>
-                  <span>Upload Photo</span>
-                </label>
-                <input type="file" id="activity-photo-file" accept="image/*" class="hidden" onchange="handleActivityPhotoUpload(event)">
-                <button type="button" onclick="clearActivityPhoto()" id="btn-clear-activity-photo" class="hidden text-rose-600 hover:text-rose-800 text-xs font-semibold px-2 py-1">Remove</button>
-              </div>
-              <p class="text-[11px] text-slate-500">Supports JPG, PNG (Auto-compressed for fast display)</p>
-            </div>
+            <button type="button" onclick="clearAllActivityPhotos()" id="btn-clear-all-activity-photos" class="hidden text-rose-600 hover:text-rose-800 text-xs font-semibold px-2 py-0.5 rounded hover:bg-rose-50 transition cursor-pointer">
+              <i class="fa-solid fa-trash-can mr-1"></i> Clear All
+            </button>
           </div>
+
+          <!-- Upload Controls -->
+          <div class="flex flex-wrap items-center gap-2">
+            <label for="activity-photo-files" class="cursor-pointer bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-cloud-arrow-up text-amber-600"></i>
+              <span>+ Upload Photos (Multi)</span>
+            </label>
+            <input type="file" id="activity-photo-files" accept="image/*" multiple class="hidden" onchange="handleActivityMultiPhotoUpload(event)">
+
+            <button type="button" onclick="promptAddActivityPhotoUrl()" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer">
+              <i class="fa-solid fa-link text-indigo-600"></i>
+              <span>+ Add via URL</span>
+            </button>
+            <span class="text-[11px] text-slate-400">Select multiple images at once (JPG, PNG)</span>
+          </div>
+
+          <!-- Thumbnail Gallery Grid -->
+          <div id="activity-photos-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 pt-1 max-h-48 overflow-y-auto p-1.5 bg-white border border-slate-200 rounded-lg">
+            <!-- Dynamically populated by renderActivityPhotosManager -->
+          </div>
+          <p class="text-[10px] text-slate-400 leading-tight">Tip: The first photo (#1) acts as the primary Cover Photo on the card. Click "Make Cover" on any thumbnail to promote it.</p>
         </div>
 
         <div>
@@ -4263,6 +4286,53 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ACTIVITY MULTI-PHOTO GALLERY LIGHTBOX -->
+  <div id="modal-activity-gallery-view" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden z-50">
+    <div class="relative bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl flex flex-col max-h-[92vh]">
+      <!-- Close Button -->
+      <button onclick="closeModal('modal-activity-gallery-view')" class="absolute top-3 right-3 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 w-9 h-9 rounded-full flex items-center justify-center transition z-20 cursor-pointer">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <!-- Header: Title, Category, Counter -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3 pr-10">
+        <div>
+          <span id="act-lightbox-cat" class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Activity</span>
+          <h3 id="act-lightbox-title" class="text-base sm:text-lg font-bold text-white mt-1">Activity Title</h3>
+        </div>
+        <div class="text-right">
+          <span id="act-lightbox-counter" class="text-xs font-mono font-bold text-slate-300 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700">1 / 1</span>
+        </div>
+      </div>
+
+      <!-- Main Photo Display -->
+      <div class="relative flex-1 min-h-[300px] max-h-[58vh] bg-black/60 rounded-xl overflow-hidden flex items-center justify-center group">
+        <img id="act-lightbox-img" src="" alt="Activity Photo" class="max-w-full max-h-[56vh] object-contain transition-all duration-300">
+        
+        <!-- Prev Button -->
+        <button type="button" onclick="prevActivityLightboxSlide()" id="act-lightbox-prev" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition border border-white/20 shadow-lg cursor-pointer">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+
+        <!-- Next Button -->
+        <button type="button" onclick="nextActivityLightboxSlide()" id="act-lightbox-next" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition border border-white/20 shadow-lg cursor-pointer">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Caption / Description & Action -->
+      <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <p id="act-lightbox-desc" class="text-slate-300 flex-1 line-clamp-2 text-xs sm:text-sm"></p>
+        <button type="button" onclick="openCurrentLightboxInMainGallery()" class="text-xs font-semibold text-amber-400 hover:text-amber-300 bg-amber-950/60 hover:bg-amber-900/80 border border-amber-800/80 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition cursor-pointer">
+          <i class="fa-solid fa-images"></i> <span>Open in Home Photo Gallery</span>
+        </button>
+      </div>
+
+      <!-- Thumbnail Strip -->
+      <div id="act-lightbox-thumbnails" class="mt-3 flex items-center gap-2 overflow-x-auto pb-1 pt-1 border-t border-slate-800"></div>
     </div>
   </div>
 
@@ -4870,6 +4940,7 @@
                 if (student.category) past.category = student.category;
                 if (student.contact) past.contact = student.contact;
                 if (student.admNo) past.admNo = student.admNo;
+                if (student.medium) past.medium = student.medium;
                 updatedCount++;
               }
             });
@@ -4892,6 +4963,7 @@
             if (student.category) past.category = student.category;
             if (student.contact) past.contact = student.contact;
             if (student.admNo) past.admNo = student.admNo;
+            if (student.medium) past.medium = student.medium;
           }
         });
       }
@@ -5999,6 +6071,23 @@
       openStaffModal(currentViewingStaffType, currentViewingStaffId);
     }
 
+    function getAutoSuggestedMedium(cls, sec) {
+      cls = (cls || '').trim();
+      sec = (sec || '').trim().toUpperCase();
+      if (cls === 'Class VI' && sec === 'B') return 'Urdu';
+      if (sec === 'B' || sec === 'C') return 'Telugu';
+      return 'English';
+    }
+
+    function autoSuggestMediumFromClassSection() {
+      var clsEl = document.getElementById('student-class');
+      var secEl = document.getElementById('student-section');
+      var medEl = document.getElementById('student-medium');
+      if (clsEl && secEl && medEl) {
+        medEl.value = getAutoSuggestedMedium(clsEl.value, secEl.value);
+      }
+    }
+
     function openStudentModal(id) {
       if (!currentUser || currentUser.role === 'student') {
         alert('Access Denied: Please sign in with an authorized staff account.');
@@ -6052,6 +6141,13 @@
       document.getElementById('student-roll').value = student ? (student.rollNo || '') : '';
       document.getElementById('student-class').value = student ? (student.classVal || defaultClass) : defaultClass;
       document.getElementById('student-section').value = student ? (student.section || defaultSec) : defaultSec;
+
+      var medEl = document.getElementById('student-medium');
+      if (medEl) {
+        var defaultMed = getAutoSuggestedMedium(student ? (student.classVal || defaultClass) : defaultClass, student ? (student.section || defaultSec) : defaultSec);
+        medEl.value = student ? (student.medium || defaultMed) : defaultMed;
+      }
+
       document.getElementById('student-dob').value = student ? (student.dob || '') : '';
 
       var doaEl = document.getElementById('student-doa');
@@ -6101,6 +6197,8 @@
       document.getElementById('view-student-pen').innerText = student.pen || 'NA';
       document.getElementById('view-student-roll').innerText = student.rollNo || '-';
       document.getElementById('view-student-class-sec').innerText = (student.classVal || '-') + ' - Section ' + (student.section || '-');
+      var vMedEl = document.getElementById('view-student-medium');
+      if (vMedEl) vMedEl.innerText = (student.medium || getAutoSuggestedMedium(student.classVal, student.section)) + ' Medium';
       document.getElementById('view-student-dob').innerText = student.dob || '01/01/2014';
 
       var vDoaEl = document.getElementById('view-student-doa');
@@ -9017,7 +9115,10 @@
               <span>${escapeText(st.name)}</span>
             </div>
           </td>
-          <td class="p-3 font-medium">${escapeText(st.classVal)}</td>
+          <td class="p-3 font-medium">
+            <div>${escapeText(st.classVal)}</div>
+            <div class="text-[10px] font-semibold ${st.medium === 'Urdu' ? 'text-purple-700' : (st.medium === 'Telugu' ? 'text-emerald-700' : 'text-blue-700')}">${escapeText(st.medium || getAutoSuggestedMedium(st.classVal, st.section))} Medium</div>
+          </td>
           <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">Section ${escapeText(st.section)}</span></td>
           <td class="p-3 text-slate-600">${escapeText(st.dob || '01/01/2014')}</td>
           <td class="p-3 text-slate-600">${escapeText(st.contact || '+91 9848011220')}</td>
@@ -9208,7 +9309,7 @@
           <div class="col-span-full p-8 text-center bg-white border border-dashed border-slate-300 rounded-2xl">
             <i class="fa-solid fa-calendar-xmark text-3xl text-slate-400 mb-2"></i>
             <p class="text-sm font-semibold text-slate-600">No school activities added yet.</p>
-            ${isAdmin ? `<button onclick="openAddActivityModal()" class="mt-3 bg-theme-700 hover:bg-theme-800 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs shadow-sm">
+            ${isAdmin ? `<button onclick="openAddActivityModal()" class="mt-3 bg-theme-700 hover:bg-theme-800 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs shadow-sm cursor-pointer">
               <i class="fa-solid fa-plus mr-1"></i> Add First Activity
             </button>` : ''}
           </div>
@@ -9224,6 +9325,13 @@
         var desc = escapeText(act.description || '');
         var descTe = escapeText(act.descriptionTe || '');
 
+        // Gather all photos
+        var allPhotos = (act.photos && Array.isArray(act.photos) && act.photos.length > 0) 
+          ? act.photos 
+          : (act.photo ? [act.photo] : []);
+        var photoCount = allPhotos.length;
+        var coverPhoto = allPhotos[0] || act.photo || '';
+
         // Badge color themes depending on category keywords
         var badgeClass = 'text-sky-700 bg-sky-50 border-sky-200';
         var catLower = cat.toLowerCase();
@@ -9233,8 +9341,8 @@
         else if (catLower.includes('cultur') || catLower.includes('arts') || catLower.includes('dance')) badgeClass = 'text-purple-700 bg-purple-50 border-purple-200';
         else if (catLower.includes('national') || catLower.includes('republic') || catLower.includes('independence')) badgeClass = 'text-orange-700 bg-orange-50 border-orange-200';
 
-        var photoMedia = act.photo 
-          ? `<img src="${act.photo}" alt="${title}" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="openActivityInGallery(${act.id})" title="Click to view full photo in Photo Gallery">`
+        var photoMedia = coverPhoto 
+          ? `<img src="${coverPhoto}" alt="${title}" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="openActivityLightbox(${act.id}, 0)" title="Click to view full photo and gallery (${photoCount} ${photoCount === 1 ? 'photo' : 'photos'})">`
           : `<i class="fa-solid ${icon} text-4xl"></i>`;
 
         return `
@@ -9245,23 +9353,46 @@
                 <span class="absolute top-2.5 left-2.5 text-[10px] uppercase font-bold px-2 py-0.5 rounded border shadow-2xs ${badgeClass} z-10 pointer-events-none">
                   ${cat}
                 </span>
-                ${act.photo ? `
-                <button type="button" onclick="openActivityInGallery(${act.id})" class="absolute bottom-2.5 right-2.5 text-[10px] font-bold px-2.5 py-1 rounded-md bg-black/70 hover:bg-black/90 text-white backdrop-blur-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer z-10" title="View in School Photo Gallery">
-                  <i class="fa-solid fa-images text-amber-300 text-[10px]"></i> <span>Gallery</span>
+                ${photoCount > 0 ? `
+                <button type="button" onclick="openActivityLightbox(${act.id}, 0)" class="absolute top-2.5 right-2.5 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-black/75 hover:bg-black/90 text-white backdrop-blur-xs transition flex items-center gap-1 shadow-xs cursor-pointer z-10" title="View all ${photoCount} photos">
+                  <i class="fa-solid fa-images text-amber-300 text-[10px]"></i> <span>${photoCount} ${photoCount === 1 ? 'Photo' : 'Photos'}</span>
+                </button>
+                ` : ''}
+                ${coverPhoto ? `
+                <button type="button" onclick="openActivityInGallery(${act.id}, 0)" class="absolute bottom-2.5 right-2.5 text-[10px] font-bold px-2.5 py-1 rounded-md bg-black/70 hover:bg-black/90 text-white backdrop-blur-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer z-10" title="View in School Photo Gallery">
+                  <i class="fa-solid fa-camera-retro text-amber-300 text-[10px]"></i> <span>Home Gallery</span>
                 </button>
                 ` : ''}
               </div>
-              <div class="p-4 space-y-1.5">
+              <div class="p-4 space-y-2">
                 <h3 class="font-bold text-slate-800 text-sm leading-snug" data-en="${title}" data-te="${titleTe || title}">
                   ${title}
                 </h3>
                 <p class="text-xs text-slate-500 leading-relaxed" data-en="${desc}" data-te="${descTe || desc}">
                   ${desc}
                 </p>
-                ${act.photo ? `
-                <div class="pt-1">
-                  <button type="button" onclick="openActivityInGallery(${act.id})" class="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition cursor-pointer">
-                    <i class="fa-solid fa-camera-retro text-orange-500 text-[11px]"></i> <span>View in Photo Gallery &rarr;</span>
+
+                ${photoCount > 1 ? `
+                <!-- Multiple Photo Thumbnails Strip -->
+                <div class="pt-1 flex items-center gap-1.5 overflow-x-auto pb-1">
+                  ${allPhotos.slice(0, 4).map((p, pIdx) => `
+                    <div onclick="openActivityLightbox(${act.id}, ${pIdx})" class="w-12 h-9 rounded-md overflow-hidden border ${pIdx === 0 ? 'border-amber-500' : 'border-slate-200'} shrink-0 cursor-pointer hover:opacity-80 transition relative" title="View photo #${pIdx + 1}">
+                      <img src="${p}" class="w-full h-full object-cover">
+                      ${pIdx === 3 && photoCount > 4 ? `
+                      <div class="absolute inset-0 bg-black/65 text-white font-bold text-[9px] flex items-center justify-center">+${photoCount - 3}</div>
+                      ` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+                ` : ''}
+
+                ${photoCount > 0 ? `
+                <div class="pt-1.5 flex items-center justify-between gap-2 border-t border-slate-100">
+                  <button type="button" onclick="openActivityLightbox(${act.id}, 0)" class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:text-amber-800 transition cursor-pointer">
+                    <i class="fa-solid fa-expand text-amber-600 text-[11px]"></i> <span>View All Photos (${photoCount}) &rarr;</span>
+                  </button>
+                  <button type="button" onclick="openActivityInGallery(${act.id}, 0)" class="text-[11px] font-semibold text-slate-500 hover:text-orange-600 transition cursor-pointer" title="View in Main Photo Gallery">
+                    <i class="fa-solid fa-images mr-1"></i> Gallery
                   </button>
                 </div>
                 ` : ''}
@@ -9270,10 +9401,10 @@
             
             ${isAdmin ? `
             <div class="admin-only px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-2">
-              <button onclick="openEditActivityModal(${act.id})" class="text-amber-800 hover:text-amber-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 border border-amber-300 inline-flex items-center gap-1 transition shadow-2xs" title="Edit Activity">
+              <button onclick="openEditActivityModal(${act.id})" class="text-amber-800 hover:text-amber-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-amber-50 hover:bg-amber-100 border border-amber-300 inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Edit Activity & Photos">
                 <i class="fa-solid fa-pen-to-square text-amber-600 text-[11px]"></i> <span>Edit</span>
               </button>
-              <button onclick="deleteActivity(${act.id})" class="text-rose-800 hover:text-rose-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-rose-50 hover:bg-rose-100 border border-rose-300 inline-flex items-center gap-1 transition shadow-2xs" title="Delete Activity">
+              <button onclick="deleteActivity(${act.id})" class="text-rose-800 hover:text-rose-900 font-semibold text-xs px-2.5 py-1 rounded-md bg-rose-50 hover:bg-rose-100 border border-rose-300 inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Delete Activity">
                 <i class="fa-solid fa-trash-can text-rose-600 text-[11px]"></i> <span>Delete</span>
               </button>
             </div>
@@ -9283,13 +9414,31 @@
       }).join('');
     }
 
-    function openActivityInGallery(actId) {
+    function openActivityInGallery(actId, photoIdx) {
       if (typeof syncActivityPhotosToGallery === 'function') {
         syncActivityPhotosToGallery();
       }
-      var idx = galleryPhotos.findIndex(function(p) {
-        return (p.activityId && p.activityId === actId) || (p.src && actId && activityList.some(function(a) { return a.id === actId && a.photo === p.src; }));
-      });
+      var targetPhotoSrc = null;
+      if (actId) {
+        var act = activityList.find(function(a) { return a.id === actId; });
+        if (act) {
+          var photos = (act.photos && Array.isArray(act.photos) && act.photos.length > 0) ? act.photos : (act.photo ? [act.photo] : []);
+          if (typeof photoIdx === 'number' && photos[photoIdx]) {
+            targetPhotoSrc = photos[photoIdx];
+          } else {
+            targetPhotoSrc = photos[0] || act.photo;
+          }
+        }
+      }
+
+      var idx = -1;
+      if (targetPhotoSrc) {
+        idx = galleryPhotos.findIndex(function(p) { return p.src === targetPhotoSrc; });
+      }
+      if (idx === -1 && actId) {
+        idx = galleryPhotos.findIndex(function(p) { return p.activityId && p.activityId === actId; });
+      }
+
       switchTab('home');
       setTimeout(function() {
         if (idx !== -1) {
@@ -9303,67 +9452,258 @@
       }, 120);
     }
 
-    function handleActivityPhotoUpload(event) {
-      var file = event.target.files && event.target.files[0];
-      if (!file) return;
+    // Lightbox / Multi-Photo Full Viewer for School Activities
+    var currentLightboxActivityId = null;
+    var currentLightboxPhotoIndex = 0;
 
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        var img = new Image();
-        img.onload = function() {
-          var canvas = document.createElement('canvas');
-          var maxDim = 800;
-          var width = img.width;
-          var height = img.height;
-          if (width > height) {
-            if (width > maxDim) {
-              height = Math.round((height * maxDim) / width);
-              width = maxDim;
-            }
-          } else {
-            if (height > maxDim) {
-              width = Math.round((width * maxDim) / height);
-              height = maxDim;
-            }
-          }
-          canvas.width = width;
-          canvas.height = height;
-          var ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          var compressed = canvas.toDataURL('image/jpeg', 0.85);
-          setActivityPhotoPreview(compressed);
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+    function openActivityLightbox(actId, photoIdx) {
+      var act = activityList.find(function(a) { return a.id === actId; });
+      if (!act) return;
+      var photos = (act.photos && Array.isArray(act.photos) && act.photos.length > 0) ? act.photos : (act.photo ? [act.photo] : []);
+      if (photos.length === 0) return;
+
+      currentLightboxActivityId = actId;
+      currentLightboxPhotoIndex = (typeof photoIdx === 'number' && photoIdx >= 0 && photoIdx < photos.length) ? photoIdx : 0;
+
+      var modal = document.getElementById('modal-activity-gallery-view');
+      var catEl = document.getElementById('act-lightbox-cat');
+      var titleEl = document.getElementById('act-lightbox-title');
+      var descEl = document.getElementById('act-lightbox-desc');
+
+      if (catEl) catEl.innerText = act.category || 'School Activity';
+      if (titleEl) titleEl.innerText = act.title || 'Activity Photo';
+      if (descEl) descEl.innerText = act.description || '';
+
+      updateActivityLightboxDisplay();
+      if (modal) modal.classList.remove('hidden');
     }
 
-    function setActivityPhotoPreview(dataUrl) {
-      var dataInput = document.getElementById('activity-photo-data');
-      var previewImg = document.getElementById('activity-photo-preview');
-      var placeholder = document.getElementById('activity-photo-placeholder');
-      var clearBtn = document.getElementById('btn-clear-activity-photo');
+    function updateActivityLightboxDisplay() {
+      var act = activityList.find(function(a) { return a.id === currentLightboxActivityId; });
+      if (!act) return;
+      var photos = (act.photos && Array.isArray(act.photos) && act.photos.length > 0) ? act.photos : (act.photo ? [act.photo] : []);
+      if (photos.length === 0) return;
 
-      if (dataInput) dataInput.value = dataUrl || '';
-      if (previewImg) {
-        if (dataUrl) {
-          previewImg.src = dataUrl;
-          previewImg.classList.remove('hidden');
-          if (placeholder) placeholder.classList.add('hidden');
-          if (clearBtn) clearBtn.classList.remove('hidden');
+      if (currentLightboxPhotoIndex < 0) currentLightboxPhotoIndex = 0;
+      if (currentLightboxPhotoIndex >= photos.length) currentLightboxPhotoIndex = photos.length - 1;
+
+      var imgEl = document.getElementById('act-lightbox-img');
+      var counterEl = document.getElementById('act-lightbox-counter');
+      var prevBtn = document.getElementById('act-lightbox-prev');
+      var nextBtn = document.getElementById('act-lightbox-next');
+      var thumbsEl = document.getElementById('act-lightbox-thumbnails');
+
+      if (imgEl) {
+        imgEl.src = photos[currentLightboxPhotoIndex];
+      }
+      if (counterEl) {
+        counterEl.innerText = (currentLightboxPhotoIndex + 1) + ' / ' + photos.length;
+      }
+      if (prevBtn) {
+        if (photos.length <= 1) prevBtn.classList.add('hidden');
+        else prevBtn.classList.remove('hidden');
+      }
+      if (nextBtn) {
+        if (photos.length <= 1) nextBtn.classList.add('hidden');
+        else nextBtn.classList.remove('hidden');
+      }
+
+      if (thumbsEl) {
+        if (photos.length <= 1) {
+          thumbsEl.innerHTML = '';
+          thumbsEl.classList.add('hidden');
         } else {
-          previewImg.src = '';
-          previewImg.classList.add('hidden');
-          if (placeholder) placeholder.classList.remove('hidden');
-          if (clearBtn) clearBtn.classList.add('hidden');
+          thumbsEl.classList.remove('hidden');
+          thumbsEl.innerHTML = photos.map(function(src, idx) {
+            var isCur = (idx === currentLightboxPhotoIndex);
+            return `
+              <button type="button" onclick="showActivityLightboxSlide(${idx})" class="w-14 h-10 rounded-lg overflow-hidden border-2 shrink-0 transition cursor-pointer ${isCur ? 'border-amber-400 ring-2 ring-amber-400/40 opacity-100 scale-105' : 'border-slate-700 opacity-60 hover:opacity-100'}">
+                <img src="${src}" class="w-full h-full object-cover">
+              </button>
+            `;
+          }).join('');
         }
       }
     }
 
+    function showActivityLightboxSlide(idx) {
+      currentLightboxPhotoIndex = idx;
+      updateActivityLightboxDisplay();
+    }
+
+    function prevActivityLightboxSlide() {
+      var act = activityList.find(function(a) { return a.id === currentLightboxActivityId; });
+      if (!act) return;
+      var photos = (act.photos && Array.isArray(act.photos) && act.photos.length > 0) ? act.photos : (act.photo ? [act.photo] : []);
+      if (photos.length <= 1) return;
+      currentLightboxPhotoIndex = (currentLightboxPhotoIndex - 1 + photos.length) % photos.length;
+      updateActivityLightboxDisplay();
+    }
+
+    function nextActivityLightboxSlide() {
+      var act = activityList.find(function(a) { return a.id === currentLightboxActivityId; });
+      if (!act) return;
+      var photos = (act.photos && Array.isArray(act.photos) && act.photos.length > 0) ? act.photos : (act.photo ? [act.photo] : []);
+      if (photos.length <= 1) return;
+      currentLightboxPhotoIndex = (currentLightboxPhotoIndex + 1) % photos.length;
+      updateActivityLightboxDisplay();
+    }
+
+    function openCurrentLightboxInMainGallery() {
+      var actId = currentLightboxActivityId;
+      var photoIdx = currentLightboxPhotoIndex;
+      closeModal('modal-activity-gallery-view');
+      if (typeof openActivityInGallery === 'function') {
+        openActivityInGallery(actId, photoIdx);
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      var modal = document.getElementById('modal-activity-gallery-view');
+      if (!modal || modal.classList.contains('hidden')) return;
+      if (e.key === 'Escape') {
+        closeModal('modal-activity-gallery-view');
+      } else if (e.key === 'ArrowLeft') {
+        prevActivityLightboxSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextActivityLightboxSlide();
+      }
+    });
+
+    // --- ACTIVITY MULTI-PHOTO UPLOAD & GALLERY MANAGER ---
+    var currentActivityPhotos = [];
+
+    function renderActivityPhotosManager() {
+      var grid = document.getElementById('activity-photos-grid');
+      var countEl = document.getElementById('activity-photos-count');
+      var clearBtn = document.getElementById('btn-clear-all-activity-photos');
+      if (!grid) return;
+
+      if (countEl) {
+        countEl.innerText = currentActivityPhotos.length + (currentActivityPhotos.length === 1 ? ' photo attached' : ' photos attached');
+      }
+      if (clearBtn) {
+        if (currentActivityPhotos.length > 0) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+
+      if (currentActivityPhotos.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-5 text-center text-slate-400">
+            <i class="fa-solid fa-images text-2xl mb-1 text-slate-300"></i>
+            <p class="text-[11px] font-medium text-slate-500">No photos added yet.</p>
+            <p class="text-[10px] text-slate-400">Click "+ Upload Photos (Multi)" to attach images from your device.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = currentActivityPhotos.map(function(src, idx) {
+        var isCover = (idx === 0);
+        return `
+          <div class="relative group rounded-lg overflow-hidden border ${isCover ? 'border-amber-500 ring-2 ring-amber-400/50' : 'border-slate-300'} bg-slate-100 aspect-video flex items-center justify-center">
+            <img src="${src}" class="w-full h-full object-cover">
+            ${isCover ? `
+            <span class="absolute top-1 left-1 bg-amber-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-xs z-10 flex items-center gap-0.5 pointer-events-none">
+              <i class="fa-solid fa-star text-[8px]"></i> Cover
+            </span>
+            ` : `
+            <button type="button" onclick="setActivityPhotoAsCover(${idx})" class="absolute top-1 left-1 opacity-0 group-hover:opacity-100 bg-black/75 hover:bg-amber-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-xs transition z-10 cursor-pointer" title="Promote to Cover Photo">
+              Make Cover
+            </button>
+            `}
+            <button type="button" onclick="removeActivityPhoto(${idx})" class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 bg-rose-600 hover:bg-rose-700 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow-xs transition z-10 cursor-pointer" title="Remove Photo">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="absolute bottom-1 right-1 bg-black/60 text-white text-[8px] px-1 rounded pointer-events-none">#${idx + 1}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleActivityMultiPhotoUpload(event) {
+      var files = event.target.files;
+      if (!files || files.length === 0) return;
+      var fileList = Array.from(files);
+
+      fileList.forEach(function(file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var img = new Image();
+          img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var maxDim = 800;
+            var width = img.width;
+            var height = img.height;
+            if (width > height) {
+              if (width > maxDim) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              }
+            } else {
+              if (height > maxDim) {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            var compressed = canvas.toDataURL('image/jpeg', 0.85);
+            currentActivityPhotos.push(compressed);
+            renderActivityPhotosManager();
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+      event.target.value = '';
+    }
+
+    function promptAddActivityPhotoUrl() {
+      var url = prompt('Enter Web / Image URL for this activity:');
+      if (url && url.trim()) {
+        currentActivityPhotos.push(url.trim());
+        renderActivityPhotosManager();
+      }
+    }
+
+    function setActivityPhotoAsCover(idx) {
+      if (idx > 0 && idx < currentActivityPhotos.length) {
+        var item = currentActivityPhotos.splice(idx, 1)[0];
+        currentActivityPhotos.unshift(item);
+        renderActivityPhotosManager();
+      }
+    }
+
+    function removeActivityPhoto(idx) {
+      if (idx >= 0 && idx < currentActivityPhotos.length) {
+        currentActivityPhotos.splice(idx, 1);
+        renderActivityPhotosManager();
+      }
+    }
+
+    function clearAllActivityPhotos() {
+      if (currentActivityPhotos.length === 0) return;
+      if (confirm('Are you sure you want to remove all photos attached to this activity?')) {
+        currentActivityPhotos = [];
+        renderActivityPhotosManager();
+      }
+    }
+
+    // Backwards-compatible stubs for single photo handlers
+    function handleActivityPhotoUpload(event) {
+      handleActivityMultiPhotoUpload(event);
+    }
+    function setActivityPhotoPreview(dataUrl) {
+      if (dataUrl) currentActivityPhotos = [dataUrl];
+      else currentActivityPhotos = [];
+      renderActivityPhotosManager();
+    }
     function clearActivityPhoto() {
-      setActivityPhotoPreview('');
-      var fileInput = document.getElementById('activity-photo-file');
-      if (fileInput) fileInput.value = '';
+      currentActivityPhotos = [];
+      renderActivityPhotosManager();
     }
 
     function openAddActivityModal() {
@@ -9380,7 +9720,9 @@
       var iconInput = document.getElementById('activity-icon'); if (iconInput) iconInput.value = 'fa-flask';
       var descInput = document.getElementById('activity-desc'); if (descInput) descInput.value = '';
       var descTeInput = document.getElementById('activity-desc-te'); if (descTeInput) descTeInput.value = '';
-      clearActivityPhoto();
+      
+      currentActivityPhotos = [];
+      renderActivityPhotosManager();
 
       var modalTitle = document.getElementById('activity-modal-title');
       if (modalTitle) modalTitle.innerText = 'Add School Activity';
@@ -9406,7 +9748,14 @@
       var descInput = document.getElementById('activity-desc'); if (descInput) descInput.value = act.description || '';
       var descTeInput = document.getElementById('activity-desc-te'); if (descTeInput) descTeInput.value = act.descriptionTe || '';
 
-      setActivityPhotoPreview(act.photo || '');
+      if (act.photos && Array.isArray(act.photos) && act.photos.length > 0) {
+        currentActivityPhotos = act.photos.slice();
+      } else if (act.photo) {
+        currentActivityPhotos = [act.photo];
+      } else {
+        currentActivityPhotos = [];
+      }
+      renderActivityPhotosManager();
 
       var modalTitle = document.getElementById('activity-modal-title');
       if (modalTitle) modalTitle.innerText = 'Edit School Activity';
@@ -9423,7 +9772,9 @@
       var icon = document.getElementById('activity-icon').value;
       var description = document.getElementById('activity-desc').value.trim();
       var descriptionTe = document.getElementById('activity-desc-te').value.trim();
-      var photo = document.getElementById('activity-photo-data').value || '';
+
+      var photos = currentActivityPhotos.slice();
+      var primaryPhoto = photos.length > 0 ? photos[0] : '';
 
       if (idVal) {
         // Edit existing
@@ -9431,7 +9782,7 @@
         var idx = activityList.findIndex(a => a.id === targetId);
         if (idx !== -1) {
           activityList[idx] = Object.assign({}, activityList[idx], {
-            title, titleTe, category, icon, description, descriptionTe, photo
+            title, titleTe, category, icon, description, descriptionTe, photo: primaryPhoto, photos: photos
           });
         }
       } else {
@@ -9444,7 +9795,8 @@
           icon,
           description,
           descriptionTe,
-          photo
+          photo: primaryPhoto,
+          photos: photos
         };
         activityList.unshift(newAct);
       }
@@ -9456,7 +9808,7 @@
       }
       syncToCloud('zphs_activities', activityList);
 
-      // Automatically link / sync activity photo to Picture Gallery
+      // Automatically link / sync all activity photos to Picture Gallery
       if (typeof syncActivityPhotosToGallery === 'function') {
         syncActivityPhotosToGallery();
         if (typeof renderGalleryThumbs === 'function') renderGalleryThumbs();
@@ -9465,7 +9817,7 @@
 
       closeModal('modal-activity');
       renderActivities();
-      alert('Activity successfully saved and photo linked to Gallery!');
+      alert('Activity successfully saved with ' + photos.length + ' photos attached and linked to Gallery!');
     }
 
     function deleteActivity(id) {
@@ -10497,6 +10849,8 @@ var currentTimetableClass = 'Class 10';
       var name = document.getElementById('student-name').value.trim().toUpperCase();
       var classVal = document.getElementById('student-class').value;
       var section = document.getElementById('student-section').value;
+      var medInput = document.getElementById('student-medium');
+      var medium = (medInput && medInput.value) ? medInput.value : getAutoSuggestedMedium(classVal, section);
 
       if (!canUserEditClass(classVal, section)) {
         var assigned = getClassTeacherFor(classVal, section);
@@ -10531,14 +10885,14 @@ var currentTimetableClass = 'Class 10';
         var idx = studentList.findIndex(s => (s.id === targetId || s.id == idVal));
         if (idx !== -1) {
           studentList[idx] = Object.assign({}, studentList[idx], {
-            admNo, pen, rollNo, name, classVal, section, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
+            admNo, pen, rollNo, name, classVal, section, medium, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
           });
           savedStudent = studentList[idx];
         }
       } else {
         var newId = (studentList.length > 0) ? (Math.max(...studentList.map(s => s.id)) + 1) : 1;
         savedStudent = {
-          id: newId, admNo, pen, rollNo, name, classVal, section, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
+          id: newId, admNo, pen, rollNo, name, classVal, section, medium, dob, doa, photo, aadhaar, fatherName, motherName, category, contact
         };
         studentList.push(savedStudent);
       }
@@ -11537,27 +11891,31 @@ var currentTimetableClass = 'Class 10';
       if (typeof activityList === 'undefined' || !Array.isArray(activityList) || !Array.isArray(galleryPhotos)) return;
       var modified = false;
       activityList.forEach(function(act) {
-        if (act && act.photo) {
+        if (!act) return;
+        var photoList = (act.photos && Array.isArray(act.photos) && act.photos.length > 0) ? act.photos : (act.photo ? [act.photo] : []);
+        photoList.forEach(function(photoSrc, pIdx) {
+          if (!photoSrc) return;
           var existingIdx = galleryPhotos.findIndex(function(p) {
-            return (p.activityId && p.activityId === act.id) || (p.src && p.src === act.photo);
+            return (p.activityId && p.activityId === act.id && p.src === photoSrc) || (p.src && p.src === photoSrc);
           });
+          var itemTitle = photoList.length > 1 ? (act.title + ' (Photo ' + (pIdx + 1) + ')') : (act.title || 'School Activity');
           var itemData = {
-            src: act.photo,
+            src: photoSrc,
             category: act.category || 'School Activity',
-            title: act.title || 'School Activity',
+            title: itemTitle,
             desc: act.description || 'School Activity at ZPHS Girls High School, Gajwel',
             activityId: act.id
           };
           if (existingIdx !== -1) {
             galleryPhotos[existingIdx].activityId = act.id;
             galleryPhotos[existingIdx].category = act.category || galleryPhotos[existingIdx].category || 'School Activity';
-            galleryPhotos[existingIdx].title = act.title || galleryPhotos[existingIdx].title;
+            galleryPhotos[existingIdx].title = itemTitle;
             galleryPhotos[existingIdx].desc = act.description || galleryPhotos[existingIdx].desc;
           } else {
             galleryPhotos.push(itemData);
             modified = true;
           }
-        }
+        });
       });
       if (modified) {
         try {
