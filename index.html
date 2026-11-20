@@ -1671,6 +1671,10 @@
             <p class="text-xs text-slate-500 mt-0.5" data-en="Access teacher class assignment controls, student edit privileges, and official certificate issue registers." data-te="ఉపాధ్యాయుల తరగతి కేటాయింపులు, ఎడిట్ అనుమతులు మరియు ధృవీకరణ పత్రాల రిజిస్టర్ల కేంద్రం.">Access teacher class assignment controls, student edit privileges, and official certificate issue registers.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
+            <button onclick="openStaffPasswordManagerModal()" class="admin-only bg-rose-600 hover:bg-rose-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Headmaster 1-Click Staff Password Reset Manager">
+              <i class="fa-solid fa-user-shield text-rose-200"></i>
+              <span>Reset Staff Passwords</span>
+            </button>
             <button onclick="openChangePasswordModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Change Staff Login Password">
               <i class="fa-solid fa-key text-amber-200"></i>
               <span>Change Password</span>
@@ -1824,6 +1828,9 @@
             </p>
           </div>
           <div class="flex items-center gap-2" id="admin-assignment-buttons">
+            <button onclick="openStaffPasswordManagerModal()" class="admin-assignment-action bg-rose-600 hover:bg-rose-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Headmaster 1-Click Staff Password Reset Panel">
+              <i class="fa-solid fa-key"></i> <span>Reset Passwords</span>
+            </button>
             <button onclick="saveClassTeacherAssignments()" class="admin-assignment-action bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Save Class Teacher Assignments">
               <i class="fa-solid fa-floppy-disk"></i> <span>Save Assignments</span>
             </button>
@@ -2634,7 +2641,66 @@
     </div>
   </div>
 
+  <!-- MODAL: HEADMASTER 1-CLICK STAFF PASSWORD RESET MANAGER -->
+  <div id="modal-staff-password-manager" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full p-5 sm:p-6 space-y-4 relative flex flex-col max-h-[90vh]">
+      <button onclick="closeModal('modal-staff-password-manager')" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 transition cursor-pointer">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
 
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center text-lg font-bold border border-rose-200 shrink-0">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-base font-bold text-slate-800">Staff Password Management (Headmaster 1-Click Reset)</h3>
+            <span class="text-[10px] bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full border border-rose-200">Headmaster Only</span>
+          </div>
+          <p class="text-xs text-slate-500">Reset any staff member's login password back to default "Gajwel@123" with one click.</p>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5">
+        <div class="relative w-full sm:w-72">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+          <input type="text" id="spm-search-input" oninput="renderStaffPasswordManagerTable()" placeholder="Search staff name, code, designation..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-rose-500">
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <select id="spm-filter-status" onchange="renderStaffPasswordManagerTable()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-rose-500 bg-white">
+            <option value="all">All Staff Members</option>
+            <option value="custom">Custom Password Set</option>
+            <option value="default">Default Password (Gajwel@123)</option>
+          </select>
+          <span class="text-xs font-bold text-slate-500 shrink-0" id="spm-count-badge">0 Staff</span>
+        </div>
+      </div>
+
+      <!-- Password Table -->
+      <div class="overflow-x-auto overflow-y-auto flex-1 border border-slate-200 rounded-xl max-h-[380px]">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200 z-10 select-none">
+            <tr>
+              <th class="p-2.5 border-r border-slate-200">Staff Particulars</th>
+              <th class="p-2.5 border-r border-slate-200">Treasury ID</th>
+              <th class="p-2.5 border-r border-slate-200">Contact</th>
+              <th class="p-2.5 border-r border-slate-200">Password Status</th>
+              <th class="p-2.5 text-center">HM Action</th>
+            </tr>
+          </thead>
+          <tbody id="spm-tbody" class="divide-y divide-slate-100">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+        <span class="text-[11px]"><i class="fa-solid fa-circle-info text-rose-600"></i> Default reset password is <strong>Gajwel@123</strong>.</span>
+        <button type="button" onclick="closeModal('modal-staff-password-manager')" class="px-4 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-300 transition cursor-pointer">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL: ADD / EDIT TIMETABLE SCHEDULE -->
   <div id="modal-timetable" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
@@ -6840,6 +6906,134 @@
       el.type = (el.type === 'password') ? 'text' : 'password';
     }
 
+    // Headmaster 1-Click Staff Password Reset Handlers
+    function openStaffPasswordManagerModal() {
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only the Headmaster / Principal can access the Staff Password Management panel.');
+        return;
+      }
+      openModal('modal-staff-password-manager');
+      renderStaffPasswordManagerTable();
+    }
+
+    function renderStaffPasswordManagerTable() {
+      var tbody = document.getElementById('spm-tbody');
+      var badge = document.getElementById('spm-count-badge');
+      if (!tbody) return;
+
+      var searchInput = document.getElementById('spm-search-input');
+      var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      var filterSelect = document.getElementById('spm-filter-status');
+      var filterVal = filterSelect ? filterSelect.value : 'all';
+
+      var allStaff = [];
+      (staffList || []).forEach(s => allStaff.push({ ...s, staffType: 'Teaching' }));
+      (nonTeachingList || []).forEach(s => allStaff.push({ ...s, staffType: 'Non-Teaching' }));
+
+      var filtered = allStaff.filter(s => {
+        var code = (s.stateStaffCode || s.nationalCode || '').toLowerCase();
+        var name = (s.name || '').toLowerCase();
+        var desig = (s.designation || '').toLowerCase();
+        var subj = (s.subject || s.role || '').toLowerCase();
+        var matchesQuery = !query || code.includes(query) || name.includes(query) || desig.includes(query) || subj.includes(query);
+
+        var rawCode = s.stateStaffCode || s.nationalCode;
+        var hasCustom = !!(staffPasswordStore && staffPasswordStore[rawCode]);
+
+        if (filterVal === 'custom' && !hasCustom) return false;
+        if (filterVal === 'default' && hasCustom) return false;
+
+        return matchesQuery;
+      });
+
+      if (badge) badge.innerText = `${filtered.length} Staff`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="p-6 text-center text-slate-400 bg-slate-50/50">
+              <i class="fa-solid fa-user-xmark text-2xl mb-1 text-slate-300 block"></i>
+              <span>No staff members match the current filter or search criteria.</span>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => {
+        var rawCode = s.stateStaffCode || s.nationalCode || '-';
+        var hasCustom = !!(staffPasswordStore && staffPasswordStore[rawCode]);
+
+        var statusBadge = hasCustom
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 inline-flex items-center gap-1 shadow-2xs">
+              <i class="fa-solid fa-key text-[9px] text-amber-700"></i> Custom Password Set
+            </span>`
+          : `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-300 inline-flex items-center gap-1">
+              <i class="fa-solid fa-check text-[9px] text-emerald-600"></i> Default (Gajwel@123)
+            </span>`;
+
+        var resetBtn = hasCustom
+          ? `<button onclick="resetStaffPasswordByHM('${escapeText(rawCode)}', '${escapeText(s.name)}')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-2.5 py-1 rounded-lg text-xs transition flex items-center gap-1 shadow-2xs mx-auto cursor-pointer" title="Reset this teacher's password to Gajwel@123">
+              <i class="fa-solid fa-rotate-left text-[10px]"></i> <span>1-Click Reset</span>
+            </button>`
+          : `<button onclick="resetStaffPasswordByHM('${escapeText(rawCode)}', '${escapeText(s.name)}')" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-700 border border-slate-300 font-bold px-2.5 py-1 rounded-lg text-xs transition flex items-center gap-1 mx-auto cursor-pointer" title="Re-enforce default password">
+              <i class="fa-solid fa-rotate-left text-[10px]"></i> <span>Reset</span>
+            </button>`;
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition">
+            <td class="p-2.5 border-r border-slate-200">
+              <div class="font-bold text-slate-800">${escapeText(s.name)}</div>
+              <div class="text-[10px] text-slate-500">${escapeText(s.designation || '')} • ${escapeText(s.subject || s.role || s.staffType)}</div>
+            </td>
+            <td class="p-2.5 border-r border-slate-200 font-mono font-bold text-slate-700">
+              ${escapeText(rawCode)}
+            </td>
+            <td class="p-2.5 border-r border-slate-200 text-slate-600 text-[11px]">
+              ${escapeText(s.contact || '-')}
+            </td>
+            <td class="p-2.5 border-r border-slate-200">
+              ${statusBadge}
+            </td>
+            <td class="p-2.5 text-center">
+              ${resetBtn}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function resetStaffPasswordByHM(staffCode, staffName) {
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only the Headmaster / Principal can reset staff passwords.');
+        return;
+      }
+      if (!staffCode || staffCode === '-') {
+        alert('Error: Staff Treasury Code / Employee ID is invalid.');
+        return;
+      }
+
+      var confirmed = confirm('HEADMASTER 1-CLICK PASSWORD RESET:\n\nStaff: ' + (staffName || 'Staff Member') + '\nEmployee ID: ' + staffCode + '\n\nAre you sure you want to reset this staff member\'s password back to default "Gajwel@123"?');
+      if (!confirmed) return;
+
+      if (!staffPasswordStore) staffPasswordStore = {};
+      delete staffPasswordStore[staffCode];
+
+      try {
+        localStorage.setItem('zphs_staff_passwords', JSON.stringify(staffPasswordStore));
+      } catch(e) {}
+
+      if (typeof syncToCloud === 'function') {
+        syncToCloud('zphs_staff_passwords', staffPasswordStore);
+      }
+
+      alert('Password Reset Successful!\n\nStaff: ' + (staffName || staffCode) + '\nPassword has been reset to: Gajwel@123\n\nThe staff member can now log in using "Gajwel@123" and change it to their wish.');
+
+      if (typeof renderStaffTable === 'function') renderStaffTable();
+      if (typeof renderClassTeacherAssignmentsTable === 'function') renderClassTeacherAssignmentsTable();
+      if (typeof renderStaffPasswordManagerTable === 'function') renderStaffPasswordManagerTable();
+    }
+
     // Class Teacher Assignment UI Handlers (in Administration Section)
     function renderClassTeacherAssignmentsTable() {
       var tbody = document.getElementById('class-teacher-assignments-tbody');
@@ -6921,7 +7115,14 @@
               ${teacherCell}
             </td>
             <td class="p-2.5 border-r border-slate-200 font-mono font-bold text-slate-700">
-              ${escapeText(assign.staffCode || '-')}
+              <div class="flex items-center justify-between gap-1">
+                <span>${escapeText(assign.staffCode || '-')}</span>
+                ${isHM && assign.staffCode && assign.staffCode !== '-' ? `
+                  <button onclick="resetStaffPasswordByHM('${escapeText(assign.staffCode)}', '${escapeText(assign.staffName)}')" class="admin-only text-rose-600 hover:text-rose-800 hover:bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200 text-[10px] font-bold inline-flex items-center gap-1 cursor-pointer" title="Headmaster 1-Click Reset to Gajwel@123">
+                    <i class="fa-solid fa-rotate-left text-[9px]"></i> Reset
+                  </button>
+                ` : ''}
+              </div>
             </td>
             <td class="p-2.5 border-r border-slate-200 text-slate-600">
               <span class="font-semibold text-slate-800">${escapeText(assign.subject || 'General')}</span>
@@ -8492,6 +8693,8 @@
     }
 
     function renderStaffTable() {
+      var isHM = isUserHeadmaster(currentUser);
+
       // Harmonic row colors cycle for pleasant visual distinction in row/table mode
       var rowColorStyles = [
         { row: 'bg-white hover:bg-amber-50/70 border-l-4 border-l-amber-500', num: 'text-amber-700 bg-amber-50/80', name: 'text-amber-900', badge: 'bg-amber-100/80 text-amber-900 border-amber-300' },
@@ -8538,6 +8741,11 @@
                 <button onclick="viewStaff(${s.id}, 'teaching')" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="View Details">
                   <i class="fa-solid fa-eye text-[11px]"></i> <span>View</span>
                 </button>
+                ${isHM ? `
+                  <button onclick="resetStaffPasswordByHM('${escapeText(s.stateStaffCode || s.nationalCode)}', '${escapeText(s.name)}')" class="bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-300 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Headmaster 1-Click Reset to Gajwel@123">
+                    <i class="fa-solid fa-rotate-left text-[10px]"></i> <span>Reset Pwd</span>
+                  </button>
+                ` : ''}
               </div>
             </div>
           </div>
@@ -8568,6 +8776,11 @@
                   <button onclick="viewStaff(${s.id}, 'teaching')" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="View Full Details">
                     <i class="fa-solid fa-eye text-[11px]"></i> <span>View</span>
                   </button>
+                  ${isHM ? `
+                    <button onclick="resetStaffPasswordByHM('${escapeText(s.stateStaffCode || s.nationalCode)}', '${escapeText(s.name)}')" class="bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-300 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Headmaster 1-Click Reset to Gajwel@123">
+                      <i class="fa-solid fa-rotate-left text-[10px]"></i> <span>Reset Pwd</span>
+                    </button>
+                  ` : ''}
                   <button onclick="deleteStaff(${s.id})" class="admin-only text-rose-600 hover:text-rose-800 hover:bg-rose-50 p-1.5 rounded transition ${isAdmin ? '' : 'hidden'}" title="Delete Staff">
                     <i class="fa-solid fa-trash text-xs"></i>
                   </button>
@@ -8613,6 +8826,11 @@
                 <button onclick="viewStaff(${s.id}, 'non-teaching')" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="View Details">
                   <i class="fa-solid fa-eye text-[11px]"></i> <span>View</span>
                 </button>
+                ${isHM ? `
+                  <button onclick="resetStaffPasswordByHM('${escapeText(s.stateStaffCode || s.nationalCode)}', '${escapeText(s.name)}')" class="bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-300 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Headmaster 1-Click Reset to Gajwel@123">
+                    <i class="fa-solid fa-rotate-left text-[10px]"></i> <span>Reset Pwd</span>
+                  </button>
+                ` : ''}
               </div>
             </div>
           </div>
@@ -8643,6 +8861,11 @@
                   <button onclick="viewStaff(${s.id}, 'non-teaching')" class="bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 px-2.5 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs" title="View Full Details">
                     <i class="fa-solid fa-eye text-[11px]"></i> <span>View</span>
                   </button>
+                  ${isHM ? `
+                    <button onclick="resetStaffPasswordByHM('${escapeText(s.stateStaffCode || s.nationalCode)}', '${escapeText(s.name)}')" class="bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-300 px-2 py-1 rounded-md font-semibold text-xs inline-flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Headmaster 1-Click Reset to Gajwel@123">
+                      <i class="fa-solid fa-rotate-left text-[10px]"></i> <span>Reset Pwd</span>
+                    </button>
+                  ` : ''}
                 </div>
               </td>
             </tr>
