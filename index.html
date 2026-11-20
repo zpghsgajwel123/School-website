@@ -621,6 +621,16 @@
           <i class="fa-solid fa-sliders w-5 text-center text-indigo-600"></i>
           <span data-en="Administration" data-te="అడ్మినిస్ట్రేషన్ (పాలన)">Administration</span>
         </a>
+        <!-- Sub-section: Assign Class to Teachers -->
+        <a href="#admin-assign-teachers" onclick="switchTab('admin-assign-teachers')" id="nav-admin-assign-teachers" class="nav-item admin-section-nav hidden flex items-center gap-2.5 px-3 py-2 ml-4 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+          <i class="fa-solid fa-chalkboard-user text-indigo-600 w-4 text-center"></i>
+          <span data-en="Assign Class to Teachers" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు">Assign Class to Teachers</span>
+        </a>
+        <!-- Sub-section: Bonafide Certificate Issue Register & Audit Log -->
+        <a href="#admin-bonafide-register" onclick="switchTab('admin-bonafide-register')" id="nav-admin-bonafide-register" class="nav-item admin-section-nav hidden flex items-center gap-2.5 px-3 py-2 ml-4 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+          <i class="fa-solid fa-clipboard-list text-amber-600 w-4 text-center"></i>
+          <span data-en="Bonafide Register & Audit Log" data-te="బోనఫైడ్ రిజిస్టర్ & ఆడిట్ లాగ్">Bonafide Register & Audit Log</span>
+        </a>
         <a href="#mdm" onclick="switchTab('mdm')" id="nav-mdm" class="nav-item admin-section-nav hidden flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
           <i class="fa-solid fa-bowl-rice w-5 text-center"></i>
           <span data-en="Mid Day Meal (MDM)" data-te="మధ్యాహ్న భోజన పథకం (MDM)">Mid Day Meal (MDM)</span>
@@ -1494,7 +1504,7 @@
               </select>
             </div>
 
-            <button onclick="switchTab('administration')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
+            <button onclick="switchTab('admin-bonafide-register')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
               <i class="fa-solid fa-clipboard-list text-indigo-200"></i> <span data-en="Bonafide Register (Admin)" data-te="బోనఫైడ్ రిజిస్టర్ (అడ్మిన్)">Bonafide Register (Admin)</span>
             </button>
             <button onclick="switchTab('students')" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs">
@@ -1517,7 +1527,7 @@
               </div>
             </div>
             <div class="mt-5 pt-4 border-t border-blue-200/60 flex items-center justify-between">
-              <button onclick="switchTab('administration')" class="text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer" title="View historical issue log with serial numbers">
+              <button onclick="switchTab('admin-bonafide-register')" class="text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-2.5 py-1 rounded-full transition flex items-center gap-1 cursor-pointer" title="View historical issue log with serial numbers">
                 <i class="fa-solid fa-list-ol text-[10px]"></i> <span>Issue Register</span>
               </button>
               <button onclick="openBonafideModalForCurrentSectionYear()" class="bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-xs cursor-pointer">
@@ -1636,23 +1646,259 @@
         </div>
       </section>
 
-      <!-- SECTION: ADMINISTRATION -->
+      <!-- SECTION: ADMINISTRATION HUB / OVERVIEW -->
       <section id="section-administration" class="content-section hidden space-y-6">
+        <!-- Sub-section Switcher Tabs: Overview vs Assign Teachers vs Bonafide Register -->
+        <div class="flex flex-wrap items-center gap-2 p-1 bg-slate-100 rounded-xl w-fit border border-slate-200">
+          <button type="button" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white text-slate-800 shadow-xs flex items-center gap-1.5 cursor-default">
+            <i class="fa-solid fa-sliders text-indigo-600"></i> <span data-en="Administration Overview" data-te="అడ్మినిస్ట్రేషన్ అవలోకనం">Administration Overview</span>
+          </button>
+          <button type="button" onclick="switchTab('admin-assign-teachers')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-chalkboard-user text-indigo-600"></i> <span data-en="Assign Class to Teachers" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు">Assign Class to Teachers</span>
+          </button>
+          <button type="button" onclick="switchTab('admin-bonafide-register')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-clipboard-list text-amber-600"></i> <span data-en="Bonafide Register & Audit Log" data-te="బోనఫైడ్ రిజిస్టర్ & ఆడిట్ లాగ్">Bonafide Register & Audit Log</span>
+          </button>
+        </div>
+
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
           <div>
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
-              <h2 class="text-xl font-bold text-slate-800" data-en="Administration & Official Registers" data-te="అడ్మినిస్ట్రేషన్ & అధికారిక రిజిస్టర్లు">Administration & Official Registers</h2>
+              <h2 class="text-xl font-bold text-slate-800" data-en="Administration & Official Management Hub" data-te="అడ్మినిస్ట్రేషన్ & అధికారిక నిర్వహణ హబ్">Administration & Official Management Hub</h2>
             </div>
-            <p class="text-xs text-slate-500 mt-0.5" data-en="Official record registers, certificate audit trails, and administrative tracking." data-te="ధృవీకరణ పత్రాల అధికారిక రిజిస్టర్, జారీ వివరాలు మరియు అడ్మినిస్ట్రేటివ్ రికార్డులు.">Official record registers, certificate audit trails, and administrative tracking.</p>
+            <p class="text-xs text-slate-500 mt-0.5" data-en="Access teacher class assignment controls, student edit privileges, and official certificate issue registers." data-te="ఉపాధ్యాయుల తరగతి కేటాయింపులు, ఎడిట్ అనుమతులు మరియు ధృవీకరణ పత్రాల రిజిస్టర్ల కేంద్రం.">Access teacher class assignment controls, student edit privileges, and official certificate issue registers.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
+            <button onclick="openChangePasswordModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Change Staff Login Password">
+              <i class="fa-solid fa-key text-amber-200"></i>
+              <span>Change Password</span>
+            </button>
             <button onclick="exportBonafideRegisterToExcel()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Download Excel Sheet for Record Purpose">
               <i class="fa-solid fa-file-excel text-emerald-200"></i>
               <span>Download Excel Sheet</span>
             </button>
             <button onclick="openBonafideModal()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Issue new Bonafide Certificate">
+              <i class="fa-solid fa-file-signature text-orange-200"></i>
+              <span>Issue Bonafide</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI / Counter Cards (Overview) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="bg-gradient-to-br from-indigo-50 to-indigo-100/60 p-3.5 rounded-xl border border-indigo-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-stamp"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-indigo-900 uppercase tracking-wider">Total Bonafide Issued</p>
+              <h3 class="text-lg font-extrabold text-indigo-950 font-mono" id="admin-overview-stat-total">0</h3>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-amber-50 to-amber-100/60 p-3.5 rounded-xl border border-amber-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-calendar-day"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-amber-900 uppercase tracking-wider">Issued Today</p>
+              <h3 class="text-lg font-extrabold text-amber-950 font-mono" id="admin-overview-stat-today">0</h3>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-sky-50 to-sky-100/60 p-3.5 rounded-xl border border-sky-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-sky-900 uppercase tracking-wider">Present Students</p>
+              <h3 class="text-lg font-extrabold text-sky-950 font-mono" id="admin-overview-stat-present">0</h3>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-rose-50 to-rose-100/60 p-3.5 rounded-xl border border-rose-200 shadow-2xs flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-rose-600 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-xs">
+              <i class="fa-solid fa-user-clock"></i>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-rose-900 uppercase tracking-wider">Left Students</p>
+              <h3 class="text-lg font-extrabold text-rose-950 font-mono" id="admin-overview-stat-left">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Section Navigation Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Card 1: Assign Class to Teachers & Edit Privileges -->
+          <div class="bg-white rounded-2xl border border-indigo-200/80 shadow-xs hover:shadow-md transition p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-indigo-100">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-slate-800" data-en="Assign Class to Teachers & Edit Privileges" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు & అనుమతులు">Assign Class to Teachers & Edit Privileges</h3>
+                    <p class="text-[11px] text-indigo-700 font-semibold mt-0.5">Classes VI to X (Sections A & B)</p>
+                  </div>
+                </div>
+                <span class="text-[11px] bg-indigo-100 text-indigo-800 font-bold px-2.5 py-1 rounded-full">10 Classes</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-3.5 leading-relaxed">
+                Designate specific class teachers to edit student personal details and input examination marks for their class.
+              </p>
+              <div class="mt-3 bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-[11px] space-y-1.5 text-slate-700">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-crown text-amber-500 text-xs"></i> <span><strong>Headmaster:</strong> Master edit & delete access across all classes.</span></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-user-pen text-indigo-600 text-xs"></i> <span><strong>Assigned Class Teacher:</strong> Edit & delete rights for assigned class only.</span></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-eye text-slate-500 text-xs"></i> <span><strong>Non-Teaching Staff & Others:</strong> View-only protected access.</span></div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-[11px] text-slate-500 font-medium">Cloud Synchronized</span>
+              <button onclick="switchTab('admin-assign-teachers')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+                <span>Open Teacher Assignments</span> <i class="fa-solid fa-arrow-right text-[11px]"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Bonafide Certificate Issue Register & Audit Log -->
+          <div class="bg-white rounded-2xl border border-amber-200/80 shadow-xs hover:shadow-md transition p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-amber-100">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-slate-800" data-en="Bonafide Certificate Issue Register & Audit Log" data-te="బోనఫైడ్ సర్టిఫికేట్ రిజిస్టర్ & ఆడిట్ లాగ్">Bonafide Certificate Issue Register & Audit Log</h3>
+                    <p class="text-[11px] text-amber-800 font-semibold mt-0.5">Sequential Serial Numbers (DDMMYY-N)</p>
+                  </div>
+                </div>
+                <span class="text-[11px] bg-amber-100 text-amber-900 font-bold px-2.5 py-1 rounded-full">Official Audit Log</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-3.5 leading-relaxed">
+                Centralized audit trail for every issued Bonafide Certificate. Automatically logs date-based sequential serial numbers, student particulars, purpose, issuing staff code, and exact time.
+              </p>
+              <div class="mt-3 bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-[11px] space-y-1.5 text-slate-700">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-hashtag text-indigo-600 text-xs"></i> <span><strong>Daily Serial:</strong> DDMMYY followed by sequential count for that day.</span></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-file-excel text-emerald-600 text-xs"></i> <span><strong>Excel Record:</strong> Instant download to Excel spreadsheet for office record.</span></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-user-shield text-sky-600 text-xs"></i> <span><strong>Staff Accountability:</strong> Records who prepared and printed each certificate.</span></div>
+              </div>
+            </div>
+            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <button onclick="exportBonafideRegisterToExcel()" class="text-emerald-700 hover:bg-emerald-50 px-2 py-1 rounded-lg font-bold text-xs flex items-center gap-1 cursor-pointer transition">
+                <i class="fa-solid fa-file-excel"></i> <span>Download Excel</span>
+              </button>
+              <button onclick="switchTab('admin-bonafide-register')" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+                <span>Open Issue Register & Log</span> <i class="fa-solid fa-arrow-right text-[11px]"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEPARATE SECTION: ASSIGN CLASS TO TEACHERS & EDIT PRIVILEGES -->
+      <section id="section-admin-assign-teachers" class="content-section hidden space-y-5">
+        <!-- Sub-section Switcher Tabs -->
+        <div class="flex flex-wrap items-center gap-2 p-1 bg-slate-100 rounded-xl w-fit border border-slate-200">
+          <button type="button" onclick="switchTab('administration')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-sliders text-indigo-600"></i> <span data-en="Administration Overview" data-te="అడ్మినిస్ట్రేషన్ అవలోకనం">Administration Overview</span>
+          </button>
+          <button type="button" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white text-indigo-900 shadow-xs flex items-center gap-1.5 cursor-default">
+            <i class="fa-solid fa-chalkboard-user text-indigo-600"></i> <span data-en="Assign Class to Teachers" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు">Assign Class to Teachers & Privileges</span>
+          </button>
+          <button type="button" onclick="switchTab('admin-bonafide-register')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-clipboard-list text-amber-600"></i> <span data-en="Bonafide Register & Audit Log" data-te="బోనఫైడ్ రిజిస్టర్ & ఆడిట్ లాగ్">Bonafide Register & Audit Log</span>
+          </button>
+        </div>
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+              <h2 class="text-xl font-bold text-slate-800" data-en="Assign Class to Teachers & Edit Privileges" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు & అనుమతులు">Assign Class to Teachers & Edit Privileges</h2>
+              <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-assigned-count-badge">10 Classes Configured</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Designate class teachers to edit student details and examination marks. <strong>Headmaster</strong> can edit all classes. <strong>Non-Teaching Staff</strong> & remaining teachers have view-only access.
+            </p>
+          </div>
+          <div class="flex items-center gap-2" id="admin-assignment-buttons">
+            <button onclick="saveClassTeacherAssignments()" class="admin-assignment-action bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Save Class Teacher Assignments">
+              <i class="fa-solid fa-floppy-disk"></i> <span>Save Assignments</span>
+            </button>
+            <button onclick="resetClassTeacherAssignmentsToDefault()" class="admin-assignment-action bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1 cursor-pointer" title="Reset to Defaults">
+              <i class="fa-solid fa-rotate-left"></i> <span>Reset</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Access Control Summary Banner -->
+        <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3 text-xs text-indigo-950 flex flex-col md:flex-row md:items-center justify-between gap-2">
+          <div class="flex items-center gap-2 font-medium">
+            <i class="fa-solid fa-shield-halved text-indigo-600 text-sm"></i>
+            <span><strong>Role-Based Policy Active:</strong> Teachers can add, edit, or delete student records and enter marks <em>strictly for their assigned class & section</em>.</span>
+          </div>
+          <div class="flex items-center gap-2 text-[11px] font-bold shrink-0">
+            <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">HM: Master Rights</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300">Teacher: Assigned Only</span>
+            <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-800">Others: View Only</span>
+          </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto max-h-[520px] overflow-y-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200 z-10 select-none">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">Class & Section</th>
+                  <th class="p-2.5 border-r border-slate-200">Medium</th>
+                  <th class="p-2.5 border-r border-slate-200 min-w-[260px]">Assigned Class Teacher (Edit Rights)</th>
+                  <th class="p-2.5 border-r border-slate-200">Staff Code</th>
+                  <th class="p-2.5 border-r border-slate-200">Subject / Designation</th>
+                  <th class="p-2.5 text-center">Active Permission</th>
+                </tr>
+              </thead>
+              <tbody id="class-teacher-assignments-tbody" class="divide-y divide-slate-100">
+                <!-- Dynamically populated by renderClassTeacherAssignmentsTable() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEPARATE SECTION: BONAFIDE CERTIFICATE ISSUE REGISTER & AUDIT LOG -->
+      <section id="section-admin-bonafide-register" class="content-section hidden space-y-5">
+        <!-- Sub-section Switcher Tabs -->
+        <div class="flex flex-wrap items-center gap-2 p-1 bg-slate-100 rounded-xl w-fit border border-slate-200">
+          <button type="button" onclick="switchTab('administration')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-sliders text-indigo-600"></i> <span data-en="Administration Overview" data-te="అడ్మినిస్ట్రేషన్ అవలోకనం">Administration Overview</span>
+          </button>
+          <button type="button" onclick="switchTab('admin-assign-teachers')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-800 flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-chalkboard-user text-indigo-600"></i> <span data-en="Assign Class to Teachers" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు">Assign Class to Teachers & Privileges</span>
+          </button>
+          <button type="button" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white text-amber-900 shadow-xs flex items-center gap-1.5 cursor-default">
+            <i class="fa-solid fa-clipboard-list text-amber-600"></i> <span data-en="Bonafide Register & Audit Log" data-te="బోనఫైడ్ రిజిస్టర్ & ఆడిట్ లాగ్">Bonafide Register & Audit Log</span>
+          </button>
+        </div>
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+              <h2 class="text-xl font-bold text-slate-800" data-en="Bonafide Certificate Issue Register & Audit Log" data-te="బోనఫైడ్ సర్టిఫికేట్ రిజిస్టర్ & ఆడిట్ లాగ్">Bonafide Certificate Issue Register & Audit Log</h2>
+              <span class="text-xs bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-full" id="admin-register-count-badge">0 Records</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5" data-en="Official record register of all issued bonafide certificates with sequential serial numbers and staff audit trail." data-te="ధృవీకరణ పత్రాల అధికారిక రిజిస్టర్, సీరియల్ నంబర్లు మరియు సిబ్బంది ఆడిట్ రికార్డులు.">Official record register of all issued bonafide certificates with sequential serial numbers and staff audit trail.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="exportBonafideRegisterToExcel()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Download Excel Sheet for Record Purpose">
+              <i class="fa-solid fa-file-excel text-emerald-200"></i>
+              <span>Download Excel Sheet</span>
+            </button>
+            <button onclick="openBonafideModal()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Issue new Bonafide Certificate">
               <i class="fa-solid fa-file-signature text-orange-200"></i>
               <span>Issue Bonafide</span>
             </button>
@@ -1699,63 +1945,19 @@
           </div>
         </div>
 
-        <!-- Assign Class to Teachers Section (Role-based Edit Privileges) -->
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="p-3.5 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div>
-              <div class="flex items-center gap-2">
-                <i class="fa-solid fa-chalkboard-user text-indigo-700 text-base"></i>
-                <h3 class="font-bold text-sm text-slate-800" data-en="Assign Class to Teachers & Edit Privileges" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు & అనుమతులు">Assign Class to Teachers & Edit Privileges</h3>
-                <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-assigned-count-badge">10 Classes Configured</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-0.5">
-                Designate class teachers to edit students details and examination marks. <strong>Headmaster</strong> can edit all classes. <strong>Non-Teaching Staff</strong> & remaining teachers have view-only access.
-              </p>
-            </div>
-            <div class="flex items-center gap-2" id="admin-assignment-buttons">
-              <button onclick="saveClassTeacherAssignments()" class="admin-assignment-action bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Save Class Teacher Assignments">
-                <i class="fa-solid fa-floppy-disk"></i> <span>Save Assignments</span>
-              </button>
-              <button onclick="resetClassTeacherAssignmentsToDefault()" class="admin-assignment-action bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1 cursor-pointer" title="Reset to Defaults">
-                <i class="fa-solid fa-rotate-left"></i> <span>Reset</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Table Container -->
-          <div class="overflow-x-auto max-h-[460px] overflow-y-auto">
-            <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200 z-10 select-none">
-                <tr>
-                  <th class="p-2.5 border-r border-slate-200">Class & Section</th>
-                  <th class="p-2.5 border-r border-slate-200">Medium</th>
-                  <th class="p-2.5 border-r border-slate-200 min-w-[260px]">Assigned Class Teacher (Edit Rights)</th>
-                  <th class="p-2.5 border-r border-slate-200">Staff Code</th>
-                  <th class="p-2.5 border-r border-slate-200">Subject / Designation</th>
-                  <th class="p-2.5 text-center">Active Permission</th>
-                </tr>
-              </thead>
-              <tbody id="class-teacher-assignments-tbody" class="divide-y divide-slate-100">
-                <!-- Dynamically populated by renderClassTeacherAssignmentsTable() -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Bonafide Issue Register Section -->
+        <!-- Table Container & Filter Toolbar -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="p-3.5 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div class="flex items-center gap-2">
-              <i class="fa-solid fa-clipboard-list text-indigo-700 text-base"></i>
-              <h3 class="font-bold text-sm text-slate-800">Bonafide Certificate Issue Register & Audit Log</h3>
-              <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-register-count-badge">0 Records</span>
+              <i class="fa-solid fa-clipboard-list text-amber-700 text-base"></i>
+              <h3 class="font-bold text-sm text-slate-800">Historical Issue Register & Audit Records</h3>
             </div>
             <div class="flex flex-wrap items-center gap-2">
               <div class="relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-                <input type="text" id="admin-register-search" oninput="filterAdministrationRegister()" placeholder="Search serial, student, adm no, PEN..." class="pl-8 pr-3 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-indigo-500 w-56 sm:w-64">
+                <input type="text" id="admin-register-search" oninput="filterAdministrationRegister()" placeholder="Search serial, student, adm no, PEN..." class="pl-8 pr-3 py-1.5 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-amber-500 w-56 sm:w-64">
               </div>
-              <select id="admin-register-filter-type" onchange="filterAdministrationRegister()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+              <select id="admin-register-filter-type" onchange="filterAdministrationRegister()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-amber-500 bg-white">
                 <option value="all">All Certificate Types</option>
                 <option value="Present Student">Present Student</option>
                 <option value="Left Student">Left Student</option>
@@ -1766,7 +1968,6 @@
             </div>
           </div>
 
-          <!-- Table Container -->
           <div class="overflow-x-auto max-h-[550px] overflow-y-auto">
             <table class="w-full text-left border-collapse text-xs">
               <thead class="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b border-slate-200 z-10 select-none">
@@ -5371,7 +5572,7 @@
     // Navigation & Tab Switcher
     function switchTab(tabId) {
       // Access control guard: Protected sections require Staff / Administrator account
-      var protectedTabs = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'exams', 'mdm', 'yearwise-students'];
+      var protectedTabs = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'admin-assign-teachers', 'admin-bonafide-register', 'exams', 'mdm', 'yearwise-students'];
       if (protectedTabs.includes(tabId)) {
         if (!currentUser || currentUser.role === 'student') {
           if (currentUser && currentUser.role === 'student') {
@@ -5427,7 +5628,15 @@
       else if (tabId === 'students-classwise') renderClasswiseStudents();
       else if (tabId === 'student-portal') renderStudentPortalView();
       else if (tabId === 'yearwise-students') renderYearwiseTable();
-      else if (tabId === 'administration') renderAdministrationSection();
+      else if (tabId === 'administration') {
+        renderAdministrationSection();
+      }
+      else if (tabId === 'admin-assign-teachers') {
+        renderClassTeacherAssignmentsTable();
+      }
+      else if (tabId === 'admin-bonafide-register') {
+        renderAdministrationSection();
+      }
       else if (tabId === 'holidays') renderHolidays();
       else if (tabId === 'activities') renderActivities();
       else if (tabId === 'mdm') renderMDMTable();
@@ -6938,7 +7147,7 @@
 
     function updateUIAuthStatus() {
       var container = document.getElementById('auth-status-container');
-      var protectedNavs = ['nav-staff', 'nav-students', 'nav-students-classwise', 'nav-yearwise-students', 'nav-certificates', 'nav-administration', 'nav-mdm', 'nav-exams'];
+      var protectedNavs = ['nav-staff', 'nav-students', 'nav-students-classwise', 'nav-yearwise-students', 'nav-certificates', 'nav-administration', 'nav-admin-assign-teachers', 'nav-admin-bonafide-register', 'nav-mdm', 'nav-exams'];
       var studentNav = document.getElementById('nav-student-portal');
       var sidebarAuth = document.getElementById('sidebar-auth-nav');
 
@@ -7039,7 +7248,7 @@
       }
 
       // If user is not staff/admin, ensure they are not viewing a protected section
-      var protectedTabsList = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'exams', 'mdm', 'yearwise-students'];
+      var protectedTabsList = ['students', 'students-classwise', 'staff', 'certificates', 'administration', 'admin-assign-teachers', 'admin-bonafide-register', 'exams', 'mdm', 'yearwise-students'];
       var isStaffUser = currentUser && currentUser.role !== 'student';
       if (!isAdmin && !isStaffUser) {
         var isCurrentTabProtected = protectedTabsList.some(tabId => {
@@ -8007,6 +8216,11 @@
       var statToday = document.getElementById('admin-stat-today'); if (statToday) statToday.innerText = todayCount;
       var statPresent = document.getElementById('admin-stat-present'); if (statPresent) statPresent.innerText = presentCount;
       var statLeft = document.getElementById('admin-stat-left'); if (statLeft) statLeft.innerText = leftCount;
+
+      var ovTotal = document.getElementById('admin-overview-stat-total'); if (ovTotal) ovTotal.innerText = total;
+      var ovToday = document.getElementById('admin-overview-stat-today'); if (ovToday) ovToday.innerText = todayCount;
+      var ovPresent = document.getElementById('admin-overview-stat-present'); if (ovPresent) ovPresent.innerText = presentCount;
+      var ovLeft = document.getElementById('admin-overview-stat-left'); if (ovLeft) ovLeft.innerText = leftCount;
 
       renderClassTeacherAssignmentsTable();
       filterAdministrationRegister();
