@@ -97,7 +97,7 @@
 
       /* Hide regular screen elements and inactive containers */
       header, nav, aside, main, footer, .modal, [id^="modal-"], .no-print,
-      #bonafide-print-container, #progress-card-print-container, #id-card-print-container, #service-cert-print-container, #hallticket-print-container, #result-memo-print-container {
+      #bonafide-print-container, #progress-card-print-container, #id-card-print-container, #service-cert-print-container, #hallticket-print-container {
         display: none !important;
       }
 
@@ -173,7 +173,7 @@
         visibility: visible !important;
       }
 
-      /* When printing Hall Ticket ONLY - Anchored at the top */
+      /* When printing Hall Ticket ONLY - Half-A4 sheet print anchored strictly at top */
       body.printing-hallticket #hallticket-print-container {
         display: block !important;
         visibility: visible !important;
@@ -188,24 +188,6 @@
       }
 
       body.printing-hallticket #hallticket-print-container * {
-        visibility: visible !important;
-      }
-
-      /* When printing Result Memo ONLY - Anchored at the top */
-      body.printing-result-memo #result-memo-print-container {
-        display: block !important;
-        visibility: visible !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #fff !important;
-      }
-
-      body.printing-result-memo #result-memo-print-container * {
         visibility: visible !important;
       }
 
@@ -2474,12 +2456,12 @@
                 <i class="fa-solid fa-id-card-clip text-amber-600"></i>
                 <span data-en="Candidate Hall Tickets (SA 1 / SA 2)" data-te="పరీక్షల హాల్ టికెట్లు (SA-1 / SA-2)">Candidate Hall Tickets (SA 1 / SA 2)</span>
               </h2>
-              <p class="text-xs text-slate-500">Auto-generate and print official Summative Assessment Admit Cards with Roll and Hall Ticket Numbers.</p>
+              <p class="text-xs text-slate-500">Auto-generate and print official Half-A4 Summative Assessment Admit Cards with Roll and Hall Ticket Numbers.</p>
             </div>
             <div class="flex items-center flex-wrap gap-2">
-              <button type="button" onclick="printBatchHallTickets()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition shadow-sm flex items-center gap-1.5 cursor-pointer" title="Print All Hall Tickets for selected Class">
+              <button type="button" onclick="printBatchHallTickets()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition shadow-sm flex items-center gap-1.5 cursor-pointer" title="Print All Hall Tickets for selected Class in Half-A4 Format">
                 <i class="fa-solid fa-print"></i>
-                <span>Print All Class Hall Tickets</span>
+                <span>Print All Class Hall Tickets (Half-A4)</span>
               </button>
               <button type="button" onclick="exportHallTicketsToCSV()" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-file-excel text-emerald-600"></i>
@@ -2655,11 +2637,11 @@
               <i class="fa-solid fa-square-poll-vertical text-emerald-600"></i>
               <span data-en="Student Examination Results Portal" data-te="విద్యార్థి పరీక్ష ఫలితాల పోర్టల్">Student Examination Results Portal</span>
             </h2>
-            <p class="text-xs text-slate-500">Check online examination marks statements for SA 1, SA 2 and Formative assessments.</p>
+            <p class="text-xs text-slate-500">Check online examination marks statements for SA 1, SA 2 and Formative assessments (Online Display Only).</p>
           </div>
-          <div class="text-xs text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-            <i class="fa-solid fa-lock text-slate-400"></i>
-            <span>Secure Student Authentication Required</span>
+          <div class="text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-semibold">
+            <i class="fa-solid fa-eye text-amber-600"></i>
+            <span>Display Purpose Only (Not for Print)</span>
           </div>
         </div>
 
@@ -4559,8 +4541,8 @@
             <i class="fa-solid fa-id-card-clip"></i>
           </span>
           <div>
-            <h3 class="text-sm font-bold text-white">Student Examination Hall Ticket (Admit Card)</h3>
-            <p class="text-[11px] text-slate-300">Summative Assessments & Annual Examination Board</p>
+            <h3 class="text-sm font-bold text-white">Student Examination Hall Ticket (Half-A4 Format)</h3>
+            <p class="text-[11px] text-slate-300">Summative & Formative Assessments • Formatted for Half-A4 Paper Print</p>
           </div>
         </div>
         <div class="flex items-center gap-3">
@@ -4596,7 +4578,7 @@
       <!-- Scrollable Preview Area -->
       <div class="p-5 overflow-y-auto flex-1 bg-slate-50">
         <!-- Admit Card Sheet -->
-        <div id="modal-ht-card-preview" class="max-w-3xl mx-auto bg-white border-2 border-slate-900 rounded-xl p-5 shadow-sm text-slate-900 text-xs font-sans relative">
+        <div id="modal-ht-card-preview" class="w-full flex justify-center">
           <!-- Dynamic Content Populated by renderHallTicketPreview -->
         </div>
       </div>
@@ -4604,14 +4586,14 @@
       <!-- Modal Footer -->
       <div class="px-5 py-3 bg-white border-t border-slate-200 flex items-center justify-between gap-3 shrink-0">
         <p class="text-[11px] text-slate-500 hidden sm:block">
-          <i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Ready for A4 print with school crest & examination guidelines
+          <i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Formatted for Half-A4 sheet print with school crest, candidate bio & horizontal timetable
         </p>
         <div class="flex items-center gap-2 ml-auto">
           <button type="button" onclick="closeModal('modal-hallticket')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-300 transition cursor-pointer">
             Close
           </button>
           <button type="button" onclick="printCurrentHallTicket()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-5 py-2 text-xs rounded-lg shadow-sm transition flex items-center gap-1.5 cursor-pointer">
-            <i class="fa-solid fa-print"></i> <span>Print Hall Ticket</span>
+            <i class="fa-solid fa-print"></i> <span>Print Half-A4 Hall Ticket</span>
           </button>
         </div>
       </div>
@@ -11333,7 +11315,7 @@ var currentTimetableClass = 'Class 10';
       }).join('');
     }
 
-    // Generates high-fidelity HTML for an official Examination Hall Ticket / Admit Card
+    // Generates high-fidelity HTML for an official Examination Hall Ticket / Admit Card in Half-A4 Sheet format
     function buildHallTicketCardHTML(student, examType, isPrintMode) {
       if (!student) return '<p class="text-center text-slate-500 py-6">No student data available</p>';
 
@@ -11349,253 +11331,194 @@ var currentTimetableClass = 'Class 10';
       var fatherName = (student.fatherName && student.fatherName !== 'Not recorded') ? student.fatherName : '-';
       var motherName = (student.motherName && student.motherName !== 'Not recorded') ? student.motherName : '-';
 
-      // Timetable rows based on exam type
-      var timetableRows = '';
-      if (examType && examType.startsWith('FA-')) {
-        timetableRows = `
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">1</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 1</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 11:00 AM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">First Language (Telugu / Urdu)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">2</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 1</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">11:30 AM - 01:00 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Second Language (Hindi / Telugu)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">3</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 2</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 11:00 AM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Third Language (English)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">4</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 2</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">11:30 AM - 01:00 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Mathematics</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">5</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 3</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 11:00 AM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">General Science (PS & BS)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">6</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 3</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">11:30 AM - 01:00 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Social Studies</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-        `;
-      } else {
-        // Summative Assessments (SA 1 / SA 2) standard board schedule
-        timetableRows = `
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">1</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 1</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 12:15 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">First Language (Telugu / Urdu)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">2</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 2</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 12:15 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Second Language (Hindi / Telugu)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">3</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 3</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 12:15 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Third Language (English)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">4</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 4</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 12:15 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Mathematics</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">5</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 5</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 12:15 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">General Science (Physical Science & Biological Science)</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-          <tr>
-            <td class="border border-slate-900 p-1.5 text-center font-bold">6</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">Day 6</td>
-            <td class="border border-slate-900 p-1.5 text-center font-mono">09:30 AM - 12:15 PM</td>
-            <td class="border border-slate-900 p-1.5 font-bold">Social Studies</td>
-            <td class="border border-slate-900 p-1.5"></td>
-            <td class="border border-slate-900 p-1.5"></td>
-          </tr>
-        `;
-      }
+      // Exam dates for horizontal timetable schedule (Date substituted in place of Day)
+      var examDates = (examType === 'SA-2')
+        ? ['15/04/2027', '16/04/2027', '17/04/2027', '19/04/2027', '20/04/2027', '21/04/2027']
+        : (examType === 'FA-1'
+          ? ['04/08/2026', '04/08/2026', '05/08/2026', '05/08/2026', '06/08/2026', '06/08/2026']
+          : (examType === 'FA-2'
+            ? ['15/09/2026', '15/09/2026', '16/09/2026', '16/09/2026', '17/09/2026', '17/09/2026']
+            : ['21/10/2026', '22/10/2026', '23/10/2026', '24/10/2026', '26/10/2026', '27/10/2026']
+          )
+        );
+
+      var isFA = examType && examType.startsWith('FA-');
+      var timeStr = isFA ? '09:30 - 11:00' : '09:30 - 12:15';
 
       var photoHTML = '';
       if (student.photo) {
         photoHTML = `<img src="${student.photo}" alt="${escapeText(student.name)}" class="w-full h-full object-cover">`;
       } else {
         photoHTML = `
-          <div class="w-full h-full bg-slate-100 flex flex-col items-center justify-center text-slate-500 p-2 text-center">
-            <i class="fa-solid fa-user text-2xl text-slate-400 mb-1"></i>
-            <span class="text-[9px] font-bold uppercase leading-tight">Affix Recent Student Photo</span>
+          <div class="w-full h-full bg-slate-50 flex flex-col items-center justify-center text-slate-500 p-1 text-center">
+            <i class="fa-solid fa-user text-xl text-slate-400 mb-0.5"></i>
+            <span class="text-[7.5px] font-bold uppercase leading-tight text-slate-600">Affix Student Photo</span>
           </div>
         `;
       }
 
       return `
-        <div class="hallticket-sheet ${isPrintMode ? 'p-6' : 'p-4'} border-2 border-slate-900 bg-white text-slate-900 font-sans relative">
+        <div class="half-a4-sheet max-w-2xl mx-auto p-4 border-[2px] border-black bg-white text-black font-sans leading-tight text-xs relative">
           <!-- Watermark / Background Crest -->
           <div class="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none z-0">
-            <img src="school_crest_logo.png" alt="Watermark" class="w-80 h-80 object-contain">
+            <img src="school_crest_logo.png" alt="Watermark" class="w-56 h-56 object-contain">
           </div>
 
-          <div class="relative z-10 space-y-3.5">
+          <div class="relative z-10 space-y-2">
             <!-- Header with Dual Logos -->
-            <div class="flex items-center justify-between border-b-2 border-slate-900 pb-3">
-              <img src="ts_govt_logo.png" alt="Govt of Telangana" class="w-16 h-16 object-contain shrink-0">
-              <div class="text-center flex-1 px-3">
-                <h1 class="text-base font-black uppercase tracking-wide text-slate-900">ZILLA PARISHAD HIGH SCHOOL (GIRLS): GAJWEL</h1>
-                <p class="text-xs font-bold text-slate-800 mt-0.5">GAJWEL MANDAL, SIDDIPET DISTRICT, TELANGANA STATE - 502278</p>
-                <div class="flex items-center justify-center gap-3 text-[11px] font-semibold text-slate-700 mt-1">
-                  <span>Department of School Education</span>
+            <div class="flex items-center justify-between border-b-2 border-black pb-1.5 mb-1.5">
+              <img src="ts_govt_logo.png" alt="Govt of Telangana" class="w-12 h-12 object-contain shrink-0">
+              <div class="text-center flex-1 px-2">
+                <h1 class="text-xs sm:text-sm font-black uppercase tracking-wide text-black leading-tight">ZILLA PARISHAD HIGH SCHOOL (GIRLS): GAJWEL</h1>
+                <p class="text-[9.5px] font-bold text-black mt-0.5">GAJWEL MANDAL, SIDDIPET DISTRICT, TELANGANA STATE - 502278</p>
+                <div class="flex items-center justify-center gap-2 text-[8.5px] font-bold text-slate-800 mt-0.5">
+                  <span>Dept. of School Education</span>
                   <span>•</span>
-                  <span class="font-mono font-bold">U-DISE: 36181802720</span>
+                  <span class="font-mono">U-DISE: 36181802720</span>
+                  <span>•</span>
+                  <span>Academic Year: 2026-27</span>
                 </div>
               </div>
-              <img src="school_crest_logo.png" alt="School Crest" class="w-16 h-16 object-contain shrink-0">
+              <img src="school_crest_logo.png" alt="School Crest" class="w-12 h-12 object-contain shrink-0">
             </div>
 
             <!-- Title & Exam Badge -->
-            <div class="text-center space-y-1">
-              <div class="inline-block bg-slate-900 text-white font-black text-xs uppercase tracking-widest px-6 py-1 rounded shadow-xs">
-                HALL TICKET / ADMIT CARD
-              </div>
-              <div class="text-xs font-extrabold text-amber-900 uppercase tracking-wide">
-                ${examTitle} — ACADEMIC YEAR 2026-27
-              </div>
+            <div class="text-center">
+              <h2 class="text-[10.5px] font-black uppercase tracking-wider inline-block px-3 py-0.5 border-2 border-black rounded-xs bg-slate-100">
+                HALL TICKET / ADMIT CARD — ${examTitle}
+              </h2>
             </div>
 
             <!-- Candidate Information & Photo Grid -->
-            <div class="flex flex-col sm:flex-row gap-3 border border-slate-900 p-2.5 rounded bg-slate-50/50">
+            <div class="flex items-start gap-2 border border-black p-1.5 rounded-xs bg-slate-50/40">
               <div class="flex-1 overflow-x-auto">
-                <table class="w-full text-left text-xs border-collapse">
+                <table class="w-full text-left text-[10.5px] border-collapse leading-snug">
                   <tbody>
-                    <tr class="border-b border-slate-300">
-                      <td class="py-1 font-bold text-slate-600 w-32">Hall Ticket No:</td>
-                      <td class="py-1 font-mono font-black text-sm text-indigo-950">${htNo}</td>
-                      <td class="py-1 font-bold text-slate-600 w-28">Admission No:</td>
-                      <td class="py-1 font-mono font-bold text-slate-900">${escapeText(student.admNo || '-')}</td>
+                    <tr class="border-b border-slate-200">
+                      <td class="py-0.5 font-bold text-slate-700 w-24">Hall Ticket No:</td>
+                      <td class="py-0.5 font-mono font-black text-xs text-indigo-950">${htNo}</td>
+                      <td class="py-0.5 font-bold text-slate-700 w-24">Admission No:</td>
+                      <td class="py-0.5 font-mono font-bold text-slate-900">${escapeText(student.admNo || '-')}</td>
                     </tr>
-                    <tr class="border-b border-slate-300">
-                      <td class="py-1 font-bold text-slate-600">Candidate Name:</td>
-                      <td class="py-1 font-extrabold text-slate-950 uppercase" colspan="3">${escapeText(student.name || '-')}</td>
+                    <tr class="border-b border-slate-200">
+                      <td class="py-0.5 font-bold text-slate-700">Candidate Name:</td>
+                      <td class="py-0.5 font-black text-slate-950 uppercase" colspan="3">${escapeText(student.name || '-')}</td>
                     </tr>
-                    <tr class="border-b border-slate-300">
-                      <td class="py-1 font-bold text-slate-600">Father's Name:</td>
-                      <td class="py-1 font-semibold text-slate-900 uppercase">${escapeText(fatherName)}</td>
-                      <td class="py-1 font-bold text-slate-600">Mother's Name:</td>
-                      <td class="py-1 font-semibold text-slate-900 uppercase">${escapeText(motherName)}</td>
+                    <tr class="border-b border-slate-200">
+                      <td class="py-0.5 font-bold text-slate-700">Father's Name:</td>
+                      <td class="py-0.5 font-semibold text-slate-900 uppercase">${escapeText(fatherName)}</td>
+                      <td class="py-0.5 font-bold text-slate-700">Mother's Name:</td>
+                      <td class="py-0.5 font-semibold text-slate-900 uppercase">${escapeText(motherName)}</td>
                     </tr>
-                    <tr class="border-b border-slate-300">
-                      <td class="py-1 font-bold text-slate-600">Class & Section:</td>
-                      <td class="py-1 font-extrabold text-slate-900">${escapeText(student.classVal || '-')} (${escapeText(student.section || 'A')})</td>
-                      <td class="py-1 font-bold text-slate-600">Roll Number:</td>
-                      <td class="py-1 font-bold text-slate-900">${student.rollNo || '-'}</td>
+                    <tr class="border-b border-slate-200">
+                      <td class="py-0.5 font-bold text-slate-700">Class & Section:</td>
+                      <td class="py-0.5 font-extrabold text-slate-900">${escapeText(student.classVal || '-')} (${escapeText(student.section || 'A')})</td>
+                      <td class="py-0.5 font-bold text-slate-700">Roll Number:</td>
+                      <td class="py-0.5 font-bold text-slate-900">${student.rollNo || '-'}</td>
                     </tr>
                     <tr>
-                      <td class="py-1 font-bold text-slate-600">Medium:</td>
-                      <td class="py-1 font-bold text-slate-900">${escapeText(med)}</td>
-                      <td class="py-1 font-bold text-slate-600">Date of Birth:</td>
-                      <td class="py-1 font-mono font-bold text-slate-900">${escapeText(student.dob || '-')}</td>
+                      <td class="py-0.5 font-bold text-slate-700">Medium:</td>
+                      <td class="py-0.5 font-bold text-slate-900">${escapeText(med)}</td>
+                      <td class="py-0.5 font-bold text-slate-700">Date of Birth:</td>
+                      <td class="py-0.5 font-mono font-bold text-slate-900">${escapeText(student.dob || '-')}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <!-- Photo Box -->
-              <div class="w-24 h-32 border-2 border-slate-900 bg-white flex items-center justify-center shrink-0 self-center sm:self-auto overflow-hidden shadow-xs">
+              <div class="w-18 h-22 border border-black bg-white flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
                 ${photoHTML}
               </div>
             </div>
 
-            <!-- Examination Timetable / Subject Schedule -->
-            <div class="space-y-1">
-              <div class="text-[11px] font-black uppercase text-slate-800 tracking-wide flex items-center justify-between">
+            <!-- Horizontal Examination Timetable (Date in place of Day) -->
+            <div>
+              <div class="text-[9px] font-black uppercase text-slate-800 tracking-wide mb-0.5 flex justify-between">
                 <span>Examination Schedule & Attendance Verification</span>
-                <span class="text-[10px] text-slate-500 font-normal">Exam Timings: As indicated per paper</span>
+                <span class="text-[8px] text-slate-600 font-normal">Timings: ${timeStr} AM</span>
               </div>
               <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs border-collapse border border-slate-900 text-slate-900">
-                  <thead class="bg-slate-200 text-slate-900 font-bold border-b border-slate-900 text-[11px]">
-                    <tr>
-                      <th class="border border-slate-900 p-1.5 text-center w-8">Sl</th>
-                      <th class="border border-slate-900 p-1.5 text-center w-14">Day</th>
-                      <th class="border border-slate-900 p-1.5 text-center w-36">Time</th>
-                      <th class="border border-slate-900 p-1.5">Subject / Paper</th>
-                      <th class="border border-slate-900 p-1.5 text-center w-28">Student Sign</th>
-                      <th class="border border-slate-900 p-1.5 text-center w-28">Invigilator Sign</th>
+                <table class="w-full border-collapse border border-black text-center text-[9px] leading-tight">
+                  <thead>
+                    <tr class="bg-slate-100 text-black font-bold">
+                      <th class="border border-black p-1 text-left w-20">Subject</th>
+                      <th class="border border-black p-1">First Language<br><span class="text-[7.5px] font-normal font-sans">(Tel / Urd)</span></th>
+                      <th class="border border-black p-1">Second Language<br><span class="text-[7.5px] font-normal font-sans">(Hindi / Tel)</span></th>
+                      <th class="border border-black p-1">Third Language<br><span class="text-[7.5px] font-normal font-sans">(English)</span></th>
+                      <th class="border border-black p-1">Mathematics</th>
+                      <th class="border border-black p-1">General Science<br><span class="text-[7.5px] font-normal font-sans">(PS & BS)</span></th>
+                      <th class="border border-black p-1">Social Studies</th>
                     </tr>
                   </thead>
                   <tbody>
-                    ${timetableRows}
+                    <tr>
+                      <td class="border border-black p-1 font-bold text-left bg-slate-50">Date</td>
+                      <td class="border border-black p-1 font-mono font-bold text-[8.5px]">${examDates[0]}</td>
+                      <td class="border border-black p-1 font-mono font-bold text-[8.5px]">${examDates[1]}</td>
+                      <td class="border border-black p-1 font-mono font-bold text-[8.5px]">${examDates[2]}</td>
+                      <td class="border border-black p-1 font-mono font-bold text-[8.5px]">${examDates[3]}</td>
+                      <td class="border border-black p-1 font-mono font-bold text-[8.5px]">${examDates[4]}</td>
+                      <td class="border border-black p-1 font-mono font-bold text-[8.5px]">${examDates[5]}</td>
+                    </tr>
+                    <tr>
+                      <td class="border border-black p-1 font-bold text-left bg-slate-50">Time</td>
+                      <td class="border border-black p-0.5 text-[8px] font-mono">${timeStr}</td>
+                      <td class="border border-black p-0.5 text-[8px] font-mono">${timeStr}</td>
+                      <td class="border border-black p-0.5 text-[8px] font-mono">${timeStr}</td>
+                      <td class="border border-black p-0.5 text-[8px] font-mono">${timeStr}</td>
+                      <td class="border border-black p-0.5 text-[8px] font-mono">${timeStr}</td>
+                      <td class="border border-black p-0.5 text-[8px] font-mono">${timeStr}</td>
+                    </tr>
+                    <tr>
+                      <td class="border border-black p-1 font-bold text-left bg-slate-50">Candidate Sign</td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-black p-1 font-bold text-left bg-slate-50">Invigilator Sign</td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                      <td class="border border-black h-5"></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
             <!-- Important Instructions to Candidates -->
-            <div class="p-2.5 border border-slate-400 rounded bg-slate-50 text-[10.5px] leading-relaxed text-slate-700 space-y-1">
-              <div class="font-bold text-slate-900 uppercase text-[10px] tracking-wider mb-0.5">Instructions for Candidates:</div>
-              <ol class="list-decimal pl-4 space-y-0.5">
-                <li>Candidates must bring this Hall Ticket to the Examination Hall on all examination days without fail.</li>
-                <li>Candidates must occupy their allotted seats at least 15 minutes prior to the commencement of the exam.</li>
-                <li>No unauthorized books, note slips, electronic calculators, smart watches or mobile phones are allowed inside the exam hall.</li>
-                <li>Write your allotted Roll Number and Hall Ticket Number (<code class="font-bold font-mono text-slate-900">${htNo}</code>) correctly on the main answer booklet.</li>
+            <div class="p-1 border border-slate-400 rounded-xs bg-slate-50 text-[8.5px] leading-tight text-slate-700 space-y-0.5">
+              <div class="font-bold text-slate-900 uppercase text-[8px] tracking-wider">Candidate Instructions:</div>
+              <ol class="list-decimal pl-3.5 space-y-0.5">
+                <li>Candidates must bring this Hall Ticket on all examination days and occupy allotted seat 15 minutes prior to the exam.</li>
+                <li>No unauthorized note slips, electronic calculators, smart watches or mobile phones are allowed in the examination hall.</li>
+                <li>Write your allotted Roll Number and Hall Ticket Number (<code class="font-bold font-mono text-slate-900">${htNo}</code>) clearly on the main answer booklet.</li>
               </ol>
             </div>
 
             <!-- Signature Blocks -->
-            <div class="pt-6 grid grid-cols-3 gap-4 text-center text-xs font-bold text-slate-900">
+            <div class="pt-3 grid grid-cols-3 gap-3 text-center text-[9.5px] font-bold text-slate-900">
               <div>
-                <div class="h-10"></div>
-                <div class="border-t border-slate-900 pt-1">
-                  <span>Signature of the Candidate</span>
+                <div class="h-5"></div>
+                <div class="border-t border-black pt-0.5">
+                  <span>Signature of Candidate</span>
                 </div>
               </div>
               <div>
-                <div class="h-10"></div>
-                <div class="border-t border-slate-900 pt-1">
+                <div class="h-5"></div>
+                <div class="border-t border-black pt-0.5">
                   <span>Signature of Class Teacher</span>
                 </div>
               </div>
               <div>
-                <div class="h-10"></div>
-                <div class="border-t border-slate-900 pt-1">
+                <div class="h-5"></div>
+                <div class="border-t border-black pt-0.5">
                   <span>Signature of Headmaster & Seal</span>
                 </div>
               </div>
@@ -11671,7 +11594,7 @@ var currentTimetableClass = 'Class 10';
       if (!printContainer) return;
 
       printContainer.innerHTML = buildHallTicketCardHTML(st, exam, true);
-      document.body.classList.remove('printing-bonafide', 'printing-id-card', 'printing-progress-card', 'printing-result-memo');
+      document.body.classList.remove('printing-bonafide', 'printing-id-card', 'printing-progress-card');
       document.body.classList.add('printing-hallticket');
 
       setTimeout(function() {
@@ -11682,7 +11605,7 @@ var currentTimetableClass = 'Class 10';
       }, 100);
     }
 
-    // Prints all candidate Hall Tickets for the selected Class/Section in batch
+    // Prints all candidate Hall Tickets for the selected Class/Section in batch (Half-A4 Sheet format)
     function printBatchHallTickets() {
       var examType = document.getElementById('ht-exam-filter')?.value || 'SA-1';
       var classFilter = document.getElementById('ht-class-filter')?.value || 'All';
@@ -11704,13 +11627,13 @@ var currentTimetableClass = 'Class 10';
 
       printContainer.innerHTML = filtered.map(function(st, idx) {
         return `
-          <div style="page-break-after: always; padding-bottom: 20px;">
+          <div class="half-a4-batch-item" style="page-break-after: always; break-after: page; margin-bottom: 0;">
             ${buildHallTicketCardHTML(st, examType, true)}
           </div>
         `;
       }).join('');
 
-      document.body.classList.remove('printing-bonafide', 'printing-id-card', 'printing-progress-card', 'printing-result-memo');
+      document.body.classList.remove('printing-bonafide', 'printing-id-card', 'printing-progress-card');
       document.body.classList.add('printing-hallticket');
 
       setTimeout(function() {
@@ -11898,6 +11821,15 @@ var currentTimetableClass = 'Class 10';
             </div>
           </div>
 
+          <!-- Online Display Notice Banner (Results for display purpose only not for print) -->
+          <div class="bg-amber-50 border-b border-amber-200 px-4 py-2 text-[11px] text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div class="flex items-center gap-2 font-semibold">
+              <i class="fa-solid fa-circle-info text-amber-600"></i>
+              <span>Notice: Examination results shown are for immediate online display & verification only (Not for printing).</span>
+            </div>
+            <span class="text-[9px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-300 w-fit">Display Purpose Only</span>
+          </div>
+
           <!-- Student Meta Grid -->
           <div class="p-5 bg-slate-50 border-b border-slate-200">
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
@@ -12036,7 +11968,7 @@ var currentTimetableClass = 'Class 10';
             </div>
             ` : ''}
 
-            <!-- Summary Badges & Action Buttons -->
+            <!-- Summary Badges & Action Buttons (Results for display purpose only not for print) -->
             <div class="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
               <div class="flex items-center gap-4 text-xs">
                 <div><span class="text-slate-500">Total Marks:</span> <strong class="text-slate-900">${grandTotal} / ${maxTotal}</strong></div>
@@ -12044,9 +11976,10 @@ var currentTimetableClass = 'Class 10';
                 <div><span class="text-slate-500">GPA:</span> <strong class="text-indigo-900 font-mono">${avgGp}</strong></div>
               </div>
               <div class="flex items-center gap-2">
-                <button type="button" onclick="printResultMemo(${student.id}, '${examSelect}')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 text-xs rounded-lg shadow-sm transition flex items-center gap-1.5 cursor-pointer">
-                  <i class="fa-solid fa-print"></i> <span>Print Marks Memo</span>
-                </button>
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-300">
+                  <i class="fa-solid fa-eye text-emerald-600"></i>
+                  <span>Display Purpose Only (Not for Print)</span>
+                </span>
               </div>
             </div>
           </div>
@@ -12089,180 +12022,9 @@ var currentTimetableClass = 'Class 10';
       }
     }
 
-    // Prints official Result Memo / Marks Statement
+    // Examination results are strictly for display purpose only, not for print
     function printResultMemo(studentId, examType) {
-      var student = studentList.find(function(s) { return s.id === studentId; }) || studentList[0];
-      if (!student) return;
-
-      var examNameMap = {
-        'SA-1': 'SUMMATIVE ASSESSMENT - I (SA 1)',
-        'SA-2': 'SUMMATIVE ASSESSMENT - II (SA 2)',
-        'FA-1': 'FORMATIVE ASSESSMENT - I (FA 1)',
-        'FA-2': 'FORMATIVE ASSESSMENT - II (FA 2)'
-      };
-      var examTitle = examNameMap[examType] || (examType + ' EXAMINATION');
-      var htNo = generateHallTicketNumber(student);
-      var custom = getStudentExamMarks(student.id, examType) || {};
-      var isFA = (examType && examType.startsWith('FA-'));
-
-      var mFirst = custom.first !== undefined ? custom.first : (isFA ? 18 : 85);
-      var mSec = custom.second !== undefined ? custom.second : (isFA ? 20 : 90);
-      var mEng = custom.english !== undefined ? custom.english : (isFA ? 17 : 88);
-      var mMath = custom.maths !== undefined ? custom.maths : (isFA ? 20 : 92);
-      var mSci = custom.science !== undefined ? custom.science : (isFA ? 18 : 84);
-      var mSoc = custom.social !== undefined ? custom.social : (isFA ? 18 : 90);
-
-      var maxPerSub = isFA ? 20 : 100;
-      var maxTotal = isFA ? 120 : 600;
-      var grandTotal = mFirst + mSec + mEng + mMath + mSci + mSoc;
-      var percentage = ((grandTotal / maxTotal) * 100).toFixed(1);
-
-      function calcGrd(m, max) {
-        var pct = (m / max) * 100;
-        if (pct >= 91) return { grade: 'A1', gp: 10 };
-        if (pct >= 81) return { grade: 'A2', gp: 9 };
-        if (pct >= 71) return { grade: 'B1', gp: 8 };
-        if (pct >= 61) return { grade: 'B2', gp: 7 };
-        if (pct >= 51) return { grade: 'C1', gp: 6 };
-        if (pct >= 41) return { grade: 'C2', gp: 5 };
-        if (pct >= 35) return { grade: 'D',  gp: 4 };
-        return { grade: 'E', gp: 0 };
-      }
-
-      var g1 = calcGrd(mFirst, maxPerSub);
-      var g2 = calcGrd(mSec, maxPerSub);
-      var g3 = calcGrd(mEng, maxPerSub);
-      var g4 = calcGrd(mMath, maxPerSub);
-      var gSci = calcGrd(mSci, maxPerSub);
-      var gSoc = calcGrd(mSoc, maxPerSub);
-      var avgGp = ((g1.gp + g2.gp + g3.gp + g4.gp + gSci.gp + gSoc.gp) / 6).toFixed(1);
-      var isPassed = (g1.gp >= 4 && g2.gp >= 4 && g3.gp >= 4 && g4.gp >= 4 && gSci.gp >= 4 && gSoc.gp >= 4);
-
-      var printContainer = document.getElementById('result-memo-print-container');
-      if (!printContainer) return;
-
-      printContainer.innerHTML = `
-        <div class="max-w-3xl mx-auto p-6 border-2 border-slate-900 bg-white text-slate-900 font-sans text-xs relative">
-          <!-- Watermark -->
-          <div class="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none z-0">
-            <img src="school_crest_logo.png" alt="Watermark" class="w-80 h-80 object-contain">
-          </div>
-
-          <div class="relative z-10 space-y-4">
-            <!-- Header -->
-            <div class="flex items-center justify-between border-b-2 border-slate-900 pb-3">
-              <img src="ts_govt_logo.png" alt="Govt of Telangana" class="w-16 h-16 object-contain shrink-0">
-              <div class="text-center flex-1 px-3">
-                <h1 class="text-base font-black uppercase text-slate-900">ZILLA PARISHAD HIGH SCHOOL (GIRLS): GAJWEL</h1>
-                <p class="text-xs font-bold text-slate-800">GAJWEL MANDAL, SIDDIPET DISTRICT, TELANGANA STATE - 502278</p>
-                <p class="text-[11px] font-mono font-bold text-slate-700">U-DISE: 36181802720 • Academic Year 2026-27</p>
-              </div>
-              <img src="school_crest_logo.png" alt="School Crest" class="w-16 h-16 object-contain shrink-0">
-            </div>
-
-            <!-- Title -->
-            <div class="text-center space-y-1">
-              <div class="inline-block bg-slate-900 text-white font-black text-xs uppercase px-5 py-1 rounded">
-                STUDENT MARKS MEMORANDUM & RESULT STATEMENT
-              </div>
-              <div class="text-xs font-extrabold text-emerald-900 uppercase">
-                ${examTitle}
-              </div>
-            </div>
-
-            <!-- Bio Grid -->
-            <div class="border border-slate-900 p-3 rounded">
-              <table class="w-full text-left text-xs">
-                <tbody>
-                  <tr class="border-b border-slate-300">
-                    <td class="py-1 font-bold w-32">Hall Ticket No:</td>
-                    <td class="py-1 font-mono font-black text-sm">${htNo}</td>
-                    <td class="py-1 font-bold w-28">Admission No:</td>
-                    <td class="py-1 font-mono font-bold">${escapeText(student.admNo || '-')}</td>
-                  </tr>
-                  <tr class="border-b border-slate-300">
-                    <td class="py-1 font-bold">Candidate Name:</td>
-                    <td class="py-1 font-extrabold uppercase" colspan="3">${escapeText(student.name || '-')}</td>
-                  </tr>
-                  <tr class="border-b border-slate-300">
-                    <td class="py-1 font-bold">Father's Name:</td>
-                    <td class="py-1 uppercase">${escapeText(student.fatherName || '-')}</td>
-                    <td class="py-1 font-bold">Mother's Name:</td>
-                    <td class="py-1 uppercase">${escapeText(student.motherName || '-')}</td>
-                  </tr>
-                  <tr>
-                    <td class="py-1 font-bold">Class & Section:</td>
-                    <td class="py-1 font-bold">${escapeText(student.classVal || '-')} (${escapeText(student.section || 'A')})</td>
-                    <td class="py-1 font-bold">Date of Birth:</td>
-                    <td class="py-1 font-mono font-bold">${escapeText(student.dob || '-')}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Marks Table -->
-            <table class="w-full border-collapse border border-slate-900 text-center text-xs">
-              <thead class="bg-slate-200 font-bold border-b border-slate-900">
-                <tr>
-                  <th class="border border-slate-900 p-1.5 text-left">Curricular Subject</th>
-                  <th class="border border-slate-900 p-1.5">Max Marks</th>
-                  <th class="border border-slate-900 p-1.5">Marks Secured</th>
-                  <th class="border border-slate-900 p-1.5">Grade</th>
-                  <th class="border border-slate-900 p-1.5">Grade Points</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td class="border border-slate-900 p-1.5 text-left font-bold">First Language (Telugu / Urdu)</td><td class="border border-slate-900 p-1.5">${maxPerSub}</td><td class="border border-slate-900 p-1.5 font-bold">${mFirst}</td><td class="border border-slate-900 p-1.5 font-bold">${g1.grade}</td><td class="border border-slate-900 p-1.5 font-mono">${g1.gp}</td></tr>
-                <tr><td class="border border-slate-900 p-1.5 text-left font-bold">Second Language (Hindi / Telugu)</td><td class="border border-slate-900 p-1.5">${maxPerSub}</td><td class="border border-slate-900 p-1.5 font-bold">${mSec}</td><td class="border border-slate-900 p-1.5 font-bold">${g2.grade}</td><td class="border border-slate-900 p-1.5 font-mono">${g2.gp}</td></tr>
-                <tr><td class="border border-slate-900 p-1.5 text-left font-bold">Third Language (English)</td><td class="border border-slate-900 p-1.5">${maxPerSub}</td><td class="border border-slate-900 p-1.5 font-bold">${mEng}</td><td class="border border-slate-900 p-1.5 font-bold">${g3.grade}</td><td class="border border-slate-900 p-1.5 font-mono">${g3.gp}</td></tr>
-                <tr><td class="border border-slate-900 p-1.5 text-left font-bold">Mathematics</td><td class="border border-slate-900 p-1.5">${maxPerSub}</td><td class="border border-slate-900 p-1.5 font-bold">${mMath}</td><td class="border border-slate-900 p-1.5 font-bold">${g4.grade}</td><td class="border border-slate-900 p-1.5 font-mono">${g4.gp}</td></tr>
-                <tr><td class="border border-slate-900 p-1.5 text-left font-bold">General Science</td><td class="border border-slate-900 p-1.5">${maxPerSub}</td><td class="border border-slate-900 p-1.5 font-bold">${mSci}</td><td class="border border-slate-900 p-1.5 font-bold">${gSci.grade}</td><td class="border border-slate-900 p-1.5 font-mono">${gSci.gp}</td></tr>
-                <tr><td class="border border-slate-900 p-1.5 text-left font-bold">Social Studies</td><td class="border border-slate-900 p-1.5">${maxPerSub}</td><td class="border border-slate-900 p-1.5 font-bold">${mSoc}</td><td class="border border-slate-900 p-1.5 font-bold">${gSoc.grade}</td><td class="border border-slate-900 p-1.5 font-mono">${gSoc.gp}</td></tr>
-                <tr class="bg-slate-100 font-black border-t-2 border-slate-900">
-                  <td class="border border-slate-900 p-1.5 text-left uppercase">Total Performance</td>
-                  <td class="border border-slate-900 p-1.5">${maxTotal}</td>
-                  <td class="border border-slate-900 p-1.5 text-sm">${grandTotal}</td>
-                  <td class="border border-slate-900 p-1.5 text-sm">${calcGrd(grandTotal, maxTotal).grade}</td>
-                  <td class="border border-slate-900 p-1.5 font-mono text-sm">GPA: ${avgGp}</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <!-- Overall Performance Summary -->
-            <div class="flex items-center justify-between border border-slate-900 p-2.5 rounded bg-slate-50 font-bold">
-              <span>Overall Percentage: <strong class="font-extrabold">${percentage}%</strong></span>
-              <span>Cumulative GPA: <strong class="font-mono font-extrabold">${avgGp}</strong></span>
-              <span>Result: <span class="px-3 py-0.5 rounded font-black uppercase ${isPassed ? 'bg-emerald-100 text-emerald-950 border border-emerald-300' : 'bg-rose-100 text-rose-950'}">${isPassed ? 'PASSED / PROMOTED' : 'NEEDS IMPROVEMENT'}</span></span>
-            </div>
-
-            <!-- Signatures -->
-            <div class="pt-8 grid grid-cols-2 gap-8 text-center text-xs font-bold text-slate-900">
-              <div>
-                <div class="h-10"></div>
-                <div class="border-t border-slate-900 pt-1">
-                  <span>Signature of Class Teacher</span>
-                </div>
-              </div>
-              <div>
-                <div class="h-10"></div>
-                <div class="border-t border-slate-900 pt-1">
-                  <span>Signature of Headmaster & School Seal</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      document.body.classList.remove('printing-bonafide', 'printing-id-card', 'printing-progress-card', 'printing-hallticket');
-      document.body.classList.add('printing-result-memo');
-
-      setTimeout(function() {
-        window.print();
-        setTimeout(function() {
-          document.body.classList.remove('printing-result-memo');
-        }, 1500);
-      }, 100);
+      alert('Examination Results are for online display purpose only (Not for printing).\n\nOfficial physical marks certificates and progress cards are issued directly by the School Administration.');
     }
 
     function setupAttendanceDate() {
@@ -15108,9 +14870,6 @@ var currentTimetableClass = 'Class 10';
 
   <!-- HALL TICKET PRINT CONTAINER (DIRECT CHILD OF BODY) -->
   <div id="hallticket-print-container" class="print-only hidden"></div>
-
-  <!-- RESULT MEMO PRINT CONTAINER (DIRECT CHILD OF BODY) -->
-  <div id="result-memo-print-container" class="print-only hidden"></div>
 
 </body>
 </html>
