@@ -1855,10 +1855,10 @@
                   </div>
                   <div>
                     <h3 class="text-base font-bold text-slate-800" data-en="Assign Class to Teachers & Edit Privileges" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు & అనుమతులు">Assign Class to Teachers & Edit Privileges</h3>
-                    <p class="text-[11px] text-indigo-700 font-semibold mt-0.5">Classes VI to X (Sections A & B)</p>
+                    <p class="text-[11px] text-indigo-700 font-semibold mt-0.5">Classes VI to X (All Sections A, B & C)</p>
                   </div>
                 </div>
-                <span class="text-[11px] bg-indigo-100 text-indigo-800 font-bold px-2.5 py-1 rounded-full">10 Classes</span>
+                <span class="text-[11px] bg-indigo-100 text-indigo-800 font-bold px-2.5 py-1 rounded-full" id="admin-overview-classes-badge">15 Classes</span>
               </div>
               <p class="text-xs text-slate-600 mt-3.5 leading-relaxed">
                 Designate specific class teachers to edit student personal details and input examination marks for their class.
@@ -1934,13 +1934,16 @@
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
               <h2 class="text-xl font-bold text-slate-800" data-en="Assign Class to Teachers & Edit Privileges" data-te="తరగతి ఉపాధ్యాయుల కేటాయింపు & అనుమతులు">Assign Class to Teachers & Edit Privileges</h2>
-              <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-assigned-count-badge">10 Classes Configured</span>
+              <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-assigned-count-badge">15 Classes Configured</span>
             </div>
             <p class="text-xs text-slate-500 mt-0.5">
               Designate class teachers to edit student details and examination marks. <strong>Headmaster</strong> can edit all classes. <strong>Non-Teaching Staff</strong> & remaining teachers have view-only access.
             </p>
           </div>
-          <div class="flex items-center gap-2" id="admin-assignment-buttons">
+          <div class="flex items-center gap-2 flex-wrap" id="admin-assignment-buttons">
+            <button onclick="openAddClassSectionModal()" class="admin-assignment-action bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Quick Assign or Add Class & Section to Staff">
+              <i class="fa-solid fa-circle-plus text-emerald-200"></i> <span>+ Assign Class / Section</span>
+            </button>
             <button onclick="openStaffPasswordManagerModal()" class="admin-assignment-action bg-rose-600 hover:bg-rose-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Headmaster 1-Click Staff Password Reset Panel">
               <i class="fa-solid fa-key"></i> <span>Reset Passwords</span>
             </button>
@@ -1963,6 +1966,69 @@
             <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">HM: Master Rights</span>
             <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300">Teacher: Assigned Only</span>
             <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-800">Others: View Only</span>
+          </div>
+        </div>
+
+        <!-- Class & Section Quick Action & Filter Bar on Top -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3 sm:p-4 shadow-xs space-y-3">
+          <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+            <!-- Left: Class & Section Filter Buttons -->
+            <div class="space-y-2 flex-1">
+              <!-- Class Filter Buttons (VI - X) -->
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-xs font-bold text-slate-700 w-16 shrink-0 flex items-center gap-1">
+                  <i class="fa-solid fa-layer-group text-indigo-600"></i> Class:
+                </span>
+                <button type="button" onclick="filterClassAssignmentsByClass('All')" id="btn-assign-cls-all" class="btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow-2xs cursor-pointer">
+                  All (VI-X)
+                </button>
+                <button type="button" onclick="filterClassAssignmentsByClass('Class VI')" id="btn-assign-cls-vi" class="btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Class VI
+                </button>
+                <button type="button" onclick="filterClassAssignmentsByClass('Class VII')" id="btn-assign-cls-vii" class="btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Class VII
+                </button>
+                <button type="button" onclick="filterClassAssignmentsByClass('Class VIII')" id="btn-assign-cls-viii" class="btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Class VIII
+                </button>
+                <button type="button" onclick="filterClassAssignmentsByClass('Class IX')" id="btn-assign-cls-ix" class="btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Class IX
+                </button>
+                <button type="button" onclick="filterClassAssignmentsByClass('Class X')" id="btn-assign-cls-x" class="btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Class X
+                </button>
+              </div>
+
+              <!-- Section Filter Buttons (All, A, B, C) -->
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-xs font-bold text-slate-700 w-16 shrink-0 flex items-center gap-1">
+                  <i class="fa-solid fa-shapes text-teal-600"></i> Section:
+                </span>
+                <button type="button" onclick="filterClassAssignmentsBySection('All')" id="btn-assign-sec-all" class="btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-bold transition bg-teal-600 text-white shadow-2xs cursor-pointer">
+                  All Sections
+                </button>
+                <button type="button" onclick="filterClassAssignmentsBySection('A')" id="btn-assign-sec-a" class="btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Section A
+                </button>
+                <button type="button" onclick="filterClassAssignmentsBySection('B')" id="btn-assign-sec-b" class="btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Section B
+                </button>
+                <button type="button" onclick="filterClassAssignmentsBySection('C')" id="btn-assign-sec-c" class="btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+                  Section C
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Search Input & Quick Info -->
+            <div class="flex items-center gap-2 self-start xl:self-center">
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                <input type="text" id="assign-search-input" onkeyup="filterClassAssignmentsSearch()" placeholder="Search class or teacher..." class="pl-8 pr-3 py-1.5 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none w-48 sm:w-56 bg-slate-50 focus:bg-white transition">
+              </div>
+              <span id="assign-filter-counter" class="text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1.5 rounded-lg border border-slate-200 whitespace-nowrap">
+                Showing 15 Classes
+              </span>
+            </div>
           </div>
         </div>
 
@@ -3069,6 +3135,77 @@
     </div>
   </div>
 
+  <!-- MODAL: ASSIGN CLASS & SECTION TO STAFF -->
+  <div id="modal-add-class-section" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-lg w-full p-5 sm:p-6 space-y-4 relative">
+      <button type="button" onclick="closeModal('modal-add-class-section')" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 transition cursor-pointer">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold border border-indigo-200 shrink-0">
+          <i class="fa-solid fa-chalkboard-user"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-slate-800">Assign Class & Section to Teacher</h3>
+          <p class="text-xs text-slate-500">Designate teacher edit privileges for student records and marks.</p>
+        </div>
+      </div>
+
+      <form id="form-add-class-section" onsubmit="handleQuickAssignClassSectionSubmit(event)" class="space-y-4">
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Class Select -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Class (VI to X)</label>
+            <select id="quick-assign-class" onchange="autoUpdateQuickAssignMedium()" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="Class VI">Class VI</option>
+              <option value="Class VII">Class VII</option>
+              <option value="Class VIII">Class VIII</option>
+              <option value="Class IX">Class IX</option>
+              <option value="Class X">Class X</option>
+            </select>
+          </div>
+
+          <!-- Section Select -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Section</label>
+            <select id="quick-assign-section" onchange="autoUpdateQuickAssignMedium()" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="A">Section A</option>
+              <option value="B">Section B</option>
+              <option value="C">Section C</option>
+              <option value="D">Section D</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Medium Select -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Medium of Instruction</label>
+          <select id="quick-assign-medium" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+            <option value="English">English Medium</option>
+            <option value="Telugu">Telugu Medium</option>
+            <option value="Urdu">Urdu Medium</option>
+          </select>
+        </div>
+
+        <!-- Staff Teacher Select -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Select Staff Member (Teacher)</label>
+          <select id="quick-assign-staff" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+            <!-- Populated dynamically with all teachers -->
+          </select>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeModal('modal-add-class-section')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-300 transition cursor-pointer">Cancel</button>
+          <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 text-xs rounded-lg shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i> <span>Assign & Save</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- MODAL: HEADMASTER 1-CLICK STAFF PASSWORD RESET MANAGER -->
   <div id="modal-staff-password-manager" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full p-5 sm:p-6 space-y-4 relative flex flex-col max-h-[90vh]">
@@ -3788,12 +3925,12 @@
                 </p>
               </div>
               <div class="text-center" id="preview-cert-seal-container">
-                <div class="w-16 sm:w-20 h-10 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9px] text-slate-400 mb-1">
+                <div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">
                   School Seal
                 </div>
               </div>
               <div class="text-center">
-                <div class="h-8 flex items-end justify-center" id="preview-cert-hm-sign-container"></div>
+                <div class="h-11 flex items-end justify-center" id="preview-cert-hm-sign-container"></div>
                 <div class="w-32 sm:w-36 border-b border-slate-800 mb-1"></div>
                 <p class="font-bold text-slate-900 leading-tight">Signature of the Headmaster,</p>
                 <p class="text-[10px] font-semibold text-slate-700">ZPGHS Gajwel.</p>
@@ -3967,12 +4104,12 @@
                 </p>
               </div>
               <div class="text-center" id="preview-prog-seal-container">
-                <div class="w-16 sm:w-20 h-10 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9px] text-slate-400 mb-1">
+                <div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">
                   School Seal
                 </div>
               </div>
               <div class="text-center">
-                <div class="h-8 flex items-end justify-center" id="preview-prog-hm-sign-container"></div>
+                <div class="h-11 flex items-end justify-center" id="preview-prog-hm-sign-container"></div>
                 <div class="w-32 sm:w-36 border-b border-black mb-1"></div>
                 <p class="font-bold text-slate-900 leading-tight text-xs">Headmistress</p>
                 <p class="text-[10px] font-semibold text-slate-700">ZPGHS Gajwel</p>
@@ -4845,7 +4982,7 @@
             </div>
 
             <!-- Preview Box -->
-            <div id="modal-preview-hm-sign-box" class="w-full h-24 border-2 border-dashed border-slate-300 rounded-lg bg-white flex items-center justify-center p-2 overflow-hidden shadow-2xs">
+            <div id="modal-preview-hm-sign-box" class="w-full h-28 border-2 border-dashed border-slate-300 rounded-lg bg-white flex items-center justify-center p-2 overflow-hidden shadow-2xs">
               <!-- Dynamically populated -->
             </div>
 
@@ -4868,7 +5005,7 @@
             </div>
 
             <!-- Preview Box -->
-            <div id="modal-preview-school-stamp-box" class="w-full h-24 border-2 border-dashed border-slate-300 rounded-lg bg-white flex items-center justify-center p-2 overflow-hidden shadow-2xs">
+            <div id="modal-preview-school-stamp-box" class="w-full h-28 border-2 border-dashed border-slate-300 rounded-lg bg-white flex items-center justify-center p-2 overflow-hidden shadow-2xs">
               <!-- Dynamically populated -->
             </div>
 
@@ -4888,7 +5025,7 @@
         <div class="p-3 bg-white border border-slate-200 rounded-xl space-y-2">
           <span class="font-bold text-slate-800 text-[11px] block">Live Combined Preview on Hall Ticket Signature Block:</span>
           <div class="border border-black p-3 bg-slate-50/50 rounded-md max-w-xs mx-auto text-center">
-            <div class="h-12 w-full flex items-center justify-center relative mb-1">
+            <div class="h-14 w-full flex items-center justify-center relative mb-1">
               <div id="modal-combined-stamp-layer" class="absolute inset-0 flex items-center justify-center pointer-events-none"></div>
               <div id="modal-combined-sign-layer" class="relative z-10 flex items-center justify-center"></div>
             </div>
@@ -5426,18 +5563,27 @@
       return defaultData;
     }
 
-    // Default Class Teacher Assignments across Classes VI to X (Sections A & B)
+    // Default Class Teacher Assignments across all Classes (VI to X) and all Sections (A, B, C)
     var defaultClassTeacherAssignments = {
       'Class VI-A': { classVal: 'Class VI', section: 'A', medium: 'English', staffCode: '1812549', staffName: 'V ANITHA', subject: 'Social Studies', desig: 'School Asst. / TGT (Social Studies)' },
-      'Class VI-B': { classVal: 'Class VI', section: 'B', medium: 'Urdu', staffCode: '2130799', staffName: 'MOHD ABDUL WAKEEL', subject: 'Urdu', desig: 'School Asst. / TGT (Urdu)' },
+      'Class VI-B': { classVal: 'Class VI', section: 'B', medium: 'Telugu', staffCode: '1811094', staffName: 'B.PARAMESHA', subject: 'Telugu', desig: 'School Asst. / TGT (Telugu)' },
+      'Class VI-C': { classVal: 'Class VI', section: 'C', medium: 'Urdu', staffCode: '2130799', staffName: 'MOHD ABDUL WAKEEL', subject: 'Urdu', desig: 'School Asst. / TGT (Urdu)' },
+
       'Class VII-A': { classVal: 'Class VII', section: 'A', medium: 'English', staffCode: '1829961', staffName: 'G.RAMESH', subject: 'Phy.Science', desig: 'School Asst. / TGT (Phy.Science)' },
       'Class VII-B': { classVal: 'Class VII', section: 'B', medium: 'Telugu', staffCode: '1812430', staffName: 'K.CHANDRASHEKAR', subject: 'English', desig: 'School Asst. / TGT (English)' },
+      'Class VII-C': { classVal: 'Class VII', section: 'C', medium: 'Urdu', staffCode: '1648670', staffName: 'SABIHA SULTANA', subject: 'Social Studies', desig: 'School Asst. / TGT (Social Studies)' },
+
       'Class VIII-A': { classVal: 'Class VIII', section: 'A', medium: 'English', staffCode: '1812759', staffName: 'VANGA PADMA', subject: 'Mathematics', desig: 'School Asst. / TGT (Mathematics)' },
       'Class VIII-B': { classVal: 'Class VIII', section: 'B', medium: 'Telugu', staffCode: '1811801', staffName: 'SK.NOORJAHAN', subject: 'Mathematics', desig: 'School Asst. / TGT (Mathematics)' },
+      'Class VIII-C': { classVal: 'Class VIII', section: 'C', medium: 'Urdu', staffCode: '1835513', staffName: 'J.BHAGYA', subject: 'Social Studies', desig: 'School Asst. / TGT (Social Studies)' },
+
       'Class IX-A': { classVal: 'Class IX', section: 'A', medium: 'English', staffCode: '1824729', staffName: 'SYED RIYAZUDDIN', subject: 'Bio.Science', desig: 'School Asst. / TGT (Bio.Science)' },
       'Class IX-B': { classVal: 'Class IX', section: 'B', medium: 'Telugu', staffCode: '1811379', staffName: 'B.HARIBABU', subject: 'Bio.Science', desig: 'School Asst. / TGT (Bio.Science)' },
+      'Class IX-C': { classVal: 'Class IX', section: 'C', medium: 'Urdu', staffCode: '1811642', staffName: 'S VASANTHA', subject: 'Bio.Science', desig: 'School Asst. / TGT (Bio.Science)' },
+
       'Class X-A': { classVal: 'Class X', section: 'A', medium: 'English', staffCode: '1808557', staffName: 'BANDI ANIL KUMAR', subject: 'English', desig: 'School Asst. / TGT (English)' },
-      'Class X-B': { classVal: 'Class X', section: 'B', medium: 'Telugu', staffCode: '1837390', staffName: 'MD YOUSUF SHAREEF', subject: 'Mathematics', desig: 'School Asst. / TGT (Mathematics)' }
+      'Class X-B': { classVal: 'Class X', section: 'B', medium: 'Telugu', staffCode: '1837390', staffName: 'MD YOUSUF SHAREEF', subject: 'Mathematics', desig: 'School Asst. / TGT (Mathematics)' },
+      'Class X-C': { classVal: 'Class X', section: 'C', medium: 'Urdu', staffCode: '2101996', staffName: 'A ANATHAPADMA LAXMI', subject: 'Telugu', desig: 'School Asst. / TGT (Telugu)' }
     };
 
     // Load data with bulletproof fallback to default data
@@ -5450,6 +5596,12 @@
     var activityList = loadStorageArray('zphs_activities', defaultActivities);
     var staffPasswordStore = loadStorageObject('zphs_staff_passwords', {});
     var classTeacherAssignments = loadStorageObject('zphs_class_teacher_assignments', defaultClassTeacherAssignments);
+    // Ensure all 15 standard class-sections exist in active assignments
+    for (var defKey in defaultClassTeacherAssignments) {
+      if (!classTeacherAssignments[defKey]) {
+        classTeacherAssignments[defKey] = Object.assign({}, defaultClassTeacherAssignments[defKey]);
+      }
+    }
     var headmasterSign = '';
     try { headmasterSign = localStorage.getItem('zphs_headmaster_sign') || ''; } catch (e) {}
     var schoolStamp = '';
@@ -7893,6 +8045,163 @@
     }
 
     // Class Teacher Assignment UI Handlers (in Administration Section)
+    var currentAssignClassFilter = 'All';
+    var currentAssignSectionFilter = 'All';
+
+    function getAllConfiguredClassesList() {
+      var standard = [
+        { key: 'Class VI-A', classVal: 'Class VI', section: 'A', medium: 'English' },
+        { key: 'Class VI-B', classVal: 'Class VI', section: 'B', medium: 'Telugu' },
+        { key: 'Class VI-C', classVal: 'Class VI', section: 'C', medium: 'Urdu' },
+
+        { key: 'Class VII-A', classVal: 'Class VII', section: 'A', medium: 'English' },
+        { key: 'Class VII-B', classVal: 'Class VII', section: 'B', medium: 'Telugu' },
+        { key: 'Class VII-C', classVal: 'Class VII', section: 'C', medium: 'Urdu' },
+
+        { key: 'Class VIII-A', classVal: 'Class VIII', section: 'A', medium: 'English' },
+        { key: 'Class VIII-B', classVal: 'Class VIII', section: 'B', medium: 'Telugu' },
+        { key: 'Class VIII-C', classVal: 'Class VIII', section: 'C', medium: 'Urdu' },
+
+        { key: 'Class IX-A', classVal: 'Class IX', section: 'A', medium: 'English' },
+        { key: 'Class IX-B', classVal: 'Class IX', section: 'B', medium: 'Telugu' },
+        { key: 'Class IX-C', classVal: 'Class IX', section: 'C', medium: 'Urdu' },
+
+        { key: 'Class X-A', classVal: 'Class X', section: 'A', medium: 'English' },
+        { key: 'Class X-B', classVal: 'Class X', section: 'B', medium: 'Telugu' },
+        { key: 'Class X-C', classVal: 'Class X', section: 'C', medium: 'Urdu' }
+      ];
+
+      var map = {};
+      standard.forEach(function(item) { map[item.key] = item; });
+
+      if (classTeacherAssignments && typeof classTeacherAssignments === 'object') {
+        for (var k in classTeacherAssignments) {
+          if (!map[k] && classTeacherAssignments[k]) {
+            var item = classTeacherAssignments[k];
+            map[k] = {
+              key: k,
+              classVal: item.classVal || (k.split('-')[0] || 'Class VI'),
+              section: item.section || (k.split('-')[1] || 'A'),
+              medium: item.medium || 'English'
+            };
+          }
+        }
+      }
+
+      return Object.values(map);
+    }
+
+    function filterClassAssignmentsByClass(cls) {
+      currentAssignClassFilter = cls || 'All';
+      updateAssignFilterButtonsUI();
+      renderClassTeacherAssignmentsTable();
+    }
+
+    function filterClassAssignmentsBySection(sec) {
+      currentAssignSectionFilter = sec || 'All';
+      updateAssignFilterButtonsUI();
+      renderClassTeacherAssignmentsTable();
+    }
+
+    function filterClassAssignmentsSearch() {
+      renderClassTeacherAssignmentsTable();
+    }
+
+    function updateAssignFilterButtonsUI() {
+      var clsBtns = document.querySelectorAll('.btn-assign-cls-filter');
+      clsBtns.forEach(function(btn) {
+        var txt = btn.innerText.trim();
+        var isActive = (currentAssignClassFilter === 'All' && txt.includes('All')) ||
+                       (currentAssignClassFilter !== 'All' && txt === currentAssignClassFilter);
+        if (isActive) {
+          btn.className = 'btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow-2xs cursor-pointer';
+        } else {
+          btn.className = 'btn-assign-cls-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer';
+        }
+      });
+
+      var secBtns = document.querySelectorAll('.btn-assign-sec-filter');
+      secBtns.forEach(function(btn) {
+        var txt = btn.innerText.trim();
+        var isActive = (currentAssignSectionFilter === 'All' && txt.includes('All')) ||
+                       (currentAssignSectionFilter !== 'All' && txt.endsWith(' ' + currentAssignSectionFilter));
+        if (isActive) {
+          btn.className = 'btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-bold transition bg-teal-600 text-white shadow-2xs cursor-pointer';
+        } else {
+          btn.className = 'btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer';
+        }
+      });
+    }
+
+    function openAddClassSectionModal() {
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only Headmaster can configure or assign classes.');
+        return;
+      }
+      var staffSelect = document.getElementById('quick-assign-staff');
+      if (staffSelect) {
+        staffSelect.innerHTML = (staffList || []).map(function(st) {
+          return `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}">${escapeText(st.name)} - ${escapeText(st.subject || st.designation)} (${escapeText(st.stateStaffCode || '')})</option>`;
+        }).join('');
+      }
+      autoUpdateQuickAssignMedium();
+      var modal = document.getElementById('modal-add-class-section');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function autoUpdateQuickAssignMedium() {
+      var sec = document.getElementById('quick-assign-section')?.value || 'A';
+      var medSelect = document.getElementById('quick-assign-medium');
+      if (medSelect) {
+        if (sec === 'A') medSelect.value = 'English';
+        else if (sec === 'B') medSelect.value = 'Telugu';
+        else if (sec === 'C') medSelect.value = 'Urdu';
+      }
+    }
+
+    function handleQuickAssignClassSectionSubmit(e) {
+      e.preventDefault();
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only Headmaster can assign classes.');
+        return;
+      }
+      var cls = document.getElementById('quick-assign-class').value;
+      var sec = document.getElementById('quick-assign-section').value;
+      var med = document.getElementById('quick-assign-medium').value;
+      var staffCode = document.getElementById('quick-assign-staff').value;
+
+      var foundStaff = (staffList || []).find(s => (s.stateStaffCode === staffCode || s.nationalCode === staffCode || String(s.id) === String(staffCode)));
+      if (!foundStaff) {
+        alert('Please select a valid staff member.');
+        return;
+      }
+
+      var key = cls + '-' + sec;
+      if (!classTeacherAssignments) classTeacherAssignments = {};
+      classTeacherAssignments[key] = {
+        classVal: cls,
+        section: sec,
+        medium: med,
+        staffId: foundStaff.id,
+        staffCode: foundStaff.stateStaffCode || foundStaff.nationalCode || staffCode,
+        staffName: foundStaff.name,
+        subject: foundStaff.subject || foundStaff.appointedFor || '',
+        desig: foundStaff.designation || 'School Assistant'
+      };
+
+      try {
+        localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
+      } catch(err) {}
+      syncToCloud('zphs_class_teacher_assignments', classTeacherAssignments);
+
+      closeModal('modal-add-class-section');
+      showSealSignNotification(`Assigned ${cls} (${sec}) to ${foundStaff.name} successfully!`);
+      renderClassTeacherAssignmentsTable();
+      renderStudentTable();
+      renderClasswiseStudents();
+      renderMarksTable();
+    }
+
     function renderClassTeacherAssignmentsTable() {
       var tbody = document.getElementById('class-teacher-assignments-tbody');
       if (!tbody) return;
@@ -7908,20 +8217,46 @@
         }
       }
 
-      var classesList = [
-        { key: 'Class VI-A', classVal: 'Class VI', section: 'A', medium: 'English' },
-        { key: 'Class VI-B', classVal: 'Class VI', section: 'B', medium: 'Urdu' },
-        { key: 'Class VII-A', classVal: 'Class VII', section: 'A', medium: 'English' },
-        { key: 'Class VII-B', classVal: 'Class VII', section: 'B', medium: 'Telugu' },
-        { key: 'Class VIII-A', classVal: 'Class VIII', section: 'A', medium: 'English' },
-        { key: 'Class VIII-B', classVal: 'Class VIII', section: 'B', medium: 'Telugu' },
-        { key: 'Class IX-A', classVal: 'Class IX', section: 'A', medium: 'English' },
-        { key: 'Class IX-B', classVal: 'Class IX', section: 'B', medium: 'Telugu' },
-        { key: 'Class X-A', classVal: 'Class X', section: 'A', medium: 'English' },
-        { key: 'Class X-B', classVal: 'Class X', section: 'B', medium: 'Telugu' }
-      ];
+      var allClasses = getAllConfiguredClassesList();
 
-      var rowsHtml = classesList.map(function(item) {
+      var badge = document.getElementById('admin-assigned-count-badge');
+      if (badge) badge.innerText = `${allClasses.length} Classes Configured`;
+      var ovBadge = document.getElementById('admin-overview-classes-badge');
+      if (ovBadge) ovBadge.innerText = `${allClasses.length} Classes`;
+
+      var searchQ = (document.getElementById('assign-search-input')?.value || '').trim().toLowerCase();
+
+      var filtered = allClasses.filter(function(item) {
+        var matchClass = (currentAssignClassFilter === 'All' || item.classVal === currentAssignClassFilter);
+        var matchSec = (currentAssignSectionFilter === 'All' || item.section === currentAssignSectionFilter);
+        
+        var assign = (classTeacherAssignments && classTeacherAssignments[item.key]) 
+          ? classTeacherAssignments[item.key] 
+          : (defaultClassTeacherAssignments[item.key] || {});
+
+        var matchSearch = !searchQ ||
+          item.key.toLowerCase().includes(searchQ) ||
+          item.classVal.toLowerCase().includes(searchQ) ||
+          item.section.toLowerCase().includes(searchQ) ||
+          item.medium.toLowerCase().includes(searchQ) ||
+          (assign.staffName && assign.staffName.toLowerCase().includes(searchQ)) ||
+          (assign.staffCode && String(assign.staffCode).toLowerCase().includes(searchQ)) ||
+          (assign.subject && assign.subject.toLowerCase().includes(searchQ));
+
+        return matchClass && matchSec && matchSearch;
+      });
+
+      var counterEl = document.getElementById('assign-filter-counter');
+      if (counterEl) {
+        counterEl.innerText = `Showing ${filtered.length} of ${allClasses.length} Classes`;
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-semibold"><i class="fa-solid fa-filter-circle-xmark text-lg text-slate-400 block mb-1"></i> No classes or sections match current filter "${escapeText(currentAssignClassFilter)}" / "${escapeText(currentAssignSectionFilter)}".</td></tr>`;
+        return;
+      }
+
+      var rowsHtml = filtered.map(function(item) {
         var assign = (classTeacherAssignments && classTeacherAssignments[item.key]) 
           ? classTeacherAssignments[item.key] 
           : (defaultClassTeacherAssignments[item.key] || {});
@@ -7956,12 +8291,16 @@
           `;
         }
 
+        var secColor = 'bg-indigo-600';
+        if (item.section === 'B') secColor = 'bg-emerald-600';
+        else if (item.section === 'C') secColor = 'bg-purple-600';
+
         return `
           <tr class="hover:bg-slate-50 transition ${isCurrentStaffAssigned ? 'bg-sky-50/40' : ''}">
             <td class="p-2.5 border-r border-slate-200 font-bold text-slate-800">
               <span class="inline-flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full ${item.section === 'A' ? 'bg-indigo-600' : 'bg-emerald-600'}"></span>
-                <span>${escapeText(item.classVal)} - Section ${escapeText(item.section)}</span>
+                <span class="w-2.5 h-2.5 rounded-full ${secColor}"></span>
+                <span class="font-bold">${escapeText(item.classVal)} - Section ${escapeText(item.section)}</span>
               </span>
             </td>
             <td class="p-2.5 border-r border-slate-200">
@@ -8004,18 +8343,7 @@
         return;
       }
 
-      var classesList = [
-        { key: 'Class VI-A', classVal: 'Class VI', section: 'A', medium: 'English' },
-        { key: 'Class VI-B', classVal: 'Class VI', section: 'B', medium: 'Urdu' },
-        { key: 'Class VII-A', classVal: 'Class VII', section: 'A', medium: 'English' },
-        { key: 'Class VII-B', classVal: 'Class VII', section: 'B', medium: 'Telugu' },
-        { key: 'Class VIII-A', classVal: 'Class VIII', section: 'A', medium: 'English' },
-        { key: 'Class VIII-B', classVal: 'Class VIII', section: 'B', medium: 'Telugu' },
-        { key: 'Class IX-A', classVal: 'Class IX', section: 'A', medium: 'English' },
-        { key: 'Class IX-B', classVal: 'Class IX', section: 'B', medium: 'Telugu' },
-        { key: 'Class X-A', classVal: 'Class X', section: 'A', medium: 'English' },
-        { key: 'Class X-B', classVal: 'Class X', section: 'B', medium: 'Telugu' }
-      ];
+      var classesList = getAllConfiguredClassesList();
 
       classesList.forEach(function(item) {
         var safeKey = item.key.replace(/\s+/g, '_');
@@ -11981,14 +12309,14 @@ var currentTimetableClass = 'Class 10';
       var hmSignStampHTML = '';
       if (headmasterSign || schoolStamp) {
         hmSignStampHTML = `
-          <div class="relative h-9 flex items-center justify-center">
-            ${schoolStamp ? `<img src="${schoolStamp}" alt="School Stamp" class="absolute max-h-11 max-w-[85px] object-contain opacity-85 mix-blend-multiply pointer-events-none">` : ''}
-            ${headmasterSign ? `<img src="${headmasterSign}" alt="Headmaster Signature" class="relative z-10 max-h-8 max-w-[110px] object-contain">` : ''}
+          <div class="relative h-13 flex items-center justify-center">
+            ${schoolStamp ? `<img src="${schoolStamp}" alt="School Stamp" class="absolute max-h-14 max-w-[110px] object-contain opacity-85 mix-blend-multiply pointer-events-none">` : ''}
+            ${headmasterSign ? `<img src="${headmasterSign}" alt="Headmaster Signature" class="relative z-10 max-h-11 max-w-[130px] object-contain">` : ''}
           </div>
         `;
       } else {
         hmSignStampHTML = `
-          <div class="h-9 flex items-end justify-center">
+          <div class="h-13 flex items-end justify-center">
             ${!isPrintMode ? `<button type="button" onclick="openSealSignModal('hallticket')" class="no-print text-[8px] text-indigo-600 hover:text-indigo-800 underline pb-1 cursor-pointer font-normal">+ Add Sign/Stamp</button>` : ''}
           </div>
         `;
@@ -12143,13 +12471,13 @@ var currentTimetableClass = 'Class 10';
             <!-- Signature Blocks -->
             <div class="pt-2 grid grid-cols-3 gap-3 text-center text-[9.5px] font-bold text-slate-900">
               <div class="flex flex-col justify-end">
-                <div class="h-9"></div>
+                <div class="h-13"></div>
                 <div class="border-t border-black pt-0.5">
                   <span>Signature of Candidate</span>
                 </div>
               </div>
               <div class="flex flex-col justify-end">
-                <div class="h-9"></div>
+                <div class="h-13"></div>
                 <div class="border-t border-black pt-0.5">
                   <span>Signature of Class Teacher</span>
                 </div>
@@ -12698,8 +13026,8 @@ var currentTimetableClass = 'Class 10';
         var img = new Image();
         img.onload = function() {
           var canvas = document.createElement('canvas');
-          var maxW = 500;
-          var maxH = 250;
+          var maxW = 600;
+          var maxH = 300;
           var width = img.width;
           var height = img.height;
 
@@ -12739,7 +13067,7 @@ var currentTimetableClass = 'Class 10';
         var img = new Image();
         img.onload = function() {
           var canvas = document.createElement('canvas');
-          var maxDim = 400;
+          var maxDim = 500;
           var width = img.width;
           var height = img.height;
 
@@ -12839,14 +13167,14 @@ var currentTimetableClass = 'Class 10';
       var signLayer = document.getElementById('modal-combined-sign-layer');
       if (stampLayer) {
         if (schoolStamp) {
-          stampLayer.innerHTML = `<img src="${schoolStamp}" alt="School Stamp" class="max-h-12 max-w-[85px] object-contain opacity-85 mix-blend-multiply">`;
+          stampLayer.innerHTML = `<img src="${schoolStamp}" alt="School Stamp" class="max-h-14 max-w-[110px] object-contain opacity-85 mix-blend-multiply">`;
         } else {
           stampLayer.innerHTML = `<span class="text-[8px] text-slate-300 italic border border-dashed border-slate-300 px-2 py-0.5 rounded">No Stamp</span>`;
         }
       }
       if (signLayer) {
         if (headmasterSign) {
-          signLayer.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-8 max-w-[110px] object-contain">`;
+          signLayer.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-11 max-w-[130px] object-contain">`;
         } else {
           signLayer.innerHTML = `<span class="text-[8px] text-slate-400 italic">No Signature</span>`;
         }
@@ -12854,73 +13182,73 @@ var currentTimetableClass = 'Class 10';
     }
 
     function updateAllSealSignElements() {
-      // 1. Bonafide Preview Modal
+      // 1. Bonafide Preview Modal (Elevated Size)
       var prevCertSeal = document.getElementById('preview-cert-seal-container');
       if (prevCertSeal) {
         if (schoolStamp) {
-          prevCertSeal.innerHTML = `<div class="w-16 sm:w-20 h-10 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-10 max-w-[76px] object-contain mix-blend-multiply opacity-90"></div>`;
+          prevCertSeal.innerHTML = `<div class="w-24 sm:w-28 h-14 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-14 max-w-[105px] object-contain mix-blend-multiply opacity-90"></div>`;
         } else {
-          prevCertSeal.innerHTML = `<div class="w-16 sm:w-20 h-10 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9px] text-slate-400 mb-1">School Seal</div>`;
+          prevCertSeal.innerHTML = `<div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">School Seal</div>`;
         }
       }
       var prevCertHm = document.getElementById('preview-cert-hm-sign-container');
       if (prevCertHm) {
         if (headmasterSign) {
-          prevCertHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-8 max-w-[120px] object-contain">`;
+          prevCertHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-11 max-w-[145px] object-contain">`;
         } else {
           prevCertHm.innerHTML = '';
         }
       }
 
-      // 2. Bonafide Print Container
+      // 2. Bonafide Print Container (Elevated Size)
       var printCertSeal = document.getElementById('print-cert-seal-container');
       if (printCertSeal) {
         if (schoolStamp) {
-          printCertSeal.innerHTML = `<div class="w-24 h-12 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-12 max-w-[96px] object-contain mix-blend-multiply"></div>`;
+          printCertSeal.innerHTML = `<div class="w-28 h-16 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-16 max-w-[120px] object-contain mix-blend-multiply"></div>`;
         } else {
-          printCertSeal.innerHTML = `<div class="w-24 h-12 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[10px] font-bold text-slate-600 mb-1">School Seal</div>`;
+          printCertSeal.innerHTML = `<div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1">School Seal</div>`;
         }
       }
       var printCertHm = document.getElementById('print-cert-hm-sign-container');
       if (printCertHm) {
         if (headmasterSign) {
-          printCertHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-8 max-w-[130px] object-contain">`;
+          printCertHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-12 max-w-[160px] object-contain">`;
         } else {
           printCertHm.innerHTML = '';
         }
       }
 
-      // 3. Progress Card Preview Modal
+      // 3. Progress Card Preview Modal (Elevated Size)
       var prevProgSeal = document.getElementById('preview-prog-seal-container');
       if (prevProgSeal) {
         if (schoolStamp) {
-          prevProgSeal.innerHTML = `<div class="w-16 sm:w-20 h-10 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-10 max-w-[76px] object-contain mix-blend-multiply opacity-90"></div>`;
+          prevProgSeal.innerHTML = `<div class="w-24 sm:w-28 h-14 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-14 max-w-[105px] object-contain mix-blend-multiply opacity-90"></div>`;
         } else {
-          prevProgSeal.innerHTML = `<div class="w-16 sm:w-20 h-10 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9px] text-slate-400 mb-1">School Seal</div>`;
+          prevProgSeal.innerHTML = `<div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">School Seal</div>`;
         }
       }
       var prevProgHm = document.getElementById('preview-prog-hm-sign-container');
       if (prevProgHm) {
         if (headmasterSign) {
-          prevProgHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-8 max-w-[120px] object-contain">`;
+          prevProgHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-11 max-w-[145px] object-contain">`;
         } else {
           prevProgHm.innerHTML = '';
         }
       }
 
-      // 4. Progress Card Print Container
+      // 4. Progress Card Print Container (Elevated Size)
       var printProgSeal = document.getElementById('print-prog-seal-container');
       if (printProgSeal) {
         if (schoolStamp) {
-          printProgSeal.innerHTML = `<div class="w-24 h-12 flex items-center justify-center mb-1.5"><img src="${schoolStamp}" alt="School Seal" class="max-h-12 max-w-[96px] object-contain mix-blend-multiply"></div>`;
+          printProgSeal.innerHTML = `<div class="w-28 h-16 flex items-center justify-center mb-1.5"><img src="${schoolStamp}" alt="School Seal" class="max-h-16 max-w-[120px] object-contain mix-blend-multiply"></div>`;
         } else {
-          printProgSeal.innerHTML = `<div class="w-24 h-12 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[10px] font-bold text-slate-600 mb-1.5">School Seal</div>`;
+          printProgSeal.innerHTML = `<div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1.5">School Seal</div>`;
         }
       }
       var printProgHm = document.getElementById('print-prog-hm-sign-container');
       if (printProgHm) {
         if (headmasterSign) {
-          printProgHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-8 max-w-[130px] object-contain">`;
+          printProgHm.innerHTML = `<img src="${headmasterSign}" alt="Headmaster Signature" class="max-h-12 max-w-[160px] object-contain">`;
         } else {
           printProgHm.innerHTML = '';
         }
@@ -15349,12 +15677,12 @@ var currentTimetableClass = 'Class 10';
             </p>
           </div>
           <div class="text-center" id="print-cert-seal-container">
-            <div class="w-24 h-12 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[10px] font-bold text-slate-600 mb-1">
+            <div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1">
               School Seal
             </div>
           </div>
           <div class="text-center">
-            <div class="h-8 flex items-end justify-center" id="print-cert-hm-sign-container"></div>
+            <div class="h-12 flex items-end justify-center" id="print-cert-hm-sign-container"></div>
             <div class="w-44 border-b-2 border-black mb-1.5"></div>
             <p class="font-black text-black leading-tight text-sm">Signature of the Headmaster,</p>
             <p class="text-xs font-bold text-black">ZPGHS Gajwel.</p>
@@ -15461,12 +15789,12 @@ var currentTimetableClass = 'Class 10';
             </p>
           </div>
           <div class="text-center" id="print-prog-seal-container">
-            <div class="w-24 h-12 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[10px] font-bold text-slate-600 mb-1.5">
+            <div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1.5">
               School Seal
             </div>
           </div>
           <div class="text-center">
-            <div class="h-8 flex items-end justify-center" id="print-prog-hm-sign-container"></div>
+            <div class="h-12 flex items-end justify-center" id="print-prog-hm-sign-container"></div>
             <div class="w-44 border-b-2 border-black mb-1.5"></div>
             <p class="font-black text-black leading-tight text-xs">Headmistress,</p>
             <p class="text-[10px] font-bold text-black">ZPGHS Gajwel.</p>
