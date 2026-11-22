@@ -712,6 +712,12 @@
           <i class="fa-solid fa-trophy w-5 text-center"></i>
           <span data-en="School Activities" data-te="పాఠశాల కార్యక్రమాలు">School Activities</span>
         </a>
+        <!-- E-Magazine Nav Button -->
+        <a href="#emagazine" onclick="switchTab('emagazine')" id="nav-emagazine" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+          <i class="fa-solid fa-book-open-reader w-5 text-center text-purple-600"></i>
+          <span data-en="School E-Magazine" data-te="ఈ-మ్యాగజైన్ (E-Magazine)">School E-Magazine</span>
+          <span class="ml-auto text-[10px] bg-purple-100 text-purple-800 font-bold px-1.5 py-0.5 rounded-full border border-purple-200">New</span>
+        </a>
         <a href="#holidays" onclick="switchTab('holidays')" id="nav-holidays" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
           <i class="fa-solid fa-umbrella-beach w-5 text-center"></i>
           <span data-en="Holidays List" data-te="సెలవుల జాబితా">Holidays List</span>
@@ -731,6 +737,23 @@
           </a>
         </div>
       </nav>
+
+      <!-- Left Sidebar Promo Card for E-Magazine -->
+      <div class="mt-3.5 p-3 bg-gradient-to-br from-purple-50 via-indigo-50 to-pink-50 border border-purple-200/80 rounded-xl text-center space-y-2 no-print shadow-2xs">
+        <div class="flex items-center justify-center gap-1 text-purple-700 font-bold text-[10.5px] uppercase tracking-wider">
+          <i class="fa-solid fa-sparkles text-amber-500"></i> <span>School Publication</span>
+        </div>
+        <div class="w-10 h-10 mx-auto rounded-xl bg-purple-600 text-white flex items-center justify-center text-base shadow-xs">
+          <i class="fa-solid fa-book-open-reader"></i>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-slate-800" data-en="E-Magazine 'Prathibha'" data-te="ఈ-మ్యాగజైన్ 'ప్రతిభ'">E-Magazine 'Prathibha'</div>
+          <div class="text-[10px] text-purple-700 font-medium">Vol. IV (2025-26 Edition)</div>
+        </div>
+        <button type="button" onclick="switchTab('emagazine')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-1.5 px-2 rounded-lg text-xs transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer">
+          <i class="fa-solid fa-book-open text-[11px]"></i> <span data-en="Read E-Magazine" data-te="ఈ-మ్యాగజైన్ చదవండి">Read E-Magazine</span>
+        </button>
+      </div>
     </aside>
 
     <!-- DYNAMIC MAIN CONTENT VIEWPORT -->
@@ -3004,6 +3027,125 @@
 
         <div id="notices-container" class="space-y-3">
           <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- SECTION 12: SCHOOL E-MAGAZINE -->
+      <section id="section-emagazine" class="content-section hidden space-y-6">
+        <!-- Section Header -->
+        <div class="pb-3 border-b border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+              <h2 class="text-xl font-bold text-slate-800" data-en="School E-Magazine: 'Prathibha'" data-te="పాఠశాల ఈ-మ్యాగజైన్: 'ప్రతిభ'">School E-Magazine: "Prathibha"</h2>
+              <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full border border-purple-200">Vol. IV (2025-26)</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5" data-en="Annual Literary, Creative, Arts & Science Publication by Students and Teachers of ZPHS Girls Gajwel." data-te="జిల్లా పరిషత్ బాలికల ఉన్నత పాఠశాల గజ్వేల్ విద్యార్థినులు & ఉపాధ్యాయుల వార్షిక సృజనాత్మక & వైజ్ఞానిక సంచిక.">
+              Annual Literary, Creative, Arts & Science Publication by Students and Teachers of ZPHS Girls Gajwel.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="downloadEmagazineIssue()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Download Full Issue PDF">
+              <i class="fa-solid fa-file-pdf"></i> <span data-en="Download PDF" data-te="పీడీఎఫ్ డౌన్‌లోడ్">Download PDF</span>
+            </button>
+            <button onclick="openAddEmagazineModal()" class="admin-only hidden bg-purple-600 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Publish New Magazine Article">
+              <i class="fa-solid fa-plus"></i> <span data-en="Publish Article" data-te="కొత్త వ్యాసం చేర్చండి">Publish Article</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Featured Magazine Hero Showcase Card -->
+        <div class="bg-gradient-to-r from-purple-900 via-indigo-950 to-slate-900 rounded-2xl p-5 sm:p-7 text-white shadow-md relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="flex flex-col lg:flex-row items-center gap-6 relative z-10">
+            <!-- 3D Magazine Cover Mockup -->
+            <div class="shrink-0 w-44 sm:w-52 h-64 sm:h-72 rounded-xl bg-gradient-to-tr from-purple-800 via-pink-700 to-amber-500 p-1 shadow-2xl transform hover:rotate-1 transition duration-300 flex flex-col justify-between text-white border-2 border-white/20 select-none">
+              <div class="bg-slate-950/40 backdrop-blur-xs rounded-lg p-2.5 text-center border border-white/20">
+                <div class="text-[9.5px] uppercase tracking-widest text-amber-300 font-bold">Annual Edition 2025-26</div>
+                <h3 class="text-xl font-extrabold tracking-wide text-white mt-0.5">PRATHIBHA</h3>
+                <div class="text-[9px] text-pink-200 font-medium">ప్రతిభ • ఈ-మ్యాగజైన్</div>
+              </div>
+              <div class="text-center my-auto py-2">
+                <i class="fa-solid fa-graduation-cap text-3xl text-amber-300 drop-shadow mb-1 block"></i>
+                <div class="text-[11px] font-bold text-white">ZPHS GIRLS GAJWEL</div>
+                <div class="text-[9px] text-slate-200">Inspiring Girls Education</div>
+              </div>
+              <div class="bg-slate-950/60 backdrop-blur-xs rounded-lg p-2 text-center text-[10px] text-purple-200 border border-white/10 flex items-center justify-between">
+                <span>Vol. IV • Issue 1</span>
+                <span class="text-amber-300 font-bold">Special Edition</span>
+              </div>
+            </div>
+
+            <!-- Issue Summary & Editorial Highlights -->
+            <div class="flex-1 space-y-3 text-center lg:text-left">
+              <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-xs border border-white/10">
+                <i class="fa-solid fa-sparkles text-amber-300"></i>
+                <span>Theme: Empowering Young Women through Science, Literature & Arts</span>
+              </div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                "Prathibha" - Annual School E-Magazine 2025-26
+              </h3>
+              <p class="text-xs sm:text-sm text-purple-100/90 leading-relaxed max-w-2xl">
+                A digital publication honoring the creative expressions, original Telugu & English poetry, scientific innovations, cultural heritage, and sporting milestones of our students and faculty.
+              </p>
+
+              <!-- Editorial Team Pills -->
+              <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1 text-xs">
+                <span class="bg-white/10 px-2.5 py-1 rounded-lg border border-white/15 text-slate-200">
+                  <strong class="text-amber-300">Patron:</strong> Headmaster (M. Ramana Kumar)
+                </span>
+                <span class="bg-white/10 px-2.5 py-1 rounded-lg border border-white/15 text-slate-200">
+                  <strong class="text-pink-300">Editors:</strong> Language & Science Faculty
+                </span>
+                <span class="bg-white/10 px-2.5 py-1 rounded-lg border border-white/15 text-slate-200">
+                  <strong class="text-cyan-300">Art Editor:</strong> A. Rama Devi
+                </span>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="pt-2 flex items-center justify-center lg:justify-start gap-3 flex-wrap">
+                <button type="button" onclick="openEmagazineReaderModal(1)" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-lg cursor-pointer">
+                  <i class="fa-solid fa-book-open"></i> <span>Read Online Issue</span>
+                </button>
+                <button type="button" onclick="downloadEmagazineIssue()" class="bg-white/15 hover:bg-white/25 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 border border-white/30 cursor-pointer">
+                  <i class="fa-solid fa-download"></i> <span>Download Full Copy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Tabs for Articles -->
+        <div class="flex items-center justify-between gap-3 flex-wrap border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-1.5 flex-wrap" id="emagazine-category-filters">
+            <button type="button" onclick="filterEmagazineCategory('All')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-bold transition bg-purple-600 text-white shadow-2xs cursor-pointer">
+              All Articles
+            </button>
+            <button type="button" onclick="filterEmagazineCategory('Editorial')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+              Headmaster's Desk
+            </button>
+            <button type="button" onclick="filterEmagazineCategory('Poetry')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+              Poetry & Sahithyam
+            </button>
+            <button type="button" onclick="filterEmagazineCategory('Creative Writing')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+              Creative Writing & Essays
+            </button>
+            <button type="button" onclick="filterEmagazineCategory('Science & Tech')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+              Science & Innovation
+            </button>
+            <button type="button" onclick="filterEmagazineCategory('Art & Drawing')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+              Student Art Gallery
+            </button>
+            <button type="button" onclick="filterEmagazineCategory('Achievements')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+              School Triumphs
+            </button>
+          </div>
+          <span class="text-xs text-slate-500 font-semibold" id="emagazine-filter-counter">Showing 7 Articles</span>
+        </div>
+
+        <!-- Articles Grid Container -->
+        <div id="emagazine-articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Dynamically populated by renderEmagazine() -->
         </div>
       </section>
 
@@ -5354,6 +5496,128 @@
     </div>
   </div>
 
+  <!-- MODAL: E-MAGAZINE READER -->
+  <div id="modal-emagazine-reader" class="fixed inset-0 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-3xl w-full p-5 sm:p-7 space-y-4 relative flex flex-col max-h-[90vh]">
+      <button onclick="closeModal('modal-emagazine-reader')" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700 transition p-1 cursor-pointer">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+      <div class="border-b border-slate-200 pb-3 flex items-center justify-between pr-8">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-200" id="emag-reader-category">
+            Editorial
+          </span>
+          <span class="text-xs text-slate-400">•</span>
+          <span class="text-xs text-slate-500 font-medium" id="emag-reader-issue">Prathibha Vol. IV (2025-26)</span>
+        </div>
+      </div>
+
+      <div class="overflow-y-auto space-y-4 pr-1 text-slate-800 flex-1 leading-relaxed">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900" id="emag-reader-title">Title</h2>
+          <div class="flex items-center gap-3 mt-2 text-xs text-slate-500 font-medium">
+            <span class="flex items-center gap-1.5 text-purple-700 font-bold">
+              <i class="fa-solid fa-feather-pointed"></i> <span id="emag-reader-author">Author</span>
+            </span>
+            <span>•</span>
+            <span id="emag-reader-class">Class X-A</span>
+            <span>•</span>
+            <span class="text-slate-400" id="emag-reader-readtime"><i class="fa-regular fa-clock"></i> 3 min read</span>
+          </div>
+        </div>
+
+        <div id="emag-reader-image-container" class="hidden rounded-xl overflow-hidden border border-slate-200 max-h-72">
+          <img id="emag-reader-image" src="" alt="Article Illustration" class="w-full h-full object-cover">
+        </div>
+
+        <div id="emag-reader-body" class="text-sm text-slate-700 leading-relaxed whitespace-pre-line bg-slate-50/50 p-4 rounded-xl border border-slate-100 font-serif">
+          <!-- Article Content -->
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 pt-3 flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="navigateEmagazineReader(-1)" id="emag-reader-prev" class="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-chevron-left text-[10px]"></i> <span>Previous</span>
+          </button>
+          <button type="button" onclick="navigateEmagazineReader(1)" id="emag-reader-next" class="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <span>Next</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </button>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="printEmagazineArticle()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-print"></i> <span>Print</span>
+          </button>
+          <button type="button" onclick="closeModal('modal-emagazine-reader')" class="px-4 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition shadow-2xs cursor-pointer">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / PUBLISH E-MAGAZINE ARTICLE -->
+  <div id="modal-add-emagazine" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-lg w-full p-6 space-y-4 relative">
+      <button onclick="closeModal('modal-add-emagazine')" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-lg font-bold border border-purple-200 shrink-0">
+          <i class="fa-solid fa-feather"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-slate-800">Publish to School E-Magazine</h3>
+          <p class="text-xs text-slate-500">Add an article, poem, essay, or artwork to "Prathibha".</p>
+        </div>
+      </div>
+
+      <form id="form-add-emagazine" onsubmit="handleSaveEmagazineArticle(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Article / Poem Title</label>
+          <input type="text" id="emag-form-title" required placeholder="e.g. నా పాఠశాల - నా గర్వం / Wings of Determination" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Category / Section</label>
+            <select id="emag-form-category" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+              <option value="Editorial">Headmaster's Desk</option>
+              <option value="Poetry">Poetry & Sahithyam</option>
+              <option value="Creative Writing">Creative Writing & Essays</option>
+              <option value="Science & Tech">Science & Innovation</option>
+              <option value="Art & Drawing">Student Art Gallery</option>
+              <option value="Achievements">School Triumphs</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Author Name & Role</label>
+            <input type="text" id="emag-form-author" required placeholder="e.g. K. Sravani (Class X-A)" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Illustration / Image URL (Optional)</label>
+          <input type="url" id="emag-form-image" placeholder="https://... or leave blank" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Article Content / Poem Text</label>
+          <textarea id="emag-form-body" rows="6" required placeholder="Type or paste the complete article, poem, essay, or project details..." class="w-full border border-slate-300 rounded-lg p-2.5 text-xs outline-none focus:ring-2 focus:ring-purple-500 font-serif"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeModal('modal-add-emagazine')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-300 transition">Cancel</button>
+          <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-2 text-xs rounded-lg shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i> <span>Publish Article</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- APPLICATION LOGIC / JAVASCRIPT -->
   
 
@@ -6711,6 +6975,7 @@
       }
       else if (tabId === 'holidays') renderHolidays();
       else if (tabId === 'activities') renderActivities();
+      else if (tabId === 'emagazine') renderEmagazine();
       else if (tabId === 'mdm') renderMDMTable();
       else if (tabId === 'timetable') renderTimetable(currentTimetableClass || 'Class 10');
       else if (tabId === 'exams') {
@@ -8912,6 +9177,7 @@
       // Re-render components that have conditional admin buttons
       if (typeof renderTimetable === 'function') renderTimetable();
       if (typeof renderActivities === 'function') renderActivities();
+      if (typeof renderEmagazine === 'function') renderEmagazine();
       if (typeof renderHolidays === 'function') renderHolidays();
       if (typeof renderNotices === 'function') renderNotices();
       if (typeof renderMDMTable === 'function') renderMDMTable();
@@ -11201,6 +11467,379 @@
         renderActivities();
       }
     }
+
+    
+    // --- SCHOOL E-MAGAZINE ('PRATHIBHA') ENGINE ---
+    var defaultEmagazineArticles = [
+      {
+        id: 1,
+        title: "Inspiring the Next Generation of Women Leaders",
+        titleTe: "నాయకత్వ పథంలో మన బాలికలు: ప్రధానోపాధ్యాయుల సందేశం",
+        category: "Editorial",
+        author: "M. Ramana Kumar",
+        role: "Headmaster, ZPHS (Girls) Gajwel",
+        classVal: "Headmaster's Desk",
+        date: "November 2026",
+        readTime: "4 min read",
+        image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=80",
+        summary: "An inspiring message from the Headmaster celebrating our girls' courage, scientific curiosity, literary excellence, and academic heights in SSC 2025-26.",
+        body: "Dear Students, Teachers, and Parents,\n\nIt gives me immense pride and joy to present Volume IV of our annual school e-magazine, \"Prathibha\" (ప్రతిభ) for the academic year 2025-26.\n\nEducation is not merely about memorizing formulas or scoring high percentages in tests; it is the beacon that awakens curiosity, builds self-confidence, and shapes character. At Zilla Parishad High School (Girls) Gajwel, our vision has always been to provide every girl student an environment where her dreams are nurtured, her creativity is celebrated, and her voices are heard with respect.\n\nOver the past academic session, our students have distinguished themselves across various domains:\n• 100% pass percentage and exceptional GPA performances in the SSC board examinations.\n• Inspiring science innovations recognized at the Siddipet District Science Fair.\n• Historic triumphs in Athletics, Kho-Kho, and Kabaddi at the inter-school level.\n• Vibrant participation in eco-initiatives like Telanganaku Haritha Haram, organic vegetable farming for mid-day meals, and green campus drives.\n\nThis magazine serves as a mirror reflecting the creative genius of our students—from heartfelt Telugu poetry and English essays to intricate artworks and scientific discoveries. I extend my sincere appreciation to the editorial committee, teachers, and above all, our talented students for bringing this edition to life.\n\nMay each of our girls rise with courage, dream with ambition, and conquer every field of knowledge.\n\nWarm regards,\nM. Ramana Kumar\nHeadmaster, ZPHS (Girls) Gajwel"
+      },
+      {
+        id: 2,
+        title: "నా పాఠశాల - నా జ్ఞాన మందిరం (A Telugu Poem)",
+        titleTe: "నా పాఠశాల - నా జ్ఞాన మందిరం",
+        category: "Poetry",
+        author: "K. Sravani",
+        role: "Student",
+        classVal: "Class X-A",
+        date: "October 2026",
+        readTime: "2 min read",
+        image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1000&q=80",
+        summary: "A touching Telugu poem portraying the school as a sanctum of knowledge, discipline, and sisterhood.",
+        body: "పసిడి కాంతుల ఉదయ వేళలోన,\nపాఠశాల గంట వినసొంపాయెను!\nజ్ఞాన జ్యోతులను వెలిగించు తల్లీ,\nమా గజ్వేల్ బాలికల బడి చల్లని ఒడి!\n\nఅక్షరాల బాటలో ఆణిముత్యాలెన్నో,\nతీర్చిదిద్దు గురువుల చల్లని దీవెనలతో,\nకలల రెక్కలు తొడిగి ఎగిరిపోదుము,\nఆకాశమే హద్దుగా సాగిపోదుము!\n\nవిజ్ఞాన దీపమై వెలుగుతూ,\nసమతా భావాన్ని నేర్పుతూ,\nమహిళా శక్తికి ప్రతీకగా నిలుచుతూ,\nదేశానికి వెలుగై మేము నిలుతుము!\n\n- కొడెం శ్రావణి, 10వ తరగతి 'ఎ' విభాగం"
+      },
+      {
+        id: 3,
+        title: "Wings of Determination: Educating the Girl Child",
+        titleTe: "లక్ష్య సాధనలో బాలికా విద్య: ఒక ఆలోచన",
+        category: "Creative Writing",
+        author: "M. Ayesha Begum",
+        role: "Student",
+        classVal: "Class IX-B",
+        date: "October 2026",
+        readTime: "3 min read",
+        image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=80",
+        summary: "An essay exploring the transformative power of female education in rural Telangana and modern India.",
+        body: "When you educate a boy, you train an individual; when you educate a girl, you empower an entire generation.\n\nGrowing up in our town of Gajwel, I have witnessed firsthand how access to dedicated teachers, smart classrooms, digital labs, and high-quality library books can change a girl's destiny. Just two decades ago, many girls in rural villages were married off early or confined to domestic chores. Today, wearing our neat school uniform, carrying bags filled with mathematics and science books, we step into ZPHS Girls Gajwel with head held high and eyes full of ambition.\n\nOur classrooms teach us that mathematics is not something to be feared, science is a tool to improve the lives of our farming families, and literature is a medium to speak our truth. Every teacher here constantly reminds us: \"Never let anyone tell you that your gender limits your horizons.\"\n\nMy dream is to study Astrophysics at ISRO and build satellites that monitor water resources and weather for farmers. I am proud to say that my school is giving me the wings, the discipline, and the courage to make that dream come true."
+      },
+      {
+        id: 4,
+        title: "Solar Water Distillation & Moringa Seed Coagulation",
+        titleTe: "సౌర శుద్ధి మరియు మునగ విత్తనాలతో పరిశుభ్రమైన తాగునీరు - సైన్స్ ప్రాజెక్ట్",
+        category: "Science & Tech",
+        author: "B. Ananya & Science Club Team",
+        role: "Student Investigators",
+        classVal: "Class VIII-A",
+        date: "September 2026",
+        readTime: "4 min read",
+        image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=80",
+        summary: "District Science Fair 1st Prize Project: Affordable, chemical-free rural water purification using solar stills and powdered Moringa oleifera seeds.",
+        body: "Project Title: Affordable Green Water Purification for Rural Communities\nPresented by: B. Ananya, K. Manasa & P. Swathi (Class VIII-A)\nGuide Teacher: Smt. P. Srilatha (Physical Science)\n\nObjective:\nTo design an affordable, zero-chemical water filtration and disinfection mechanism for village households using natural Moringa oleifera (munaga) seed powder and solar energy.\n\nMethodology:\n1. Coagulation: Dry Moringa seeds were deshelled and crushed into fine powder. When added to turbid pond and borewell water at 50 mg/liter, the natural cationic proteins bind to negatively charged clay particles and bacteria, precipitating 95% of turbidity within 45 minutes.\n2. Charcoal & Sand Filtration: The coagulated water passes through a gravity column with layers of gravel, fine sand, and active charcoal made from coconut shells.\n3. Solar Thermal Disinfection: The filtered water was exposed in shallow glass solar distillers. Sunlight UV-A radiation coupled with thermal heating up to 65°C eliminated E. coli pathogens completely.\n\nOutcome:\nThe total dissolved solids (TDS) dropped from 780 ppm to 140 ppm, and turbidity fell from 45 NTU to under 2 NTU. Our low-cost prototype was awarded First Prize at the Siddipet District Science Congress 2026! We express our heartfelt gratitude to our Headmaster and science teachers for funding our experimental setup."
+      },
+      {
+        id: 5,
+        title: "Bathukamma: The Floral Symphony & Cultural Canvas",
+        titleTe: "బతుకమ్మ పండుగ: ప్రకృతిని ఆరాధించే తెలంగాణ మహిళా సంస్కృతి",
+        category: "Art & Drawing",
+        author: "P. Divya",
+        role: "Student Artist",
+        classVal: "Class VII-B",
+        date: "October 2026",
+        readTime: "3 min read",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80",
+        summary: "A celebration of Telangana's floral festival Bathukamma, highlighting sisterhood, natural dyes, and female harmony.",
+        body: "Telangana's unique identity comes alive through Bathukamma—the festival of flowers. Unlike any other festival in the world where idols are worshiped, Bathukamma worships nature herself in the form of seasonal wild flowers: Gunugu (Celosia), Tangedu (Cassia auriculata), Gummadi (Cucurbita), and Katla.\n\nAt our school, preparing for Bathukamma is a week-long festival of unity. Girls from Class 6 to Class 10 gather wild blossoms from the surrounding Gajwel hills and green fields. Arranging them conical-tier upon brass plates (Thambalam) is an intricate art form passed down from our grandmothers.\n\nWhen hundreds of us dressed in vibrant Pattu Pavadas dance rhythmically around the flower pyramids singing:\n\"ఒక్కేసి పువ్వేసి చందమామ... ఒక్క జాములాయే చందమామ...\"\nthe entire school courtyard resonates with pure bliss. Through my painting presented in the school gallery, I tried to capture this burst of colors, the spirit of sisterhood, and our sacred gratitude to Mother Earth."
+      },
+      {
+        id: 6,
+        title: "District Champions: School Kho-Kho & Athletics Report",
+        titleTe: "జిల్లా ఖో-ఖో & అథ్లెటిక్స్ టోర్నమెంట్‌లో మన పాఠశాల బాలికల ఘన విజయం",
+        category: "Achievements",
+        author: "Ch. Renuka",
+        role: "Physical Education Teacher",
+        classVal: "Sports Committee",
+        date: "November 2026",
+        readTime: "3 min read",
+        image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=80",
+        summary: "Highlights from the Siddipet District Inter-School Tournament where ZPHS Girls Gajwel won the Under-17 Kho-Kho trophy and 4 Athletics medals.",
+        body: "It is with immense pride that the Department of Physical Education announces our resounding triumph at the 68th School Games Federation (SGF) District Tournament held at Siddipet Stadium.\n\nUnder-17 Kho-Kho Championship:\nOur team, captained by G. Sandhya (Class X-C), remained unbeaten throughout the tournament. In the nail-biting final against ZPHS Jagdevpur, our defenders showed extraordinary agility and stamina, holding out for a full 7 minutes in the second innings to clinch victory with a score of 14-11!\n\nAthletics Medal Tally:\n• 100m Sprint: Gold Medal - T. Kavitha (Class IX-A) [Record: 13.82s]\n• 400m Run: Silver Medal - R. Shireesha (Class X-A)\n• Long Jump: Gold Medal - M. Keerthi (Class VIII-B) [Distance: 4.62m]\n• 4x100m Relay: Silver Medal - ZPHS Girls Gajwel Squad\n\nFive of our players have been selected to represent Siddipet District in the Telangana State Level Inter-School Championship in Hyderabad. We congratulate our champion girls and salute their tireless morning practice sessions!"
+      },
+      {
+        id: 7,
+        title: "Haritha Haram: Planting 500 Native Trees on Campus",
+        titleTe: "హరితహారం: పాఠశాల ప్రాంగణంలో 500 మొక్కల పెంపకం - పర్యావరణ పరిరక్షణ",
+        category: "Creative Writing",
+        author: "S. Snehalatha",
+        role: "Student (Green Club President)",
+        classVal: "Class X-B",
+        date: "August 2026",
+        readTime: "3 min read",
+        image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80",
+        summary: "How student volunteers turned the school campus into a biodiversity sanctuary with shade trees, medicinal plants, and compost beds.",
+        body: "A green campus is a healthy mind's best companion. Under the Telangana Ku Haritha Haram program, our Eco-Club embarked on a mission this monsoon to plant and adopt 500 saplings across the school perimeter and courtyard.\n\nEach student was assigned one tree to adopt, water, and protect throughout her school journey. We planted native species including Neem (Vepa), Gulmohar, Tamarind, Jamun, and flowering shrubs. We also created a herbal medicinal garden featuring Tulasi, Ashwagandha, and Aloe Vera.\n\nTo ensure water conservation, we connected the rainwater runoff pipes from our main building roof directly into two recharge percolation pits. Furthermore, vegetable peels and organic waste from our daily Mid-Day Meal kitchen are processed in two vermicompost pits, producing rich organic manure for our plants.\n\nToday, our school is not just a building; it is a lush, oxygen-rich green haven where birds sing and shade shields us during hot afternoons. Green Gajwel begins with us!"
+      }
+    ];
+
+    var emagazineArticles = loadStorageArray('zphs_emagazines', defaultEmagazineArticles);
+    var currentEmagazineFilter = 'All';
+    var currentReaderArticleIndex = 0;
+
+    function escapeEmagText(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    if (typeof openModal !== 'function') {
+      window.openModal = function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('hidden');
+      };
+    }
+
+    function renderEmagazine() {
+      var grid = document.getElementById('emagazine-articles-grid');
+      var counter = document.getElementById('emagazine-filter-counter');
+      if (!grid) return;
+
+      if (!emagazineArticles || emagazineArticles.length === 0) {
+        emagazineArticles = defaultEmagazineArticles.slice();
+        try {
+          localStorage.setItem('zphs_emagazines', JSON.stringify(emagazineArticles));
+        } catch(e) {}
+      }
+
+      var filtered = emagazineArticles.filter(function(art) {
+        if (currentEmagazineFilter === 'All') return true;
+        return art.category === currentEmagazineFilter;
+      });
+
+      if (counter) {
+        counter.textContent = 'Showing ' + filtered.length + ' of ' + emagazineArticles.length + ' Articles';
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-12 text-center bg-white rounded-2xl border border-dashed border-slate-300 p-8 space-y-3"><i class="fa-solid fa-book-open text-4xl text-purple-300"></i><h4 class="text-base font-bold text-slate-700">No articles in this section yet</h4><p class="text-xs text-slate-500 max-w-sm mx-auto">Be the first to publish an article or poem in this category.</p><button onclick="filterEmagazineCategory(\'All\')" class="px-3.5 py-1.5 bg-purple-100 text-purple-700 hover:bg-purple-200 text-xs font-bold rounded-lg transition">View All Articles</button></div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(function(art) {
+        var categoryBadges = {
+          'Editorial': 'bg-purple-100 text-purple-800 border-purple-200',
+          'Poetry': 'bg-pink-100 text-pink-800 border-pink-200',
+          'Creative Writing': 'bg-indigo-100 text-indigo-800 border-indigo-200',
+          'Science & Tech': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+          'Art & Drawing': 'bg-amber-100 text-amber-800 border-amber-200',
+          'Achievements': 'bg-blue-100 text-blue-800 border-blue-200'
+        };
+        var badgeCls = categoryBadges[art.category] || 'bg-slate-100 text-slate-800 border-slate-200';
+
+        var imgHtml = art.image ? '<div class="h-44 w-full overflow-hidden bg-slate-100 relative"><img src="' + escapeEmagText(art.image) + '" alt="' + escapeEmagText(art.title) + '" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div><span class="absolute bottom-2.5 left-3 text-[10px] font-bold text-white bg-slate-900/70 backdrop-blur-xs px-2 py-0.5 rounded border border-white/20">' + escapeEmagText(art.classVal || art.role || 'ZPHS Girls') + '</span></div>' : '';
+
+        var summaryText = art.summary || (art.body ? art.body.substring(0, 140) + '...' : '');
+
+        return '<div class="group bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-md transition duration-200 flex flex-col overflow-hidden hover:border-purple-300">' +
+          imgHtml +
+          '<div class="p-5 flex-1 flex flex-col justify-between space-y-3">' +
+            '<div class="space-y-2">' +
+              '<div class="flex items-center justify-between gap-2">' +
+                '<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border ' + badgeCls + '">' + escapeEmagText(art.category) + '</span>' +
+                '<span class="text-[11px] text-slate-400 font-medium"><i class="fa-regular fa-clock text-[10px]"></i> ' + escapeEmagText(art.readTime || '3 min') + '</span>' +
+              '</div>' +
+              '<h3 class="text-base font-bold text-slate-800 group-hover:text-purple-700 transition leading-snug line-clamp-2">' + escapeEmagText(art.title) + '</h3>' +
+              (art.titleTe ? '<div class="text-[11px] text-slate-500 font-medium line-clamp-1">' + escapeEmagText(art.titleTe) + '</div>' : '') +
+              '<p class="text-xs text-slate-600 line-clamp-3 leading-relaxed">' + escapeEmagText(summaryText) + '</p>' +
+            '</div>' +
+            '<div class="pt-3 border-t border-slate-100 flex items-center justify-between">' +
+              '<div class="flex items-center gap-2">' +
+                '<div class="w-7 h-7 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-xs font-bold border border-purple-200"><i class="fa-solid fa-user-pen text-[10px]"></i></div>' +
+                '<div class="leading-tight">' +
+                  '<div class="text-xs font-bold text-slate-800">' + escapeEmagText(art.author) + '</div>' +
+                  '<div class="text-[10px] text-slate-400">' + escapeEmagText(art.classVal || art.role || 'Contributor') + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<button type="button" onclick="openEmagazineReaderModal(' + art.id + ')" class="px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-600 text-purple-700 hover:text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer"><span>Read</span> <i class="fa-solid fa-arrow-right text-[10px]"></i></button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function filterEmagazineCategory(category) {
+      currentEmagazineFilter = category;
+      var buttons = document.querySelectorAll('.btn-emag-filter');
+      buttons.forEach(function(btn) {
+        if (btn.textContent.trim().toLowerCase().includes(category.toLowerCase()) || (category === 'All' && btn.textContent.trim() === 'All Articles')) {
+          btn.className = 'btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-bold transition bg-purple-600 text-white shadow-2xs cursor-pointer';
+        } else {
+          btn.className = 'btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer';
+        }
+      });
+      renderEmagazine();
+    }
+
+    function openEmagazineReaderModal(id) {
+      var idx = emagazineArticles.findIndex(function(a) { return a.id == id; });
+      if (idx === -1) idx = 0;
+      currentReaderArticleIndex = idx;
+      populateReaderModalWithCurrent();
+      openModal('modal-emagazine-reader');
+    }
+
+    function populateReaderModalWithCurrent() {
+      if (!emagazineArticles || emagazineArticles.length === 0) return;
+      var art = emagazineArticles[currentReaderArticleIndex];
+      if (!art) return;
+
+      var catEl = document.getElementById('emag-reader-category');
+      if (catEl) catEl.textContent = art.category;
+
+      var titleEl = document.getElementById('emag-reader-title');
+      if (titleEl) titleEl.textContent = art.title;
+
+      var authorEl = document.getElementById('emag-reader-author');
+      if (authorEl) authorEl.textContent = art.author;
+
+      var classEl = document.getElementById('emag-reader-class');
+      if (classEl) classEl.textContent = art.classVal || art.role || 'ZPHS Girls Gajwel';
+
+      var readtimeEl = document.getElementById('emag-reader-readtime');
+      if (readtimeEl) readtimeEl.innerHTML = '<i class="fa-regular fa-clock"></i> ' + escapeEmagText(art.readTime || '3 min read') + ' • ' + escapeEmagText(art.date || '2025-26');
+
+      var imgWrap = document.getElementById('emag-reader-image-container');
+      var imgEl = document.getElementById('emag-reader-image');
+      if (imgWrap && imgEl) {
+        if (art.image) {
+          imgEl.src = art.image;
+          imgWrap.classList.remove('hidden');
+        } else {
+          imgWrap.classList.add('hidden');
+          imgEl.src = '';
+        }
+      }
+
+      var bodyEl = document.getElementById('emag-reader-body');
+      if (bodyEl) {
+        bodyEl.textContent = art.body || art.summary || 'No content provided.';
+      }
+
+      var prevBtn = document.getElementById('emag-reader-prev-btn');
+      var nextBtn = document.getElementById('emag-reader-next-btn');
+      if (prevBtn) prevBtn.disabled = (currentReaderArticleIndex <= 0);
+      if (nextBtn) nextBtn.disabled = (currentReaderArticleIndex >= emagazineArticles.length - 1);
+    }
+
+    function navigateEmagazineReader(direction) {
+      var newIdx = currentReaderArticleIndex + direction;
+      if (newIdx >= 0 && newIdx < emagazineArticles.length) {
+        currentReaderArticleIndex = newIdx;
+        populateReaderModalWithCurrent();
+        var scrollContainer = document.querySelector('#modal-emagazine-reader .overflow-y-auto');
+        if (scrollContainer) scrollContainer.scrollTop = 0;
+      }
+    }
+
+    function printEmagazineArticle() {
+      var art = emagazineArticles[currentReaderArticleIndex];
+      if (!art) return;
+      var printWin = window.open('', '_blank');
+      if (!printWin) {
+        alert('Please allow popups to print the magazine article.');
+        return;
+      }
+      printWin.document.write(
+        '<!DOCTYPE html><html><head><title>' + escapeEmagText(art.title) + ' - ZPHS Girls Gajwel E-Magazine</title>' +
+        '<style>body{font-family:Georgia,serif;line-height:1.8;color:#1e293b;max-width:800px;margin:40px auto;padding:20px;}' +
+        '.header{text-align:center;border-bottom:2px solid #7c3aed;padding-bottom:20px;margin-bottom:30px;}' +
+        '.header h1{margin:0;font-size:24px;color:#581c87;}' +
+        '.header p{margin:5px 0 0 0;font-size:14px;color:#64748b;font-family:sans-serif;}' +
+        '.badge{display:inline-block;background:#f3e8ff;color:#6b21a8;font-weight:bold;padding:3px 10px;border-radius:12px;font-size:12px;font-family:sans-serif;}' +
+        '.title{font-size:22px;font-weight:bold;margin:15px 0 5px 0;color:#0f172a;}' +
+        '.meta{font-size:13px;color:#64748b;font-family:sans-serif;margin-bottom:25px;}' +
+        '.content{white-space:pre-line;font-size:15px;color:#334155;}' +
+        '.footer{margin-top:50px;border-top:1px solid #cbd5e1;padding-top:15px;font-size:12px;color:#94a3b8;font-family:sans-serif;text-align:center;}' +
+        '</style></head><body>' +
+        '<div class="header"><h1>ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL</h1><p>Annual School E-Magazine: \"Prathibha\" (ప్రతిభ) • Vol. IV (2025-26)</p></div>' +
+        '<div><span class="badge">' + escapeEmagText(art.category) + '</span><div class="title">' + escapeEmagText(art.title) + '</div>' +
+        '<div class="meta">By: <strong>' + escapeEmagText(art.author) + '</strong> (' + escapeEmagText(art.classVal || art.role || 'Contributor') + ') | Date: ' + escapeEmagText(art.date || '2025-26') + '</div>' +
+        '<div class="content">' + escapeEmagText(art.body || art.summary || '') + '</div></div>' +
+        '<div class="footer">Printed from ZPHS Girls Gajwel Official Portal • U-DISE: 36181802720</div>' +
+        '<script>window.onload=function(){window.print();};<\/script></body></html>'
+      );
+      printWin.document.close();
+    }
+
+    function downloadEmagazineIssue() {
+      var fullHtml = '<!DOCTYPE html><html><head><title>PRATHIBHA - Annual School E-Magazine 2025-26 (ZPHS Girls Gajwel)</title>' +
+        '<style>@media print{.page-break{page-break-after:always;}}' +
+        'body{font-family:Georgia,serif;line-height:1.8;color:#1e293b;max-width:850px;margin:40px auto;padding:20px;}' +
+        '.cover{text-align:center;padding:80px 20px;border:8px double #6b21a8;border-radius:20px;background:#faf5ff;margin-bottom:50px;}' +
+        '.cover h1{font-size:38px;color:#581c87;margin:10px 0;letter-spacing:2px;}' +
+        '.cover h2{font-size:20px;color:#9333ea;font-family:sans-serif;margin-top:0;}' +
+        '.cover p{font-size:16px;color:#475569;font-family:sans-serif;}' +
+        '.article{margin-bottom:50px;padding-bottom:30px;border-bottom:1px dashed #cbd5e1;}' +
+        '.article-cat{font-family:sans-serif;font-size:12px;font-weight:bold;color:#7e22ce;text-transform:uppercase;}' +
+        '.article-title{font-size:22px;color:#0f172a;margin:8px 0;font-weight:bold;}' +
+        '.article-meta{font-family:sans-serif;font-size:13px;color:#64748b;margin-bottom:15px;}' +
+        '.article-body{font-size:14.5px;line-height:1.8;color:#334155;white-space:pre-line;}' +
+        '</style></head><body>' +
+        '<div class="cover page-break"><p style="font-weight:bold;letter-spacing:1px;">ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL</p><h1>PRATHIBHA (ప్రతిభ)</h1><h2>ANNUAL SCHOOL E-MAGAZINE 2025-26 • VOLUME IV</h2><p style="margin-top:30px;">Inspiring Girls Education, Literary Expression, Arts & Scientific Innovation</p><p style="font-size:13px;color:#64748b;margin-top:50px;">Patron: M. Ramana Kumar, Headmaster<br>Editorial Committee: ZPHS Language & Science Faculty<br>Published: Gajwel, Siddipet District, Telangana</p></div>' +
+        emagazineArticles.map(function(art, i) {
+          return '<div class="article ' + (i < emagazineArticles.length - 1 ? 'page-break' : '') + '">' +
+            '<div class="article-cat">' + escapeEmagText(art.category) + '</div>' +
+            '<div class="article-title">' + escapeEmagText(art.title) + '</div>' +
+            '<div class="article-meta">Author: <strong>' + escapeEmagText(art.author) + '</strong> (' + escapeEmagText(art.classVal || art.role || 'Contributor') + ') • Date: ' + escapeEmagText(art.date || '2025-26') + '</div>' +
+            '<div class="article-body">' + escapeEmagText(art.body || art.summary || '') + '</div>' +
+          '</div>';
+        }).join('') +
+        '<script>window.onload=function(){window.print();};<\/script></body></html>';
+
+      var win = window.open('', '_blank');
+      if (win) {
+        win.document.write(fullHtml);
+        win.document.close();
+      } else {
+        alert('Please allow popups to download the full E-Magazine issue.');
+      }
+    }
+
+    function openAddEmagazineModal() {
+      var form = document.getElementById('form-add-emagazine');
+      if (form) form.reset();
+      openModal('modal-add-emagazine');
+    }
+
+    function handleSaveEmagazineArticle(e) {
+      if (e) e.preventDefault();
+      var title = (document.getElementById('emag-form-title')?.value || '').trim();
+      var category = document.getElementById('emag-form-category')?.value;
+      var author = (document.getElementById('emag-form-author')?.value || '').trim();
+      var image = (document.getElementById('emag-form-image')?.value || '').trim();
+      var body = (document.getElementById('emag-form-body')?.value || '').trim();
+
+      if (!title || !author || !body) {
+        alert('Please fill in title, author name, and article content.');
+        return;
+      }
+
+      var newArticle = {
+        id: Date.now(),
+        title: title,
+        category: category || 'Creative Writing',
+        author: author,
+        role: 'Contributor',
+        classVal: author.includes('Class') ? author : 'ZPHS Girls Gajwel',
+        date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        readTime: Math.max(2, Math.ceil(body.split(' ').length / 150)) + ' min read',
+        image: image || '',
+        summary: body.substring(0, 150) + '...',
+        body: body
+      };
+
+      emagazineArticles.unshift(newArticle);
+      try {
+        localStorage.setItem('zphs_emagazines', JSON.stringify(emagazineArticles));
+      } catch(err) {}
+      closeModal('modal-add-emagazine');
+      renderEmagazine();
+      alert('Article published successfully to School E-Magazine!');
+    }
+
 
     // --- TIMETABLE STORAGE & CRUD ENGINE ---
     var defaultTimetables = {
