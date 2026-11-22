@@ -16946,9 +16946,6 @@ var currentTimetableClass = 'Class 10';
       var inputDob = document.getElementById('service-cert-input-dob')?.value.trim() || getStaffDOB(member).replace(/-/g, '/');
 
       var today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      var empCode = (typeof currentUser !== 'undefined' && currentUser && currentUser.code) ? currentUser.code : '1782341';
-      var empName = (typeof currentUser !== 'undefined' && currentUser && currentUser.name) ? currentUser.name : 'P RAJA KUMARASWAMY';
-      var preparedBy = empCode + ' (' + empName + ')';
 
       // Update Modal Preview Spans
       var elPrevTitle = document.getElementById('sc-prev-title'); if (elPrevTitle) elPrevTitle.innerText = title;
@@ -16961,7 +16958,6 @@ var currentTimetableClass = 'Class 10';
       var elPrevCompleted = document.getElementById('sc-prev-completed'); if (elPrevCompleted) elPrevCompleted.innerText = inputCompleted;
       var elPrevDob = document.getElementById('sc-prev-dob'); if (elPrevDob) elPrevDob.innerText = inputDob;
       var elPrevDate = document.getElementById('sc-prev-date'); if (elPrevDate) elPrevDate.innerText = today;
-      var elPrevPrep = document.getElementById('sc-prev-prepared-by'); if (elPrevPrep) elPrevPrep.innerText = preparedBy;
 
       // Update Print Container Spans
       var elPrintTitle = document.getElementById('sc-print-title'); if (elPrintTitle) elPrintTitle.innerText = title;
@@ -16974,7 +16970,6 @@ var currentTimetableClass = 'Class 10';
       var elPrintCompleted = document.getElementById('sc-print-completed'); if (elPrintCompleted) elPrintCompleted.innerText = inputCompleted;
       var elPrintDob = document.getElementById('sc-print-dob'); if (elPrintDob) elPrintDob.innerText = inputDob;
       var elPrintDate = document.getElementById('sc-print-date'); if (elPrintDate) elPrintDate.innerText = today;
-      var elPrintPrep = document.getElementById('sc-print-prepared-by'); if (elPrintPrep) elPrintPrep.innerText = preparedBy;
 
       // Update Staff Photo in Preview & Print
       var key = currentServiceCertStaffId + '_' + currentServiceCertStaffType;
@@ -17546,9 +17541,6 @@ var currentTimetableClass = 'Class 10';
                   <p>Place: <strong id="sc-prev-place">Gajwel</strong></p>
                   <p>Date: <strong id="sc-prev-date">14/11/2026</strong></p>
                 </div>
-                <div class="text-right">
-                  <p class="font-mono text-[10px] text-slate-600">Emp Code: <span id="sc-prev-prepared-by">1782341 (P RAJA KUMARASWAMY)</span></p>
-                </div>
               </div>
             </div>
           </div>
@@ -17711,9 +17703,6 @@ var currentTimetableClass = 'Class 10';
             <div>
               <p>Place: <strong id="sc-print-place">Gajwel</strong></p>
               <p>Date: <strong id="sc-print-date">14/11/2026</strong></p>
-            </div>
-            <div class="text-right">
-              <p class="font-mono text-[10px] text-slate-600">Emp Code: <span id="sc-print-prepared-by">1782341 (P RAJA KUMARASWAMY)</span></p>
             </div>
           </div>
         </div>
