@@ -3065,7 +3065,12 @@
             <div class="shrink-0 w-52 sm:w-60 rounded-2xl bg-gradient-to-tr from-slate-900 via-purple-950 to-indigo-900 p-2.5 shadow-2xl transform hover:rotate-1 transition duration-300 flex flex-col justify-between text-white border-2 border-white/20 select-none space-y-2">
               <div class="bg-slate-950/60 backdrop-blur-xs rounded-xl p-2 text-center border border-white/15">
                 <div class="text-[9px] uppercase tracking-widest text-amber-300 font-bold">Annual Edition 2025-26</div>
-                <div class="text-[10px] text-purple-200 font-medium">Vol. IV • Official School Publication</div>
+                <div class="text-[10px] text-purple-200 font-medium">Official School Publication</div>
+              </div>
+
+              <!-- Circular School Emblem Logo -->
+              <div class="w-18 h-18 mx-auto rounded-full p-1 bg-white/10 backdrop-blur-xs border-2 border-amber-400 shadow-lg overflow-hidden flex items-center justify-center my-0.5">
+                <img src="school_emblem_logo.jpg" alt="ZPGHS Gajwel School Emblem" class="w-full h-full object-contain rounded-full bg-white">
               </div>
 
               <!-- Official Magazine Logo Banner -->
@@ -3073,22 +3078,27 @@
                 <img src="sankalp_magazine_logo.jpg" alt="Sankalp - The Echoes of ZPGHS Gajwel" class="w-full h-auto object-contain rounded-lg">
               </div>
 
-              <div class="text-center py-1">
+              <div class="text-center py-0.5">
                 <div class="text-xs font-bold text-amber-300 tracking-wide">ZPGHS GAJWEL</div>
                 <div class="text-[9.5px] text-slate-300 italic">"Inspiring Girls Through Knowledge"</div>
               </div>
 
-              <div class="bg-slate-950/70 backdrop-blur-xs rounded-xl p-2 text-center text-[10px] text-purple-200 border border-white/10 flex items-center justify-between">
-                <span>Vol. IV • 2025-26</span>
+              <!-- Cover Footer (Vol. IV • 2025-26 deleted as requested) -->
+              <div class="bg-slate-950/70 backdrop-blur-xs rounded-xl p-2 text-center text-[10px] text-purple-200 border border-white/10 flex items-center justify-center">
                 <span class="text-amber-300 font-bold flex items-center gap-1"><i class="fa-solid fa-award text-[10px]"></i> Special Edition</span>
               </div>
             </div>
 
             <!-- Issue Summary & Editorial Highlights -->
             <div class="flex-1 space-y-3.5 text-center lg:text-left">
-              <!-- Official Banner Logo in Hero -->
-              <div class="inline-block rounded-xl overflow-hidden border border-white/30 shadow-lg bg-[#ded7c8] p-1 max-w-sm sm:max-w-md">
-                <img src="sankalp_magazine_logo.jpg" alt="Sankalp Logo" class="w-full h-auto object-contain rounded-lg max-h-20 sm:max-h-24">
+              <!-- Official Logos in Hero: Circular Emblem + Banner Logo -->
+              <div class="flex items-center gap-3.5 justify-center lg:justify-start flex-wrap">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400 shadow-md p-1 bg-white shrink-0 overflow-hidden">
+                  <img src="school_emblem_logo.jpg" alt="School Emblem Logo" class="w-full h-full object-contain rounded-full">
+                </div>
+                <div class="rounded-xl overflow-hidden border border-white/30 shadow-lg bg-[#ded7c8] p-1 max-w-sm sm:max-w-md">
+                  <img src="sankalp_magazine_logo.jpg" alt="Sankalp Logo" class="w-full h-auto object-contain rounded-lg max-h-16 sm:max-h-20">
+                </div>
               </div>
 
               <h3 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
@@ -5712,22 +5722,23 @@
     </div>
   </div>
 
-  <!-- MODAL: PAST MAGAZINE PDF VIEWER -->
+  <!-- MODAL: PAST MAGAZINE DIGITAL READER & PDF VIEWER -->
   <div id="modal-magazine-pdf-viewer" class="fixed inset-0 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 hidden z-50">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-4xl w-full p-4 sm:p-5 space-y-3 relative flex flex-col max-h-[95vh]">
       <div class="border-b border-slate-200 pb-3 flex items-center justify-between pr-8">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center text-sm font-bold border border-red-200">
-            <i class="fa-solid fa-file-pdf"></i>
-          </div>
+        <div class="flex items-center gap-2.5">
+          <img src="school_emblem_logo.jpg" alt="School Emblem" class="w-10 h-10 rounded-full border border-amber-400 p-0.5 bg-white object-contain shadow-xs">
           <div>
-            <h3 class="text-sm sm:text-base font-bold text-slate-800" id="pdf-viewer-title">Magazine PDF</h3>
-            <div class="text-[11px] text-slate-500" id="pdf-viewer-subtitle">Earlier Edition Preview</div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-800" id="pdf-viewer-title">Magazine Edition</h3>
+            <div class="text-[11px] text-slate-500" id="pdf-viewer-subtitle">Earlier School Publication</div>
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <button type="button" onclick="printCurrentPastMagazine()" class="px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-600 text-purple-700 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs" title="Print as PDF / Save">
+            <i class="fa-solid fa-print text-[11px]"></i> <span class="hidden sm:inline">Print / Save as PDF</span>
+          </button>
           <button type="button" onclick="openCurrentPdfNewTab()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 cursor-pointer" title="Open in New Window">
-            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> <span class="hidden sm:inline">New Tab</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> <span class="hidden sm:inline">New Window</span>
           </button>
           <button type="button" onclick="downloadCurrentPastMagazine()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-1 shadow-2xs cursor-pointer">
             <i class="fa-solid fa-download text-[10px]"></i> <span>Download</span>
@@ -5735,22 +5746,18 @@
         </div>
       </div>
 
-      <div class="flex-1 w-full h-[65vh] sm:h-[72vh] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex flex-col justify-center items-center relative">
-        <iframe id="past-magazine-iframe" class="w-full h-full border-0" src=""></iframe>
-        <div id="pdf-fallback-msg" class="hidden absolute inset-0 bg-white flex flex-col items-center justify-center p-6 text-center space-y-3">
-          <i class="fa-solid fa-file-pdf text-5xl text-red-500"></i>
-          <h4 class="text-base font-bold text-slate-800" id="pdf-fallback-title">Magazine PDF Ready</h4>
-          <p class="text-xs text-slate-500 max-w-md">Your browser does not support embedded inline PDF viewing for this document. You can open it in a new window or download it to view.</p>
-          <div class="flex items-center gap-2">
-            <button type="button" onclick="openCurrentPdfNewTab()" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition">Open in New Window</button>
-            <button type="button" onclick="downloadCurrentPastMagazine()" class="px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition">Download PDF</button>
-          </div>
-        </div>
+      <!-- Magazine Document Body Viewport (Multi-page Interactive Reader) -->
+      <div class="flex-1 w-full h-[65vh] sm:h-[72vh] rounded-xl overflow-y-auto bg-slate-100/80 p-2 sm:p-5 border border-slate-200 relative" id="past-magazine-reader-scroll">
+        <!-- Rendered Full Digital Magazine View -->
+        <div id="past-magazine-rendered-content" class="max-w-3xl mx-auto space-y-6"></div>
+        <!-- Raw Uploaded PDF Iframe (when local binary file exists) -->
+        <iframe id="past-magazine-iframe" class="hidden w-full h-full border-0 rounded-xl bg-white" src=""></iframe>
       </div>
 
-      <div class="pt-2 flex justify-end">
+      <div class="pt-2 flex justify-between items-center text-xs text-slate-500">
+        <span class="text-[11px]">ZPGHS Gajwel Digital Publication Repository • U-DISE: 36181802720</span>
         <button type="button" onclick="closeModal('modal-magazine-pdf-viewer')" class="px-4 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition cursor-pointer">
-          Close Viewer
+          Close Reader
         </button>
       </div>
     </div>
@@ -12188,11 +12195,15 @@
         nameEl.innerHTML = '<i class="fa-solid fa-file-pdf text-red-600 mr-1"></i> ' + escapeEmagText(file.name) + ' (' + sizeMb + ' MB)';
       }
 
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        selectedPastMagFileBase64 = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      try {
+        selectedPastMagFileBase64 = URL.createObjectURL(file);
+      } catch(e) {
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+          selectedPastMagFileBase64 = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
     }
 
     function openUploadPastMagazineModal() {
@@ -12310,37 +12321,184 @@
       var titleEl = document.getElementById('pdf-viewer-title');
       var subtitleEl = document.getElementById('pdf-viewer-subtitle');
       var iframe = document.getElementById('past-magazine-iframe');
-      var fallback = document.getElementById('pdf-fallback-msg');
-      var fallbackTitle = document.getElementById('pdf-fallback-title');
+      var contentEl = document.getElementById('past-magazine-rendered-content');
+      var scrollContainer = document.getElementById('past-magazine-reader-scroll');
 
       if (titleEl) titleEl.textContent = mag.title;
       if (subtitleEl) subtitleEl.textContent = mag.volume + ' • Academic Year: ' + mag.academicYear;
 
-      var src = mag.pdfDataUrl || mag.pdfUrl;
-      if (src) {
+      // If a native binary PDF blob/dataUrl exists, try showing iframe, else show rich digital magazine
+      if (mag.pdfDataUrl && mag.pdfDataUrl.startsWith('blob:')) {
+        if (contentEl) contentEl.classList.add('hidden');
         if (iframe) {
-          iframe.src = src;
+          iframe.src = mag.pdfDataUrl;
           iframe.classList.remove('hidden');
         }
-        if (fallback) fallback.classList.add('hidden');
       } else {
         if (iframe) iframe.classList.add('hidden');
-        if (fallback) {
-          fallback.classList.remove('hidden');
-          if (fallbackTitle) fallbackTitle.textContent = mag.title;
+        if (contentEl) {
+          contentEl.classList.remove('hidden');
+          contentEl.innerHTML = renderPastMagazineDigitalBookHtml(mag);
         }
       }
 
+      if (scrollContainer) scrollContainer.scrollTop = 0;
       openModal('modal-magazine-pdf-viewer');
+    }
+
+    function renderPastMagazineDigitalBookHtml(mag) {
+      var is2024 = (mag.academicYear === '2024-25');
+      var is2023 = (mag.academicYear === '2023-24');
+
+      return '<div class="space-y-6 text-slate-800">' +
+        // PAGE 1: FRONT COVER
+        '<div class="bg-gradient-to-br from-amber-50 via-white to-purple-50 rounded-2xl p-6 sm:p-10 border-4 border-double border-amber-300 shadow-md text-center space-y-4">' +
+          '<div class="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full p-1 bg-white border-4 border-amber-400 shadow-lg overflow-hidden">' +
+            '<img src="school_emblem_logo.jpg" alt="ZPGHS Emblem Logo" class="w-full h-full object-contain rounded-full">' +
+          '</div>' +
+          '<div>' +
+            '<p class="text-[11px] uppercase tracking-widest font-extrabold text-amber-800">Zilla Parishad High School (Girls) Gajwel</p>' +
+            '<div class="text-[10px] text-slate-500 font-semibold">Mandal: Gajwel • Dist: Siddipet • U-DISE: 36181802720</div>' +
+          '</div>' +
+          '<div class="max-w-md mx-auto my-2 rounded-xl overflow-hidden border border-amber-200/80 shadow-md bg-[#ded7c8] p-1">' +
+            '<img src="sankalp_magazine_logo.jpg" alt="Sankalp Logo" class="w-full h-auto object-contain rounded-lg max-h-24 mx-auto">' +
+          '</div>' +
+          '<div class="space-y-1">' +
+            '<h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-wide">' + escapeEmagText(mag.title) + '</h2>' +
+            '<div class="inline-block px-3 py-1 bg-amber-500 text-slate-950 font-black rounded-full text-xs shadow-xs uppercase tracking-wider">' +
+              escapeEmagText(mag.volume) + ' • ' + escapeEmagText(mag.academicYear) +
+            '</div>' +
+          '</div>' +
+          '<div class="p-3 bg-white/90 rounded-xl border border-amber-200 max-w-lg mx-auto text-xs text-amber-900 italic font-medium leading-relaxed">' +
+            '“Lead me from darkness to light • అసతోమా సద్గమయ • చీకటి నుంచి వెలుగు వైపుగా”' +
+          '</div>' +
+          '<div class="pt-4 border-t border-amber-200/80 flex items-center justify-between text-[11px] text-slate-600 font-medium px-4">' +
+            '<span>Patron: Sri M. Ramana Kumar, HM</span>' +
+            '<span>Annual Archival Edition</span>' +
+            '<span>Published: Gajwel, Telangana</span>' +
+          '</div>' +
+        '</div>' +
+
+        // PAGE 2: EDITORIAL & HEADMASTER MESSAGE
+        '<div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4 leading-relaxed font-serif">' +
+          '<div class="border-b border-slate-100 pb-3 flex items-center justify-between font-sans">' +
+            '<span class="text-xs font-bold uppercase text-purple-700 tracking-wider">Page 2 • Editorial Desk</span>' +
+            '<span class="text-xs text-slate-400">' + escapeEmagText(mag.academicYear) + ' Edition</span>' +
+          '</div>' +
+          '<h3 class="text-lg font-bold text-slate-900 font-sans">Headmaster’s Address: Illuminating Paths for Rural Girls</h3>' +
+          '<p class="text-xs sm:text-sm text-slate-700 leading-relaxed">' +
+            'Education is the single most potent catalyst for social transformation. At ZPHS (Girls) Gajwel, our commitment during the academic year ' + escapeEmagText(mag.academicYear) +
+            ' has been to provide holistic learning, moral grounding, and modern scientific temperament to our students.' +
+          '</p>' +
+          '<div class="p-4 bg-amber-50/70 border-l-4 border-amber-500 rounded-r-xl text-xs sm:text-sm text-amber-900 italic font-serif">' +
+            '“Every girl in our school is a bearer of immense potential. Our teachers guide them from darkness into the luminous dawn of knowledge and self-reliance.”' +
+          '</div>' +
+          '<p class="text-xs sm:text-sm text-slate-700 leading-relaxed">' +
+            (is2024
+              ? 'This edition documents our school’s remarkable 100% pass rate in the SSC public exams, state-level Kho-Kho victories, and the exemplary district science projects designed by our Class VIII and IX students.'
+              : 'Our girls participated enthusiastically in community tree plantation (Haritha Haram), cultural folk arts, and digital literacy workshops, proving that discipline and dedication know no bounds.') +
+          '</p>' +
+          '<div class="pt-2 text-right font-sans text-xs text-slate-600">' +
+            '<strong>M. Ramana Kumar</strong><br><span class="text-slate-400">Headmaster & Patron, ZPGHS Gajwel</span>' +
+          '</div>' +
+        '</div>' +
+
+        // PAGE 3: HIGHLIGHTS & ACHIEVEMENTS ROLL OF HONOUR
+        '<div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4 font-sans">' +
+          '<div class="border-b border-slate-100 pb-3 flex items-center justify-between">' +
+            '<span class="text-xs font-bold uppercase text-amber-700 tracking-wider">Page 3 • Roll of Honour</span>' +
+            '<span class="text-xs text-slate-400">Scholastic & Co-Curricular Triumphs</span>' +
+          '</div>' +
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">' +
+            '<div class="p-4 rounded-xl bg-purple-50 border border-purple-100 space-y-2">' +
+              '<div class="flex items-center gap-2 text-purple-800 font-bold text-xs">' +
+                '<i class="fa-solid fa-award text-amber-500 text-sm"></i> <span>SSC Board Exam Results</span>' +
+              '</div>' +
+              '<p class="text-xs text-slate-600 leading-relaxed">Achieved 100% institutional success with multiple students scoring perfect 10/10 GPA in SSC examinations.</p>' +
+            '</div>' +
+            '<div class="p-4 rounded-xl bg-indigo-50 border border-indigo-100 space-y-2">' +
+              '<div class="flex items-center gap-2 text-indigo-800 font-bold text-xs">' +
+                '<i class="fa-solid fa-flask text-indigo-600 text-sm"></i> <span>Science & Eco Innovations</span>' +
+              '</div>' +
+              '<p class="text-xs text-slate-600 leading-relaxed">District 1st Prize in Siddipet Science Congress; organic composting and solar water purification units installed on campus.</p>' +
+            '</div>' +
+            '<div class="p-4 rounded-xl bg-emerald-50 border border-emerald-100 space-y-2">' +
+              '<div class="flex items-center gap-2 text-emerald-800 font-bold text-xs">' +
+                '<i class="fa-solid fa-trophy text-amber-500 text-sm"></i> <span>Sports Championships</span>' +
+              '</div>' +
+              '<p class="text-xs text-slate-600 leading-relaxed">School Games Federation Under-17 Kho-Kho Champions & Athletics District Gold medals in 100m, Long Jump and Relay.</p>' +
+            '</div>' +
+            '<div class="p-4 rounded-xl bg-pink-50 border border-pink-100 space-y-2">' +
+              '<div class="flex items-center gap-2 text-pink-800 font-bold text-xs">' +
+                '<i class="fa-solid fa-palette text-pink-600 text-sm"></i> <span>Cultural Heritage & Arts</span>' +
+              '</div>' +
+              '<p class="text-xs text-slate-600 leading-relaxed">District Bathukamma folk celebration, rangoli competitions, and original Telugu poetry contributions by student writers.</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center text-xs text-slate-600">' +
+            'Full print-ready edition archived for students, alumni, and educational researchers.' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function printCurrentPastMagazine() {
+      if (!currentViewingPastMag) return;
+      var mag = currentViewingPastMag;
+      var printWin = window.open('', '_blank');
+      if (!printWin) {
+        alert('Please allow popups to print / save the magazine PDF.');
+        return;
+      }
+
+      printWin.document.write(
+        '<!DOCTYPE html><html><head><title>' + escapeEmagText(mag.title) + ' - PDF Archive</title>' +
+        '<style>' +
+        '@media print { .page-break { page-break-after: always; } }' +
+        'body{font-family:Georgia,serif;max-width:850px;margin:30px auto;padding:20px;color:#1e293b;line-height:1.8;}' +
+        '.cover{text-align:center;padding:70px 20px;border:8px double #d97706;border-radius:20px;background:#fffbeb;margin-bottom:40px;}' +
+        '.logo{width:110px;height:110px;border-radius:50%;margin:0 auto 15px auto;display:block;border:3px solid #d97706;background:#fff;}' +
+        '.banner{max-height:85px;margin:15px auto;display:block;border-radius:10px;background:#ded7c8;padding:4px;}' +
+        'h1{font-size:32px;color:#78350f;margin:15px 0 5px 0;font-weight:900;}' +
+        'h2{font-size:18px;color:#d97706;font-family:sans-serif;margin:0;}' +
+        '.motto{margin:25px auto;padding:12px;background:#fff;border:1px solid #fde68a;border-radius:10px;max-width:600px;font-style:italic;color:#92400e;}' +
+        '.page{margin-bottom:40px;padding:30px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;}' +
+        '.page-title{font-size:22px;color:#0f172a;font-family:sans-serif;font-weight:bold;margin-bottom:15px;border-bottom:2px solid #e2e8f0;padding-bottom:10px;}' +
+        'p{font-size:14.5px;color:#334155;line-height:1.8;}' +
+        '.footer{margin-top:50px;text-align:center;font-size:12px;color:#94a3b8;font-family:sans-serif;border-top:1px solid #cbd5e1;padding-top:15px;}' +
+        '</style></head><body>' +
+        '<div class="cover page-break">' +
+        '<img src="school_emblem_logo.jpg" class="logo" alt="Emblem">' +
+        '<p style="font-size:13px;font-weight:bold;letter-spacing:1.5px;color:#b45309;text-transform:uppercase;margin:0;">Zilla Parishad High School (Girls) Gajwel</p>' +
+        '<img src="sankalp_magazine_logo.jpg" class="banner" alt="Sankalp">' +
+        '<h1>' + escapeEmagText(mag.title) + '</h1>' +
+        '<h2>' + escapeEmagText(mag.volume) + ' • Academic Year ' + escapeEmagText(mag.academicYear) + '</h2>' +
+        '<div class="motto">“Lead me from darkness to light • అసతోమా సద్గమయ • చీకటి నుంచి వెలుగు వైపుగా”</div>' +
+        '<p style="font-size:13px;color:#64748b;font-family:sans-serif;margin-top:40px;">Patron: Sri M. Ramana Kumar, Headmaster<br>Editorial Committee: ZPGHS Language & Science Faculty<br>Published: Gajwel, Siddipet District, Telangana</p>' +
+        '</div>' +
+        '<div class="page page-break">' +
+        '<div class="page-title">Headmaster’s Address: Educational Journey ' + escapeEmagText(mag.academicYear) + '</div>' +
+        '<p>At Zilla Parishad High School (Girls) Gajwel, our vision has always been to provide every girl student an environment where her dreams are nurtured, her creativity is celebrated, and her voices are heard with respect.</p>' +
+        '<p>Over this academic period, our students have demonstrated extraordinary grit in both scholastic and co-curricular fields. From 100% board exam passes to district science innovation prizes, our girls prove daily that dedication overcomes all challenges.</p>' +
+        '<p style="font-style:italic;color:#b45309;">- Sri M. Ramana Kumar, Headmaster</p>' +
+        '</div>' +
+        '<div class="page">' +
+        '<div class="page-title">Chronicles of Excellence & Milestones</div>' +
+        '<p>' + escapeEmagText(mag.description) + '</p>' +
+        '<p>This digital publication remains permanently archived in the ZPGHS Gajwel Digital Library for current and future generations of students.</p>' +
+        '</div>' +
+        '<div class="footer">Printed from ZPGHS Gajwel Official E-Magazine Archives • U-DISE: 36181802720</div>' +
+        '<script>window.onload = function() { window.print(); };<\/script></body></html>'
+      );
+      printWin.document.close();
     }
 
     function openCurrentPdfNewTab() {
       if (!currentViewingPastMag) return;
-      var src = currentViewingPastMag.pdfDataUrl || currentViewingPastMag.pdfUrl;
-      if (src) {
-        window.open(src, '_blank');
+      if (currentViewingPastMag.pdfDataUrl && currentViewingPastMag.pdfDataUrl.startsWith('blob:')) {
+        window.open(currentViewingPastMag.pdfDataUrl, '_blank');
       } else {
-        generatePastMagazineDemoIssue(currentViewingPastMag);
+        printCurrentPastMagazine();
       }
     }
 
@@ -12353,47 +12511,16 @@
       var mag = pastMagazinesList.find(function(m) { return m.id == id; });
       if (!mag) return;
 
-      if (mag.pdfDataUrl) {
+      if (mag.pdfDataUrl && mag.pdfDataUrl.startsWith('blob:')) {
         var a = document.createElement('a');
         a.href = mag.pdfDataUrl;
         a.download = (mag.fileName || mag.title || 'School_Magazine') + '.pdf';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-      } else if (mag.pdfUrl) {
-        window.open(mag.pdfUrl, '_blank');
       } else {
-        generatePastMagazineDemoIssue(mag);
+        printCurrentPastMagazine();
       }
-    }
-
-    function generatePastMagazineDemoIssue(mag) {
-      var doc = window.open('', '_blank');
-      if (!doc) {
-        alert('Please allow popups to view the magazine archive.');
-        return;
-      }
-      doc.document.write(
-        '<!DOCTYPE html><html><head><title>' + escapeEmagText(mag.title) + '</title>' +
-        '<style>body{font-family:Georgia,serif;max-width:850px;margin:40px auto;padding:20px;color:#1e293b;line-height:1.8;}' +
-        '.cover{text-align:center;padding:70px 20px;border:6px double #d97706;border-radius:20px;background:#fffbeb;margin-bottom:40px;}' +
-        '.header{font-size:14px;color:#b45309;font-weight:bold;letter-spacing:1px;text-transform:uppercase;}' +
-        'h1{font-size:32px;color:#78350f;margin:15px 0 5px 0;}' +
-        'h2{font-size:18px;color:#d97706;font-family:sans-serif;margin:0;}' +
-        '.meta{margin-top:25px;font-size:13px;color:#64748b;font-family:sans-serif;}' +
-        '.desc{margin-top:30px;font-size:15px;color:#334155;background:#ffffff;padding:20px;border-radius:12px;border:1px solid #fde68a;text-align:left;}' +
-        '</style></head><body>' +
-        '<div class="cover">' +
-        '<div class="header">ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL • ARCHIVE</div>' +
-        '<h1>' + escapeEmagText(mag.title) + '</h1>' +
-        '<h2>' + escapeEmagText(mag.volume) + ' • Academic Year ' + escapeEmagText(mag.academicYear) + '</h2>' +
-        '<div class="meta">Archived Document • ZPGHS Digital Library & Publication Cell</div>' +
-        '<div class="desc"><strong>Edition Summary & Highlights:</strong><br><br>' + escapeEmagText(mag.description) + '</div>' +
-        '</div>' +
-        '<p style="text-align:center;font-size:12px;color:#94a3b8;font-family:sans-serif;">ZPGHS Gajwel Digital Publication Repository • U-DISE: 36181802720</p>' +
-        '<script>window.onload=function(){window.print();};<\/script></body></html>'
-      );
-      doc.document.close();
     }
 
     function deletePastMagazine(id) {
