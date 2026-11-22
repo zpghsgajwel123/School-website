@@ -8088,6 +8088,11 @@
     var currentAssignSectionFilter = 'All';
 
     function getAllConfiguredClassesList() {
+      var deletedClasses = [];
+      try {
+        deletedClasses = JSON.parse(localStorage.getItem('zphs_deleted_classes')) || [];
+      } catch(e) {}
+
       var standard = [
         { key: 'Class VI-A', classVal: 'Class VI', section: 'A', medium: 'English' },
         { key: 'Class VI-B', classVal: 'Class VI', section: 'B', medium: 'Telugu' },
@@ -8111,17 +8116,21 @@
       ];
 
       var map = {};
-      standard.forEach(function(item) { map[item.key] = item; });
+      standard.forEach(function(item) {
+        if (!deletedClasses.includes(item.key)) {
+          map[item.key] = item;
+        }
+      });
 
       if (classTeacherAssignments && typeof classTeacherAssignments === 'object') {
         for (var k in classTeacherAssignments) {
-          if (!map[k] && classTeacherAssignments[k]) {
+          if (!deletedClasses.includes(k) && !map[k] && classTeacherAssignments[k]) {
             var item = classTeacherAssignments[k];
             map[k] = {
               key: k,
               classVal: item.classVal || (k.split('-')[0] || 'Class VI'),
               section: item.section || (k.split('-')[1] || 'A'),
-              medium: item.medium || 'English'
+              medium: item.medium || getAutoSuggestedMedium(item.classVal, item.section)
             };
           }
         }
@@ -8290,6 +8299,18 @@
           desig: foundStaff.designation || 'Staff'
         };
       });
+
+      var deletedClasses = [];
+      try {
+        deletedClasses = JSON.parse(localStorage.getItem('zphs_deleted_classes')) || [];
+      } catch(e) {}
+      var updatedDeleted = deletedClasses.filter(k => !targets.some(t => t.key === k));
+      if (updatedDeleted.length !== deletedClasses.length) {
+        try {
+          localStorage.setItem('zphs_deleted_classes', JSON.stringify(updatedDeleted));
+        } catch(e) {}
+        syncToCloud('zphs_deleted_classes', updatedDeleted);
+      }
 
       try {
         localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
@@ -8506,11 +8527,11 @@
               ${teacherCell}
             </td>
             <td class="p-2.5 border-r border-slate-200 font-mono font-bold text-slate-700">
-              <div class="flex items-center justify-between gap-1">
+              <div class="flex items-center justify-between gap-1.5">
                 <span>${escapeText(assign.staffCode || '-')}</span>
-                ${isHM && assign.staffCode && assign.staffCode !== '-' ? `
-                  <button onclick="resetStaffPasswordByHM('${escapeText(assign.staffCode)}', '${escapeText(assign.staffName)}')" class="admin-only text-rose-600 hover:text-rose-800 hover:bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200 text-[10px] font-bold inline-flex items-center gap-1 cursor-pointer" title="Headmaster 1-Click Reset to Gajwel@123">
-                    <i class="fa-solid fa-rotate-left text-[9px]"></i> Reset
+                ${isHM ? `
+                  <button onclick="deleteClassTeacherAssignment('${escapeText(item.key)}')" class="admin-only text-rose-600 hover:text-white hover:bg-rose-600 border border-rose-300 hover:border-rose-600 px-2 py-0.5 rounded-md text-[10px] font-bold inline-flex items-center gap-1 cursor-pointer transition shadow-2xs" title="Delete ${escapeText(item.key)} class assignment">
+                    <i class="fa-solid fa-trash-can text-[9.5px]"></i> <span>Delete</span>
                   </button>
                 ` : ''}
               </div>
@@ -8527,6 +8548,43 @@
       }).join('');
 
       tbody.innerHTML = rowsHtml;
+    }
+
+    function deleteClassTeacherAssignment(classKey) {
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only Headmaster can delete class assignments.');
+        return;
+      }
+      if (!confirm(`Are you sure you want to delete "${classKey}" from configured classes?\n\nThis will remove the class and its teacher assignment from the active list.`)) {
+        return;
+      }
+
+      var deletedClasses = [];
+      try {
+        deletedClasses = JSON.parse(localStorage.getItem('zphs_deleted_classes')) || [];
+      } catch(e) {}
+
+      if (!deletedClasses.includes(classKey)) {
+        deletedClasses.push(classKey);
+        try {
+          localStorage.setItem('zphs_deleted_classes', JSON.stringify(deletedClasses));
+        } catch(e) {}
+        syncToCloud('zphs_deleted_classes', deletedClasses);
+      }
+
+      if (classTeacherAssignments && classTeacherAssignments[classKey]) {
+        delete classTeacherAssignments[classKey];
+        try {
+          localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
+        } catch(e) {}
+        syncToCloud('zphs_class_teacher_assignments', classTeacherAssignments);
+      }
+
+      showSealSignNotification(`Deleted "${classKey}" successfully!`);
+      renderClassTeacherAssignmentsTable();
+      renderStudentTable();
+      renderClasswiseStudents();
+      renderMarksTable();
     }
 
     function saveClassTeacherAssignments() {
@@ -8579,6 +8637,10 @@
         return;
       }
       if (!confirm('Reset all class teacher assignments to official defaults?')) return;
+      try {
+        localStorage.removeItem('zphs_deleted_classes');
+      } catch(e) {}
+      syncToCloud('zphs_deleted_classes', []);
       classTeacherAssignments = JSON.parse(JSON.stringify(defaultClassTeacherAssignments));
       try {
         localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
