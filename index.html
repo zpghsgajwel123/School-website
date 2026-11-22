@@ -3045,10 +3045,13 @@
             </p>
           </div>
           <div class="flex items-center gap-2 flex-wrap">
+            <button type="button" onclick="openUploadPastMagazineModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Upload Earlier Magazine PDF">
+              <i class="fa-solid fa-cloud-arrow-up text-xs"></i> <span data-en="Upload Earlier Magazine PDF" data-te="గత సంచికల PDF అప్‌లోడ్">Upload Earlier Magazine PDF</span>
+            </button>
             <button onclick="downloadEmagazineIssue()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Download Full Issue PDF">
               <i class="fa-solid fa-file-pdf"></i> <span data-en="Download PDF" data-te="పీడీఎఫ్ డౌన్‌లోడ్">Download PDF</span>
             </button>
-            <button onclick="openAddEmagazineModal()" class="admin-only hidden bg-purple-600 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Publish New Magazine Article">
+            <button onclick="openAddEmagazineModal()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Publish New Magazine Article">
               <i class="fa-solid fa-plus"></i> <span data-en="Publish Article" data-te="కొత్త వ్యాసం చేర్చండి">Publish Article</span>
             </button>
           </div>
@@ -3122,6 +3125,35 @@
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Earlier Magazine Editions (PDF Archive Shelf) -->
+        <div class="bg-gradient-to-br from-slate-50 via-white to-amber-50/40 rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-200/80 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-sm font-bold border border-amber-200 shrink-0">
+                <i class="fa-solid fa-box-archive"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm sm:text-base font-bold text-slate-800" data-en="Earlier Magazine Editions (PDF Archive)" data-te="గత పాఠశాల సంచికల ఆర్కైవ్ (PDFలు)">Earlier Magazine Editions (PDF Archive)</h3>
+                  <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-200" id="past-magazines-count-badge">3 Editions</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5" data-en="Browse, read, and download previous annual school magazine PDF issues from past academic years." data-te="గత విద్యా సంవత్సరాల పాఠశాల వార్షిక సంచికల PDFలను చదవండి లేదా డౌన్‌లోడ్ చేసుకోండి.">
+                  Browse, read, and download previous annual school magazine PDF issues from past academic years.
+                </p>
+              </div>
+            </div>
+            <button type="button" onclick="openUploadPastMagazineModal()" class="self-start sm:self-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span data-en="Upload Earlier Magazine PDF" data-te="గత సంచిక PDF అప్‌లోడ్">Upload Earlier Magazine PDF</span>
+            </button>
+          </div>
+
+          <!-- Earlier Magazines Grid -->
+          <div id="past-magazines-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Dynamically populated by renderPastMagazines() -->
           </div>
         </div>
 
@@ -5633,6 +5665,114 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL: UPLOAD EARLIER MAGAZINE PDF -->
+  <div id="modal-upload-past-magazine" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-lg w-full p-6 space-y-4 relative">
+      <button onclick="closeModal('modal-upload-past-magazine')" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 cursor-pointer">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg font-bold border border-amber-200 shrink-0">
+          <i class="fa-solid fa-file-pdf"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-slate-800">Upload Earlier Magazine PDF</h3>
+          <p class="text-xs text-slate-500">Add an earlier annual edition (e.g. 2024-25, 2023-24) to the archive.</p>
+        </div>
+      </div>
+
+      <form id="form-upload-past-magazine" onsubmit="handleSavePastMagazine(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Magazine Edition Title</label>
+          <input type="text" id="past-mag-title" required placeholder="e.g. Sankalp Vol. III / Prathibha Annual Magazine" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Academic Year</label>
+            <input type="text" id="past-mag-year" required placeholder="e.g. 2024-25" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Volume / Issue</label>
+            <input type="text" id="past-mag-volume" required placeholder="e.g. Vol. III (Issue 1)" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Select Magazine PDF File</label>
+          <div class="border-2 border-dashed border-amber-300 rounded-xl p-3 bg-amber-50/50 text-center space-y-1.5 hover:bg-amber-50 transition cursor-pointer" onclick="document.getElementById('past-mag-file').click()">
+            <i class="fa-solid fa-cloud-arrow-up text-2xl text-amber-600"></i>
+            <div class="text-xs font-bold text-slate-700" id="past-mag-filename">Click to choose a PDF file from your device</div>
+            <div class="text-[10px] text-slate-400">PDF documents up to 20MB supported</div>
+          </div>
+          <input type="file" id="past-mag-file" accept="application/pdf,.pdf" class="hidden" onchange="handlePastMagFileSelect(event)">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Or Cloud PDF Link / Google Drive URL (Optional)</label>
+          <input type="url" id="past-mag-url" placeholder="https://drive.google.com/... or direct PDF link" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Brief Description / Highlights</label>
+          <textarea id="past-mag-desc" rows="3" placeholder="Brief summary of highlights, top rankers, achievements in this edition..." class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeModal('modal-upload-past-magazine')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-300 transition">Cancel</button>
+          <button type="submit" id="past-mag-submit-btn" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-2 text-xs rounded-lg shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i> <span>Upload & Save PDF</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PAST MAGAZINE PDF VIEWER -->
+  <div id="modal-magazine-pdf-viewer" class="fixed inset-0 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-4xl w-full p-4 sm:p-5 space-y-3 relative flex flex-col max-h-[95vh]">
+      <div class="border-b border-slate-200 pb-3 flex items-center justify-between pr-8">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center text-sm font-bold border border-red-200">
+            <i class="fa-solid fa-file-pdf"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-800" id="pdf-viewer-title">Magazine PDF</h3>
+            <div class="text-[11px] text-slate-500" id="pdf-viewer-subtitle">Earlier Edition Preview</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="openCurrentPdfNewTab()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1 cursor-pointer" title="Open in New Window">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> <span class="hidden sm:inline">New Tab</span>
+          </button>
+          <button type="button" onclick="downloadCurrentPastMagazine()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-1 shadow-2xs cursor-pointer">
+            <i class="fa-solid fa-download text-[10px]"></i> <span>Download</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1 w-full h-[65vh] sm:h-[72vh] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex flex-col justify-center items-center relative">
+        <iframe id="past-magazine-iframe" class="w-full h-full border-0" src=""></iframe>
+        <div id="pdf-fallback-msg" class="hidden absolute inset-0 bg-white flex flex-col items-center justify-center p-6 text-center space-y-3">
+          <i class="fa-solid fa-file-pdf text-5xl text-red-500"></i>
+          <h4 class="text-base font-bold text-slate-800" id="pdf-fallback-title">Magazine PDF Ready</h4>
+          <p class="text-xs text-slate-500 max-w-md">Your browser does not support embedded inline PDF viewing for this document. You can open it in a new window or download it to view.</p>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openCurrentPdfNewTab()" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition">Open in New Window</button>
+            <button type="button" onclick="downloadCurrentPastMagazine()" class="px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition">Download PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-2 flex justify-end">
+        <button type="button" onclick="closeModal('modal-magazine-pdf-viewer')" class="px-4 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition cursor-pointer">
+          Close Viewer
+        </button>
+      </div>
     </div>
   </div>
 
@@ -11611,6 +11751,7 @@
     }
 
     function renderEmagazine() {
+      if (typeof renderPastMagazines === 'function') renderPastMagazines();
       var grid = document.getElementById('emagazine-articles-grid');
       var counter = document.getElementById('emagazine-filter-counter');
       if (!grid) return;
@@ -12006,6 +12147,289 @@
       renderEmagazine();
       alert('Article published successfully to School E-Magazine!');
     }
+
+    // --- EARLIER MAGAZINES (PDF ARCHIVE) ENGINE ---
+    var defaultPastMagazines = [
+      {
+        id: 'past-mag-1',
+        title: "Sankalp: The Echoes of ZPGHS Gajwel (Vol. III)",
+        academicYear: "2024-25",
+        volume: "Vol. III (Issue 1)",
+        pages: "24 Pages",
+        fileSize: "3.2 MB",
+        uploadedDate: "March 2025",
+        description: "Annual edition featuring SSC 10/10 GPA achievers, District Kho-Kho gold medals, and State Science Fair exhibits.",
+        coverColor: "from-amber-600 to-rose-700",
+        pdfUrl: ""
+      },
+      {
+        id: 'past-mag-2',
+        title: "Prathibha - Annual School Magazine (Vol. II)",
+        academicYear: "2023-24",
+        volume: "Vol. II (Issue 1)",
+        pages: "20 Pages",
+        fileSize: "2.8 MB",
+        uploadedDate: "March 2024",
+        description: "Focusing on STEM innovation, Haritha Haram eco-drives, student short stories, and Telangana cultural arts.",
+        coverColor: "from-blue-600 to-indigo-800",
+        pdfUrl: ""
+      },
+      {
+        id: 'past-mag-3',
+        title: "Prathibha - Inaugural School Magazine (Vol. I)",
+        academicYear: "2022-23",
+        volume: "Vol. I (Inaugural)",
+        pages: "16 Pages",
+        fileSize: "2.1 MB",
+        uploadedDate: "March 2023",
+        description: "Inaugural edition celebrating the golden legacy of ZPHS Girls Gajwel, teacher tributes, and poetry collections.",
+        coverColor: "from-emerald-600 to-teal-800",
+        pdfUrl: ""
+      }
+    ];
+
+    var pastMagazinesList = loadStorageArray('zphs_past_magazines', defaultPastMagazines);
+    var selectedPastMagFileBase64 = '';
+    var currentViewingPastMag = null;
+
+    function handlePastMagFileSelect(event) {
+      var file = event.target.files ? event.target.files[0] : null;
+      var nameEl = document.getElementById('past-mag-filename');
+      if (!file) return;
+
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        alert('Please select a valid PDF file.');
+        event.target.value = '';
+        return;
+      }
+
+      var sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+      if (nameEl) {
+        nameEl.innerHTML = '<i class="fa-solid fa-file-pdf text-red-600 mr-1"></i> ' + escapeEmagText(file.name) + ' (' + sizeMb + ' MB)';
+      }
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        selectedPastMagFileBase64 = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function openUploadPastMagazineModal() {
+      var form = document.getElementById('form-upload-past-magazine');
+      if (form) form.reset();
+      selectedPastMagFileBase64 = '';
+      var nameEl = document.getElementById('past-mag-filename');
+      if (nameEl) nameEl.textContent = 'Click to choose a PDF file from your device';
+      openModal('modal-upload-past-magazine');
+    }
+
+    function handleSavePastMagazine(e) {
+      if (e) e.preventDefault();
+      var title = (document.getElementById('past-mag-title')?.value || '').trim();
+      var year = (document.getElementById('past-mag-year')?.value || '').trim();
+      var volume = (document.getElementById('past-mag-volume')?.value || '').trim();
+      var url = (document.getElementById('past-mag-url')?.value || '').trim();
+      var desc = (document.getElementById('past-mag-desc')?.value || '').trim();
+
+      if (!title || !year || !volume) {
+        alert('Please fill in Magazine Title, Academic Year, and Volume.');
+        return;
+      }
+
+      var fileInput = document.getElementById('past-mag-file');
+      var fileName = fileInput?.files?.[0]?.name || '';
+      var fileSizeStr = fileInput?.files?.[0] ? (fileInput.files[0].size / (1024 * 1024)).toFixed(1) + ' MB' : 'PDF Document';
+
+      var newMag = {
+        id: 'past-mag-' + Date.now(),
+        title: title,
+        academicYear: year,
+        volume: volume,
+        pages: 'Full Edition PDF',
+        fileSize: fileSizeStr,
+        uploadedDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        description: desc || 'Annual publication archived for students and faculty.',
+        coverColor: 'from-purple-700 to-indigo-900',
+        pdfUrl: url || '',
+        pdfDataUrl: selectedPastMagFileBase64 || '',
+        fileName: fileName || (title + '.pdf')
+      };
+
+      pastMagazinesList.unshift(newMag);
+      try {
+        localStorage.setItem('zphs_past_magazines', JSON.stringify(pastMagazinesList));
+      } catch(err) {
+        console.warn('Storage save error (file might be large):', err);
+        alert('Note: The PDF is saved for this active browser session. If clearing cache, please re-upload or provide a cloud link.');
+      }
+
+      closeModal('modal-upload-past-magazine');
+      renderPastMagazines();
+      alert('Earlier Magazine PDF "' + title + '" has been uploaded and added to the archive!');
+    }
+
+    function renderPastMagazines() {
+      var grid = document.getElementById('past-magazines-grid');
+      var badge = document.getElementById('past-magazines-count-badge');
+      if (!grid) return;
+
+      if (!pastMagazinesList || pastMagazinesList.length === 0) {
+        pastMagazinesList = defaultPastMagazines.slice();
+      }
+
+      if (badge) {
+        badge.textContent = pastMagazinesList.length + ' Editions';
+      }
+
+      grid.innerHTML = pastMagazinesList.map(function(item) {
+        var grad = item.coverColor || 'from-indigo-600 to-purple-800';
+        return '<div class="bg-white rounded-xl border border-slate-200 shadow-2xs hover:shadow-md transition duration-200 overflow-hidden flex flex-col justify-between hover:border-amber-300">' +
+          '<div class="p-4 space-y-2.5">' +
+            '<div class="flex items-start justify-between gap-2">' +
+              '<div class="flex items-center gap-2">' +
+                '<div class="w-10 h-10 rounded-lg bg-gradient-to-tr ' + grad + ' text-white flex items-center justify-center text-lg font-bold shadow-xs shrink-0">' +
+                  '<i class="fa-solid fa-file-pdf"></i>' +
+                '</div>' +
+                '<div>' +
+                  '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">' + escapeEmagText(item.academicYear) + '</span>' +
+                  '<div class="text-[11px] text-slate-400 font-medium mt-0.5">' + escapeEmagText(item.volume) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<button type="button" onclick="deletePastMagazine(\'' + item.id + '\')" class="text-slate-400 hover:text-red-600 p-1 transition cursor-pointer" title="Delete Edition">' +
+                '<i class="fa-solid fa-trash-can text-xs"></i>' +
+              '</button>' +
+            '</div>' +
+            '<div>' +
+              '<h4 class="text-xs font-bold text-slate-800 leading-snug line-clamp-1">' + escapeEmagText(item.title) + '</h4>' +
+              '<p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">' + escapeEmagText(item.description) + '</p>' +
+            '</div>' +
+            '<div class="text-[10px] text-slate-400 flex items-center gap-2">' +
+              '<span><i class="fa-regular fa-file"></i> ' + escapeEmagText(item.fileSize || 'PDF') + '</span>' +
+              '<span>•</span>' +
+              '<span><i class="fa-regular fa-calendar"></i> ' + escapeEmagText(item.uploadedDate || 'Archived') + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="bg-slate-50 px-4 py-2.5 border-t border-slate-100 flex items-center justify-between gap-2">' +
+            '<button type="button" onclick="viewPastMagazinePdf(\'' + item.id + '\')" class="flex-1 bg-amber-100 hover:bg-amber-500 hover:text-slate-950 text-amber-900 font-bold py-1.5 px-2 rounded-lg text-xs transition flex items-center justify-center gap-1.5 cursor-pointer">' +
+              '<i class="fa-solid fa-book-open-reader text-[11px]"></i> <span>Read PDF</span>' +
+            '</button>' +
+            '<button type="button" onclick="downloadPastMagazinePdf(\'' + item.id + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-1.5 px-2.5 rounded-lg text-xs transition flex items-center gap-1 cursor-pointer" title="Download PDF">' +
+              '<i class="fa-solid fa-download text-[11px]"></i>' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function viewPastMagazinePdf(id) {
+      var mag = pastMagazinesList.find(function(m) { return m.id == id; });
+      if (!mag) return;
+      currentViewingPastMag = mag;
+
+      var titleEl = document.getElementById('pdf-viewer-title');
+      var subtitleEl = document.getElementById('pdf-viewer-subtitle');
+      var iframe = document.getElementById('past-magazine-iframe');
+      var fallback = document.getElementById('pdf-fallback-msg');
+      var fallbackTitle = document.getElementById('pdf-fallback-title');
+
+      if (titleEl) titleEl.textContent = mag.title;
+      if (subtitleEl) subtitleEl.textContent = mag.volume + ' • Academic Year: ' + mag.academicYear;
+
+      var src = mag.pdfDataUrl || mag.pdfUrl;
+      if (src) {
+        if (iframe) {
+          iframe.src = src;
+          iframe.classList.remove('hidden');
+        }
+        if (fallback) fallback.classList.add('hidden');
+      } else {
+        if (iframe) iframe.classList.add('hidden');
+        if (fallback) {
+          fallback.classList.remove('hidden');
+          if (fallbackTitle) fallbackTitle.textContent = mag.title;
+        }
+      }
+
+      openModal('modal-magazine-pdf-viewer');
+    }
+
+    function openCurrentPdfNewTab() {
+      if (!currentViewingPastMag) return;
+      var src = currentViewingPastMag.pdfDataUrl || currentViewingPastMag.pdfUrl;
+      if (src) {
+        window.open(src, '_blank');
+      } else {
+        generatePastMagazineDemoIssue(currentViewingPastMag);
+      }
+    }
+
+    function downloadCurrentPastMagazine() {
+      if (!currentViewingPastMag) return;
+      downloadPastMagazinePdf(currentViewingPastMag.id);
+    }
+
+    function downloadPastMagazinePdf(id) {
+      var mag = pastMagazinesList.find(function(m) { return m.id == id; });
+      if (!mag) return;
+
+      if (mag.pdfDataUrl) {
+        var a = document.createElement('a');
+        a.href = mag.pdfDataUrl;
+        a.download = (mag.fileName || mag.title || 'School_Magazine') + '.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else if (mag.pdfUrl) {
+        window.open(mag.pdfUrl, '_blank');
+      } else {
+        generatePastMagazineDemoIssue(mag);
+      }
+    }
+
+    function generatePastMagazineDemoIssue(mag) {
+      var doc = window.open('', '_blank');
+      if (!doc) {
+        alert('Please allow popups to view the magazine archive.');
+        return;
+      }
+      doc.document.write(
+        '<!DOCTYPE html><html><head><title>' + escapeEmagText(mag.title) + '</title>' +
+        '<style>body{font-family:Georgia,serif;max-width:850px;margin:40px auto;padding:20px;color:#1e293b;line-height:1.8;}' +
+        '.cover{text-align:center;padding:70px 20px;border:6px double #d97706;border-radius:20px;background:#fffbeb;margin-bottom:40px;}' +
+        '.header{font-size:14px;color:#b45309;font-weight:bold;letter-spacing:1px;text-transform:uppercase;}' +
+        'h1{font-size:32px;color:#78350f;margin:15px 0 5px 0;}' +
+        'h2{font-size:18px;color:#d97706;font-family:sans-serif;margin:0;}' +
+        '.meta{margin-top:25px;font-size:13px;color:#64748b;font-family:sans-serif;}' +
+        '.desc{margin-top:30px;font-size:15px;color:#334155;background:#ffffff;padding:20px;border-radius:12px;border:1px solid #fde68a;text-align:left;}' +
+        '</style></head><body>' +
+        '<div class="cover">' +
+        '<div class="header">ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL • ARCHIVE</div>' +
+        '<h1>' + escapeEmagText(mag.title) + '</h1>' +
+        '<h2>' + escapeEmagText(mag.volume) + ' • Academic Year ' + escapeEmagText(mag.academicYear) + '</h2>' +
+        '<div class="meta">Archived Document • ZPGHS Digital Library & Publication Cell</div>' +
+        '<div class="desc"><strong>Edition Summary & Highlights:</strong><br><br>' + escapeEmagText(mag.description) + '</div>' +
+        '</div>' +
+        '<p style="text-align:center;font-size:12px;color:#94a3b8;font-family:sans-serif;">ZPGHS Gajwel Digital Publication Repository • U-DISE: 36181802720</p>' +
+        '<script>window.onload=function(){window.print();};<\/script></body></html>'
+      );
+      doc.document.close();
+    }
+
+    function deletePastMagazine(id) {
+      var mag = pastMagazinesList.find(function(m) { return m.id == id; });
+      var title = mag ? mag.title : 'this edition';
+      if (!confirm('Are you sure you want to delete the archived magazine:\n"' + title + '"?\n\nThis will remove it from the earlier editions shelf.')) {
+        return;
+      }
+      pastMagazinesList = pastMagazinesList.filter(function(m) { return m.id != id; });
+      try {
+        localStorage.setItem('zphs_past_magazines', JSON.stringify(pastMagazinesList));
+      } catch(e) {}
+      renderPastMagazines();
+      alert('Archived magazine "' + title + '" deleted.');
+    }
+
 
 
     // --- TIMETABLE STORAGE & CRUD ENGINE ---
