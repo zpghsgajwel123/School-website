@@ -1865,8 +1865,8 @@
               </p>
               <div class="mt-3 bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-[11px] space-y-1.5 text-slate-700">
                 <div class="flex items-center gap-2"><i class="fa-solid fa-crown text-amber-500 text-xs"></i> <span><strong>Headmaster:</strong> Master edit & delete access across all classes.</span></div>
-                <div class="flex items-center gap-2"><i class="fa-solid fa-user-pen text-indigo-600 text-xs"></i> <span><strong>Assigned Class Teacher:</strong> Edit & delete rights for assigned class only.</span></div>
-                <div class="flex items-center gap-2"><i class="fa-solid fa-eye text-slate-500 text-xs"></i> <span><strong>Non-Teaching Staff & Others:</strong> View-only protected access.</span></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-user-pen text-indigo-600 text-xs"></i> <span><strong>Assigned Teacher / Clerk:</strong> Edit & input rights for assigned class(es).</span></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-eye text-slate-500 text-xs"></i> <span><strong>Unassigned Staff:</strong> View-only protected access.</span></div>
               </div>
             </div>
             <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
@@ -1937,10 +1937,13 @@
               <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full" id="admin-assigned-count-badge">15 Classes Configured</span>
             </div>
             <p class="text-xs text-slate-500 mt-0.5">
-              Designate class teachers to edit student details and examination marks. <strong>Headmaster</strong> can edit all classes. <strong>Non-Teaching Staff</strong> & remaining teachers have view-only access.
+              Designate class teachers or School Clerk to edit student details and examination marks. <strong>Headmaster & Assigned Clerk/Teachers</strong> have editing privileges. Unassigned staff have view-only access.
             </p>
           </div>
           <div class="flex items-center gap-2 flex-wrap" id="admin-assignment-buttons">
+            <button onclick="quickAssignClerkAction('all')" class="admin-assignment-action bg-purple-600 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="1-Click Assign All Classes & Sections to School Clerk (P Raja Kumaraswamy)">
+              <i class="fa-solid fa-user-pen text-purple-200"></i> <span>Assign All to Clerk</span>
+            </button>
             <button onclick="openAddClassSectionModal()" class="admin-assignment-action bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Quick Assign or Add Class & Section to Staff">
               <i class="fa-solid fa-circle-plus text-emerald-200"></i> <span>+ Assign Class / Section</span>
             </button>
@@ -1960,11 +1963,11 @@
         <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3 text-xs text-indigo-950 flex flex-col md:flex-row md:items-center justify-between gap-2">
           <div class="flex items-center gap-2 font-medium">
             <i class="fa-solid fa-shield-halved text-indigo-600 text-sm"></i>
-            <span><strong>Role-Based Policy Active:</strong> Teachers can add, edit, or delete student records and enter marks <em>strictly for their assigned class & section</em>.</span>
+            <span><strong>Role-Based Policy Active:</strong> Teachers & assigned Clerk can add, edit, or delete student records and enter marks <em>for their assigned classes</em>.</span>
           </div>
           <div class="flex items-center gap-2 text-[11px] font-bold shrink-0">
             <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">HM: Master Rights</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300">Teacher: Assigned Only</span>
+            <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-900 border border-purple-300">Clerk/Teacher: Assigned</span>
             <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-800">Others: View Only</span>
           </div>
         </div>
@@ -1973,7 +1976,7 @@
         <div class="bg-white rounded-xl border border-slate-200 p-3 sm:p-4 shadow-xs space-y-3">
           <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
             <!-- Left: Class & Section Filter Buttons -->
-            <div class="space-y-2 flex-1">
+            <div class="space-y-2.5 flex-1">
               <!-- Class Filter Buttons (VI - X) -->
               <div class="flex items-center gap-1.5 flex-wrap">
                 <span class="text-xs font-bold text-slate-700 w-16 shrink-0 flex items-center gap-1">
@@ -2016,6 +2019,22 @@
                 <button type="button" onclick="filterClassAssignmentsBySection('C')" id="btn-assign-sec-c" class="btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
                   Section C
                 </button>
+              </div>
+
+              <!-- Quick Assign to Clerk Action Row -->
+              <div class="pt-2 border-t border-slate-100 flex items-center gap-2 flex-wrap text-xs admin-only" id="assign-clerk-quick-strip">
+                <span class="text-xs font-bold text-slate-700 flex items-center gap-1 shrink-0">
+                  <i class="fa-solid fa-user-pen text-purple-600"></i> Assign to Clerk:
+                </span>
+                <button type="button" onclick="quickAssignClerkAction('all')" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Assign All Classes (VI-X) and All Sections to School Clerk P Raja Kumaraswamy">
+                  <i class="fa-solid fa-check-double text-purple-200"></i> <span>Assign All Classes (VI-X) & All Sections to Clerk</span>
+                </button>
+                <button type="button" onclick="quickAssignClerkAction('filtered')" id="btn-quick-assign-filtered-clerk" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Assign currently filtered Class & Section to School Clerk">
+                  <i class="fa-solid fa-arrow-pointer text-indigo-200"></i> <span id="btn-quick-assign-filtered-text">Assign Selected Filter to Clerk</span>
+                </button>
+                <span class="text-[11px] text-slate-600 font-semibold bg-purple-50 border border-purple-200 text-purple-900 px-2.5 py-1 rounded-md flex items-center gap-1">
+                  <i class="fa-solid fa-id-badge text-purple-600"></i> Clerk: <strong>P RAJA KUMARASWAMY</strong> (1782341)
+                </span>
               </div>
             </div>
 
@@ -3147,8 +3166,8 @@
           <i class="fa-solid fa-chalkboard-user"></i>
         </div>
         <div>
-          <h3 class="text-base font-bold text-slate-800">Assign Class & Section to Teacher</h3>
-          <p class="text-xs text-slate-500">Designate teacher edit privileges for student records and marks.</p>
+          <h3 class="text-base font-bold text-slate-800">Assign Class & Section to Staff / Clerk</h3>
+          <p class="text-xs text-slate-500">Designate teacher or clerk edit privileges for student records and marks.</p>
         </div>
       </div>
 
@@ -3156,8 +3175,9 @@
         <div class="grid grid-cols-2 gap-3">
           <!-- Class Select -->
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Class (VI to X)</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Class</label>
             <select id="quick-assign-class" onchange="autoUpdateQuickAssignMedium()" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="All Classes">All Classes (VI - X)</option>
               <option value="Class VI">Class VI</option>
               <option value="Class VII">Class VII</option>
               <option value="Class VIII">Class VIII</option>
@@ -3170,10 +3190,10 @@
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Section</label>
             <select id="quick-assign-section" onchange="autoUpdateQuickAssignMedium()" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="All Sections">All Sections (A, B, C)</option>
               <option value="A">Section A</option>
               <option value="B">Section B</option>
               <option value="C">Section C</option>
-              <option value="D">Section D</option>
             </select>
           </div>
         </div>
@@ -3182,17 +3202,18 @@
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Medium of Instruction</label>
           <select id="quick-assign-medium" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="English">English Medium</option>
-            <option value="Telugu">Telugu Medium</option>
-            <option value="Urdu">Urdu Medium</option>
+            <option value="English">English Medium (Default for Sec A)</option>
+            <option value="Telugu">Telugu Medium (Default for Sec B)</option>
+            <option value="Urdu">Urdu Medium (Default for Sec C)</option>
           </select>
+          <p class="text-[10px] text-slate-400 mt-1">When All Sections is selected, medium automatically follows standard section languages (A=English, B=Telugu, C=Urdu).</p>
         </div>
 
-        <!-- Staff Teacher Select -->
+        <!-- Staff Teacher / Clerk Select -->
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Select Staff Member (Teacher)</label>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Select Staff Member (Teacher / School Clerk)</label>
           <select id="quick-assign-staff" class="w-full border border-slate-300 rounded-lg p-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-            <!-- Populated dynamically with all teachers -->
+            <!-- Populated dynamically with Clerk & all teachers -->
           </select>
         </div>
 
@@ -7006,7 +7027,7 @@
         if (typeof openLoginModal === 'function') openLoginModal();
         return;
       }
-      if (isUserNonTeaching(currentUser)) {
+      if (isUserNonTeaching(currentUser) && !hasAnyAssignedClass(currentUser)) {
         alert('Access Denied: Non-Teaching staff have View-Only permissions for student profiles.');
         return;
       }
@@ -7220,7 +7241,7 @@
         if (typeof openLoginModal === 'function') openLoginModal();
         return;
       }
-      if (isUserNonTeaching(currentUser)) {
+      if (isUserNonTeaching(currentUser) && !hasAnyAssignedClass(currentUser)) {
         alert('Access Denied: Non-Teaching staff have View-Only permissions for examination marks.');
         return;
       }
@@ -7459,7 +7480,7 @@
         if (typeof openLoginModal === 'function') openLoginModal();
         return;
       }
-      if (isUserNonTeaching(currentUser)) {
+      if (isUserNonTeaching(currentUser) && !hasAnyAssignedClass(currentUser)) {
         alert('Access Denied: Non-Teaching staff have View-Only permissions for examination marks.');
         return;
       }
@@ -7605,7 +7626,7 @@
         if (typeof openLoginModal === 'function') openLoginModal();
         return;
       }
-      if (isUserNonTeaching(currentUser)) {
+      if (isUserNonTeaching(currentUser) && !hasAnyAssignedClass(currentUser)) {
         alert('Access Denied: Non-Teaching staff have View-Only permissions.');
         return;
       }
@@ -7766,10 +7787,7 @@
       // Headmaster has universal master access across all classes
       if (isUserHeadmaster(currentUser)) return true;
 
-      // Non-teaching staff can never edit students or exams (view-only)
-      if (isUserNonTeaching(currentUser)) return false;
-
-      // Regular teaching staff: check if assigned to this specific class & section
+      // Check if user (teacher OR assigned School Clerk) is assigned to this specific class & section
       var normClass = String(classVal || '').trim();
       var normSec = String(section || 'A').trim();
       var classKey = normClass + '-' + normSec;
@@ -7798,6 +7816,9 @@
           return true;
         }
       }
+
+      // Unassigned non-teaching staff have view-only access
+      if (isUserNonTeaching(currentUser)) return false;
 
       return false;
     }
@@ -8131,6 +8152,13 @@
           btn.className = 'btn-assign-sec-filter px-3 py-1 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition cursor-pointer';
         }
       });
+
+      var filtBtnText = document.getElementById('btn-quick-assign-filtered-text');
+      if (filtBtnText) {
+        var clsLabel = currentAssignClassFilter === 'All' ? 'All Classes' : currentAssignClassFilter;
+        var secLabel = currentAssignSectionFilter === 'All' ? 'All Sections' : 'Sec ' + currentAssignSectionFilter;
+        filtBtnText.innerText = `Assign ${clsLabel} (${secLabel}) to Clerk`;
+      }
     }
 
     function openAddClassSectionModal() {
@@ -8140,9 +8168,25 @@
       }
       var staffSelect = document.getElementById('quick-assign-staff');
       if (staffSelect) {
-        staffSelect.innerHTML = (staffList || []).map(function(st) {
-          return `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}">${escapeText(st.name)} - ${escapeText(st.subject || st.designation)} (${escapeText(st.stateStaffCode || '')})</option>`;
-        }).join('');
+        var optionsHtml = '';
+        // Group 1: School Clerk & Non-Teaching Staff
+        if (nonTeachingList && nonTeachingList.length > 0) {
+          optionsHtml += '<optgroup label="📋 School Clerk & Non-Teaching Staff">';
+          nonTeachingList.forEach(function(st) {
+            var isClerk = (String(st.stateStaffCode) === '1782341' || (st.name && st.name.includes('RAJA KUMARASWAMY')));
+            optionsHtml += `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}" ${isClerk ? 'selected' : ''}>${escapeText(st.name)} - ${escapeText(st.designation || 'Clerk')} (${escapeText(st.stateStaffCode || '')})${isClerk ? ' ★ School Clerk' : ''}</option>`;
+          });
+          optionsHtml += '</optgroup>';
+        }
+        // Group 2: Teaching Staff
+        if (staffList && staffList.length > 0) {
+          optionsHtml += '<optgroup label="👨‍🏫 Teaching Staff">';
+          staffList.forEach(function(st) {
+            optionsHtml += `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}">${escapeText(st.name)} - ${escapeText(st.subject || st.designation)} (${escapeText(st.stateStaffCode || '')})</option>`;
+          });
+          optionsHtml += '</optgroup>';
+        }
+        staffSelect.innerHTML = optionsHtml;
       }
       autoUpdateQuickAssignMedium();
       var modal = document.getElementById('modal-add-class-section');
@@ -8150,12 +8194,13 @@
     }
 
     function autoUpdateQuickAssignMedium() {
-      var sec = document.getElementById('quick-assign-section')?.value || 'A';
+      var sec = document.getElementById('quick-assign-section')?.value || 'All Sections';
       var medSelect = document.getElementById('quick-assign-medium');
       if (medSelect) {
         if (sec === 'A') medSelect.value = 'English';
         else if (sec === 'B') medSelect.value = 'Telugu';
         else if (sec === 'C') medSelect.value = 'Urdu';
+        else if (sec === 'All Sections') medSelect.value = 'English';
       }
     }
 
@@ -8172,22 +8217,59 @@
 
       var foundStaff = (staffList || []).find(s => (s.stateStaffCode === staffCode || s.nationalCode === staffCode || String(s.id) === String(staffCode)));
       if (!foundStaff) {
+        foundStaff = (nonTeachingList || []).find(s => (s.stateStaffCode === staffCode || s.nationalCode === staffCode || String(s.id) === String(staffCode)));
+      }
+      if (!foundStaff) {
         alert('Please select a valid staff member.');
         return;
       }
 
-      var key = cls + '-' + sec;
+      var allClasses = getAllConfiguredClassesList();
+      var targets = [];
+
+      var isAllClasses = (cls === 'All Classes' || cls === 'All');
+      var isAllSections = (sec === 'All Sections' || sec === 'All');
+
+      if (isAllClasses && isAllSections) {
+        targets = allClasses;
+      } else if (isAllClasses) {
+        targets = allClasses.filter(c => c.section === sec);
+      } else if (isAllSections) {
+        targets = allClasses.filter(c => c.classVal === cls);
+      } else {
+        var existing = allClasses.find(c => c.classVal === cls && c.section === sec);
+        if (existing) {
+          targets = [existing];
+        } else {
+          targets = [{
+            key: cls + '-' + sec,
+            classVal: cls,
+            section: sec,
+            medium: med
+          }];
+        }
+      }
+
       if (!classTeacherAssignments) classTeacherAssignments = {};
-      classTeacherAssignments[key] = {
-        classVal: cls,
-        section: sec,
-        medium: med,
-        staffId: foundStaff.id,
-        staffCode: foundStaff.stateStaffCode || foundStaff.nationalCode || staffCode,
-        staffName: foundStaff.name,
-        subject: foundStaff.subject || foundStaff.appointedFor || '',
-        desig: foundStaff.designation || 'School Assistant'
-      };
+
+      targets.forEach(function(item) {
+        var itemMed = item.medium || med;
+        if (isAllSections) {
+          if (item.section === 'A') itemMed = 'English';
+          else if (item.section === 'B') itemMed = 'Telugu';
+          else if (item.section === 'C') itemMed = 'Urdu';
+        }
+        classTeacherAssignments[item.key] = {
+          classVal: item.classVal,
+          section: item.section,
+          medium: itemMed,
+          staffId: foundStaff.id,
+          staffCode: foundStaff.stateStaffCode || foundStaff.nationalCode || staffCode,
+          staffName: foundStaff.name,
+          subject: foundStaff.subject || (foundStaff.designation ? foundStaff.designation : 'General'),
+          desig: foundStaff.designation || 'Staff'
+        };
+      });
 
       try {
         localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
@@ -8195,7 +8277,74 @@
       syncToCloud('zphs_class_teacher_assignments', classTeacherAssignments);
 
       closeModal('modal-add-class-section');
-      showSealSignNotification(`Assigned ${cls} (${sec}) to ${foundStaff.name} successfully!`);
+      showSealSignNotification(`Assigned ${targets.length} class(es) to ${foundStaff.name} successfully!`);
+      renderClassTeacherAssignmentsTable();
+      renderStudentTable();
+      renderClasswiseStudents();
+      renderMarksTable();
+    }
+
+    function quickAssignClerkAction(mode) {
+      if (!isUserHeadmaster(currentUser)) {
+        alert('Access Denied: Only Headmaster can assign classes.');
+        return;
+      }
+      var clerkCode = '1782341';
+      var clerkStaff = (nonTeachingList || []).find(s => String(s.stateStaffCode) === clerkCode || (s.name && s.name.includes('RAJA KUMARASWAMY')));
+      if (!clerkStaff) {
+        clerkStaff = (defaultNonTeachingStaff || []).find(s => String(s.stateStaffCode) === clerkCode) || {
+          id: 1,
+          name: 'P RAJA KUMARASWAMY',
+          designation: 'Record Assistant',
+          stateStaffCode: '1782341',
+          appointedFor: 'Clerk / Prepared by'
+        };
+      }
+
+      var allClasses = getAllConfiguredClassesList();
+      var targets = [];
+      if (mode === 'all') {
+        targets = allClasses;
+      } else {
+        targets = allClasses.filter(function(item) {
+          var matchClass = (currentAssignClassFilter === 'All' || item.classVal === currentAssignClassFilter);
+          var matchSec = (currentAssignSectionFilter === 'All' || item.section === currentAssignSectionFilter);
+          return matchClass && matchSec;
+        });
+      }
+
+      if (!targets.length) {
+        alert('No classes match the current filter selection.');
+        return;
+      }
+
+      var confirmMsg = (mode === 'all')
+        ? `Assign ALL ${targets.length} Classes (VI to X, Sections A, B, C) to School Clerk:\n${clerkStaff.name} (${clerkStaff.stateStaffCode})?\n\nThis will grant the Clerk editing rights for student records and examination marks.`
+        : `Assign ${targets.length} selected class(es) (${currentAssignClassFilter} - ${currentAssignSectionFilter}) to School Clerk:\n${clerkStaff.name} (${clerkStaff.stateStaffCode})?`;
+
+      if (!confirm(confirmMsg)) return;
+
+      if (!classTeacherAssignments) classTeacherAssignments = {};
+
+      targets.forEach(function(item) {
+        classTeacherAssignments[item.key] = {
+          classVal: item.classVal,
+          section: item.section,
+          medium: item.medium,
+          staffId: clerkStaff.id || 1,
+          staffCode: clerkStaff.stateStaffCode || '1782341',
+          staffName: clerkStaff.name || 'P RAJA KUMARASWAMY',
+          subject: 'Office / Administration',
+          desig: clerkStaff.designation || 'Record Assistant / Clerk'
+        };
+      });
+
+      try {
+        localStorage.setItem('zphs_class_teacher_assignments', JSON.stringify(classTeacherAssignments));
+      } catch(e) {}
+      syncToCloud('zphs_class_teacher_assignments', classTeacherAssignments);
+
+      showSealSignNotification(`Assigned ${targets.length} class(es) to Clerk ${clerkStaff.name} successfully!`);
       renderClassTeacherAssignmentsTable();
       renderStudentTable();
       renderClasswiseStudents();
@@ -8267,21 +8416,36 @@
           (assign.staffId && String(assign.staffId) === String(currentUser.id || ''))
         );
 
+        var isClerkAssigned = (assign.staffCode === '1782341' || (assign.staffName && assign.staffName.includes('RAJA KUMARASWAMY')) || (assign.desig && assign.desig.toLowerCase().includes('record assistant')));
+
         var teacherCell = '';
         if (isHM) {
+          var clerkOpts = (nonTeachingList || []).map(function(st) {
+            var isSelected = (String(st.stateStaffCode) === String(assign.staffCode) || String(st.nationalCode) === String(assign.staffCode) || String(st.id) === String(assign.staffId));
+            var isClerk = (String(st.stateStaffCode) === '1782341' || (st.name && st.name.includes('RAJA KUMARASWAMY')));
+            return `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}" ${isSelected ? 'selected' : ''}>${escapeText(st.name)} - ${escapeText(st.designation || 'Clerk')} (${escapeText(st.stateStaffCode || '')})${isClerk ? ' ★ School Clerk' : ''}</option>`;
+          }).join('');
+
+          var teachOpts = (staffList || []).map(function(st) {
+            var isSelected = (String(st.stateStaffCode) === String(assign.staffCode) || String(st.nationalCode) === String(assign.staffCode) || String(st.id) === String(assign.staffId));
+            return `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}" ${isSelected ? 'selected' : ''}>${escapeText(st.name)} - ${escapeText(st.subject || st.designation)} (${escapeText(st.stateStaffCode || '')})</option>`;
+          }).join('');
+
           teacherCell = `
             <select id="assign-select-${safeKey}" class="border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800 bg-white focus:ring-2 focus:ring-indigo-500 w-full outline-none shadow-2xs">
-              ${(staffList || []).map(function(st) {
-                var isSelected = (st.stateStaffCode === assign.staffCode || st.nationalCode === assign.staffCode || String(st.id) === String(assign.staffId));
-                return `<option value="${escapeText(st.stateStaffCode || st.nationalCode || st.id)}" ${isSelected ? 'selected' : ''}>${escapeText(st.name)} - ${escapeText(st.subject || st.designation)} (${escapeText(st.stateStaffCode || '')})</option>`;
-              }).join('')}
+              <optgroup label="📋 School Clerk & Non-Teaching Staff">
+                ${clerkOpts}
+              </optgroup>
+              <optgroup label="👨‍🏫 Teaching Staff">
+                ${teachOpts}
+              </optgroup>
             </select>
           `;
         } else {
           teacherCell = `
             <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs shrink-0">
-                <i class="fa-solid fa-chalkboard-user"></i>
+              <div class="w-7 h-7 rounded-full ${isClerkAssigned ? 'bg-purple-100 text-purple-700' : 'bg-indigo-100 text-indigo-700'} flex items-center justify-center font-bold text-xs shrink-0">
+                <i class="fa-solid ${isClerkAssigned ? 'fa-user-pen' : 'fa-chalkboard-user'}"></i>
               </div>
               <div>
                 <span class="font-bold text-slate-800">${escapeText(assign.staffName || 'Unassigned')}</span>
@@ -8294,6 +8458,16 @@
         var secColor = 'bg-indigo-600';
         if (item.section === 'B') secColor = 'bg-emerald-600';
         else if (item.section === 'C') secColor = 'bg-purple-600';
+
+        var permissionBadge = isClerkAssigned ? `
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-100 text-purple-900 border border-purple-200 inline-flex items-center gap-1 shadow-2xs">
+            <i class="fa-solid fa-user-pen text-[9px] text-purple-600"></i> Clerk (Edit Rights)
+          </span>
+        ` : `
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 inline-flex items-center gap-1 shadow-2xs">
+            <i class="fa-solid fa-lock-open text-[9px]"></i> Class Teacher (Edit Rights)
+          </span>
+        `;
 
         return `
           <tr class="hover:bg-slate-50 transition ${isCurrentStaffAssigned ? 'bg-sky-50/40' : ''}">
@@ -8323,12 +8497,10 @@
             </td>
             <td class="p-2.5 border-r border-slate-200 text-slate-600">
               <span class="font-semibold text-slate-800">${escapeText(assign.subject || 'General')}</span>
-              <span class="text-[10px] text-slate-400 block">${escapeText(assign.desig || 'School Assistant')}</span>
+              <span class="text-[10px] text-slate-400 block">${escapeText(assign.desig || (isClerkAssigned ? 'Record Assistant / Clerk' : 'School Assistant'))}</span>
             </td>
             <td class="p-2.5 text-center">
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 inline-flex items-center gap-1 shadow-2xs">
-                <i class="fa-solid fa-lock-open text-[9px]"></i> Class Teacher (Edit Rights)
-              </span>
+              ${permissionBadge}
             </td>
           </tr>
         `;
@@ -8351,6 +8523,9 @@
         if (sel && sel.value) {
           var code = sel.value;
           var foundStaff = (staffList || []).find(s => (s.stateStaffCode === code || s.nationalCode === code || String(s.id) === String(code)));
+          if (!foundStaff) {
+            foundStaff = (nonTeachingList || []).find(s => (s.stateStaffCode === code || s.nationalCode === code || String(s.id) === String(code)));
+          }
           if (foundStaff) {
             classTeacherAssignments[item.key] = {
               classVal: item.classVal,
@@ -8359,8 +8534,8 @@
               staffId: foundStaff.id,
               staffCode: foundStaff.stateStaffCode || foundStaff.nationalCode || code,
               staffName: foundStaff.name,
-              subject: foundStaff.subject || foundStaff.appointedFor || '',
-              desig: foundStaff.designation || 'School Assistant'
+              subject: foundStaff.subject || (foundStaff.designation ? foundStaff.designation : 'General'),
+              desig: foundStaff.designation || 'Staff'
             };
           }
         }
@@ -8543,17 +8718,18 @@
         var isNonTeach = isUserNonTeaching(currentUser);
         var assignedInfo = getAssignedClassForUser(currentUser);
 
-        var badgeLabel = isHM ? 'Headmaster' : (isNonTeach ? 'Office Staff' : 'Teacher');
+        var isClerk = (String(currentUser.code) === '1782341' || (currentUser.name && currentUser.name.includes('RAJA KUMARASWAMY')));
+        var badgeLabel = isHM ? 'Headmaster' : (isNonTeach ? (isClerk && assignedInfo ? 'School Clerk' : 'Office Staff') : 'Teacher');
         var badgeColor = isHM 
           ? 'bg-gradient-to-r from-sky-600 to-indigo-600 border-sky-400 text-white' 
           : (isNonTeach 
-            ? 'bg-amber-600 border-amber-500 text-white' 
+            ? (isClerk && assignedInfo ? 'bg-purple-600 border-purple-500 text-white' : 'bg-amber-600 border-amber-500 text-white') 
             : 'bg-indigo-600 border-indigo-500 text-white');
-        var badgeIcon = isHM ? 'fa-shield-halved' : (isNonTeach ? 'fa-briefcase' : 'fa-chalkboard-user');
+        var badgeIcon = isHM ? 'fa-shield-halved' : (isNonTeach ? (isClerk && assignedInfo ? 'fa-user-pen' : 'fa-briefcase') : 'fa-chalkboard-user');
         var badgeTooltip = isHM 
           ? `Headmaster / Super Admin (${currentUser.code || ''})` 
           : (isNonTeach 
-            ? `${currentUser.name} - Non-Teaching Staff (View-Only Mode)` 
+            ? (assignedInfo ? `${currentUser.name} - Assigned Classes: ${assignedInfo} (Edit Privileges Active)` : `${currentUser.name} - Non-Teaching Staff (View-Only Mode)`) 
             : `${currentUser.name} - Class Teacher: ${assignedInfo || 'General'}`);
 
         container.innerHTML = `
@@ -13678,7 +13854,7 @@ var currentTimetableClass = 'Class 10';
         if (typeof openLoginModal === 'function') openLoginModal();
         return;
       }
-      if (isUserNonTeaching(currentUser)) {
+      if (isUserNonTeaching(currentUser) && !hasAnyAssignedClass(currentUser)) {
         alert('Access Denied: Non-Teaching staff have View-Only permissions.');
         return;
       }
