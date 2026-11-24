@@ -4138,7 +4138,7 @@
                 </p>
               </div>
               <div class="text-center" id="preview-cert-seal-container">
-                <div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">
+                <div class="w-[70px] sm:w-[72px] h-[70px] sm:h-[72px] border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1 mx-auto">
                   School Seal
                 </div>
               </div>
@@ -4317,7 +4317,7 @@
                 </p>
               </div>
               <div class="text-center" id="preview-prog-seal-container">
-                <div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">
+                <div class="w-[70px] sm:w-[72px] h-[70px] sm:h-[72px] border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1 mx-auto">
                   School Seal
                 </div>
               </div>
@@ -14124,8 +14124,8 @@ var currentTimetableClass = 'Class 10';
       var hmSignStampHTML = '';
       if (headmasterSign || schoolStamp) {
         hmSignStampHTML = `
-          <div class="relative h-13 flex items-center justify-center">
-            ${schoolStamp ? `<img src="${schoolStamp}" alt="School Stamp" class="absolute max-h-14 max-w-[110px] object-contain opacity-85 mix-blend-multiply pointer-events-none">` : ''}
+          <div class="relative h-14 sm:h-16 flex items-center justify-center">
+            ${schoolStamp ? `<img src="${schoolStamp}" alt="School Stamp" class="absolute w-12 h-12 sm:w-14 sm:h-14 max-h-14 max-w-[110px] object-contain opacity-85 mix-blend-multiply pointer-events-none">` : ''}
             ${headmasterSign ? `<img src="${headmasterSign}" alt="Headmaster Signature" class="relative z-10 max-h-11 max-w-[130px] object-contain">` : ''}
           </div>
         `;
@@ -14982,7 +14982,7 @@ var currentTimetableClass = 'Class 10';
       var signLayer = document.getElementById('modal-combined-sign-layer');
       if (stampLayer) {
         if (schoolStamp) {
-          stampLayer.innerHTML = `<img src="${schoolStamp}" alt="School Stamp" class="max-h-14 max-w-[110px] object-contain opacity-85 mix-blend-multiply">`;
+          stampLayer.innerHTML = `<img src="${schoolStamp}" alt="School Stamp" class="w-14 h-14 max-h-16 max-w-[120px] object-contain opacity-85 mix-blend-multiply">`;
         } else {
           stampLayer.innerHTML = `<span class="text-[8px] text-slate-300 italic border border-dashed border-slate-300 px-2 py-0.5 rounded">No Stamp</span>`;
         }
@@ -14997,13 +14997,13 @@ var currentTimetableClass = 'Class 10';
     }
 
     function updateAllSealSignElements() {
-      // 1. Bonafide Preview Modal (Elevated Size)
+      // 1. Bonafide Preview Modal (Enlarged to match School Logo ~70px-72px)
       var prevCertSeal = document.getElementById('preview-cert-seal-container');
       if (prevCertSeal) {
         if (schoolStamp) {
-          prevCertSeal.innerHTML = `<div class="w-24 sm:w-28 h-14 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-14 max-w-[105px] object-contain mix-blend-multiply opacity-90"></div>`;
+          prevCertSeal.innerHTML = `<div class="w-[72px] sm:w-[76px] h-[72px] sm:h-[76px] flex items-center justify-center mb-1 mx-auto"><img src="${schoolStamp}" alt="School Seal" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] object-contain mix-blend-multiply opacity-90"></div>`;
         } else {
-          prevCertSeal.innerHTML = `<div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">School Seal</div>`;
+          prevCertSeal.innerHTML = `<div class="w-[70px] sm:w-[72px] h-[70px] sm:h-[72px] border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1 mx-auto">School Seal</div>`;
         }
       }
       var prevCertHm = document.getElementById('preview-cert-hm-sign-container');
@@ -15015,13 +15015,13 @@ var currentTimetableClass = 'Class 10';
         }
       }
 
-      // 2. Bonafide Print Container (Elevated Size)
+      // 2. Bonafide Print Container (Enlarged to match School Logo 74px)
       var printCertSeal = document.getElementById('print-cert-seal-container');
       if (printCertSeal) {
         if (schoolStamp) {
-          printCertSeal.innerHTML = `<div class="w-28 h-16 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-16 max-w-[120px] object-contain mix-blend-multiply"></div>`;
+          printCertSeal.innerHTML = `<div class="w-[76px] h-[76px] flex items-center justify-center mb-1 mx-auto"><img src="${schoolStamp}" alt="School Seal" class="w-[74px] h-[74px] object-contain mix-blend-multiply"></div>`;
         } else {
-          printCertSeal.innerHTML = `<div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1">School Seal</div>`;
+          printCertSeal.innerHTML = `<div class="w-[74px] h-[74px] border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[10px] font-bold text-slate-600 mb-1 mx-auto">School Seal</div>`;
         }
       }
       var printCertHm = document.getElementById('print-cert-hm-sign-container');
@@ -15033,13 +15033,13 @@ var currentTimetableClass = 'Class 10';
         }
       }
 
-      // 3. Progress Card Preview Modal (Elevated Size)
+      // 3. Progress Card Preview Modal (Enlarged to match School Logo ~70px-72px)
       var prevProgSeal = document.getElementById('preview-prog-seal-container');
       if (prevProgSeal) {
         if (schoolStamp) {
-          prevProgSeal.innerHTML = `<div class="w-24 sm:w-28 h-14 flex items-center justify-center mb-1"><img src="${schoolStamp}" alt="School Seal" class="max-h-14 max-w-[105px] object-contain mix-blend-multiply opacity-90"></div>`;
+          prevProgSeal.innerHTML = `<div class="w-[72px] sm:w-[76px] h-[72px] sm:h-[76px] flex items-center justify-center mb-1 mx-auto"><img src="${schoolStamp}" alt="School Seal" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] object-contain mix-blend-multiply opacity-90"></div>`;
         } else {
-          prevProgSeal.innerHTML = `<div class="w-20 sm:w-24 h-12 border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1">School Seal</div>`;
+          prevProgSeal.innerHTML = `<div class="w-[70px] sm:w-[72px] h-[70px] sm:h-[72px] border border-dashed border-slate-400 rounded-sm flex items-center justify-center text-[9.5px] text-slate-400 mb-1 mx-auto">School Seal</div>`;
         }
       }
       var prevProgHm = document.getElementById('preview-prog-hm-sign-container');
@@ -15051,13 +15051,13 @@ var currentTimetableClass = 'Class 10';
         }
       }
 
-      // 4. Progress Card Print Container (Elevated Size)
+      // 4. Progress Card Print Container (Enlarged to match School Logo 80px)
       var printProgSeal = document.getElementById('print-prog-seal-container');
       if (printProgSeal) {
         if (schoolStamp) {
-          printProgSeal.innerHTML = `<div class="w-28 h-16 flex items-center justify-center mb-1.5"><img src="${schoolStamp}" alt="School Seal" class="max-h-16 max-w-[120px] object-contain mix-blend-multiply"></div>`;
+          printProgSeal.innerHTML = `<div class="w-[82px] h-[82px] flex items-center justify-center mb-1.5 mx-auto"><img src="${schoolStamp}" alt="School Seal" class="w-[80px] h-[80px] object-contain mix-blend-multiply"></div>`;
         } else {
-          printProgSeal.innerHTML = `<div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1.5">School Seal</div>`;
+          printProgSeal.innerHTML = `<div class="w-[80px] h-[80px] border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1.5 mx-auto">School Seal</div>`;
         }
       }
       var printProgHm = document.getElementById('print-prog-hm-sign-container');
@@ -17487,7 +17487,7 @@ var currentTimetableClass = 'Class 10';
             </p>
           </div>
           <div class="text-center" id="print-cert-seal-container">
-            <div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1">
+            <div class="w-[74px] h-[74px] border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[10px] font-bold text-slate-600 mb-1 mx-auto">
               School Seal
             </div>
           </div>
@@ -17599,7 +17599,7 @@ var currentTimetableClass = 'Class 10';
             </p>
           </div>
           <div class="text-center" id="print-prog-seal-container">
-            <div class="w-28 h-14 border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1.5">
+            <div class="w-[80px] h-[80px] border-2 border-dashed border-slate-600 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-600 mb-1.5 mx-auto">
               School Seal
             </div>
           </div>
