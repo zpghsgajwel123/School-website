@@ -904,123 +904,50 @@
           </div>
         </div>
 
-        <!-- SECTION: PICTURE GALLERY (Auto changes every 4-5 seconds) -->
-        <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-            <div class="flex items-center gap-2">
-              <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-orange-100 text-orange-600 text-sm">
+        <!-- SECTION: PHOTO GALLERY (Ribbon Type Flow) -->
+        <div class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white shadow-xs space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-orange-100 text-orange-600 text-base shadow-2xs">
                 <i class="fa-solid fa-images"></i>
               </span>
               <div>
-                <h3 class="font-bold text-slate-800 text-base" data-en="Picture Gallery" data-te="చిత్ర మాలిక (Picture Gallery)">Picture Gallery</h3>
-                <p class="text-[11px] text-slate-500" data-en="Glimpses of school campus, smart classrooms, events and achievements" data-te="పాఠశాల కార్యక్రమాలు, విశేషాల చిత్రాలు">Glimpses of school campus, smart classrooms, events and achievements</p>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-bold text-slate-800 text-base sm:text-lg" data-en="Photo Gallery" data-te="ఫోటో గ్యాలరీ (Photo Gallery)">Photo Gallery</h3>
+                  <span class="text-[10px] font-black uppercase tracking-wider bg-orange-100 text-orange-800 border border-orange-300 px-2 py-0.5 rounded-full shadow-2xs">Ribbon Flow</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5" data-en="Flowing ribbon of school campus, smart classrooms, events, sports and achievements" data-te="పాఠశాల విశేషాలు, కార్యక్రమాలు, ప్రాంగణం ఫోటోల ప్రవాహం (రిబ్బన్ ఫ్లో)">Flowing ribbon of school campus, smart classrooms, events, sports and achievements</p>
               </div>
             </div>
-            <!-- Slider Controls, Add Photo & Management Actions -->
+
+            <!-- Ribbon Controls & Admin Action -->
             <div class="flex items-center flex-wrap gap-2">
               <div class="admin-only hidden inline-flex items-center gap-2">
-                <button onclick="openAddPhotoModal()" class="bg-theme-700 hover:bg-theme-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition shadow-xs flex items-center gap-1.5">
+                <button onclick="openAddPhotoModal()" class="bg-theme-700 hover:bg-theme-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer">
                   <i class="fa-solid fa-plus"></i>
-                  <span data-en="Add Photo" data-te="చిత్రం జోడించు">Add Photo</span>
-                </button>
-                <button onclick="openEditCurrentPhotoModal()" class="text-amber-800 hover:text-amber-900 font-semibold text-xs px-2.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-300 inline-flex items-center gap-1 transition shadow-2xs" title="Edit Current Photo">
-                  <i class="fa-solid fa-pen-to-square text-amber-600"></i>
-                  <span>Edit</span>
-                </button>
-                <button onclick="deleteCurrentPhoto()" class="text-rose-800 hover:text-rose-900 font-semibold text-xs px-2.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-300 inline-flex items-center gap-1 transition shadow-2xs" title="Delete Current Photo">
-                  <i class="fa-solid fa-trash-can text-rose-600"></i>
-                  <span>Delete</span>
+                  <span data-en="Add Photo" data-te="ఫోటో జోడించు">Add Photo</span>
                 </button>
               </div>
-              <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Auto 4s</span>
-              </span>
-              <button onclick="prevGallerySlide()" class="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 flex items-center justify-center transition" title="Previous Image">
-                <i class="fa-solid fa-chevron-left text-xs"></i>
-              </button>
-              <button onclick="nextGallerySlide()" class="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 flex items-center justify-center transition" title="Next Image">
-                <i class="fa-solid fa-chevron-right text-xs"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- Carousel Showcase Container (Split into Two: 2 Photos at a Time) -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            <!-- Left Photo Frame (Photo 1) -->
-            <div class="relative w-full h-64 sm:h-72 md:h-80 rounded-xl overflow-hidden bg-slate-900 group shadow-md border border-slate-200">
-              <!-- Slide Image 1 -->
-              <img id="gallery-current-img" src="school_building.jpg" alt="Picture Gallery Photo 1" class="w-full h-full object-cover transition-all duration-700 ease-in-out opacity-100 cursor-pointer hover:scale-105" onclick="openPhotoViewerModal(currentGalleryIndex)" title="Click to view full photo">
-              
-              <!-- Index Badge 1 -->
-              <span id="gallery-badge-1" class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border border-white/20 z-10 pointer-events-none">1 / 5</span>
-              
-              <!-- Admin Controls on Photo 1 -->
-              <div class="admin-only hidden absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition">
-                <button type="button" onclick="openEditGalleryPhotoAt(currentGalleryIndex)" class="bg-amber-600 hover:bg-amber-700 text-white w-7 h-7 rounded-lg flex items-center justify-center text-xs shadow-md cursor-pointer" title="Edit This Photo">
-                  <i class="fa-solid fa-pen-to-square"></i>
+              <div class="inline-flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-2xs">
+                <button type="button" onclick="scrollGalleryRibbon(-1)" class="w-8 h-8 rounded-lg bg-white hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-2xs cursor-pointer" title="Scroll Left (వెనుకకు)">
+                  <i class="fa-solid fa-chevron-left text-xs"></i>
                 </button>
-                <button type="button" onclick="deleteGalleryPhotoAt(currentGalleryIndex)" class="bg-rose-600 hover:bg-rose-700 text-white w-7 h-7 rounded-lg flex items-center justify-center text-xs shadow-md cursor-pointer" title="Delete This Photo">
-                  <i class="fa-solid fa-trash-can"></i>
+                <button type="button" onclick="toggleGalleryRibbonPause()" id="btn-gallery-ribbon-pause" class="px-2.5 h-8 rounded-lg bg-white hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition shadow-2xs cursor-pointer" title="Pause / Resume Ribbon Flow">
+                  <i class="fa-solid fa-pause text-xs text-amber-600" id="icon-gallery-ribbon-pause"></i>
+                  <span id="text-gallery-ribbon-pause" class="text-[11px] hidden sm:inline">Flowing</span>
                 </button>
-              </div>
-
-              <!-- Gradient Overlay for Caption 1 -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-4 text-white pointer-events-none">
-                <div class="flex items-center gap-2 mb-1">
-                  <span id="gallery-category" class="inline-block px-2.5 py-0.5 rounded bg-orange-500 text-white text-[10px] sm:text-[11px] font-bold w-fit shadow">Campus Life</span>
-                  <button id="gallery-activity-link" onclick="viewLinkedActivityDetails(currentGalleryIndex)" class="hidden pointer-events-auto cursor-pointer hover:bg-amber-400/30 transition px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 text-[10px] font-bold border border-amber-300/40 shadow-xs flex items-center gap-1" title="Click to view this activity details">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i> <span data-en="View Activity" data-te="కార్యక్రమ వివరాలు">View Activity</span>
-                  </button>
-                </div>
-                <h4 id="gallery-title" class="text-sm sm:text-base font-bold tracking-tight line-clamp-1">ZPHS Girls Gajwel Main School Building & Campus</h4>
-                <p id="gallery-desc" class="text-xs text-slate-200 mt-0.5 line-clamp-2">Well-equipped academic building providing modern educational facilities and empowering education for girl students.</p>
-              </div>
-            </div>
-
-            <!-- Right Photo Frame (Photo 2) -->
-            <div id="gallery-card-2" class="relative w-full h-64 sm:h-72 md:h-80 rounded-xl overflow-hidden bg-slate-900 group shadow-md border border-slate-200">
-              <!-- Slide Image 2 -->
-              <img id="gallery-current-img-2" src="school_building.jpg" alt="Picture Gallery Photo 2" class="w-full h-full object-cover transition-all duration-700 ease-in-out opacity-100 cursor-pointer hover:scale-105" onclick="openPhotoViewerModal(getSecondGalleryIndex())" title="Click to view full photo">
-              
-              <!-- Index Badge 2 -->
-              <span id="gallery-badge-2" class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border border-white/20 z-10 pointer-events-none">2 / 5</span>
-
-              <!-- Admin Controls on Photo 2 -->
-              <div class="admin-only hidden absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition">
-                <button type="button" onclick="openEditGalleryPhotoAt(getSecondGalleryIndex())" class="bg-amber-600 hover:bg-amber-700 text-white w-7 h-7 rounded-lg flex items-center justify-center text-xs shadow-md cursor-pointer" title="Edit This Photo">
-                  <i class="fa-solid fa-pen-to-square"></i>
+                <button type="button" onclick="scrollGalleryRibbon(1)" class="w-8 h-8 rounded-lg bg-white hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-2xs cursor-pointer" title="Scroll Right (ముందుకు)">
+                  <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
-                <button type="button" onclick="deleteGalleryPhotoAt(getSecondGalleryIndex)" class="bg-rose-600 hover:bg-rose-700 text-white w-7 h-7 rounded-lg flex items-center justify-center text-xs shadow-md cursor-pointer" title="Delete This Photo">
-                  <i class="fa-solid fa-trash-can"></i>
-                </button>
-              </div>
-
-              <!-- Gradient Overlay for Caption 2 -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-4 text-white pointer-events-none">
-                <div class="flex items-center gap-2 mb-1">
-                  <span id="gallery-category-2" class="inline-block px-2.5 py-0.5 rounded bg-emerald-600 text-white text-[10px] sm:text-[11px] font-bold w-fit shadow">Smart Classroom</span>
-                  <button id="gallery-activity-link-2" onclick="viewLinkedActivityDetails(getSecondGalleryIndex())" class="hidden pointer-events-auto cursor-pointer hover:bg-amber-400/30 transition px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 text-[10px] font-bold border border-amber-300/40 shadow-xs flex items-center gap-1" title="Click to view this activity details">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i> <span data-en="View Activity" data-te="కార్యక్రమ వివరాలు">View Activity</span>
-                  </button>
-                </div>
-                <h4 id="gallery-title-2" class="text-sm sm:text-base font-bold tracking-tight line-clamp-1">Interactive Smart Digital Classrooms</h4>
-                <p id="gallery-desc-2" class="text-xs text-slate-200 mt-0.5 line-clamp-2">Students actively engaging in multimedia-assisted digital learning and interactive presentations.</p>
               </div>
             </div>
           </div>
 
-          <!-- Dot Indicators & Pair Status -->
-          <div class="flex items-center justify-between pt-1">
-            <span class="text-[11px] text-slate-500 font-semibold" id="gallery-current-pair-text">Displaying 2 photos at a time</span>
-            <div class="flex items-center gap-1.5" id="gallery-dots">
-              <!-- Dynamically populated -->
+          <!-- Photo Gallery Ribbon Container (Continuous Flowing Strip) -->
+          <div class="relative group">
+            <div id="gallery-ribbon-container" class="overflow-x-auto scroll-smooth py-2 flex items-stretch gap-4 select-none" style="scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent;" onmouseenter="pauseGalleryRibbon()" onmouseleave="resumeGalleryRibbon()">
+              <!-- Dynamically populated by renderGalleryRibbon() with ribbon photo cards -->
             </div>
-          </div>
-
-          <!-- Thumbnail Strip -->
-          <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 pt-1" id="gallery-thumbs">
-            <!-- Dynamically populated -->
           </div>
         </div>
       </section>
@@ -12906,7 +12833,7 @@
       }
       syncToCloud('zphs_activities', activityList);
 
-      // Automatically link / sync all activity photos to Picture Gallery
+      // Automatically link / sync all activity photos to Photo Gallery
       if (typeof syncActivityPhotosToGallery === 'function') {
         syncActivityPhotosToGallery();
         if (typeof renderGalleryThumbs === 'function') renderGalleryThumbs();
@@ -17711,7 +17638,7 @@ var currentTimetableClass = 'Class 10';
   
 
 
-    // --- PICTURE GALLERY CAROUSEL (4.5s Interval) ---
+    // --- PHOTO GALLERY RIBBON FLOW ---
     var defaultGalleryPhotos = [
       {
         src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&h=600&q=80',
@@ -17753,7 +17680,7 @@ var currentTimetableClass = 'Class 10';
     var currentGalleryIndex = 0;
     var galleryInterval = null;
 
-    // Dynamically link and synchronize School Activity photos into the Picture Gallery
+    // Dynamically link and synchronize School Activity photos into the Photo Gallery
     function syncActivityPhotosToGallery() {
       if (typeof activityList === 'undefined' || !Array.isArray(activityList) || !Array.isArray(galleryPhotos)) return;
       var modified = false;
@@ -17814,7 +17741,7 @@ var currentTimetableClass = 'Class 10';
       var nextBtn = document.getElementById('act-lightbox-next');
       var thumbsEl = document.getElementById('act-lightbox-thumbnails');
 
-      if (catEl) catEl.innerText = item.category || 'Picture Gallery';
+      if (catEl) catEl.innerText = item.category || 'Photo Gallery';
       if (titleEl) titleEl.innerText = item.title || 'School Photo';
       if (descEl) descEl.innerText = item.desc || '';
       if (imgEl) imgEl.src = item.src;
@@ -17861,164 +17788,159 @@ var currentTimetableClass = 'Class 10';
       }
     }
 
+    var isGalleryRibbonPaused = false;
+    var galleryRibbonInterval = null;
+
     function initGallery() {
       syncActivityPhotosToGallery();
-      renderGalleryThumbs();
-      showGallerySlide(0);
-      startGalleryAutoTimer();
+      renderGalleryRibbon();
+      startGalleryRibbonFlow();
+    }
+
+    function renderGalleryRibbon() {
+      var container = document.getElementById('gallery-ribbon-container');
+      if (!container) return;
+
+      if (!galleryPhotos || galleryPhotos.length === 0) {
+        galleryPhotos = defaultGalleryPhotos.slice();
+      }
+
+      var canManage = (typeof isAdmin !== 'undefined' && isAdmin);
+
+      var categoryColors = {
+        'Campus Life': 'bg-orange-500 text-white',
+        'Digital Classroom': 'bg-emerald-600 text-white',
+        'Smart Classroom': 'bg-emerald-600 text-white',
+        'Science & Lab': 'bg-amber-600 text-white',
+        'Library & Reading': 'bg-blue-600 text-white',
+        'Sports & Athletics': 'bg-teal-600 text-white',
+        'School Activity': 'bg-indigo-600 text-white'
+      };
+
+      container.innerHTML = galleryPhotos.map(function(item, idx) {
+        var cat = escapeText(item.category || 'Photo Gallery');
+        var catBadgeClass = categoryColors[item.category] || 'bg-amber-600 text-white';
+        var safeTitle = escapeText(item.title || ('School Photo #' + (idx + 1)));
+        var safeDesc = escapeText(item.desc || '');
+        var safeSrc = escapeText(item.src || 'school_building.jpg');
+
+        var activityBtn = item.activityId ? `
+          <button type="button" onclick="event.stopPropagation(); viewLinkedActivityDetails(${idx})" class="mt-1 px-2.5 py-0.5 rounded-full bg-amber-500/25 hover:bg-amber-500/40 text-amber-200 text-[10px] font-bold border border-amber-300/40 shadow-xs flex items-center gap-1 w-fit transition pointer-events-auto cursor-pointer" title="View linked school activity">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i> <span>View Activity</span>
+          </button>
+        ` : '';
+
+        var adminControls = canManage ? `
+          <div class="admin-only absolute top-3 right-3 z-20 flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition pointer-events-auto">
+            <button type="button" onclick="event.stopPropagation(); openEditGalleryPhotoAt(${idx})" class="bg-amber-600 hover:bg-amber-700 text-white w-7 h-7 rounded-lg flex items-center justify-center text-xs shadow-md transition cursor-pointer" title="Edit This Photo">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button type="button" onclick="event.stopPropagation(); deleteGalleryPhotoAt(${idx})" class="bg-rose-600 hover:bg-rose-700 text-white w-7 h-7 rounded-lg flex items-center justify-center text-xs shadow-md transition cursor-pointer" title="Delete This Photo">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        ` : '';
+
+        return `
+          <div onclick="openPhotoViewerModal(${idx})" class="gallery-ribbon-card group relative w-72 sm:w-80 md:w-96 shrink-0 h-64 sm:h-72 md:h-80 rounded-2xl overflow-hidden bg-slate-900 shadow-md hover:shadow-xl border border-slate-200/80 transition duration-300 cursor-pointer flex flex-col justify-end select-none">
+            <!-- Photo Image with Zoom on Hover -->
+            <img src="${safeSrc}" alt="${safeTitle}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" onerror="this.src='school_building.jpg'">
+
+            <!-- Top Left: Category Badge & Index -->
+            <div class="absolute top-3 left-3 z-10 flex items-center gap-1.5 pointer-events-none">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold shadow-xs ${catBadgeClass}">
+                ${cat}
+              </span>
+              <span class="bg-black/60 backdrop-blur-xs text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border border-white/20">
+                ${idx + 1} / ${galleryPhotos.length}
+              </span>
+            </div>
+
+            <!-- Top Right: Admin Controls -->
+            ${adminControls}
+
+            <!-- Bottom Gradient Overlay for Captions -->
+            <div class="relative z-10 bg-gradient-to-t from-black/95 via-black/50 to-transparent p-4 sm:p-5 text-white pointer-events-none space-y-1">
+              <h4 class="text-sm sm:text-base font-bold tracking-tight line-clamp-1 group-hover:text-amber-300 transition">
+                ${safeTitle}
+              </h4>
+              ${safeDesc ? `<p class="text-xs text-slate-200 line-clamp-2 leading-relaxed opacity-90">${safeDesc}</p>` : ''}
+              ${activityBtn}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function scrollGalleryRibbon(direction) {
+      var container = document.getElementById('gallery-ribbon-container');
+      if (!container) return;
+      var scrollAmount = 350 * direction;
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+
+    function startGalleryRibbonFlow() {
+      if (galleryRibbonInterval) clearInterval(galleryRibbonInterval);
+      galleryRibbonInterval = setInterval(function() {
+        if (isGalleryRibbonPaused) return;
+        var container = document.getElementById('gallery-ribbon-container');
+        if (!container) return;
+        
+        // Wrap around smoothly if reached end
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 8) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollLeft += 1.5;
+        }
+      }, 35);
+    }
+
+    function pauseGalleryRibbon() {
+      isGalleryRibbonPaused = true;
+      var textEl = document.getElementById('text-gallery-ribbon-pause');
+      var iconEl = document.getElementById('icon-gallery-ribbon-pause');
+      if (textEl) textEl.textContent = 'Paused';
+      if (iconEl) iconEl.className = 'fa-solid fa-play text-xs text-emerald-600';
+    }
+
+    function resumeGalleryRibbon() {
+      isGalleryRibbonPaused = false;
+      var textEl = document.getElementById('text-gallery-ribbon-pause');
+      var iconEl = document.getElementById('icon-gallery-ribbon-pause');
+      if (textEl) textEl.textContent = 'Flowing';
+      if (iconEl) iconEl.className = 'fa-solid fa-pause text-xs text-amber-600';
+    }
+
+    function toggleGalleryRibbonPause() {
+      if (isGalleryRibbonPaused) {
+        resumeGalleryRibbon();
+      } else {
+        pauseGalleryRibbon();
+      }
     }
 
     function showGallerySlide(index) {
-      if (!galleryPhotos || galleryPhotos.length === 0) return;
-      if (index >= galleryPhotos.length) index = 0;
-      if (index < 0) index = galleryPhotos.length - 1;
-      currentGalleryIndex = index;
-
-      var idx1 = currentGalleryIndex;
-      var idx2 = getSecondGalleryIndex();
-
-      var imgEl1 = document.getElementById('gallery-current-img');
-      var catEl1 = document.getElementById('gallery-category');
-      var titleEl1 = document.getElementById('gallery-title');
-      var descEl1 = document.getElementById('gallery-desc');
-      var actLink1 = document.getElementById('gallery-activity-link');
-      var badge1 = document.getElementById('gallery-badge-1');
-
-      var imgEl2 = document.getElementById('gallery-current-img-2');
-      var catEl2 = document.getElementById('gallery-category-2');
-      var titleEl2 = document.getElementById('gallery-title-2');
-      var descEl2 = document.getElementById('gallery-desc-2');
-      var actLink2 = document.getElementById('gallery-activity-link-2');
-      var badge2 = document.getElementById('gallery-badge-2');
-      var card2 = document.getElementById('gallery-card-2');
-
-      if (imgEl1) imgEl1.style.opacity = '0.3';
-      if (imgEl2) imgEl2.style.opacity = '0.3';
-
-      setTimeout(function() {
-        var item1 = galleryPhotos[idx1];
-        if (item1 && imgEl1) {
-          imgEl1.src = item1.src;
-          if (catEl1) catEl1.innerText = item1.category || 'Campus Life';
-          if (titleEl1) titleEl1.innerText = item1.title || '';
-          if (descEl1) descEl1.innerText = item1.desc || '';
-          if (badge1) badge1.innerText = (idx1 + 1) + ' / ' + galleryPhotos.length;
-          if (actLink1) {
-            if (item1.activityId) {
-              actLink1.classList.remove('hidden');
-              actLink1.setAttribute('data-act-id', item1.activityId);
-            } else {
-              actLink1.classList.add('hidden');
-            }
-          }
-          imgEl1.style.opacity = '1';
-        }
-
-        if (idx2 !== null && galleryPhotos[idx2] && imgEl2) {
-          var item2 = galleryPhotos[idx2];
-          imgEl2.src = item2.src;
-          if (catEl2) catEl2.innerText = item2.category || 'School Life';
-          if (titleEl2) titleEl2.innerText = item2.title || '';
-          if (descEl2) descEl2.innerText = item2.desc || '';
-          if (badge2) badge2.innerText = (idx2 + 1) + ' / ' + galleryPhotos.length;
-          if (actLink2) {
-            if (item2.activityId) {
-              actLink2.classList.remove('hidden');
-              actLink2.setAttribute('data-act-id', item2.activityId);
-            } else {
-              actLink2.classList.add('hidden');
-            }
-          }
-          if (card2) card2.classList.remove('hidden');
-          imgEl2.style.opacity = '1';
-        } else if (card2) {
-          card2.classList.add('hidden');
-        }
-
-        var pairText = document.getElementById('gallery-current-pair-text');
-        if (pairText) {
-          if (idx2 !== null && idx2 !== idx1 && galleryPhotos.length > 1) {
-            pairText.innerText = 'Displaying Photos ' + (idx1 + 1) + ' & ' + (idx2 + 1) + ' of ' + galleryPhotos.length;
-          } else {
-            pairText.innerText = 'Displaying Photo ' + (idx1 + 1) + ' of ' + galleryPhotos.length;
-          }
-        }
-      }, 200);
-
-      renderGalleryDots();
-      highlightGalleryThumb();
-    }
-
-    function nextGallerySlide() {
-      var step = (galleryPhotos && galleryPhotos.length > 2) ? 2 : 1;
-      showGallerySlide((currentGalleryIndex + step) % galleryPhotos.length);
-      resetGalleryTimer();
-    }
-
-    function prevGallerySlide() {
-      var step = (galleryPhotos && galleryPhotos.length > 2) ? 2 : 1;
-      var newIdx = currentGalleryIndex - step;
-      if (newIdx < 0) {
-        newIdx = (galleryPhotos.length + newIdx) % galleryPhotos.length;
+      if (typeof index === 'number' && index >= 0 && index < galleryPhotos.length) {
+        currentGalleryIndex = index;
       }
-      showGallerySlide(newIdx);
-      resetGalleryTimer();
+      var container = document.getElementById('gallery-ribbon-container');
+      if (container && container.children[currentGalleryIndex]) {
+        var card = container.children[currentGalleryIndex];
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        card.classList.add('ring-4', 'ring-amber-400');
+        setTimeout(function() { card.classList.remove('ring-4', 'ring-amber-400'); }, 2000);
+      }
     }
 
-    function renderGalleryDots() {
-      var dotsContainer = document.getElementById('gallery-dots');
-      if (!dotsContainer) return;
-      var idx1 = currentGalleryIndex;
-      var idx2 = getSecondGalleryIndex();
+    function nextGallerySlide() { scrollGalleryRibbon(1); }
+    function prevGallerySlide() { scrollGalleryRibbon(-1); }
+    function renderGalleryThumbs() {}
+    function renderGalleryDots() {}
+    function highlightGalleryThumb() {}
+    function resetGalleryTimer() {}
+    function startGalleryAutoTimer() {}
 
-      dotsContainer.innerHTML = galleryPhotos.map(function(_, i) {
-        var isCur = (i === idx1 || i === idx2);
-        var activeClass = isCur ? 'bg-orange-500 w-5 opacity-100 shadow-xs' : 'bg-slate-300 hover:bg-slate-400 w-2 opacity-60';
-        return '<button onclick="showGallerySlide(' + i + '); resetGalleryTimer();" class="h-2 rounded-full transition-all ' + activeClass + '" title="Jump to Photo #' + (i + 1) + '"></button>';
-      }).join('');
-    }
-
-    function renderGalleryThumbs() {
-      var thumbsContainer = document.getElementById('gallery-thumbs');
-      if (!thumbsContainer) return;
-      thumbsContainer.innerHTML = galleryPhotos.map(function(item, i) {
-        return '<div onclick="showGallerySlide(' + i + '); resetGalleryTimer();" id="gallery-thumb-' + i + '" class="h-14 sm:h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-all border-transparent hover:opacity-100 opacity-60 relative group" title="' + escapeText(item.title || ('Photo #' + (i + 1))) + '">' +
-               '<img src="' + item.src + '" class="w-full h-full object-cover">' +
-               '<span class="absolute bottom-0.5 right-1 bg-black/60 text-white text-[9px] font-mono px-1 rounded pointer-events-none">' + (i + 1) + '</span>' +
-               '</div>';
-      }).join('');
-      highlightGalleryThumb();
-    }
-
-    function highlightGalleryThumb() {
-      var idx1 = currentGalleryIndex;
-      var idx2 = getSecondGalleryIndex();
-      galleryPhotos.forEach(function(_, i) {
-        var el = document.getElementById('gallery-thumb-' + i);
-        if (el) {
-          if (i === idx1 || i === idx2) {
-            var isPrimary = (i === idx1);
-            el.className = 'h-14 sm:h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-all ' + (isPrimary ? 'border-orange-500 ring-2 ring-orange-400/50' : 'border-emerald-500 ring-2 ring-emerald-400/40') + ' opacity-100 shadow-sm relative group scale-102';
-          } else {
-            el.className = 'h-14 sm:h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-all border-transparent hover:opacity-90 opacity-60 relative group';
-          }
-        }
-      });
-    }
-
-    function startGalleryAutoTimer() {
-      clearInterval(galleryInterval);
-      // Auto change picture every 4.5 seconds (4500ms)
-      galleryInterval = setInterval(function() {
-        nextGallerySlide();
-      }, 4500);
-    }
-
-    function resetGalleryTimer() {
-      startGalleryAutoTimer();
-    }
-
-    // --- Picture Gallery Add, Edit, Delete Management ---
+    // --- Photo Gallery Add, Edit, Delete Management ---
     function openAddPhotoModal() {
       if (!isAdmin) {
         alert('Access Denied: Only administrators have permission to make changes.');
@@ -18173,10 +18095,8 @@ var currentTimetableClass = 'Class 10';
       syncToCloud('zphs_gallery_photos', galleryPhotos);
 
       closeModal('modal-gallery-photo');
-      renderGalleryThumbs();
-      showGallerySlide(currentGalleryIndex);
-      resetGalleryTimer();
-      alert('Photo saved to gallery successfully!');
+      renderGalleryRibbon();
+      alert('Photo saved to photo gallery successfully!');
     }
 
     function deleteCurrentPhoto() {
@@ -18190,7 +18110,7 @@ var currentTimetableClass = 'Class 10';
       var currentPhoto = galleryPhotos[currentGalleryIndex];
       var name = currentPhoto ? currentPhoto.title : 'this photo';
       
-      if (confirm('Are you sure you want to delete "' + name + '" from the picture gallery?')) {
+      if (confirm('Are you sure you want to delete "' + name + '" from the photo gallery?')) {
         galleryPhotos.splice(currentGalleryIndex, 1);
         if (galleryPhotos.length === 0) {
           galleryPhotos = [
@@ -18211,9 +18131,7 @@ var currentTimetableClass = 'Class 10';
           console.warn('Error deleting gallery photo:', err);
         }
         syncToCloud('zphs_gallery_photos', galleryPhotos);
-        renderGalleryThumbs();
-        showGallerySlide(currentGalleryIndex);
-        resetGalleryTimer();
+        renderGalleryRibbon();
       }
     }
 
