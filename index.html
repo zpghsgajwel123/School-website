@@ -5590,7 +5590,7 @@
             </button>
           </div>
 
-          <!-- Upload Controls -->
+          <!-- Upload & Paste Controls -->
           <div class="flex flex-wrap items-center gap-2">
             <label for="activity-photo-files" class="cursor-pointer bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
               <i class="fa-solid fa-cloud-arrow-up text-amber-600"></i>
@@ -5598,11 +5598,22 @@
             </label>
             <input type="file" id="activity-photo-files" accept="image/*" multiple class="hidden" onchange="handleActivityMultiPhotoUpload(event)">
 
-            <button type="button" onclick="promptAddActivityPhotoUrl()" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer">
+            <button type="button" onclick="pasteActivityPhotoFromClipboard()" class="bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-950 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Paste copied photo from website or clipboard (Ctrl+V)">
+              <i class="fa-solid fa-paste text-amber-700"></i>
+              <span>📋 Paste Photo from Website</span>
+            </button>
+
+            <button type="button" onclick="promptAddActivityPhotoUrl()" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-2.5 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs cursor-pointer">
               <i class="fa-solid fa-link text-indigo-600"></i>
               <span>+ Add via URL</span>
             </button>
             <span class="text-[11px] text-slate-400">Select multiple images at once (JPG, PNG)</span>
+          </div>
+
+          <!-- Quick Paste Click/Drop Zone -->
+          <div id="activity-paste-dropzone" onclick="pasteActivityPhotoFromClipboard()" class="p-2 border border-dashed border-amber-300 rounded-lg bg-amber-50/50 hover:bg-amber-100/50 text-center text-[11px] text-amber-900 cursor-pointer transition select-none flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-clipboard text-amber-600"></i>
+            <span>Tip: Copy any photo from a website, then click here or press <strong>Ctrl+V</strong> to paste directly into this activity</span>
           </div>
 
           <!-- Thumbnail Gallery Grid -->
@@ -5705,11 +5716,83 @@
           <label class="block text-xs font-semibold text-slate-700 mb-1">Notice Details</label>
           <textarea id="notice-content" required rows="3" placeholder="Enter notice details..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-theme-600"></textarea>
         </div>
+
+        <!-- Photo Attachment for Notice (Upload or Copy-Paste from Website) -->
+        <div class="p-3 bg-amber-50/60 border border-amber-200 rounded-xl space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-amber-950 flex items-center gap-1.5">
+              <i class="fa-solid fa-camera text-amber-600"></i>
+              <span>Notice Photograph / Circular Image (Optional)</span>
+            </label>
+            <button type="button" onclick="clearNoticePhoto()" id="btn-clear-notice-photo" class="hidden text-rose-600 hover:text-rose-800 text-[11px] font-bold px-1.5 py-0.5 rounded hover:bg-rose-50 transition cursor-pointer">
+              <i class="fa-solid fa-trash-can mr-1"></i> Remove Photo
+            </button>
+          </div>
+
+          <!-- Upload & Paste Buttons -->
+          <div class="flex flex-wrap items-center gap-2">
+            <label for="notice-photo-file-input" class="cursor-pointer bg-white border border-amber-300 hover:bg-amber-100/60 text-amber-950 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-cloud-arrow-up text-amber-600"></i>
+              <span>Upload Photo</span>
+            </label>
+            <input type="file" id="notice-photo-file-input" accept="image/*" class="hidden" onchange="handleNoticePhotoFileUpload(event)">
+
+            <button type="button" onclick="triggerNoticePhotoPaste()" class="bg-white border border-amber-300 hover:bg-amber-100/60 text-amber-950 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Paste copied photo from website or clipboard">
+              <i class="fa-solid fa-paste text-orange-600"></i>
+              <span>📋 Paste Photo from Website</span>
+            </button>
+
+            <button type="button" onclick="promptNoticePhotoUrl()" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-2 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs cursor-pointer" title="Enter Image Link">
+              <i class="fa-solid fa-link text-slate-500 text-[11px]"></i>
+              <span>Link</span>
+            </button>
+          </div>
+
+          <!-- Hidden Input for Notice Photo Data -->
+          <input type="hidden" id="notice-photo-val" value="">
+
+          <!-- Photo Preview Container -->
+          <div id="notice-photo-preview-wrapper" class="hidden flex items-center gap-3 p-2 bg-white rounded-lg border border-amber-300">
+            <img id="notice-photo-preview-img" src="" alt="Notice Photo Preview" class="w-14 h-14 rounded-md object-cover border border-slate-200 shadow-2xs">
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-bold text-slate-800 truncate" id="notice-photo-preview-name">Photo attached</p>
+              <p class="text-[10px] text-amber-700 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-bolt text-yellow-500"></i> Will flash in live marquee ticker
+              </p>
+            </div>
+            <button type="button" onclick="clearNoticePhoto()" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 cursor-pointer" title="Remove Photo">
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Quick Paste Click/Drop Zone -->
+          <div id="notice-paste-zone" onclick="triggerNoticePhotoPaste()" class="border border-dashed border-amber-300 rounded-lg p-2 text-center text-[11px] text-amber-900 bg-white/70 hover:bg-amber-100/50 transition cursor-pointer select-none">
+            <i class="fa-regular fa-clipboard mr-1 text-amber-600"></i>
+            <span>Tip: Copy any photo from a website, then click here or press <strong>Ctrl+V</strong> to paste</span>
+          </div>
+        </div>
+
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('modal-notice')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
           <button type="submit" class="bg-theme-700 hover:bg-theme-800 text-white px-4 py-2 text-xs font-semibold rounded-lg shadow" id="notice-submit-btn">Publish</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NOTICE PHOTO HIGH-RES VIEW -->
+  <div id="modal-notice-photo-view" class="fixed inset-0 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 hidden z-50">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full p-4 sm:p-5 space-y-3 relative flex flex-col max-h-[92vh]">
+      <button onclick="closeModal('modal-notice-photo-view')" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-700 transition p-1 cursor-pointer bg-white/80 rounded-full">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div class="border-b border-slate-100 pb-2 pr-8">
+        <span class="text-[10px] uppercase font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-200">Notice Attachment</span>
+        <h3 id="notice-lightbox-title" class="text-sm sm:text-base font-bold text-slate-900 mt-1">Notice Photograph</h3>
+      </div>
+      <div class="overflow-auto flex-1 flex items-center justify-center bg-slate-50 rounded-xl p-2 border border-slate-200">
+        <img id="notice-lightbox-img" src="" alt="Notice Photo" class="max-w-full max-h-[72vh] object-contain rounded-lg shadow-sm">
+      </div>
     </div>
   </div>
 
@@ -5931,36 +6014,90 @@
       <form id="form-add-emagazine" onsubmit="handleSaveEmagazineArticle(event)" class="space-y-3.5">
         <input type="hidden" id="emag-form-id" value="">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Article / Poem Title</label>
-          <input type="text" id="emag-form-title" required placeholder="e.g. నా పాఠశాల - నా గర్వం / Wings of Determination" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
+          <label class="block text-xs font-bold text-slate-700 mb-1">
+            Article Title (Write your own custom title / స్వంత శీర్షిక) <span class="text-rose-500">*</span>
+          </label>
+          <input type="text" id="emag-form-title" required placeholder="Type custom article title, e.g. నా పాఠశాల - నా గర్వం / The Power of Digital Dreams" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Category / Section</label>
-            <select id="emag-form-category" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+            <select id="emag-form-category" onchange="handleEmagCategoryChange()" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
               <option value="Editorial">Headmaster's Desk</option>
-              <option value="Poetry">Poetry & Sahithyam</option>
-              <option value="Creative Writing">Creative Writing & Essays</option>
-              <option value="Science & Tech">Science & Innovation</option>
-              <option value="Art & Drawing">Student Art Gallery</option>
+              <option value="Poetry">Poetry &amp; Sahithyam</option>
+              <option value="Creative Writing">Creative Writing &amp; Essays</option>
+              <option value="Science &amp; Tech">Science &amp; Innovation</option>
+              <option value="Art &amp; Drawing">Student Art Gallery</option>
               <option value="Achievements">School Triumphs</option>
+              <option value="Custom">+ Write Custom Category / Section...</option>
             </select>
+            <div id="emag-custom-category-container" class="hidden mt-1.5">
+              <input type="text" id="emag-form-custom-category" placeholder="Type custom category name, e.g. Sports, Quiz, Special..." class="w-full border border-purple-300 bg-purple-50/60 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 font-medium">
+            </div>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Author Name & Role</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Author Name &amp; Role</label>
             <input type="text" id="emag-form-author" required placeholder="e.g. K. Sravani (Class X-A)" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
           </div>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Illustration / Image URL (Optional)</label>
-          <input type="url" id="emag-form-image" placeholder="https://... or leave blank" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
+        <!-- Photo Attachment Option: Upload or Paste from Website / Clipboard -->
+        <div class="p-3 bg-purple-50/50 border border-purple-200 rounded-xl space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-purple-950 flex items-center gap-1.5">
+              <i class="fa-solid fa-camera text-purple-600"></i>
+              <span>Article Photo / Artwork (Upload or Paste from Website)</span>
+            </label>
+            <button type="button" onclick="clearEmagArticlePhoto()" id="btn-clear-emag-photo" class="hidden text-rose-600 hover:text-rose-800 text-[11px] font-bold px-1.5 py-0.5 rounded hover:bg-rose-50 transition cursor-pointer">
+              <i class="fa-solid fa-trash-can mr-1"></i> Remove Photo
+            </button>
+          </div>
+
+          <!-- Upload & Paste Buttons -->
+          <div class="flex flex-wrap items-center gap-2">
+            <label for="emag-photo-file-input" class="cursor-pointer bg-white border border-purple-300 hover:bg-purple-100/60 text-purple-900 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-cloud-arrow-up text-purple-600"></i>
+              <span>Upload Photo</span>
+            </label>
+            <input type="file" id="emag-photo-file-input" accept="image/*" class="hidden" onchange="handleEmagPhotoFileUpload(event)">
+
+            <button type="button" onclick="triggerEmagPhotoPaste()" class="bg-white border border-purple-300 hover:bg-purple-100/60 text-purple-900 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Paste copied photo from website or clipboard">
+              <i class="fa-solid fa-paste text-indigo-600"></i>
+              <span>Paste Photo from Website</span>
+            </button>
+
+            <button type="button" onclick="promptEmagPhotoUrl()" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-2.5 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs cursor-pointer" title="Enter Image Link">
+              <i class="fa-solid fa-link text-slate-500 text-[11px]"></i>
+              <span>Image Link</span>
+            </button>
+          </div>
+
+          <!-- Hidden input storing active image data / URL -->
+          <input type="hidden" id="emag-form-image" value="">
+
+          <!-- Photo Preview Container -->
+          <div id="emag-photo-preview-wrapper" class="hidden flex items-center gap-3 p-2 bg-white rounded-lg border border-purple-200">
+            <img id="emag-photo-preview-img" src="" alt="Article Photo Preview" class="w-16 h-16 rounded-md object-cover border border-slate-200 shadow-2xs">
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-bold text-slate-800 truncate" id="emag-photo-preview-name">Photo attached</p>
+              <p class="text-[10px] text-emerald-700 font-semibold flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Ready to publish with article</p>
+            </div>
+            <button type="button" onclick="clearEmagArticlePhoto()" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 cursor-pointer" title="Remove Photo">
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Paste helper text & click trap -->
+          <div id="emag-paste-zone" onclick="triggerEmagPhotoPaste()" class="border border-dashed border-purple-300 rounded-lg p-2 text-center text-[11px] text-purple-800 bg-white/70 hover:bg-purple-100/50 transition cursor-pointer select-none">
+            <i class="fa-regular fa-clipboard mr-1 text-purple-600"></i>
+            <span>Tip: Copy any photo from a website, then click here or press <strong>Ctrl+V</strong> to paste</span>
+          </div>
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Article Content / Poem Text</label>
-          <textarea id="emag-form-body" rows="6" required placeholder="Type or paste the complete article, poem, essay, or project details..." class="w-full border border-slate-300 rounded-lg p-2.5 text-xs outline-none focus:ring-2 focus:ring-purple-500 font-serif"></textarea>
+          <textarea id="emag-form-body" rows="5" required placeholder="Type or paste the complete article, poem, essay, or project details..." class="w-full border border-slate-300 rounded-lg p-2.5 text-xs outline-none focus:ring-2 focus:ring-purple-500 font-serif"></textarea>
         </div>
 
         <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
@@ -8091,6 +8228,82 @@
       document.getElementById('modal-view-student').classList.remove('hidden');
     }
 
+    var currentNoticePhoto = '';
+
+    function setNoticePhotoPreview(url, name) {
+      currentNoticePhoto = url || '';
+      var hiddenInput = document.getElementById('notice-form-photo');
+      if (hiddenInput) hiddenInput.value = url || '';
+      var previewWrap = document.getElementById('notice-photo-preview-wrapper');
+      var previewImg = document.getElementById('notice-photo-preview-img');
+      var previewName = document.getElementById('notice-photo-preview-name');
+      var clearBtn = document.getElementById('btn-clear-notice-photo');
+
+      if (url) {
+        if (previewImg) previewImg.src = url;
+        if (previewName) previewName.textContent = name || 'Notice Circular / Photo Attached';
+        if (previewWrap) previewWrap.classList.remove('hidden');
+        if (clearBtn) clearBtn.classList.remove('hidden');
+      } else {
+        if (previewImg) previewImg.src = '';
+        if (previewWrap) previewWrap.classList.add('hidden');
+        if (clearBtn) clearBtn.classList.add('hidden');
+      }
+    }
+
+    function clearNoticePhoto() {
+      setNoticePhotoPreview('', '');
+      var fileInput = document.getElementById('notice-photo-file-input');
+      if (fileInput) fileInput.value = '';
+    }
+
+    function handleNoticePhotoFileUpload(event) {
+      var file = event.target.files ? event.target.files[0] : null;
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        compressImageToDataUrl(e.target.result, 900, function(err, compressed) {
+          setNoticePhotoPreview(compressed, file.name);
+        });
+      };
+      reader.readAsDataURL(file);
+      event.target.value = '';
+    }
+
+    async function triggerNoticePhotoPaste() {
+      try {
+        var src = await getClipboardImageOrUrl();
+        if (!src) return;
+        compressImageToDataUrl(src, 900, function(err, compressed) {
+          setNoticePhotoPreview(compressed, 'Pasted Notice Photograph');
+        });
+      } catch(err) {
+        console.error('Error pasting notice photo:', err);
+      }
+    }
+
+    function promptNoticePhotoUrl() {
+      var url = prompt('Enter Image / Circular URL:');
+      if (url && url.trim()) {
+        setNoticePhotoPreview(url.trim(), 'Web Photo URL');
+      }
+    }
+
+    function openNoticePhotoModal(photoUrl, title) {
+      var modal = document.getElementById('modal-notice-photo-view');
+      var img = document.getElementById('notice-lightbox-img');
+      var titleEl = document.getElementById('notice-lightbox-title');
+      var dlLink = document.getElementById('notice-lightbox-download');
+      if (!modal || !img) return;
+      img.src = photoUrl;
+      if (titleEl) titleEl.textContent = title || 'Notice Circular / Photograph';
+      if (dlLink) {
+        dlLink.href = photoUrl;
+        dlLink.download = (title ? title.replace(/[^a-zA-Z0-9]/g, '_') : 'notice_photo') + '.jpg';
+      }
+      openModal('modal-notice-photo-view');
+    }
+
     function openNoticeModal() {
       if (!isAdmin) {
         alert('Access Denied: Only administrators have permission to make changes.');
@@ -8106,6 +8319,7 @@
       if (contentField) contentField.value = '';
       var dateField = document.getElementById('notice-date');
       if (dateField) dateField.value = new Date().toISOString().split('T')[0];
+      clearNoticePhoto();
 
       var modalTitle = document.getElementById('notice-modal-title');
       if (modalTitle) modalTitle.textContent = 'Publish School Notice';
@@ -8139,6 +8353,12 @@
           rawDate = parts[2] + '-' + parts[1] + '-' + parts[0];
         }
         dateField.value = rawDate;
+      }
+
+      if (notice.photo) {
+        setNoticePhotoPreview(notice.photo, 'Attached Circular / Photo');
+      } else {
+        clearNoticePhoto();
       }
 
       var modalTitle = document.getElementById('notice-modal-title');
@@ -11980,6 +12200,12 @@
         var safeTitle = escapeText(n.title || 'Notice');
         var formattedDate = formatDisplayDateDDMMYYYY(n.date);
         var safeDate = escapeText(formattedDate || '');
+        var photoBadge = n.photo ? `
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-black bg-amber-300 text-slate-950 animate-bounce shadow-md border border-yellow-100 tracking-wider">
+            <i class="fa-solid fa-camera text-slate-900"></i> FLASH PHOTO
+          </span>
+          <img src="${escapeText(n.photo)}" alt="Notice Circular" class="w-6 h-6 sm:w-7 sm:h-7 rounded-md object-cover border-2 border-white/90 shadow-md inline-block">
+        ` : '';
 
         return `
           <a href="#notices" onclick="switchTab('notices')" class="inline-flex items-center gap-2.5 text-sm sm:text-base md:text-[17px] font-bold text-white hover:text-yellow-200 transition-colors whitespace-nowrap group px-2">
@@ -11988,6 +12214,7 @@
                 NEW
               </span>
             ` : ''}
+            ${photoBadge}
             <span class="group-hover:underline tracking-normal">${safeTitle}</span>
             <span class="text-xs sm:text-sm text-amber-200/90 font-medium font-mono">(${safeDate})</span>
             <span class="text-yellow-300 font-extrabold text-lg mx-3 sm:mx-4 select-none">✦</span>
@@ -12025,6 +12252,21 @@
         var safeContent = escapeText(n.content || '');
         var formattedDate = formatDisplayDateDDMMYYYY(n.date);
         var safeDate = escapeText(formattedDate || '');
+        var photoAttachmentHtml = n.photo ? `
+          <div class="mt-2.5 flex items-center gap-3 p-2.5 bg-white rounded-xl border border-amber-200/80 shadow-2xs max-w-md">
+            <img src="${escapeText(n.photo)}" onclick="openNoticePhotoModal('${escapeText(n.photo)}', '${escapeText(safeTitle)}')" alt="Notice Attachment" class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-slate-200 cursor-pointer hover:opacity-90 hover:scale-105 transition shrink-0 shadow-2xs" title="Click to view full size photo">
+            <div class="flex-1 min-w-0">
+              <span class="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full mb-1">
+                <i class="fa-solid fa-camera"></i> Attached Photo / Circular
+              </span>
+              <p class="text-[11px] text-slate-500 truncate">Official notice photograph attached</p>
+              <button type="button" onclick="openNoticePhotoModal('${escapeText(n.photo)}', '${escapeText(safeTitle)}')" class="mt-1 text-xs font-bold text-amber-700 hover:text-amber-900 inline-flex items-center gap-1 cursor-pointer">
+                <i class="fa-solid fa-expand text-[10px]"></i> View Full Photo
+              </button>
+            </div>
+          </div>
+        ` : '';
+
         return `
           <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2 hover:bg-white hover:shadow-xs transition">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
@@ -12045,6 +12287,7 @@
               </div>
             </div>
             <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-5">${safeContent}</p>
+            ${photoAttachmentHtml}
           </div>
         `;
       }).join('');
@@ -12382,6 +12625,101 @@
           </div>
         `;
       }).join('');
+    }
+
+    function compressImageToDataUrl(src, maxDim, callback) {
+      if (!src) return callback ? callback(new Error('No image source'), null) : null;
+      if (typeof src === 'string' && src.startsWith('data:image/') && src.length < 350000) {
+        if (callback) callback(null, src);
+        return;
+      }
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function() {
+        try {
+          var canvas = document.createElement('canvas');
+          var width = img.width;
+          var height = img.height;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          var compressed = canvas.toDataURL('image/jpeg', 0.85);
+          if (callback) callback(null, compressed);
+        } catch (err) {
+          if (callback) callback(null, src);
+        }
+      };
+      img.onerror = function() {
+        if (callback) callback(null, src);
+      };
+      img.src = src;
+    }
+
+    async function getClipboardImageOrUrl() {
+      if (navigator.clipboard && navigator.clipboard.read) {
+        try {
+          var items = await navigator.clipboard.read();
+          for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var imgType = item.types.find(function(t) { return t.startsWith('image/'); });
+            if (imgType) {
+              var blob = await item.getType(imgType);
+              return await new Promise(function(resolve) {
+                var reader = new FileReader();
+                reader.onload = function(e) { resolve(e.target.result); };
+                reader.readAsDataURL(blob);
+              });
+            }
+          }
+        } catch (err) {
+          console.warn('Clipboard read access:', err);
+        }
+      }
+
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        try {
+          var text = await navigator.clipboard.readText();
+          if (text) {
+            text = text.trim();
+            if (text.startsWith('data:image/') || text.startsWith('http://') || text.startsWith('https://')) {
+              return text;
+            }
+          }
+        } catch (e) {}
+      }
+
+      var fallbackUrl = prompt('Paste copied photo URL or image address from website:');
+      if (fallbackUrl && fallbackUrl.trim()) {
+        return fallbackUrl.trim();
+      }
+      return null;
+    }
+
+    async function pasteActivityPhotoFromClipboard() {
+      try {
+        var src = await getClipboardImageOrUrl();
+        if (!src) return;
+        compressImageToDataUrl(src, 800, function(err, compressed) {
+          if (compressed) {
+            currentActivityPhotos.push(compressed);
+            renderActivityPhotosManager();
+          }
+        });
+      } catch (err) {
+        console.error('Failed to paste activity photo:', err);
+      }
     }
 
     function handleActivityMultiPhotoUpload(event) {
@@ -12819,9 +13157,59 @@
         }
       }
 
+      var standardCategories = ['Editorial', 'Poetry', 'Creative Writing', 'Science & Tech', 'Art & Drawing', 'Achievements'];
+      var customCategories = [];
+      emagazineArticles.forEach(function(art) {
+        if (art.category && !standardCategories.includes(art.category) && !customCategories.includes(art.category)) {
+          customCategories.push(art.category);
+        }
+      });
+      var filterContainer = document.getElementById('emagazine-category-filters');
+      if (filterContainer) {
+        var baseHtml = `
+          <button type="button" onclick="filterEmagazineCategory('All')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'All' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
+            All Articles
+          </button>
+          <button type="button" onclick="filterEmagazineCategory('Editorial')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Editorial' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
+            Headmaster's Desk
+          </button>
+          <button type="button" onclick="filterEmagazineCategory('Poetry')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Poetry' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
+            Poetry & Sahithyam
+          </button>
+          <button type="button" onclick="filterEmagazineCategory('Creative Writing')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Creative Writing' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
+            Creative Writing & Essays
+          </button>
+          <button type="button" onclick="filterEmagazineCategory('Science & Tech')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Science & Tech' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
+            Science & Innovation
+          </button>
+          <button type="button" onclick="filterEmagazineCategory('Art & Drawing')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Art & Drawing' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
+            Student Art Gallery
+          </button>
+          <button type="button" onclick="filterEmagazineCategory('Achievements')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Achievements' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
+            School Triumphs
+          </button>
+        `;
+        var customHtml = customCategories.map(function(c) {
+          var isAct = currentEmagazineFilter.toLowerCase() === c.toLowerCase();
+          return `<button type="button" onclick="filterEmagazineCategory('${escapeEmagText(c)}')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${isAct ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-purple-900 bg-purple-50 hover:bg-purple-100 border border-purple-200'} transition cursor-pointer">
+            ★ ${escapeEmagText(c)}
+          </button>`;
+        }).join('');
+
+        var searchBtn = `
+          <button type="button" onclick="promptCustomArticleSearch()" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs cursor-pointer inline-flex items-center gap-1" title="Filter by Custom Title or Category">
+            <i class="fa-solid fa-magnifying-glass text-amber-700 text-[11px]"></i>
+            <span>+ Custom / Search Title</span>
+          </button>
+        `;
+        filterContainer.innerHTML = baseHtml + customHtml + searchBtn;
+      }
+
       var filtered = emagazineArticles.filter(function(art) {
         if (currentEmagazineFilter === 'All') return true;
-        return art.category === currentEmagazineFilter;
+        if (art.category && art.category.toLowerCase() === currentEmagazineFilter.toLowerCase()) return true;
+        if (art.title && art.title.toLowerCase().includes(currentEmagazineFilter.toLowerCase())) return true;
+        return false;
       });
 
       if (counter) {
@@ -13077,6 +13465,202 @@
       }
     }
 
+    function handleEmagCategoryChange() {
+      var select = document.getElementById('emag-form-category');
+      var container = document.getElementById('emag-custom-category-container');
+      var input = document.getElementById('emag-form-custom-category');
+      if (!select || !container) return;
+      if (select.value === 'Custom') {
+        container.classList.remove('hidden');
+        if (input) input.focus();
+      } else {
+        container.classList.add('hidden');
+      }
+    }
+
+    function setEmagPhotoPreview(url, name) {
+      var hiddenInput = document.getElementById('emag-form-image');
+      if (hiddenInput) hiddenInput.value = url || '';
+      var previewWrap = document.getElementById('emag-photo-preview-wrapper');
+      var previewImg = document.getElementById('emag-photo-preview-img');
+      var previewName = document.getElementById('emag-photo-preview-name');
+      var clearBtn = document.getElementById('btn-clear-emag-photo');
+
+      if (url) {
+        if (previewImg) previewImg.src = url;
+        if (previewName) previewName.textContent = name || 'Article Photo Attached';
+        if (previewWrap) previewWrap.classList.remove('hidden');
+        if (clearBtn) clearBtn.classList.remove('hidden');
+      } else {
+        if (previewImg) previewImg.src = '';
+        if (previewWrap) previewWrap.classList.add('hidden');
+        if (clearBtn) clearBtn.classList.add('hidden');
+      }
+    }
+
+    function clearEmagArticlePhoto() {
+      setEmagPhotoPreview('', '');
+      var fileInput = document.getElementById('emag-photo-file-input');
+      if (fileInput) fileInput.value = '';
+    }
+
+    function handleEmagPhotoFileUpload(event) {
+      var file = event.target.files ? event.target.files[0] : null;
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        compressImageToDataUrl(e.target.result, 900, function(err, compressed) {
+          setEmagPhotoPreview(compressed, file.name);
+        });
+      };
+      reader.readAsDataURL(file);
+      event.target.value = '';
+    }
+
+    async function triggerEmagPhotoPaste() {
+      try {
+        var src = await getClipboardImageOrUrl();
+        if (!src) return;
+        compressImageToDataUrl(src, 900, function(err, compressed) {
+          setEmagPhotoPreview(compressed, 'Pasted Article Photo');
+        });
+      } catch(err) {
+        console.error('Error pasting emag photo:', err);
+      }
+    }
+
+    function promptEmagPhotoUrl() {
+      var url = prompt('Enter Image / Artwork Web URL:');
+      if (url && url.trim()) {
+        setEmagPhotoPreview(url.trim(), 'Web Photo URL');
+      }
+    }
+
+    function promptCustomArticleSearch() {
+      var val = prompt('Enter custom category, section, or article title to filter:');
+      if (val && val.trim()) {
+        filterEmagazineCategory(val.trim());
+      }
+    }
+
+    // Global Paste Listener for Website Photos across Activities, Notices, and E-Magazine
+    window.addEventListener('paste', function(e) {
+      var actModal = document.getElementById('modal-activity');
+      if (actModal && !actModal.classList.contains('hidden')) {
+        var activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag === 'input' || activeTag === 'textarea') {
+          var items = (e.clipboardData || window.clipboardData)?.items;
+          if (items && Array.from(items).some(i => i.type.startsWith('image/'))) {
+            for (var i = 0; i < items.length; i++) {
+              if (items[i].type.startsWith('image/')) {
+                var blob = items[i].getAsFile();
+                var reader = new FileReader();
+                reader.onload = function(ev) {
+                  compressImageToDataUrl(ev.target.result, 800, function(err, compressed) {
+                    if (compressed) {
+                      currentActivityPhotos.push(compressed);
+                      renderActivityPhotosManager();
+                    }
+                  });
+                };
+                reader.readAsDataURL(blob);
+                e.preventDefault();
+                return;
+              }
+            }
+          }
+          return;
+        }
+        var items = (e.clipboardData || window.clipboardData)?.items;
+        if (items) {
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].type.startsWith('image/')) {
+              var blob = items[i].getAsFile();
+              var reader = new FileReader();
+              reader.onload = function(ev) {
+                compressImageToDataUrl(ev.target.result, 800, function(err, compressed) {
+                  if (compressed) {
+                    currentActivityPhotos.push(compressed);
+                    renderActivityPhotosManager();
+                  }
+                });
+              };
+              reader.readAsDataURL(blob);
+              e.preventDefault();
+              return;
+            }
+          }
+        }
+        var text = (e.clipboardData || window.clipboardData)?.getData('text');
+        if (text && (text.startsWith('http://') || text.startsWith('https://') || text.startsWith('data:image/'))) {
+          currentActivityPhotos.push(text.trim());
+          renderActivityPhotosManager();
+          e.preventDefault();
+          return;
+        }
+      }
+
+      var noticeModal = document.getElementById('modal-notice');
+      if (noticeModal && !noticeModal.classList.contains('hidden')) {
+        var items = (e.clipboardData || window.clipboardData)?.items;
+        if (items) {
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].type.startsWith('image/')) {
+              var blob = items[i].getAsFile();
+              var reader = new FileReader();
+              reader.onload = function(ev) {
+                compressImageToDataUrl(ev.target.result, 900, function(err, compressed) {
+                  setNoticePhotoPreview(compressed, 'Pasted Notice Photograph');
+                });
+              };
+              reader.readAsDataURL(blob);
+              e.preventDefault();
+              return;
+            }
+          }
+        }
+        var activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag !== 'input' && activeTag !== 'textarea') {
+          var text = (e.clipboardData || window.clipboardData)?.getData('text');
+          if (text && (text.startsWith('http://') || text.startsWith('https://') || text.startsWith('data:image/'))) {
+            setNoticePhotoPreview(text.trim(), 'Pasted Web Photograph');
+            e.preventDefault();
+            return;
+          }
+        }
+      }
+
+      var emagModal = document.getElementById('modal-add-emagazine');
+      if (emagModal && !emagModal.classList.contains('hidden')) {
+        var items = (e.clipboardData || window.clipboardData)?.items;
+        if (items) {
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].type.startsWith('image/')) {
+              var blob = items[i].getAsFile();
+              var reader = new FileReader();
+              reader.onload = function(ev) {
+                compressImageToDataUrl(ev.target.result, 900, function(err, compressed) {
+                  setEmagPhotoPreview(compressed, 'Pasted Article Artwork');
+                });
+              };
+              reader.readAsDataURL(blob);
+              e.preventDefault();
+              return;
+            }
+          }
+        }
+        var activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag !== 'input' && activeTag !== 'textarea') {
+          var text = (e.clipboardData || window.clipboardData)?.getData('text');
+          if (text && (text.startsWith('http://') || text.startsWith('https://') || text.startsWith('data:image/'))) {
+            setEmagPhotoPreview(text.trim(), 'Pasted Web Artwork');
+            e.preventDefault();
+            return;
+          }
+        }
+      }
+    });
+
     function openAddEmagazineModal() {
       if (!canManageEmagazine()) {
         alert('Access Denied: Only authorized staff and administrators can publish new magazine articles.');
@@ -13086,6 +13670,12 @@
       if (form) form.reset();
       var idField = document.getElementById('emag-form-id');
       if (idField) idField.value = '';
+      var catSelect = document.getElementById('emag-form-category');
+      if (catSelect) catSelect.value = 'Creative Writing';
+      handleEmagCategoryChange();
+      var customCatInput = document.getElementById('emag-form-custom-category');
+      if (customCatInput) customCatInput.value = '';
+      clearEmagArticlePhoto();
       var titleEl = document.getElementById('emag-modal-title');
       if (titleEl) titleEl.textContent = 'Publish to School E-Magazine';
       var subtitleEl = document.getElementById('emag-modal-subtitle');
@@ -13113,13 +13703,27 @@
       if (titleInput) titleInput.value = art.title || '';
 
       var catSelect = document.getElementById('emag-form-category');
-      if (catSelect) catSelect.value = art.category || 'Creative Writing';
+      var customCatInput = document.getElementById('emag-form-custom-category');
+      var standardCats = ['Creative Writing', 'Poetry', 'Editorial', 'Science & Tech', 'Art & Drawing', 'Achievements'];
+      if (catSelect) {
+        if (standardCats.includes(art.category)) {
+          catSelect.value = art.category;
+          if (customCatInput) customCatInput.value = '';
+        } else {
+          catSelect.value = 'Custom';
+          if (customCatInput) customCatInput.value = art.category || '';
+        }
+        handleEmagCategoryChange();
+      }
 
       var authorInput = document.getElementById('emag-form-author');
       if (authorInput) authorInput.value = art.author || '';
 
-      var imgInput = document.getElementById('emag-form-image');
-      if (imgInput) imgInput.value = art.image || '';
+      if (art.image) {
+        setEmagPhotoPreview(art.image, 'Saved Article Photo');
+      } else {
+        clearEmagArticlePhoto();
+      }
 
       var bodyTextarea = document.getElementById('emag-form-body');
       if (bodyTextarea) bodyTextarea.value = art.body || '';
@@ -13147,7 +13751,9 @@
       if (e) e.preventDefault();
       var editId = (document.getElementById('emag-form-id')?.value || '').trim();
       var title = (document.getElementById('emag-form-title')?.value || '').trim();
-      var category = document.getElementById('emag-form-category')?.value;
+      var rawCategory = document.getElementById('emag-form-category')?.value;
+      var customCategory = (document.getElementById('emag-form-custom-category')?.value || '').trim();
+      var category = (rawCategory === 'Custom' ? (customCategory || 'Custom Writing') : rawCategory) || 'Creative Writing';
       var author = (document.getElementById('emag-form-author')?.value || '').trim();
       var image = (document.getElementById('emag-form-image')?.value || '').trim();
       var body = (document.getElementById('emag-form-body')?.value || '').trim();
@@ -13165,7 +13771,7 @@
         var idx = emagazineArticles.findIndex(function(a) { return a.id == editId; });
         if (idx !== -1) {
           emagazineArticles[idx].title = title;
-          emagazineArticles[idx].category = category || 'Creative Writing';
+          emagazineArticles[idx].category = category;
           emagazineArticles[idx].author = author;
           emagazineArticles[idx].image = image || '';
           emagazineArticles[idx].body = body;
@@ -13193,7 +13799,7 @@
       var newArticle = {
         id: Date.now(),
         title: title,
-        category: category || 'Creative Writing',
+        category: category,
         author: author,
         role: 'Contributor',
         classVal: author.includes('Class') ? author : 'ZPHS Girls Gajwel',
@@ -16177,6 +16783,7 @@ var currentTimetableClass = 'Class 10';
       var date = document.getElementById('notice-date').value;
       var title = document.getElementById('notice-title').value.trim();
       var content = document.getElementById('notice-content').value.trim();
+      var photo = (document.getElementById('notice-form-photo')?.value || currentNoticePhoto || '').trim();
 
       if (idVal) {
         var nid = parseInt(idVal, 10);
@@ -16185,9 +16792,10 @@ var currentTimetableClass = 'Class 10';
           noticeList[idx].date = date;
           noticeList[idx].title = title;
           noticeList[idx].content = content;
+          noticeList[idx].photo = photo;
         }
       } else {
-        noticeList.unshift({ id: Date.now(), date, title, content });
+        noticeList.unshift({ id: Date.now(), date, title, content, photo });
       }
 
       try {
