@@ -12201,10 +12201,7 @@
         var formattedDate = formatDisplayDateDDMMYYYY(n.date);
         var safeDate = escapeText(formattedDate || '');
         var photoBadge = n.photo ? `
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-black bg-amber-300 text-slate-950 animate-bounce shadow-md border border-yellow-100 tracking-wider">
-            <i class="fa-solid fa-camera text-slate-900"></i> FLASH PHOTO
-          </span>
-          <img src="${escapeText(n.photo)}" alt="Notice Circular" class="w-6 h-6 sm:w-7 sm:h-7 rounded-md object-cover border-2 border-white/90 shadow-md inline-block">
+          <img src="${escapeText(n.photo)}" alt="Notice Photo" class="w-6 h-6 sm:w-7 sm:h-7 rounded-md object-cover border-2 border-white/90 shadow-md inline-block">
         ` : '';
 
         return `
