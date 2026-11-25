@@ -510,6 +510,22 @@
       animation-play-state: paused;
     }
 
+    /* Photo Gallery Ribbon Flow */
+    @keyframes photoRibbonFlow {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .photo-ribbon-track {
+      display: inline-flex;
+      white-space: nowrap;
+      will-change: transform;
+      animation: photoRibbonFlow 40s linear infinite;
+    }
+    .photo-ribbon-wrapper:hover .photo-ribbon-track,
+    .photo-ribbon-track.is-paused {
+      animation-play-state: paused !important;
+    }
+
     </style>
 </head>
 <body class="bg-[#fcf8f3] font-sans text-slate-800 antialiased min-h-screen flex flex-col">
@@ -944,10 +960,14 @@
           </div>
 
           <!-- Photo Gallery Ribbon Container (Continuous Flowing Strip) -->
-          <div class="relative group">
-            <div id="gallery-ribbon-container" class="overflow-x-auto scroll-smooth py-2 flex items-stretch gap-4 select-none" style="scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent;" onmouseenter="pauseGalleryRibbon()" onmouseleave="resumeGalleryRibbon()">
+          <div class="photo-ribbon-wrapper overflow-hidden relative rounded-2xl py-2 cursor-pointer select-none">
+            <div id="gallery-ribbon-track" class="photo-ribbon-track flex items-stretch gap-4">
               <!-- Dynamically populated by renderGalleryRibbon() with ribbon photo cards -->
             </div>
+            
+            <!-- Left & Right Gradient Fade Edges -->
+            <div class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white via-white/80 to-transparent z-10"></div>
+            <div class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white via-white/80 to-transparent z-10"></div>
           </div>
         </div>
       </section>
@@ -17789,17 +17809,16 @@ var currentTimetableClass = 'Class 10';
     }
 
     var isGalleryRibbonPaused = false;
-    var galleryRibbonInterval = null;
+    var currentRibbonOffset = 0;
 
     function initGallery() {
       syncActivityPhotosToGallery();
       renderGalleryRibbon();
-      startGalleryRibbonFlow();
     }
 
     function renderGalleryRibbon() {
-      var container = document.getElementById('gallery-ribbon-container');
-      if (!container) return;
+      var track = document.getElementById('gallery-ribbon-track');
+      if (!track) return;
 
       if (!galleryPhotos || galleryPhotos.length === 0) {
         galleryPhotos = defaultGalleryPhotos.slice();
@@ -17817,7 +17836,7 @@ var currentTimetableClass = 'Class 10';
         'School Activity': 'bg-indigo-600 text-white'
       };
 
-      container.innerHTML = galleryPhotos.map(function(item, idx) {
+      var cardsHtml = galleryPhotos.map(function(item, idx) {
         var cat = escapeText(item.category || 'Photo Gallery');
         var catBadgeClass = categoryColors[item.category] || 'bg-amber-600 text-white';
         var safeTitle = escapeText(item.title || ('School Photo #' + (idx + 1)));
@@ -17842,7 +17861,7 @@ var currentTimetableClass = 'Class 10';
         ` : '';
 
         return `
-          <div onclick="openPhotoViewerModal(${idx})" class="gallery-ribbon-card group relative w-72 sm:w-80 md:w-96 shrink-0 h-64 sm:h-72 md:h-80 rounded-2xl overflow-hidden bg-slate-900 shadow-md hover:shadow-xl border border-slate-200/80 transition duration-300 cursor-pointer flex flex-col justify-end select-none">
+          <div onclick="openPhotoViewerModal(${idx})" class="gallery-ribbon-card group relative w-72 sm:w-80 md:w-96 shrink-0 h-64 sm:h-72 md:h-80 rounded-2xl overflow-hidden bg-slate-900 shadow-md hover:shadow-xl border border-slate-200/80 transition duration-300 cursor-pointer flex flex-col justify-end select-none whitespace-normal">
             <!-- Photo Image with Zoom on Hover -->
             <img src="${safeSrc}" alt="${safeTitle}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" onerror="this.src='school_building.jpg'">
 
@@ -17870,62 +17889,82 @@ var currentTimetableClass = 'Class 10';
           </div>
         `;
       }).join('');
-    }
 
-    function scrollGalleryRibbon(direction) {
-      var container = document.getElementById('gallery-ribbon-container');
-      if (!container) return;
-      var scrollAmount = 350 * direction;
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+      // Duplicate cards to form an infinite, seamless continuous ribbon loop
+      var repetitions = galleryPhotos.length < 5 ? 4 : (galleryPhotos.length < 8 ? 3 : 2);
+      var fullTrackHtml = '';
+      for (var r = 0; r < repetitions; r++) {
+        fullTrackHtml += cardsHtml;
+      }
+      track.innerHTML = fullTrackHtml;
 
-    function startGalleryRibbonFlow() {
-      if (galleryRibbonInterval) clearInterval(galleryRibbonInterval);
-      galleryRibbonInterval = setInterval(function() {
-        if (isGalleryRibbonPaused) return;
-        var container = document.getElementById('gallery-ribbon-container');
-        if (!container) return;
-        
-        // Wrap around smoothly if reached end
-        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 8) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          container.scrollLeft += 1.5;
-        }
-      }, 35);
+      // Adjust duration dynamically: approximately 3.5s per photo card
+      var totalCards = galleryPhotos.length * repetitions;
+      var duration = Math.max(30, Math.round(totalCards * 3.5));
+      track.style.animation = 'photoRibbonFlow ' + duration + 's linear infinite';
+      currentRibbonOffset = 0;
     }
 
     function pauseGalleryRibbon() {
       isGalleryRibbonPaused = true;
+      var track = document.getElementById('gallery-ribbon-track');
       var textEl = document.getElementById('text-gallery-ribbon-pause');
       var iconEl = document.getElementById('icon-gallery-ribbon-pause');
+      if (track) track.classList.add('is-paused');
       if (textEl) textEl.textContent = 'Paused';
       if (iconEl) iconEl.className = 'fa-solid fa-play text-xs text-emerald-600';
     }
 
     function resumeGalleryRibbon() {
       isGalleryRibbonPaused = false;
+      var track = document.getElementById('gallery-ribbon-track');
       var textEl = document.getElementById('text-gallery-ribbon-pause');
       var iconEl = document.getElementById('icon-gallery-ribbon-pause');
+      if (track) {
+        track.classList.remove('is-paused');
+        track.style.transition = '';
+        track.style.transform = '';
+        var repetitions = galleryPhotos.length < 5 ? 4 : (galleryPhotos.length < 8 ? 3 : 2);
+        var totalCards = galleryPhotos.length * repetitions;
+        var duration = Math.max(30, Math.round(totalCards * 3.5));
+        track.style.animation = 'photoRibbonFlow ' + duration + 's linear infinite';
+      }
       if (textEl) textEl.textContent = 'Flowing';
       if (iconEl) iconEl.className = 'fa-solid fa-pause text-xs text-amber-600';
     }
 
     function toggleGalleryRibbonPause() {
-      if (isGalleryRibbonPaused) {
+      var track = document.getElementById('gallery-ribbon-track');
+      if (track && track.classList.contains('is-paused')) {
         resumeGalleryRibbon();
       } else {
         pauseGalleryRibbon();
       }
     }
 
+    function scrollGalleryRibbon(direction) {
+      var track = document.getElementById('gallery-ribbon-track');
+      if (!track) return;
+      pauseGalleryRibbon();
+      currentRibbonOffset -= (direction * 350);
+      var halfWidth = track.scrollWidth / 2;
+      if (halfWidth > 0) {
+        if (Math.abs(currentRibbonOffset) >= halfWidth) currentRibbonOffset = 0;
+        if (currentRibbonOffset > 0) currentRibbonOffset = -halfWidth + 350;
+      }
+      track.style.animation = 'none';
+      track.style.transition = 'transform 0.4s ease-out';
+      track.style.transform = 'translate3d(' + currentRibbonOffset + 'px, 0, 0)';
+    }
+
     function showGallerySlide(index) {
       if (typeof index === 'number' && index >= 0 && index < galleryPhotos.length) {
         currentGalleryIndex = index;
       }
-      var container = document.getElementById('gallery-ribbon-container');
-      if (container && container.children[currentGalleryIndex]) {
-        var card = container.children[currentGalleryIndex];
+      var track = document.getElementById('gallery-ribbon-track');
+      if (track && track.children[currentGalleryIndex]) {
+        var card = track.children[currentGalleryIndex];
+        pauseGalleryRibbon();
         card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         card.classList.add('ring-4', 'ring-amber-400');
         setTimeout(function() { card.classList.remove('ring-4', 'ring-amber-400'); }, 2000);
@@ -17939,6 +17978,7 @@ var currentTimetableClass = 'Class 10';
     function highlightGalleryThumb() {}
     function resetGalleryTimer() {}
     function startGalleryAutoTimer() {}
+    function startGalleryRibbonFlow() {}
 
     // --- Photo Gallery Add, Edit, Delete Management ---
     function openAddPhotoModal() {
