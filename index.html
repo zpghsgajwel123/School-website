@@ -60,6 +60,8 @@
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      max-width: 100%;
     }
 
     body {
@@ -806,266 +808,159 @@
       <!-- SECTION 1: HOME DASHBOARD -->
       <section id="section-home" class="content-section space-y-6">
         
-        <!-- ========================================== -->
-        <!-- PROMINENT SCHOOL PROFILE SHOWCASE HERO CARD -->
-        <!-- ========================================== -->
-        <div id="home-school-profile" class="rounded-2xl border border-purple-200/90 bg-white shadow-md overflow-hidden scroll-mt-24 space-y-0">
+        <!-- Dashboard Stats Grid (Soft Pastel Colors) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-sky-50 border border-sky-100 rounded-xl p-4 flex items-center justify-between shadow-xs">
+            <div>
+              <p class="text-xs font-semibold text-sky-800/80 uppercase" data-en="Total Students" data-te="మొత్తం విద్యార్థులు" data-ur="کل طالبات">Total Students</p>
+              <h3 class="text-2xl font-bold text-sky-950 mt-1" id="stat-students-count">0</h3>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-sky-200/60 text-sky-700 flex items-center justify-center font-bold text-lg">
+              <i class="fa-solid fa-user-graduate"></i>
+            </div>
+          </div>
           
-          <!-- Hero Header Banner with Light Brinjal Background & Official Emblems -->
-          <div class="relative bg-gradient-to-r from-[#fbf8fe] via-[#f3eafc] to-[#fbf8fe] overflow-hidden p-5 sm:p-7 md:p-8 border-b border-purple-200/90">
-            <!-- Subtle Ambient Lavender Glow -->
-            <div class="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-purple-200/40 blur-3xl pointer-events-none"></div>
-
-            <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-4 sm:gap-6 text-center md:text-left">
-              <!-- School Crest / Emblem: School Logo 2 -->
-              <div class="relative shrink-0">
-                <img src="school_logo_2.jpg" onerror="this.onerror=null; this.src='school_emblem_logo.jpg';" alt="School Logo" class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border-2 border-purple-300 shadow-xl object-contain bg-white p-1 ring-4 ring-purple-100 mx-auto">
-                <span class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-950 rounded-full p-1.5 shadow-md text-[11px] font-black" title="Verified School Crest">
-                  <i class="fa-solid fa-circle-check text-slate-900"></i>
-                </span>
-              </div>
-
-              <!-- Grand School Names & Details in Rich Purple -->
-              <div class="flex-1 space-y-2">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-purple-700 text-white shadow-xs">
-                  <i class="fa-solid fa-school text-amber-300"></i>
-                  <span data-en="Official School Profile" data-te="అధికారిక పాఠశాల ప్రొఫైల్" data-ur="సర్కారీ స్కూల్ ప్రొఫైల్">Official School Profile</span>
-                </div>
-                
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-purple-950 tracking-wide leading-tight drop-shadow-xs" data-en="ZILLA PARISHAD HIGH SCHOOL (GIRLS), GAJWEL" data-te="జిల్లా పరిషత్ ఉన్నత పాఠశాల (బాలికలు), గజ్వేల్" data-ur="ضلع پریشد ہائی اسکول (طالبات)، گجویل">
-                  ZILLA PARISHAD HIGH SCHOOL (GIRLS), GAJWEL
-                </h2>
-                
-                <p class="text-xs sm:text-sm font-bold text-purple-900/80 flex items-center justify-center md:justify-start gap-1.5" data-en="Gajwel Mandal, Siddipet District, Telangana - 502278" data-te="గజ్వేల్ మండలం, సిద్దిపేట జిల్లా, తెలంగాణ - 502278" data-ur="گجویل منڈل، ضلع سدی پیٹ، تلنگانہ – 502278">
-                  <i class="fa-solid fa-location-dot text-rose-600"></i>
-                  <span>Gajwel Mandal, Siddipet District, Telangana - 502278</span>
-                </p>
-
-                <!-- High-visibility Badges -->
-                <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1.5">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black bg-amber-400 text-slate-950 shadow-xs">
-                    <i class="fa-solid fa-id-badge text-slate-900"></i>
-                    <span>U-DISE: 36181802720</span>
-                  </span>
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-purple-100 text-purple-900 border border-purple-300 shadow-2xs">
-                    <i class="fa-solid fa-building-columns text-purple-700"></i>
-                    <span data-en="DSE Telangana (SSC Board)" data-te="డి.ఎస్.ఇ తెలంగాణ (SSC బోర్డ్)">DSE Telangana (SSC Board)</span>
-                  </span>
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-2xs">
-                    <i class="fa-solid fa-language text-emerald-700"></i>
-                    <span data-en="English & Urdu Medium" data-te="ఇంగ్లీష్ & ఉర్దూ మాధ్యమం">English & Urdu Medium</span>
-                  </span>
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-pink-100 text-pink-900 border border-pink-300 shadow-2xs">
-                    <i class="fa-solid fa-venus text-pink-700"></i>
-                    <span data-en="Girls High School (VI - X)" data-te="బాలికల ఉన్నత పాఠశాల (6 - 10)">Girls High School (VI - X)</span>
-                  </span>
-                </div>
-              </div>
-
-              <!-- Telangana State Govt Emblem -->
-              <div class="hidden sm:flex flex-col items-center shrink-0 bg-white/90 p-3 rounded-2xl border border-purple-200/90 shadow-sm">
-                <img src="ts_govt_logo.png" alt="Govt of Telangana" class="w-14 h-14 object-contain drop-shadow-xs">
-                <span class="text-[10px] font-black text-purple-900 mt-1 uppercase tracking-wider">Govt of TS</span>
-              </div>
+          <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 flex items-center justify-between shadow-xs">
+            <div>
+              <p class="text-xs font-semibold text-emerald-800/80 uppercase" data-en="Total Staff" data-te="ఉపాధ్యాయులు" data-ur="کل اساتذہ">Total Staff</p>
+              <h3 class="text-2xl font-bold text-emerald-950 mt-1" id="stat-staff-count">0</h3>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-emerald-200/60 text-emerald-700 flex items-center justify-center font-bold text-lg">
+              <i class="fa-solid fa-chalkboard-user"></i>
             </div>
           </div>
 
-          <!-- Quick Metrics Bar (Students, Staff, Classes, U-DISE) -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 sm:p-4 bg-slate-50 border-b border-slate-200">
-            <div class="bg-white border border-sky-200 rounded-xl p-3 flex items-center justify-between shadow-xs">
-              <div>
-                <p class="text-[11px] font-bold text-sky-800 uppercase tracking-wider" data-en="Total Students" data-te="మొత్తం విద్యార్థులు" data-ur="کل طالبات">Total Students</p>
-                <h3 class="text-2xl font-black text-sky-950 mt-0.5" id="stat-students-count">0</h3>
-              </div>
-              <div class="w-9 h-9 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-user-graduate"></i>
-              </div>
+          <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 flex items-center justify-between shadow-xs">
+            <div>
+              <p class="text-xs font-semibold text-amber-800/80 uppercase" data-en="Active Classes" data-te="తరగతులు" data-ur="కలాస్">Active Classes</p>
+              <h3 class="text-2xl font-bold text-amber-950 mt-1">5 (VI - X)</h3>
             </div>
-
-            <div class="bg-white border border-emerald-200 rounded-xl p-3 flex items-center justify-between shadow-xs">
-              <div>
-                <p class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider" data-en="Total Staff" data-te="ఉపాధ్యాయులు" data-ur="کل اساتذہ">Total Staff</p>
-                <h3 class="text-2xl font-black text-emerald-950 mt-0.5" id="stat-staff-count">0</h3>
-              </div>
-              <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-chalkboard-user"></i>
-              </div>
-            </div>
-
-            <div class="bg-white border border-amber-200 rounded-xl p-3 flex items-center justify-between shadow-xs">
-              <div>
-                <p class="text-[11px] font-bold text-amber-800 uppercase tracking-wider" data-en="Active Classes" data-te="తరగతులు" data-ur="కలాస్">Active Classes</p>
-                <h3 class="text-2xl font-black text-amber-950 mt-0.5">5 (VI - X)</h3>
-              </div>
-              <div class="w-9 h-9 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-book-open"></i>
-              </div>
-            </div>
-
-            <div class="bg-white border border-indigo-200 rounded-xl p-3 flex items-center justify-between shadow-xs">
-              <div>
-                <p class="text-[11px] font-bold text-indigo-800 uppercase tracking-wider" data-en="School Code" data-te="పాఠశాల కోడ్" data-ur="اسکول کوڈ">School Code</p>
-                <h3 class="text-lg sm:text-xl font-black text-indigo-950 mt-0.5">36181802720</h3>
-              </div>
-              <div class="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-shield-halved"></i>
-              </div>
+            <div class="w-10 h-10 rounded-lg bg-amber-200/60 text-amber-700 flex items-center justify-center font-bold text-lg">
+              <i class="fa-solid fa-book-open"></i>
             </div>
           </div>
-
-          <!-- Comprehensive School Profile Particulars (3 Column Structured Grid) -->
-          <div class="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-5 text-sm">
-            
-            <!-- Column 1: Administration & Leadership -->
-            <div class="bg-slate-50/80 border border-slate-200 rounded-xl p-4.5 space-y-3">
-              <h4 class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-2 flex items-center gap-2">
-                <i class="fa-solid fa-user-tie text-indigo-600"></i>
-                <span data-en="Administration & Leadership" data-te="పాలనా విభాగం & నాయకత్వం" data-ur="انتظامیہ اور قیادت">Administration & Leadership</span>
-              </h4>
-              <div class="space-y-2 text-xs sm:text-sm">
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="Headmistress:" data-te="ప్రధానోపాధ్యాయురాలు:">Headmistress:</span>
-                  <span class="font-bold text-slate-900" data-en="Smt. Shaheen Sulthana, M.Sc, B.Ed" data-te="శ్రీమతి షాహీన్ సుల్తానా, M.Sc, B.Ed">Smt. Shaheen Sulthana, M.Sc, B.Ed</span>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="Official Phone:" data-te="అధికారిక ఫోన్ నంబర్:">Official Phone:</span>
-                  <a href="tel:+919951801946" class="font-bold text-indigo-700 hover:underline flex items-center gap-1">
-                    <i class="fa-solid fa-phone text-xs"></i> +91 9951801946
-                  </a>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="Official Email:" data-te="ఈమెయిల్:">Official Email:</span>
-                  <a href="mailto:ghmzpghsgajwel@gmail.com" class="font-bold text-indigo-700 hover:underline break-all flex items-center gap-1">
-                    <i class="fa-solid fa-envelope text-xs"></i> ghmzpghsgajwel@gmail.com
-                  </a>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="School Management:" data-te="పాఠశాల యాజమాన్యం:">School Management:</span>
-                  <span class="font-semibold text-slate-800" data-en="Zilla Parishad / Dept of School Education" data-te="జిల్లా పరిషత్ / పాఠశాల విద్యాశాఖ">Zilla Parishad / Dept of School Education</span>
-                </div>
-              </div>
-
-              <!-- Quick Action Contact Buttons -->
-              <div class="pt-2 flex flex-wrap gap-2">
-                <a href="tel:+919951801946" class="flex-1 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs text-center flex items-center justify-center gap-1.5 shadow-2xs transition">
-                  <i class="fa-solid fa-phone"></i>
-                  <span data-en="Call School" data-te="ఫోన్ చేయండి">Call</span>
-                </a>
-                <a href="mailto:ghmzpghsgajwel@gmail.com" class="flex-1 py-1.5 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs text-center flex items-center justify-center gap-1.5 shadow-2xs transition">
-                  <i class="fa-solid fa-envelope"></i>
-                  <span data-en="Email" data-te="ఈమెయిల్">Email</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- Column 2: Academic Streams & Curriculum -->
-            <div class="bg-slate-50/80 border border-slate-200 rounded-xl p-4.5 space-y-3">
-              <h4 class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-2 flex items-center gap-2">
-                <i class="fa-solid fa-graduation-cap text-sky-600"></i>
-                <span data-en="Academics & Curriculum" data-te="బోధన & విద్యా విధానం" data-ur="تعلیم اور نصاب">Academics & Curriculum</span>
-              </h4>
-              <div class="space-y-2 text-xs sm:text-sm">
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="Medium of Instruction:" data-te="బోధనా మాధ్యమం:">Medium of Instruction:</span>
-                  <span class="font-bold text-slate-900" data-en="English Medium & Urdu Medium" data-te="ఇంగ్లీష్ మీడియం & ఉర్దూ మీడియం">English Medium & Urdu Medium</span>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="Classes Handled:" data-te="తరగతులు:">Classes Handled:</span>
-                  <span class="font-semibold text-slate-800" data-en="Class 6 to Class 10 (Secondary Education)" data-te="6వ తరగతి నుండి 10వ తరగతి వరకు">Class 6 to Class 10 (Secondary Education)</span>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="Board Affiliation:" data-te="బోర్డు అనుబంధం:">Board Affiliation:</span>
-                  <span class="font-semibold text-slate-800" data-en="Directorate of School Education, Govt. of Telangana (SSC)" data-te="తెలంగాణ పాఠశాల విద్యా డైరెక్టరేట్ (ఎస్.ఎస్.సి)">Directorate of School Education, Govt. of Telangana (SSC)</span>
-                </div>
-                <div>
-                  <span class="text-slate-500 font-medium block text-xs" data-en="Academic Highlights:" data-te="విద్యా విశేషాలు:">Academic Highlights:</span>
-                  <ul class="list-disc list-inside text-slate-700 text-xs space-y-1 mt-1 font-medium">
-                    <li data-en="High SSC Board Examination Results" data-te="ఉత్తమ ఎస్.ఎస్.సి పరీక్షల ఫలితాలు">High SSC Board Examination Results</li>
-                    <li data-en="Interactive Digital Classroom Learning" data-te="ఇంటరాక్టివ్ డిజిటల్ తరగతి గదులు">Interactive Digital Classroom Learning</li>
-                    <li data-en="Dedicated Remedial & Special Classes" data-te="ప్రత్యేక శ్రద్ధ & రెమెడియల్ తరగతులు">Dedicated Remedial & Special Classes</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Column 3: Campus Facilities & Welfare Schemes -->
-            <div class="bg-slate-50/80 border border-slate-200 rounded-xl p-4.5 space-y-3">
-              <h4 class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-2 flex items-center gap-2">
-                <i class="fa-solid fa-shapes text-emerald-600"></i>
-                <span data-en="Campus Facilities & Schemes" data-te="వసతులు & సంక్షేమ పథకాలు" data-ur="سہولیات اور فلاحی اسکیمیں">Campus Facilities & Schemes</span>
-              </h4>
-              
-              <!-- Badges of Facilities -->
-              <div>
-                <span class="text-slate-500 font-medium block text-xs mb-1.5" data-en="Key Campus Infrastructure:" data-te="పాఠశాల వసతులు:">Key Campus Infrastructure:</span>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="px-2 py-0.5 bg-blue-50 border border-blue-200 text-blue-800 rounded text-[11px] font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-tv text-blue-600"></i> <span data-en="Digital Classrooms" data-te="డిజిటల్ తరగతులు">Digital Classrooms</span>
-                  </span>
-                  <span class="px-2 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-[11px] font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-flask text-emerald-600"></i> <span data-en="Science Lab" data-te="సైన్స్ ల్యాబ్">Science Lab</span>
-                  </span>
-                  <span class="px-2 py-0.5 bg-purple-50 border border-purple-200 text-purple-800 rounded text-[11px] font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-laptop-code text-purple-600"></i> <span data-en="Computer Lab" data-te="కంప్యూటర్ ల్యాబ్">Computer Lab</span>
-                  </span>
-                  <span class="px-2 py-0.5 bg-amber-50 border border-amber-200 text-amber-800 rounded text-[11px] font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-futbol text-amber-600"></i> <span data-en="Playground" data-te="క్రీడా మైదానం">Playground</span>
-                  </span>
-                  <span class="px-2 py-0.5 bg-teal-50 border border-teal-200 text-teal-800 rounded text-[11px] font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-book text-teal-600"></i> <span data-en="Library" data-te="లైబ్రరీ">Library</span>
-                  </span>
-                  <span class="px-2 py-0.5 bg-cyan-50 border border-cyan-200 text-cyan-800 rounded text-[11px] font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-faucet-drip text-cyan-600"></i> <span data-en="Safe Drinking Water" data-te="తాగునీరు">RO Drinking Water</span>
-                  </span>
-                </div>
-              </div>
-
-              <!-- Govt Welfare Schemes -->
-              <div class="pt-1 border-t border-slate-200">
-                <span class="text-slate-500 font-medium block text-xs mb-1.5" data-en="Government Welfare Schemes:" data-te="ప్రభుత్వ సంక్షేమ పథకాలు:">Government Welfare Schemes:</span>
-                <div class="space-y-1 text-xs text-slate-700 font-medium">
-                  <div class="flex items-center gap-1.5 text-emerald-800">
-                    <i class="fa-solid fa-check-circle text-emerald-600"></i>
-                    <span data-en="Nutritious Mid-Day Meal (KCR Diet & Eggs)" data-te="పౌష్టికాహార మధ్యాహ్న భోజనం (గుడ్లు సహా)">Nutritious Mid-Day Meal (Eggs included)</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 text-emerald-800">
-                    <i class="fa-solid fa-check-circle text-emerald-600"></i>
-                    <span data-en="Free Textbooks, Workbooks & Notebooks" data-te="ఉచిత పాఠ్యపుస్తకాలు & నోట్‌బుక్స్">Free Textbooks, Workbooks & Notebooks</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 text-emerald-800">
-                    <i class="fa-solid fa-check-circle text-emerald-600"></i>
-                    <span data-en="Free School Uniforms & Shoes" data-te="ఉచిత యూనిఫారాలు & షూస్">Free School Uniforms & Shoes</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 text-emerald-800">
-                    <i class="fa-solid fa-check-circle text-emerald-600"></i>
-                    <span data-en="Girl Child Health & Self-Defense Programs" data-te="బాలికల ఆరోగ్యం & ఆత్మరక్షణ శిక్షణ">Girl Child Health & Self-Defense Programs</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
         </div>
 
-        <!-- Latest Announcements Section (Full-Width Clean Presentation) -->
-        <div class="border border-teal-200 rounded-2xl p-5 sm:p-6 bg-teal-50/60 shadow-xs">
-          <div class="flex items-center justify-between mb-4 border-b border-teal-200/80 pb-3">
-            <h3 class="font-bold text-teal-900 text-base sm:text-lg flex items-center gap-2">
-              <span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-teal-100 text-teal-700 text-sm shadow-2xs">
-                <i class="fa-solid fa-bullhorn"></i>
-              </span>
-              <span data-en="Recent Announcements & Circulars" data-te="ఇటీవలి పాఠశాల ప్రకటనలు & సర్క్యులర్లు" data-ur="حالیہ اعلانات اور سرکلرز">Recent Announcements & Circulars</span>
-            </h3>
-            <button onclick="switchTab('notices')" class="text-xs text-teal-800 hover:text-teal-950 hover:underline font-bold bg-white/80 border border-teal-300 px-3 py-1.5 rounded-lg shadow-2xs transition flex items-center gap-1.5" data-en="View All Notices" data-te="అన్ని ప్రకటనలు చూడండి">
-              <span>View All Notices</span>
-              <i class="fa-solid fa-arrow-right text-xs"></i>
-            </button>
+        <!-- Quick Info & Notice Preview Grid (Balanced 2-Column Dashboard that fits the screen) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
+          
+          <!-- Column 1: Latest Announcements Preview -->
+          <div class="border border-teal-200 rounded-2xl p-5 bg-teal-50/70 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4 border-b border-teal-200/80 pb-3">
+                <h3 class="font-bold text-teal-900 text-sm sm:text-base flex items-center gap-2">
+                  <span class="w-7 h-7 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-xs shadow-2xs">
+                    <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+                  <span data-en="Recent Announcements" data-te="ఇటీవలి ప్రకటనలు" data-ur="حالیہ اعلانات">Recent Announcements</span>
+                </h3>
+                <button onclick="switchTab('notices')" class="text-xs text-teal-800 hover:text-teal-950 hover:underline font-bold bg-white/80 border border-teal-300 px-2.5 py-1 rounded-lg shadow-2xs transition flex items-center gap-1 cursor-pointer" data-en="View All" data-te="అన్నీ చూడండి">
+                  <span>View All</span>
+                  <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </button>
+              </div>
+              <ul id="home-notice-list" class="space-y-2.5 text-sm max-h-[360px] overflow-y-auto pr-1">
+                <!-- Dynamically populated -->
+              </ul>
+            </div>
+            <div class="pt-3 mt-3 border-t border-teal-200/60 flex items-center justify-between text-xs text-teal-800/80">
+              <span class="flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left"></i> Updates regularly</span>
+              <button onclick="switchTab('notices')" class="font-bold hover:underline text-teal-900">Open Notice Board →</button>
+            </div>
           </div>
-          <ul id="home-notice-list" class="space-y-3 text-sm">
-            <!-- Dynamically populated by renderNotices() -->
-          </ul>
+
+          <!-- Column 2: School Profile (Light Brinjal, School Logo 2, No Timings, Fits Screen) -->
+          <div id="home-school-profile" class="border border-purple-200 rounded-2xl p-5 bg-gradient-to-br from-[#faf5ff] via-[#f3e8ff]/60 to-[#faf5ff] shadow-xs flex flex-col justify-between scroll-mt-20">
+            <div>
+              <!-- Header with School Logo 2 and Title -->
+              <div class="flex items-center gap-3.5 mb-3.5 pb-3 border-b border-purple-200/80">
+                <div class="relative shrink-0">
+                  <img src="school_logo_2.jpg" onerror="this.onerror=null; this.src='school_emblem_logo.jpg';" alt="School Logo" class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-purple-300 shadow-md object-contain bg-white p-0.5 ring-2 ring-purple-200/50">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="px-2 py-0.5 bg-purple-700 text-white rounded text-[10px] font-extrabold uppercase tracking-wide shadow-2xs">Official</span>
+                    <span class="px-2 py-0.5 bg-amber-400 text-slate-950 rounded text-[10px] font-black shadow-2xs">U-DISE: 36181802720</span>
+                  </div>
+                  <h3 class="font-black text-purple-950 text-sm sm:text-base leading-snug mt-1 truncate" title="ZILLA PARISHAD HIGH SCHOOL (GIRLS), GAJWEL" data-en="ZILLA PARISHAD HIGH SCHOOL (GIRLS): GAJWEL" data-te="జిల్లా పరిషత్ ఉన్నత పాఠశాల (బాలికలు): గజ్వేల్" data-ur="ضلع پریشد ہائی اسکول (طالبات): گجویل">
+                    ZILLA PARISHAD HIGH SCHOOL (GIRLS): GAJWEL
+                  </h3>
+                  <p class="text-[11px] font-semibold text-purple-900/80 flex items-center gap-1 truncate" data-en="Gajwel, Siddipet District, Telangana - 502278" data-te="గజ్వేల్, సిద్దిపేట జిల్లా, తెలంగాణ">
+                    <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i> Gajwel, Siddipet District, Telangana - 502278
+                  </p>
+                </div>
+              </div>
+
+              <!-- Particulars Details List -->
+              <div class="space-y-2 text-xs sm:text-sm text-purple-950/85">
+                <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
+                  <span class="font-medium text-purple-900/70" data-en="Headmistress:" data-te="ప్రధానోపాధ్యాయురాలు:">Headmistress:</span>
+                  <span class="text-purple-950 font-bold text-right" data-en="Smt. Shaheen Sulthana, M.Sc, B.Ed" data-te="శ్రీమతి షాహీన్ సుల్తానా, M.Sc, B.Ed">Smt. Shaheen Sulthana, M.Sc, B.Ed</span>
+                </div>
+                <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
+                  <span class="font-medium text-purple-900/70" data-en="Admin Email:" data-te="ఈమెయిల్:">Admin Email:</span>
+                  <a href="mailto:ghmzpghsgajwel@gmail.com" class="text-purple-950 font-semibold hover:underline truncate max-w-[200px]">ghmzpghsgajwel@gmail.com</a>
+                </div>
+                <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
+                  <span class="font-medium text-purple-900/70" data-en="Medium of Instruction:" data-te="బోధనా మాధ్యమం:">Medium of Instruction:</span>
+                  <span class="text-purple-950 font-semibold" data-en="English and Urdu Medium" data-te="ఇంగ్లీష్ మరియు ఉర్దూ మాధ్యమం">English and Urdu Medium</span>
+                </div>
+                <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
+                  <span class="font-medium text-purple-900/70" data-en="Affiliation:" data-te="అనుబంధం:">Affiliation:</span>
+                  <span class="text-purple-950 font-semibold">DSE Telangana (SSC Board)</span>
+                </div>
+                <div class="flex justify-between items-center py-0.5">
+                  <span class="font-medium text-purple-900/70" data-en="School Contact:" data-te="ఫోన్ నంబర్:">School Contact:</span>
+                  <a href="tel:+919951801946" class="text-purple-950 font-bold hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-phone text-[10px] text-emerald-600"></i> +91 9951801946
+                  </a>
+                </div>
+              </div>
+
+              <!-- Facilities Badges Section -->
+              <div class="mt-3 pt-2.5 border-t border-purple-200">
+                <span class="text-[11px] font-bold text-purple-950 block mb-1.5" data-en="Key Facilities & Government Schemes:" data-te="ముఖ్యమైన వసతులు & ప్రభుత్వ పథకాలు:">Key Facilities & Government Schemes:</span>
+                <div class="flex flex-wrap gap-1">
+                  <span class="px-2 py-0.5 bg-blue-50 border border-blue-200 text-blue-800 rounded-md text-[10px] font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-chalkboard-user text-blue-600"></i>
+                    <span data-en="Digital Classrooms" data-te="డిజిటల్ తరగతి గదులు">Digital Classrooms</span>
+                  </span>
+                  <span class="px-2 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-md text-[10px] font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-vial text-emerald-600"></i>
+                    <span data-en="Science Lab" data-te="సైన్స్ ప్రయోగశాల">Science Lab</span>
+                  </span>
+                  <span class="px-2 py-0.5 bg-amber-50 border border-amber-200 text-amber-800 rounded-md text-[10px] font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-volleyball text-amber-600"></i>
+                    <span data-en="Sports Ground" data-te="క్రీడా మైదానం">Sports Ground</span>
+                  </span>
+                  <span class="px-2 py-0.5 bg-purple-50 border border-purple-200 text-purple-800 rounded-md text-[10px] font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-bowl-rice text-purple-600"></i>
+                    <span data-en="Mid Day Meal" data-te="మధ్యాహ్న భోజనం">Mid Day Meal</span>
+                  </span>
+                  <span class="px-2 py-0.5 bg-teal-50 border border-teal-200 text-teal-800 rounded-md text-[10px] font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-book text-teal-600"></i>
+                    <span data-en="Free Text Books" data-te="ఉచిత పాఠ్యపుస్తకాలు">Free Books</span>
+                  </span>
+                  <span class="px-2 py-0.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-md text-[10px] font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-shoe-prints text-rose-600"></i>
+                    <span data-en="Free Shoes" data-te="ఉచిత షూస్">Free Shoes</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="pt-3 mt-3 border-t border-purple-200/70 flex items-center gap-2">
+              <a href="tel:+919951801946" class="flex-1 py-1 px-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs text-center flex items-center justify-center gap-1 shadow-2xs transition">
+                <i class="fa-solid fa-phone text-[10px]"></i> <span data-en="Call" data-te="కాల్">Call</span>
+              </a>
+              <a href="mailto:ghmzpghsgajwel@gmail.com" class="flex-1 py-1 px-2.5 rounded-lg bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs text-center flex items-center justify-center gap-1 shadow-2xs transition">
+                <i class="fa-solid fa-envelope text-[10px]"></i> <span data-en="Email" data-te="ఈమెయిల్">Email</span>
+              </a>
+            </div>
+
+          </div>
+
         </div>
 
         <!-- SECTION: PHOTO GALLERY (Ribbon Type Flow) -->
