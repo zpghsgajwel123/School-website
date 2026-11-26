@@ -1,0 +1,127 @@
+{
+  "lastUpdated": "2026-11-26T15:41:28.966Z",
+  "formattedDate": "Thursday, 26 November 2026 at 9:11 pm",
+  "edition": "Daily 6:00 AM IST Digest",
+  "totalStories": 10,
+  "sources": [
+    "The Hindu",
+    "Deccan Chronicle",
+    "Open-Meteo"
+  ],
+  "stories": [
+    {
+      "id": 1,
+      "title": "Gajwel Weather: 24°C, Clear Sunny Sky",
+      "summary": "Current local weather in Gajwel, Siddipet District: 24°C with clear sunny sky and winds at 9 km/h. Suitable for regular school schedule.",
+      "category": "Weather",
+      "source": "Open-Meteo",
+      "url": "https://open-meteo.com/en/docs",
+      "imageUrl": null,
+      "pubDate": "Thu, 26 Nov 2026 15:41:29 GMT",
+      "weatherMeta": {
+        "temp": 24,
+        "condition": "Clear Sunny Sky",
+        "wind": 9
+      }
+    },
+    {
+      "id": 2,
+      "title": "Bandi Sanjay seeks crackdown on drug mafia, questions action on key cases",
+      "summary": "Latest regional report from Telangana covering key developments and governance updates as reported by The Hindu.",
+      "category": "Telangana",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/national/telangana/bandi-sanjay-seeks-crackdown-on-drug-mafia-questions-action-on-key-cases/article71747502.ece",
+      "imageUrl": "https://th-i.thgim.com/public/incoming/n5o46k/article71747623.ece/alternates/LANDSCAPE_1200/Bandi-Sanjay-saGO9GPC8HT.3.jpg.jpg",
+      "pubDate": "Thu, 26 Nov 2026 21:04:12 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 3,
+      "title": "ACB arrests TGSPDCL engineer for accepting ₹60,000 bribe in Gadwal",
+      "summary": "Latest regional report from Telangana covering key developments and governance updates as reported by The Hindu.",
+      "category": "Telangana",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/national/telangana/acb-arrests-tgspdcl-engineer-for-accepting-60000-bribe-in-gadwal/article71747440.ece",
+      "imageUrl": "https://th-i.thgim.com/public/news/national/telangana/slqjgt/article71747466.ece/alternates/LANDSCAPE_1200/WhatsApp%20Image%202026-11-26%20at%208.09.13%20PM.jpeg",
+      "pubDate": "Thu, 26 Nov 2026 20:56:39 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 4,
+      "title": "New investments, expansion of units key to TG industrial growth plans: Minister",
+      "summary": "Latest regional report from Telangana covering key developments and governance updates as reported by The Hindu.",
+      "category": "Telangana",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/cities/Hyderabad/new-investments-expansion-of-units-key-to-tg-industrial-growth-plans-minister/article71746757.ece",
+      "imageUrl": "https://th-i.thgim.com/public/news/national/telangana/ie43h4/article71746738.ece/alternates/LANDSCAPE_1200/26.11.2026%20Vintage%20Coffee.jpeg",
+      "pubDate": "Thu, 26 Nov 2026 20:53:26 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 5,
+      "title": "Carbohydrate quality, not quantity, must drive future nutrition research, says CFTRI chief",
+      "summary": "Latest regional report from Telangana covering key developments and governance updates as reported by The Hindu.",
+      "category": "Telangana",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/national/telangana/carbohydrate-quality-not-quantity-must-drive-future-nutrition-research-says-cftri-chief/article71745576.ece",
+      "imageUrl": null,
+      "pubDate": "Thu, 26 Nov 2026 20:45:57 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 6,
+      "title": "Mahadevappa turns up for Constitution Day function at Maharaja’s College grounds",
+      "summary": "National news bulletin from India covering major policy, administrative, and public updates reported by The Hindu.",
+      "category": "National",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/national/karnataka/mahadevappa-turns-up-for-constitution-day-function-at-maharajas-college-grounds/article71747614.ece",
+      "imageUrl": "https://th-i.thgim.com/public/incoming/xvyb8b/article71747654.ece/alternates/LANDSCAPE_1200/5964_26_11_2026_19_26_30_3_SIDDUMAHADEVAPPA.JPG",
+      "pubDate": "Thu, 26 Nov 2026 21:07:53 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 7,
+      "title": "SBI donates ₹4.43 lakh cheque to improve facilities in tribal schools in Parvatipuram -Manyam",
+      "summary": "National news bulletin from India covering major policy, administrative, and public updates reported by The Hindu.",
+      "category": "National",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/sbi-donates-443-lakh-cheque-to-improve-facilities-in-tribal-schools-in-parvatipuram-manyam/article71745500.ece",
+      "imageUrl": "https://th-i.thgim.com/public/incoming/g9dkg2/article71747437.ece/alternates/LANDSCAPE_1200/9774_26_11_2026_11_42_7_1_SCREENSHOT_20261126_113307.JPG",
+      "pubDate": "Thu, 26 Nov 2026 21:06:30 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 8,
+      "title": "Serbia sets Presidential election for December 27 after students won Parliamentary vote",
+      "summary": "The Presidential vote will be held after a student movement defeated Mr.",
+      "category": "International",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/international/serbia-sets-presidential-election-for-december-27-after-students-won-parliamentary-vote/article71746565.ece",
+      "imageUrl": "https://th-i.thgim.com/public/incoming/55sn4o/article71746714.ece/alternates/LANDSCAPE_1200/2026-11-17T171014Z_1047750035_RC2KPOA4CJUG_RTRMADP_3_SERBIA-PARLIAMENT.JPG",
+      "pubDate": "Thu, 26 Nov 2026 19:25:13 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 9,
+      "title": "U.K. net migration falls to lowest since 1997; Indians largest foreign group entering and leaving the country",
+      "summary": "Some 44,000 Indians arrived in the U.K.",
+      "category": "International",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/news/international/uk-net-migration-falls-to-lowest-since-1997-indians-largest-foreign-group-entering-and-leaving-the-country/article71746576.ece",
+      "imageUrl": "https://th-i.thgim.com/public/incoming/kbcw2e/article71746587.ece/alternates/LANDSCAPE_1200/2023-12-05T082430Z_1681444546_RC2VQ4A8JSE1_RTRMADP_3_MIGRATION-BRITAIN-RWANDA-CLEVERLY.JPG",
+      "pubDate": "Thu, 26 Nov 2026 18:25:21 +0530",
+      "weatherMeta": null
+    },
+    {
+      "id": 10,
+      "title": "BIMSTEC meet: Roshan and Sabita win high hurdles gold",
+      "summary": "Sports roundup highlighting recent tournament results, matches, and athletic performances reported by The Hindu.",
+      "category": "Sports",
+      "source": "The Hindu",
+      "url": "https://www.thehindu.com/sport/athletics/bimstec-meet-roshan-and-sabita-win-high-hurdles-gold/article71747557.ece",
+      "imageUrl": null,
+      "pubDate": "Thu, 26 Nov 2026 21:01:39 +0530",
+      "weatherMeta": null
+    }
+  ]
+}
