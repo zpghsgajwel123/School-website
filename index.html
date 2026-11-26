@@ -3817,11 +3817,22 @@
               <img id="gallery-modal-preview" src="" alt="Preview" class="w-full h-full object-cover hidden">
             </div>
             <div class="flex-1 space-y-1">
-              <label for="gallery-file-input" class="cursor-pointer bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
-                <i class="fa-solid fa-upload text-orange-500"></i>
-                <span>Choose Image File</span>
-              </label>
-              <input type="file" id="gallery-file-input" accept="image/*" class="hidden" onchange="handleGalleryPhotoUpload(event)">
+              <div class="flex flex-wrap items-center gap-2">
+                <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Open Phone Camera directly on Android">
+                  <i class="fa-solid fa-camera"></i>
+                  <span>Take Photo (Camera)</span>
+                  <input type="file" id="gallery-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleGalleryPhotoUpload(event)">
+                </label>
+                <label for="gallery-file-input" class="cursor-pointer bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Choose photo from phone Gallery or Files">
+                  <i class="fa-solid fa-images text-orange-500"></i>
+                  <span>From Gallery / Files</span>
+                </label>
+                <input type="file" id="gallery-file-input" accept="image/*" class="hidden" onchange="handleGalleryPhotoUpload(event)">
+                <button type="button" onclick="openLiveCameraModal('gallery')" class="bg-orange-50 hover:bg-orange-100 text-orange-800 border border-orange-200 font-semibold px-2.5 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs" title="Open in-screen Live Camera">
+                  <i class="fa-solid fa-video text-orange-600"></i>
+                  <span>Live Camera</span>
+                </button>
+              </div>
               <p class="text-[11px] text-slate-500">or enter an Image Web URL below</p>
             </div>
           </div>
@@ -3893,11 +3904,26 @@
             <label class="block font-bold text-slate-800 text-xs">Staff Photograph</label>
             <p class="text-[11px] text-slate-500">Upload official passport photo (JPG/PNG). Image will be auto-optimized for profile, cards & ID card.</p>
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
-              <label class="cursor-pointer bg-white hover:bg-orange-50 text-orange-700 border border-orange-300 hover:border-orange-400 font-semibold px-3 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition">
-                <i class="fa-solid fa-camera text-orange-600"></i>
-                <span id="staff-photo-btn-text">Upload Photo</span>
+              <!-- Android Camera Button (Direct Camera Access) -->
+              <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition" title="Open Phone Camera directly on Android phone">
+                <i class="fa-solid fa-camera"></i>
+                <span>Take Photo (Camera)</span>
+                <input type="file" id="staff-photo-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleStaffPhotoUpload(event)">
+              </label>
+
+              <!-- Gallery / File Chooser Button -->
+              <label class="cursor-pointer bg-white hover:bg-orange-50 text-orange-700 border border-orange-300 hover:border-orange-400 font-semibold px-3 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition" title="Choose photo from phone Gallery or Files">
+                <i class="fa-solid fa-images text-orange-600"></i>
+                <span id="staff-photo-btn-text">Choose from Gallery</span>
                 <input type="file" id="staff-photo-input" accept="image/*" class="hidden" onchange="handleStaffPhotoUpload(event)">
               </label>
+
+              <!-- Live Camera Viewfinder Button -->
+              <button type="button" onclick="openLiveCameraModal('staff')" class="bg-orange-50 hover:bg-orange-100 text-orange-800 border border-orange-200 font-semibold px-2.5 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition" title="Open in-screen Live Camera Viewfinder">
+                <i class="fa-solid fa-video text-orange-600"></i>
+                <span>Live Camera</span>
+              </button>
+
               <button type="button" onclick="removeStaffPhoto()" class="text-rose-600 hover:text-rose-800 font-medium text-xs px-2 py-1 transition" id="staff-photo-clear-text" style="display:none;">
                 <i class="fa-solid fa-xmark"></i> Remove Photo
               </button>
@@ -4588,9 +4614,25 @@
           <img id="view-student-photo" src="" class="w-full h-full object-cover hidden" alt="Student Photo">
           <i id="view-student-icon" class="fa-solid fa-user-graduate"></i>
         </div>
-        <div>
+        <div class="flex-1 min-w-0">
           <h3 class="text-lg font-bold text-slate-900 leading-tight" id="view-student-name">Student Profile</h3>
           <p class="text-xs text-slate-500">Z.P.H.S (Girls), Gajwel • Student Academic Profile</p>
+          <div id="view-student-photo-actions" class="flex flex-wrap items-center gap-1.5 mt-1.5">
+            <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 rounded-md text-[11px] shadow-2xs inline-flex items-center gap-1 transition" title="Take photo directly with Android phone camera">
+              <i class="fa-solid fa-camera"></i>
+              <span>Camera</span>
+              <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handleViewStudentQuickPhoto(event)">
+            </label>
+            <label class="cursor-pointer bg-white hover:bg-slate-50 text-indigo-700 border border-indigo-300 font-semibold px-2 py-0.5 rounded-md text-[11px] shadow-2xs inline-flex items-center gap-1 transition" title="Choose photo from phone gallery or files">
+              <i class="fa-solid fa-images text-indigo-600"></i>
+              <span>Gallery</span>
+              <input type="file" accept="image/*" class="hidden" onchange="handleViewStudentQuickPhoto(event)">
+            </label>
+            <button type="button" onclick="openLiveCameraModal('view-student')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-semibold px-2 py-0.5 rounded-md text-[11px] shadow-2xs inline-flex items-center gap-1 transition" title="Open in-screen live camera">
+              <i class="fa-solid fa-video text-indigo-600"></i>
+              <span>Live Camera</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -4651,6 +4693,93 @@
           </button>
         </div>
         <button type="button" onclick="closeModal('modal-view-student')" class="px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-300 transition">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LIVE CAMERA CAPTURE (Webcam / Mobile Camera Viewfinder) -->
+  <div id="modal-live-camera" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-3 hidden z-50">
+    <div class="bg-slate-900 border border-slate-700 text-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden flex flex-col relative">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-4 py-3 border-b border-slate-800 bg-slate-950/50">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600/30 text-emerald-400 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white" id="live-camera-modal-title">Take Photo (Live Camera)</h3>
+            <p class="text-[10px] text-slate-400">Position face inside guide and tap shutter</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeLiveCameraModal()" class="text-slate-400 hover:text-white w-7 h-7 rounded-full flex items-center justify-center hover:bg-slate-800 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Viewfinder Stage -->
+      <div class="relative bg-black flex items-center justify-center overflow-hidden min-h-[300px] max-h-[360px]">
+        <!-- Live Video Element -->
+        <video id="live-camera-video" autoplay playsinline muted class="w-full h-full object-cover"></video>
+        
+        <!-- Snapshot Canvas (Hidden) -->
+        <canvas id="live-camera-canvas" class="hidden"></canvas>
+        
+        <!-- Captured Image Preview (Shown after snap) -->
+        <img id="live-camera-preview" src="" alt="Captured Preview" class="w-full h-full object-contain hidden">
+
+        <!-- Face Guide Oval (Only shown during live video) -->
+        <div id="live-camera-guide" class="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div class="w-48 h-60 rounded-full border-2 border-dashed border-emerald-400/70 shadow-[0_0_0_9999px_rgba(0,0,0,0.35)] flex items-end justify-center pb-3">
+            <span class="text-[10px] font-bold text-emerald-300 bg-slate-950/70 px-2 py-0.5 rounded-full backdrop-blur-xs">Passport Photo Guide</span>
+          </div>
+        </div>
+
+        <!-- Camera Switch Button (Switch Front/Back) -->
+        <button type="button" id="live-camera-switch-btn" onclick="switchLiveCameraFacingMode()" class="absolute top-3 right-3 bg-slate-900/80 hover:bg-slate-800 text-white w-9 h-9 rounded-full flex items-center justify-center border border-white/20 shadow-md backdrop-blur-xs transition" title="Switch Front/Back Camera">
+          <i class="fa-solid fa-camera-rotate text-xs"></i>
+        </button>
+
+        <!-- Permission / Error message fallback banner -->
+        <div id="live-camera-error-box" class="hidden absolute inset-0 bg-slate-900 p-6 flex flex-col items-center justify-center text-center space-y-3">
+          <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl"></i>
+          <p class="text-xs text-slate-200" id="live-camera-error-msg">Camera access unavailable or blocked. You can still open your phone's native camera directly below:</p>
+          <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition inline-flex items-center gap-2 shadow-md">
+            <i class="fa-solid fa-camera"></i>
+            <span>Open Android Phone Camera</span>
+            <input type="file" id="live-camera-native-fallback" accept="image/*" capture="environment" class="hidden" onchange="handleLiveCameraNativeFallback(event)">
+          </label>
+        </div>
+      </div>
+
+      <!-- Controls Footer -->
+      <div class="p-3 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between">
+        <!-- Native Camera direct fallback button -->
+        <label class="cursor-pointer text-slate-300 hover:text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition inline-flex items-center gap-1.5" title="Open Phone Native Camera app">
+          <i class="fa-solid fa-mobile-screen text-emerald-400"></i>
+          <span class="hidden sm:inline">Phone</span> Camera
+          <input type="file" id="live-camera-direct-native" accept="image/*" capture="environment" class="hidden" onchange="handleLiveCameraNativeFallback(event)">
+        </label>
+
+        <!-- Live Capture Shutter Button (Shown when streaming) -->
+        <div id="live-camera-stream-actions" class="flex items-center gap-3">
+          <button type="button" onclick="snapLiveCameraPhoto()" class="w-12 h-12 rounded-full bg-white hover:bg-slate-200 text-slate-900 flex items-center justify-center shadow-lg active:scale-95 transition ring-4 ring-emerald-500/50" title="Snap Photo">
+            <i class="fa-solid fa-camera text-base text-emerald-700"></i>
+          </button>
+        </div>
+
+        <!-- Confirm / Retake Buttons (Shown after snapping photo) -->
+        <div id="live-camera-review-actions" class="hidden flex items-center gap-2">
+          <button type="button" onclick="retakeLiveCameraPhoto()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-rotate-left"></i> Retake
+          </button>
+          <button type="button" onclick="confirmLiveCameraPhoto()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-md">
+            <i class="fa-solid fa-check"></i> Use Photo
+          </button>
+        </div>
+
+        <button type="button" onclick="closeLiveCameraModal()" class="text-xs text-slate-400 hover:text-white px-2 py-1">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
@@ -4815,11 +4944,26 @@
             <label class="block font-bold text-slate-800 text-xs">Student Photograph</label>
             <p class="text-[11px] text-slate-500">Upload passport size photo (JPG/PNG). Image is auto-optimized for Bonafide Certificates & Progress Cards.</p>
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
-              <label class="cursor-pointer bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-300 hover:border-indigo-400 font-semibold px-3 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition">
-                <i class="fa-solid fa-camera text-indigo-600"></i>
-                <span id="student-photo-btn-text">Upload Photo</span>
+              <!-- Android Camera Button (Direct Camera Access) -->
+              <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition" title="Open Phone Camera directly on Android phone">
+                <i class="fa-solid fa-camera"></i>
+                <span>Take Photo (Camera)</span>
+                <input type="file" id="student-photo-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleStudentPhotoUpload(event)">
+              </label>
+
+              <!-- Gallery / File Chooser Button -->
+              <label class="cursor-pointer bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-300 hover:border-indigo-400 font-semibold px-3 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition" title="Choose photo from phone Gallery or Files">
+                <i class="fa-solid fa-images text-indigo-600"></i>
+                <span id="student-photo-btn-text">Choose from Gallery</span>
                 <input type="file" id="student-photo-input" accept="image/*" class="hidden" onchange="handleStudentPhotoUpload(event)">
               </label>
+
+              <!-- Live Camera Viewfinder Button -->
+              <button type="button" onclick="openLiveCameraModal('student')" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-semibold px-2.5 py-1.5 rounded-lg text-xs shadow-2xs inline-flex items-center gap-1.5 transition" title="Open in-screen Live Camera Viewfinder">
+                <i class="fa-solid fa-video text-indigo-600"></i>
+                <span>Live Camera</span>
+              </button>
+
               <button type="button" onclick="removeStudentPhoto()" class="text-rose-600 hover:text-rose-800 font-medium text-xs px-2 py-1 transition" id="student-photo-clear-text" style="display:none;">
                 <i class="fa-solid fa-xmark"></i> Remove Photo
               </button>
@@ -5539,11 +5683,22 @@
 
           <!-- Upload & Paste Controls -->
           <div class="flex flex-wrap items-center gap-2">
-            <label for="activity-photo-files" class="cursor-pointer bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
+            <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Open Phone Camera directly on Android">
+              <i class="fa-solid fa-camera"></i>
+              <span>Take Photo (Camera)</span>
+              <input type="file" id="activity-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleActivityCameraPhotoUpload(event)">
+            </label>
+
+            <label for="activity-photo-files" class="cursor-pointer bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-semibold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Choose photos from phone Gallery or Files">
               <i class="fa-solid fa-cloud-arrow-up text-amber-600"></i>
               <span>+ Upload Photos (Multi)</span>
             </label>
             <input type="file" id="activity-photo-files" accept="image/*" multiple class="hidden" onchange="handleActivityMultiPhotoUpload(event)">
+
+            <button type="button" onclick="openLiveCameraModal('activity')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 font-semibold px-2.5 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs" title="Open in-screen Live Camera">
+              <i class="fa-solid fa-video text-indigo-600"></i>
+              <span>Live Camera</span>
+            </button>
 
             <button type="button" onclick="pasteActivityPhotoFromClipboard()" class="bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-950 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Paste copied photo from website or clipboard (Ctrl+V)">
               <i class="fa-solid fa-paste text-amber-700"></i>
@@ -5678,11 +5833,22 @@
 
           <!-- Upload & Paste Buttons -->
           <div class="flex flex-wrap items-center gap-2">
-            <label for="notice-photo-file-input" class="cursor-pointer bg-white border border-amber-300 hover:bg-amber-100/60 text-amber-950 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
-              <i class="fa-solid fa-cloud-arrow-up text-amber-600"></i>
-              <span>Upload Photo</span>
+            <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Open Phone Camera directly on Android">
+              <i class="fa-solid fa-camera"></i>
+              <span>Take Photo (Camera)</span>
+              <input type="file" id="notice-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleNoticePhotoFileUpload(event)">
+            </label>
+
+            <label for="notice-photo-file-input" class="cursor-pointer bg-white border border-amber-300 hover:bg-amber-100/60 text-amber-950 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Choose photo from phone Gallery or Files">
+              <i class="fa-solid fa-images text-amber-600"></i>
+              <span>From Gallery / Files</span>
             </label>
             <input type="file" id="notice-photo-file-input" accept="image/*" class="hidden" onchange="handleNoticePhotoFileUpload(event)">
+
+            <button type="button" onclick="openLiveCameraModal('notice')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 font-semibold px-2.5 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs" title="Open in-screen Live Camera">
+              <i class="fa-solid fa-video text-amber-700"></i>
+              <span>Live Camera</span>
+            </button>
 
             <button type="button" onclick="triggerNoticePhotoPaste()" class="bg-white border border-amber-300 hover:bg-amber-100/60 text-amber-950 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Paste copied photo from website or clipboard">
               <i class="fa-solid fa-paste text-orange-600"></i>
@@ -6003,11 +6169,22 @@
 
           <!-- Upload & Paste Buttons -->
           <div class="flex flex-wrap items-center gap-2">
-            <label for="emag-photo-file-input" class="cursor-pointer bg-white border border-purple-300 hover:bg-purple-100/60 text-purple-900 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs">
-              <i class="fa-solid fa-cloud-arrow-up text-purple-600"></i>
-              <span>Upload Photo</span>
+            <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Open Phone Camera directly on Android">
+              <i class="fa-solid fa-camera"></i>
+              <span>Take Photo (Camera)</span>
+              <input type="file" id="emag-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleEmagPhotoFileUpload(event)">
+            </label>
+
+            <label for="emag-photo-file-input" class="cursor-pointer bg-white border border-purple-300 hover:bg-purple-100/60 text-purple-900 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs" title="Choose photo from phone Gallery or Files">
+              <i class="fa-solid fa-images text-purple-600"></i>
+              <span>From Gallery / Files</span>
             </label>
             <input type="file" id="emag-photo-file-input" accept="image/*" class="hidden" onchange="handleEmagPhotoFileUpload(event)">
+
+            <button type="button" onclick="openLiveCameraModal('emag')" class="bg-purple-100 hover:bg-purple-200 text-purple-900 border border-purple-300 font-semibold px-2.5 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs" title="Open in-screen Live Camera">
+              <i class="fa-solid fa-video text-purple-700"></i>
+              <span>Live Camera</span>
+            </button>
 
             <button type="button" onclick="triggerEmagPhotoPaste()" class="bg-white border border-purple-300 hover:bg-purple-100/60 text-purple-900 font-bold px-3 py-1.5 rounded-lg text-xs transition inline-flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Paste copied photo from website or clipboard">
               <i class="fa-solid fa-paste text-indigo-600"></i>
@@ -7856,7 +8033,9 @@
 
     function removeStaffPhoto() {
       var fileInput = document.getElementById('staff-photo-input');
+      var camInput = document.getElementById('staff-photo-camera-input');
       if (fileInput) fileInput.value = '';
+      if (camInput) camInput.value = '';
       setStaffPhotoPreview('');
     }
 
@@ -7934,8 +8113,345 @@
 
     function removeStudentPhoto() {
       var fileInput = document.getElementById('student-photo-input');
+      var camInput = document.getElementById('student-photo-camera-input');
       if (fileInput) fileInput.value = '';
+      if (camInput) camInput.value = '';
       setStudentPhotoPreview('');
+    }
+
+    // --- Quick Photo Updation Directly from Student View Modal ---
+    function handleViewStudentQuickPhoto(event) {
+      var file = event.target.files && event.target.files[0];
+      if (!file || !currentViewStudentId) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          var canvas = document.createElement('canvas');
+          var maxDim = 320;
+          var width = img.width, height = img.height;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          var compressedDataUrl = canvas.toDataURL('image/jpeg', 0.86);
+
+          var st = (studentList || []).find(s => s.id === currentViewStudentId);
+          if (st) {
+            st.photo = compressedDataUrl;
+            saveStudentsToStorage();
+            if (typeof syncToCloud === 'function') syncToCloud('zphs_students', studentList);
+            viewStudent(currentViewStudentId);
+            if (typeof renderStudentsTable === 'function') renderStudentsTable();
+            showCustomToast('Student photo updated successfully!', 'success');
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleActivityCameraPhotoUpload(event) {
+      if (typeof handleActivityMultiPhotoUpload === 'function') {
+        handleActivityMultiPhotoUpload(event);
+      }
+    }
+
+    // --- Universal Live Camera Viewfinder & Android Native Camera Manager ---
+    var activeLiveCameraStream = null;
+    var activeLiveCameraFacing = 'environment'; // 'environment' (back camera for photos) or 'user' (front camera)
+    var activeLiveCameraTarget = 'student'; // 'student' | 'staff' | 'view-student' | 'gallery' | 'activity' | 'notice' | 'emag' | 'service-cert' | 'id-card'
+    var capturedLivePhotoDataUrl = null;
+
+    function openLiveCameraModal(targetType) {
+      activeLiveCameraTarget = targetType || 'student';
+      capturedLivePhotoDataUrl = null;
+
+      var modal = document.getElementById('modal-live-camera');
+      var video = document.getElementById('live-camera-video');
+      var preview = document.getElementById('live-camera-preview');
+      var guide = document.getElementById('live-camera-guide');
+      var errorBox = document.getElementById('live-camera-error-box');
+      var streamActions = document.getElementById('live-camera-stream-actions');
+      var reviewActions = document.getElementById('live-camera-review-actions');
+      var switchBtn = document.getElementById('live-camera-switch-btn');
+      var title = document.getElementById('live-camera-modal-title');
+
+      if (title) {
+        if (activeLiveCameraTarget === 'student' || activeLiveCameraTarget === 'view-student') {
+          title.innerText = 'Take Student Photo (Camera)';
+        } else if (activeLiveCameraTarget === 'staff') {
+          title.innerText = 'Take Staff Photo (Camera)';
+        } else {
+          title.innerText = 'Take Photo (Camera)';
+        }
+      }
+
+      if (video) video.classList.remove('hidden');
+      if (preview) { preview.classList.add('hidden'); preview.src = ''; }
+      if (guide) guide.classList.remove('hidden');
+      if (errorBox) errorBox.classList.add('hidden');
+      if (streamActions) streamActions.classList.remove('hidden');
+      if (reviewActions) reviewActions.classList.add('hidden');
+      if (switchBtn) switchBtn.classList.remove('hidden');
+
+      if (modal) modal.classList.remove('hidden');
+
+      startLiveCameraStream();
+    }
+
+    function startLiveCameraStream() {
+      stopLiveCameraStream();
+      var video = document.getElementById('live-camera-video');
+      var errorBox = document.getElementById('live-camera-error-box');
+      var errorMsg = document.getElementById('live-camera-error-msg');
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        if (errorBox) errorBox.classList.remove('hidden');
+        if (errorMsg) errorMsg.innerText = 'Live camera stream is not supported in this browser. Please tap "Open Android Phone Camera" below:';
+        return;
+      }
+
+      var constraints = {
+        video: {
+          facingMode: { ideal: activeLiveCameraFacing },
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false
+      };
+
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(stream) {
+          activeLiveCameraStream = stream;
+          if (video) {
+            video.srcObject = stream;
+            video.play().catch(function(e) { console.warn('Video playback notice:', e); });
+          }
+          if (errorBox) errorBox.classList.add('hidden');
+        })
+        .catch(function(err) {
+          console.warn('getUserMedia ideal failed, falling back:', err);
+          navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(function(stream) {
+              activeLiveCameraStream = stream;
+              if (video) {
+                video.srcObject = stream;
+                video.play().catch(function(e) { console.warn('Video playback notice:', e); });
+              }
+              if (errorBox) errorBox.classList.add('hidden');
+            })
+            .catch(function(finalErr) {
+              if (errorBox) errorBox.classList.remove('hidden');
+              if (errorMsg) errorMsg.innerText = 'Camera access was blocked or permission is needed. You can still open your phone\'s camera directly:';
+            });
+        });
+    }
+
+    function switchLiveCameraFacingMode() {
+      activeLiveCameraFacing = (activeLiveCameraFacing === 'environment') ? 'user' : 'environment';
+      startLiveCameraStream();
+    }
+
+    function stopLiveCameraStream() {
+      if (activeLiveCameraStream) {
+        activeLiveCameraStream.getTracks().forEach(function(track) {
+          try { track.stop(); } catch(e) {}
+        });
+        activeLiveCameraStream = null;
+      }
+      var video = document.getElementById('live-camera-video');
+      if (video) video.srcObject = null;
+    }
+
+    function snapLiveCameraPhoto() {
+      var video = document.getElementById('live-camera-video');
+      var canvas = document.getElementById('live-camera-canvas');
+      var preview = document.getElementById('live-camera-preview');
+      var guide = document.getElementById('live-camera-guide');
+      var streamActions = document.getElementById('live-camera-stream-actions');
+      var reviewActions = document.getElementById('live-camera-review-actions');
+      var switchBtn = document.getElementById('live-camera-switch-btn');
+
+      if (!video || !canvas) return;
+
+      var vWidth = video.videoWidth || 640;
+      var vHeight = video.videoHeight || 480;
+
+      // 3:4 portrait ratio for school identity photographs
+      var targetW = 360;
+      var targetH = 480;
+
+      canvas.width = targetW;
+      canvas.height = targetH;
+      var ctx = canvas.getContext('2d');
+
+      var sWidth = vWidth;
+      var sHeight = Math.round(vWidth * (targetH / targetW));
+      if (sHeight > vHeight) {
+        sHeight = vHeight;
+        sWidth = Math.round(vHeight * (targetW / targetH));
+      }
+      var sx = Math.max(0, Math.round((vWidth - sWidth) / 2));
+      var sy = Math.max(0, Math.round((vHeight - sHeight) / 2));
+
+      // Mirror if selfie/front camera
+      if (activeLiveCameraFacing === 'user') {
+        ctx.translate(targetW, 0);
+        ctx.scale(-1, 1);
+      }
+
+      ctx.drawImage(video, sx, sy, sWidth, sHeight, 0, 0, targetW, targetH);
+
+      capturedLivePhotoDataUrl = canvas.toDataURL('image/jpeg', 0.88);
+
+      if (preview) {
+        preview.src = capturedLivePhotoDataUrl;
+        preview.classList.remove('hidden');
+      }
+      if (video) video.classList.add('hidden');
+      if (guide) guide.classList.add('hidden');
+      if (switchBtn) switchBtn.classList.add('hidden');
+      if (streamActions) streamActions.classList.add('hidden');
+      if (reviewActions) reviewActions.classList.remove('hidden');
+
+      stopLiveCameraStream();
+    }
+
+    function retakeLiveCameraPhoto() {
+      capturedLivePhotoDataUrl = null;
+      var video = document.getElementById('live-camera-video');
+      var preview = document.getElementById('live-camera-preview');
+      var guide = document.getElementById('live-camera-guide');
+      var streamActions = document.getElementById('live-camera-stream-actions');
+      var reviewActions = document.getElementById('live-camera-review-actions');
+      var switchBtn = document.getElementById('live-camera-switch-btn');
+
+      if (preview) { preview.classList.add('hidden'); preview.src = ''; }
+      if (video) video.classList.remove('hidden');
+      if (guide) guide.classList.remove('hidden');
+      if (switchBtn) switchBtn.classList.remove('hidden');
+      if (streamActions) streamActions.classList.remove('hidden');
+      if (reviewActions) reviewActions.classList.add('hidden');
+
+      startLiveCameraStream();
+    }
+
+    function confirmLiveCameraPhoto() {
+      if (!capturedLivePhotoDataUrl) return;
+      applyCapturedPhotoToTarget(capturedLivePhotoDataUrl, activeLiveCameraTarget);
+      closeLiveCameraModal();
+    }
+
+    function handleLiveCameraNativeFallback(event) {
+      var file = event.target.files && event.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          var canvas = document.createElement('canvas');
+          var maxDim = 360;
+          var width = img.width, height = img.height;
+          if (width > height) {
+            if (width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; }
+          } else {
+            if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          var compressed = canvas.toDataURL('image/jpeg', 0.88);
+          applyCapturedPhotoToTarget(compressed, activeLiveCameraTarget);
+          closeLiveCameraModal();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function closeLiveCameraModal() {
+      stopLiveCameraStream();
+      var modal = document.getElementById('modal-live-camera');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function applyCapturedPhotoToTarget(dataUrl, target) {
+      if (!dataUrl) return;
+      if (target === 'student') {
+        setStudentPhotoPreview(dataUrl);
+      } else if (target === 'staff') {
+        setStaffPhotoPreview(dataUrl);
+      } else if (target === 'view-student') {
+        if (typeof currentViewStudentId !== 'undefined' && currentViewStudentId) {
+          var st = (studentList || []).find(s => s.id === currentViewStudentId);
+          if (st) {
+            st.photo = dataUrl;
+            saveStudentsToStorage();
+            if (typeof syncToCloud === 'function') syncToCloud('zphs_students', studentList);
+            viewStudent(currentViewStudentId);
+            if (typeof renderStudentsTable === 'function') renderStudentsTable();
+            showCustomToast('Student photo updated successfully!', 'success');
+          }
+        }
+      } else if (target === 'gallery') {
+        var preview = document.getElementById('gallery-modal-preview');
+        var icon = document.getElementById('gallery-placeholder-icon');
+        var urlInput = document.getElementById('gallery-url-input');
+        if (preview) { preview.src = dataUrl; preview.classList.remove('hidden'); }
+        if (icon) icon.classList.add('hidden');
+        if (urlInput) urlInput.value = dataUrl;
+      } else if (target === 'activity') {
+        if (typeof pendingActivityPhotos !== 'undefined' && Array.isArray(pendingActivityPhotos)) {
+          pendingActivityPhotos.push(dataUrl);
+          if (typeof renderActivityPhotoThumbnails === 'function') renderActivityPhotoThumbnails();
+        }
+      } else if (target === 'notice') {
+        var valInput = document.getElementById('notice-photo-val');
+        var wrap = document.getElementById('notice-photo-preview-wrapper');
+        var img = document.getElementById('notice-photo-preview-img');
+        var name = document.getElementById('notice-photo-preview-name');
+        if (valInput) valInput.value = dataUrl;
+        if (img) img.src = dataUrl;
+        if (wrap) wrap.classList.remove('hidden');
+        if (name) name.innerText = 'Camera Photo Captured';
+      } else if (target === 'emag') {
+        var valInput = document.getElementById('emag-form-image');
+        var wrap = document.getElementById('emag-photo-preview-wrapper');
+        var img = document.getElementById('emag-photo-preview-img');
+        var name = document.getElementById('emag-photo-preview-name');
+        if (valInput) valInput.value = dataUrl;
+        if (img) img.src = dataUrl;
+        if (wrap) wrap.classList.remove('hidden');
+        if (name) name.innerText = 'Camera Photo Captured';
+      } else if (target === 'id-card') {
+        if (typeof activeIdCardCustomPhoto !== 'undefined') {
+          activeIdCardCustomPhoto = dataUrl;
+          if (typeof renderIdCardPreview === 'function') renderIdCardPreview();
+        }
+      } else if (target === 'service-cert') {
+        if (typeof activeServiceCertPhoto !== 'undefined') {
+          activeServiceCertPhoto = dataUrl;
+          if (typeof updateServiceCertPreview === 'function') updateServiceCertPreview();
+          var thumb = document.getElementById('service-cert-photo-thumb');
+          var status = document.getElementById('service-cert-photo-status');
+          if (thumb) thumb.innerHTML = '<img src="' + dataUrl + '" class="w-full h-full object-cover">';
+          if (status) status.innerText = 'Custom Camera photo uploaded';
+        }
+      }
     }
 
     function openStaffModal(forcedType, staffId) {
@@ -8164,11 +8680,22 @@
       document.getElementById('view-student-contact').innerText = student.contact || '+91 9848011220';
 
       var editBtn = document.querySelector('#modal-view-student button[onclick="openEditStudentFromViewModal()"]');
+      var photoActions = document.getElementById('view-student-photo-actions');
+      var canEdit = canUserEditClass(student.classVal, student.section);
+
       if (editBtn) {
-        if (canUserEditClass(student.classVal, student.section)) {
+        if (canEdit) {
           editBtn.classList.remove('hidden');
         } else {
           editBtn.classList.add('hidden');
+        }
+      }
+
+      if (photoActions) {
+        if (canEdit) {
+          photoActions.classList.remove('hidden');
+        } else {
+          photoActions.classList.add('hidden');
         }
       }
 
@@ -19120,12 +19647,21 @@ var currentTimetableClass = 'Class 10';
               <span class="text-[10px] text-slate-500" id="service-cert-photo-status">Using saved staff profile photo</span>
             </div>
           </div>
-          <div class="flex items-center gap-1.5">
-            <label class="cursor-pointer bg-white hover:bg-amber-50 text-amber-800 border border-amber-300 font-semibold px-2.5 py-1 rounded-md text-[11px] shadow-2xs inline-flex items-center gap-1 transition">
-              <i class="fa-solid fa-camera text-amber-600"></i>
-              <span>Change / Upload Photo</span>
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2.5 py-1 rounded-md text-[11px] shadow-2xs inline-flex items-center gap-1 transition" title="Open Phone Camera directly on Android">
+              <i class="fa-solid fa-camera"></i>
+              <span>Camera</span>
+              <input type="file" id="service-cert-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleServiceCertPhotoUpload(event)">
+            </label>
+            <label class="cursor-pointer bg-white hover:bg-amber-50 text-amber-800 border border-amber-300 font-semibold px-2.5 py-1 rounded-md text-[11px] shadow-2xs inline-flex items-center gap-1 transition" title="Choose photo from Gallery / Files">
+              <i class="fa-solid fa-images text-amber-600"></i>
+              <span>Gallery</span>
               <input type="file" id="service-cert-photo-input" accept="image/*" class="hidden" onchange="handleServiceCertPhotoUpload(event)">
             </label>
+            <button type="button" onclick="openLiveCameraModal('service-cert')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 font-semibold px-2 py-1 rounded-md text-[11px] shadow-2xs inline-flex items-center gap-1 transition" title="Open Live Camera">
+              <i class="fa-solid fa-video text-amber-700"></i>
+              <span>Live</span>
+            </button>
             <button type="button" onclick="resetServiceCertPhoto()" class="text-slate-500 hover:text-rose-600 text-[11px] px-2 py-1 border border-slate-200 rounded-md bg-white hover:bg-rose-50 transition" title="Reset to saved profile photo">
               Reset
             </button>
@@ -19276,9 +19812,22 @@ var currentTimetableClass = 'Class 10';
         </div>
         <div>
           <label class="block font-semibold text-slate-700 mb-1">Upload Photo (Optional for this card):</label>
-          <div class="flex items-center gap-2">
-            <input type="file" id="id-card-photo-input" accept="image/*" onchange="handleIdCardPhotoUpload(event)" class="text-xs text-slate-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
-            <button type="button" onclick="resetIdCardPhoto()" class="text-slate-500 hover:text-rose-600 text-xs px-2 py-1 border border-slate-200 rounded bg-white" title="Reset to standard avatar">Reset</button>
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <label class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2.5 py-1.5 rounded-md text-xs shadow-2xs inline-flex items-center gap-1 transition" title="Open Phone Camera directly on Android">
+              <i class="fa-solid fa-camera"></i>
+              <span>Camera</span>
+              <input type="file" id="id-card-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleIdCardPhotoUpload(event)">
+            </label>
+            <label class="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold px-2.5 py-1.5 rounded-md text-xs shadow-2xs inline-flex items-center gap-1 transition" title="Choose photo from Gallery or Files">
+              <i class="fa-solid fa-images text-blue-600"></i>
+              <span>Gallery</span>
+              <input type="file" id="id-card-photo-input" accept="image/*" class="hidden" onchange="handleIdCardPhotoUpload(event)">
+            </label>
+            <button type="button" onclick="openLiveCameraModal('id-card')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-semibold px-2 py-1.5 rounded-md text-xs shadow-2xs inline-flex items-center gap-1 transition" title="Open in-screen Live Camera">
+              <i class="fa-solid fa-video text-indigo-600"></i>
+              <span>Live</span>
+            </button>
+            <button type="button" onclick="resetIdCardPhoto()" class="text-slate-500 hover:text-rose-600 text-xs px-2 py-1.5 border border-slate-200 rounded-md bg-white hover:bg-rose-50 transition" title="Reset to standard avatar">Reset</button>
           </div>
         </div>
       </div>
