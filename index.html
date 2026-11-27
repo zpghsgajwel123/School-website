@@ -809,17 +809,17 @@
       <section id="section-home" class="content-section space-y-2.5">
         
         <!-- ========================================================================================= -->
-        <!-- HOME SCREEN VERTICAL DIVISION: LEFT (SCHOOL PROFILE) & RIGHT (NOTIFICATIONS IN 2 PARTS)   -->
+        <!-- HOME SCREEN: SCHOOL PROFILE, CIRCULARS & NOTIFICATIONS (HORIZONTAL, LEFT-ALIGNED)         -->
         <!-- ========================================================================================= -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch text-left">
           
           <!-- ======================================================== -->
-          <!-- LEFT COLUMN (VERTICAL): SCHOOL PROFILE (Light Brinjal)   -->
+          <!-- 1. SCHOOL PROFILE (Light Brinjal, Left-Aligned)          -->
           <!-- ======================================================== -->
-          <div id="home-school-profile" class="border border-purple-200/90 rounded-xl p-2.5 sm:p-3 bg-gradient-to-br from-[#faf5ff] via-[#f3e8ff]/60 to-[#faf5ff] shadow-2xs scroll-mt-20 space-y-2 flex flex-col justify-between">
-            <!-- Compact School Profile Header -->
-            <div class="flex items-center justify-between pb-1.5 border-b border-purple-200/80">
-              <h3 class="font-bold text-purple-950 text-xs sm:text-sm flex items-center gap-1.5">
+          <div id="home-school-profile" class="border border-purple-200/90 rounded-xl p-2.5 sm:p-3 bg-gradient-to-br from-[#faf5ff] via-[#f3e8ff]/60 to-[#faf5ff] shadow-2xs scroll-mt-20 space-y-2 flex flex-col justify-between text-left">
+            <!-- Header -->
+            <div class="flex items-center justify-between pb-1.5 border-b border-purple-200/80 text-left">
+              <h3 class="font-bold text-purple-950 text-xs sm:text-sm flex items-center gap-1.5 text-left">
                 <span class="w-5 h-5 rounded bg-purple-200 text-purple-800 flex items-center justify-center text-[11px] shadow-2xs">
                   <i class="fa-solid fa-school-flag"></i>
                 </span>
@@ -829,149 +829,128 @@
             </div>
 
             <!-- Integrated Stats Row (3 Compact Cards in 1 Row) -->
-            <div class="grid grid-cols-3 gap-1.5">
-              <div class="bg-white/95 border border-sky-200 rounded-lg p-1.5 flex flex-col justify-between shadow-2xs">
-                <p class="text-[8.5px] font-bold text-sky-800 uppercase tracking-wider truncate" data-en="Students" data-te="విద్యార్థులు" data-ur="طالبات">Students</p>
+            <div class="grid grid-cols-3 gap-1.5 text-left">
+              <div class="bg-white/95 border border-sky-200 rounded-lg p-1.5 flex flex-col justify-between shadow-2xs text-left">
+                <p class="text-[8.5px] font-bold text-sky-800 uppercase tracking-wider truncate text-left" data-en="Students" data-te="విద్యార్థులు" data-ur="طالبات">Students</p>
                 <div class="flex items-baseline justify-between mt-0.5">
-                  <h3 class="text-sm sm:text-base font-black text-sky-950" id="stat-students-count">0</h3>
+                  <h3 class="text-sm sm:text-base font-black text-sky-950 text-left" id="stat-students-count">0</h3>
                   <i class="fa-solid fa-user-graduate text-sky-600 text-[10px]"></i>
                 </div>
               </div>
-              <div class="bg-white/95 border border-emerald-200 rounded-lg p-1.5 flex flex-col justify-between shadow-2xs">
-                <p class="text-[8.5px] font-bold text-emerald-800 uppercase tracking-wider truncate" data-en="Staff" data-te="ఉపాధ్యాయులు" data-ur="اساتذہ">Staff</p>
+              <div class="bg-white/95 border border-emerald-200 rounded-lg p-1.5 flex flex-col justify-between shadow-2xs text-left">
+                <p class="text-[8.5px] font-bold text-emerald-800 uppercase tracking-wider truncate text-left" data-en="Staff" data-te="ఉపాధ్యాయులు" data-ur="اساتذహ">Staff</p>
                 <div class="flex items-baseline justify-between mt-0.5">
-                  <h3 class="text-sm sm:text-base font-black text-emerald-950" id="stat-staff-count">0</h3>
+                  <h3 class="text-sm sm:text-base font-black text-emerald-950 text-left" id="stat-staff-count">0</h3>
                   <i class="fa-solid fa-chalkboard-user text-emerald-600 text-[10px]"></i>
                 </div>
               </div>
-              <div class="bg-white/95 border border-amber-200 rounded-lg p-1.5 flex flex-col justify-between shadow-2xs">
-                <p class="text-[8.5px] font-bold text-amber-800 uppercase tracking-wider truncate" data-en="Classes" data-te="తరగతులు" data-ur="కలాస్">Classes</p>
+              <div class="bg-white/95 border border-amber-200 rounded-lg p-1.5 flex flex-col justify-between shadow-2xs text-left">
+                <p class="text-[8.5px] font-bold text-amber-800 uppercase tracking-wider truncate text-left" data-en="Classes" data-te="తరగతులు" data-ur="కలాస్">Classes</p>
                 <div class="flex items-baseline justify-between mt-0.5">
-                  <h3 class="text-xs sm:text-sm font-black text-amber-950 truncate">VI - X</h3>
+                  <h3 class="text-xs sm:text-sm font-black text-amber-950 truncate text-left">VI - X</h3>
                   <i class="fa-solid fa-book-open text-amber-600 text-[10px]"></i>
                 </div>
               </div>
             </div>
 
-            <!-- Particulars Details List -->
-            <div class="space-y-1 text-[10.5px] sm:text-xs text-purple-950/85 bg-white/70 border border-purple-100 rounded-lg p-2 shadow-2xs">
-              <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
-                <span class="font-medium text-purple-900/70" data-en="Headmistress:" data-te="ప్రధానోపాధ్యాయురాలు:">Headmistress:</span>
-                <span class="text-purple-950 font-bold text-right" data-en="Smt. Shaheen Sulthana, M.Sc, B.Ed" data-te="శ్రీమతి షాహీన్ సుల్తానా, M.Sc, B.Ed">Smt. Shaheen Sulthana, M.Sc, B.Ed</span>
+            <!-- Particulars Details List (Left-Aligned) -->
+            <div class="space-y-1 text-[10.5px] sm:text-xs text-purple-950/90 bg-white/70 border border-purple-100 rounded-lg p-2 shadow-2xs text-left">
+              <div class="flex items-baseline gap-1 py-0.5 border-b border-purple-100 text-left">
+                <span class="font-semibold text-purple-900/70 shrink-0 text-left" data-en="HM:" data-te="హెచ్.ఎం:">HM:</span>
+                <span class="text-purple-950 font-bold truncate text-left" data-en="Smt. Shaheen Sulthana, M.Sc, B.Ed" data-te="శ్రీమతి షాహీన్ సుల్తానా, M.Sc, B.Ed">Smt. Shaheen Sulthana, M.Sc, B.Ed</span>
               </div>
-              <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
-                <span class="font-medium text-purple-900/70" data-en="Admin Email:" data-te="ఈమెయిల్:">Admin Email:</span>
-                <a href="mailto:ghmzpghsgajwel@gmail.com" class="text-purple-950 font-semibold hover:underline truncate max-w-[190px]">ghmzpghsgajwel@gmail.com</a>
+              <div class="flex items-baseline gap-1 py-0.5 border-b border-purple-100 text-left">
+                <span class="font-semibold text-purple-900/70 shrink-0 text-left" data-en="Email:" data-te="ఈమెయిల్:">Email:</span>
+                <a href="mailto:ghmzpghsgajwel@gmail.com" class="text-purple-950 font-bold hover:underline truncate text-left">ghmzpghsgajwel@gmail.com</a>
               </div>
-              <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
-                <span class="font-medium text-purple-900/70" data-en="Medium:" data-te="బోధనా మాధ్యమం:">Medium:</span>
-                <span class="text-purple-950 font-semibold" data-en="English & Urdu Medium" data-te="ఇంగ్లీష్ & ఉర్దూ మాధ్యమం">English & Urdu Medium</span>
+              <div class="flex items-baseline gap-1 py-0.5 border-b border-purple-100 text-left">
+                <span class="font-semibold text-purple-900/70 shrink-0 text-left" data-en="Medium:" data-te="మాధ్యమం:">Medium:</span>
+                <span class="text-purple-950 font-bold text-left" data-en="English & Urdu" data-te="ఇంగ్లీష్ & ఉర్దూ">English & Urdu Medium</span>
               </div>
-              <div class="flex justify-between items-center py-0.5 border-b border-purple-100">
-                <span class="font-medium text-purple-900/70" data-en="Affiliation:" data-te="అనుబంధం:">Affiliation:</span>
-                <span class="text-purple-950 font-semibold">DSE Telangana (SSC Board)</span>
-              </div>
-              <div class="flex justify-between items-center py-0.5">
-                <span class="font-medium text-purple-900/70" data-en="School Contact:" data-te="ఫోన్ నంబర్:">Contact:</span>
-                <a href="tel:+919951801946" class="text-purple-950 font-bold hover:underline flex items-center gap-1">
+              <div class="flex items-baseline gap-1 py-0.5 text-left">
+                <span class="font-semibold text-purple-900/70 shrink-0 text-left" data-en="Phone:" data-te="ఫోన్:">Phone:</span>
+                <a href="tel:+919951801946" class="text-purple-950 font-bold hover:underline text-left flex items-center gap-1">
                   <i class="fa-solid fa-phone text-emerald-600 text-[9px]"></i> +91 9951801946
                 </a>
               </div>
             </div>
 
-            <!-- Facilities & Welfare Schemes Badges -->
-            <div class="pt-1 border-t border-purple-200">
-              <span class="text-[9.5px] font-bold text-purple-950 block mb-1" data-en="Key Facilities & Government Schemes:" data-te="ముఖ్యమైన వసతులు & ప్రభుత్వ పథకాలు:">Key Facilities & Schemes:</span>
-              <div class="flex flex-wrap gap-1">
-                <span class="px-1.5 py-0.5 bg-blue-50 border border-blue-200 text-blue-800 rounded text-[9px] font-semibold flex items-center gap-1"><i class="fa-solid fa-tv text-blue-600"></i> Digital Classes</span>
-                <span class="px-1.5 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-[9px] font-semibold flex items-center gap-1"><i class="fa-solid fa-vial text-emerald-600"></i> Science Lab</span>
-                <span class="px-1.5 py-0.5 bg-purple-50 border border-purple-200 text-purple-800 rounded text-[9px] font-semibold flex items-center gap-1"><i class="fa-solid fa-bowl-rice text-purple-600"></i> Mid Day Meal</span>
-                <span class="px-1.5 py-0.5 bg-amber-50 border border-amber-200 text-amber-800 rounded text-[9px] font-semibold flex items-center gap-1"><i class="fa-solid fa-volleyball text-amber-600"></i> Sports</span>
-                <span class="px-1.5 py-0.5 bg-teal-50 border border-teal-200 text-teal-800 rounded text-[9px] font-semibold flex items-center gap-1"><i class="fa-solid fa-book text-teal-600"></i> Textbooks</span>
-                <span class="px-1.5 py-0.5 bg-rose-50 border border-rose-200 text-rose-800 rounded text-[9px] font-semibold flex items-center gap-1"><i class="fa-solid fa-shoe-prints text-rose-600"></i> Free Shoes</span>
+            <!-- Facilities & Welfare Schemes Badges (Left-Aligned) -->
+            <div class="pt-1 border-t border-purple-200 text-left">
+              <span class="text-[9px] font-bold text-purple-950 block mb-1 text-left" data-en="Key Facilities & Schemes:" data-te="ముఖ్యమైన వసతులు:">Key Facilities & Schemes:</span>
+              <div class="flex flex-wrap gap-1 text-left justify-start">
+                <span class="px-1.5 py-0.5 bg-blue-50 border border-blue-200 text-blue-800 rounded text-[8.5px] font-semibold flex items-center gap-1"><i class="fa-solid fa-tv text-blue-600"></i> Digital</span>
+                <span class="px-1.5 py-0.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-[8.5px] font-semibold flex items-center gap-1"><i class="fa-solid fa-vial text-emerald-600"></i> Lab</span>
+                <span class="px-1.5 py-0.5 bg-purple-50 border border-purple-200 text-purple-800 rounded text-[8.5px] font-semibold flex items-center gap-1"><i class="fa-solid fa-bowl-rice text-purple-600"></i> MDM</span>
+                <span class="px-1.5 py-0.5 bg-amber-50 border border-amber-200 text-amber-800 rounded text-[8.5px] font-semibold flex items-center gap-1"><i class="fa-solid fa-volleyball text-amber-600"></i> Sports</span>
+                <span class="px-1.5 py-0.5 bg-teal-50 border border-teal-200 text-teal-800 rounded text-[8.5px] font-semibold flex items-center gap-1"><i class="fa-solid fa-book text-teal-600"></i> Books</span>
               </div>
             </div>
 
-            <!-- Quick Action Contact Buttons -->
-            <div class="pt-1 flex items-center gap-2">
-              <a href="tel:+919951801946" class="flex-1 py-1 px-2 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] text-center flex items-center justify-center gap-1 shadow-2xs transition">
-                <i class="fa-solid fa-phone text-[10px]"></i> <span data-en="Call School" data-te="కాల్ చేయండి">Call</span>
+            <!-- Quick Action Contact Buttons (Left-Aligned) -->
+            <div class="pt-1 flex items-center gap-1.5 text-left justify-start">
+              <a href="tel:+919951801946" class="flex-1 py-1 px-2 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10.5px] text-center flex items-center justify-center gap-1 shadow-2xs transition">
+                <i class="fa-solid fa-phone text-[9px]"></i> <span data-en="Call School" data-te="కాల్ చేయండి">Call</span>
               </a>
-              <a href="mailto:ghmzpghsgajwel@gmail.com" class="flex-1 py-1 px-2 rounded-md bg-purple-700 hover:bg-purple-800 text-white font-bold text-[11px] text-center flex items-center justify-center gap-1 shadow-2xs transition">
-                <i class="fa-solid fa-envelope text-[10px]"></i> <span data-en="Send Email" data-te="ఈమెయిల్">Email</span>
+              <a href="mailto:ghmzpghsgajwel@gmail.com" class="flex-1 py-1 px-2 rounded-md bg-purple-700 hover:bg-purple-800 text-white font-bold text-[10.5px] text-center flex items-center justify-center gap-1 shadow-2xs transition">
+                <i class="fa-solid fa-envelope text-[9px]"></i> <span data-en="Send Email" data-te="ఈమెయిల్">Email</span>
               </a>
             </div>
 
           </div>
 
           <!-- ======================================================== -->
-          <!-- RIGHT COLUMN (VERTICAL): NOTIFICATIONS IN TWO PARTS      -->
+          <!-- 2. OFFICIAL CIRCULARS & ORDERS (Teal, Left-Aligned)      -->
           <!-- ======================================================== -->
-          <div class="space-y-2 flex flex-col justify-between">
-            
-            <div class="flex items-center justify-between border-b border-slate-200/80 pb-1">
-              <h3 class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-1.5">
-                <span class="w-5 h-5 rounded bg-teal-100 text-teal-700 flex items-center justify-center text-[11px] shadow-2xs">
-                  <i class="fa-solid fa-bullhorn"></i>
-                </span>
-                <span data-en="Recent Notifications & Circulars" data-te="తాజా నోటీసులు & ప్రకటనలు" data-ur="حالیہ اعلانات اور سرکلرز">Recent Notifications & Circulars</span>
-              </h3>
-              <button onclick="switchTab('notices')" class="text-[10px] text-teal-800 hover:text-teal-950 hover:underline font-bold bg-white border border-teal-300 px-2 py-0.5 rounded shadow-2xs transition flex items-center gap-1 cursor-pointer" data-en="View All" data-te="అన్నీ చూడండి">
-                <span>View All</span>
-                <i class="fa-solid fa-arrow-right text-[8px]"></i>
-              </button>
-            </div>
-
-            <!-- PART 1: Official Circulars & Academic Orders (Vertical Half 1) -->
-            <div class="border border-teal-200 rounded-xl p-2.5 bg-teal-50/70 shadow-2xs flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-1.5 border-b border-teal-200/80 pb-1">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-4 h-4 rounded bg-teal-600 text-white flex items-center justify-center text-[9px] shadow-2xs">
-                      <i class="fa-solid fa-scroll"></i>
-                    </span>
-                    <h4 class="font-bold text-teal-950 text-[11px] sm:text-xs" data-en="Part 1: Official Circulars & Orders" data-te="భాగం 1: అధికారిక సర్క్యులర్లు & ఉత్తర్వులు" data-ur="حصہ 1: سرکاری سرکلرز">
-                      Part 1: Official Circulars & Orders
-                    </h4>
-                  </div>
-                  <span class="px-1.5 py-0.2 bg-teal-200/80 text-teal-900 rounded font-bold text-[8.5px] uppercase">Part 1</span>
+          <div class="border border-teal-200 rounded-xl p-2.5 sm:p-3 bg-teal-50/70 shadow-2xs flex flex-col justify-between text-left">
+            <div>
+              <div class="flex items-center justify-between pb-1.5 border-b border-teal-200/80 mb-2 text-left">
+                <div class="flex items-center gap-1.5 text-left">
+                  <span class="w-5 h-5 rounded bg-teal-600 text-white flex items-center justify-center text-[10px] shadow-2xs">
+                    <i class="fa-solid fa-scroll"></i>
+                  </span>
+                  <h4 class="font-bold text-teal-950 text-xs sm:text-sm text-left" data-en="Official Circulars" data-te="అధికారిక సర్క్యులర్లు" data-ur="سرکاری سرکلرز">
+                    Official Circulars
+                  </h4>
                 </div>
-                <ul id="home-notice-list-1" class="space-y-1 text-xs max-h-[96px] overflow-y-auto pr-1">
-                  <!-- Dynamically populated -->
-                </ul>
-                <!-- Hidden legacy container for compatibility -->
-                <ul id="home-notice-list" class="hidden"></ul>
+                <span class="px-1.5 py-0.5 bg-teal-200 text-teal-900 rounded font-bold text-[8.5px] uppercase">Orders</span>
               </div>
-              <div class="pt-1 mt-1 border-t border-teal-200/60 flex items-center justify-between text-[10px] text-teal-800/80">
-                <span class="flex items-center gap-1"><i class="fa-solid fa-file-circle-check"></i> Official Orders</span>
-                <button onclick="switchTab('notices')" class="font-bold hover:underline text-teal-900 text-[10px]">View Circulars →</button>
-              </div>
+              <ul id="home-notice-list-1" class="space-y-1.5 text-xs max-h-[175px] overflow-y-auto pr-1 text-left">
+                <!-- Dynamically populated -->
+              </ul>
+              <!-- Hidden legacy container for compatibility -->
+              <ul id="home-notice-list" class="hidden"></ul>
             </div>
+            <div class="pt-1.5 mt-2 border-t border-teal-200/60 flex items-center justify-between text-[10px] text-teal-800/90 text-left">
+              <span class="flex items-center gap-1 text-left"><i class="fa-solid fa-file-circle-check text-teal-600"></i> Department Orders</span>
+              <button onclick="switchTab('notices')" class="font-bold hover:underline text-teal-900 cursor-pointer">View All →</button>
+            </div>
+          </div>
 
-            <!-- PART 2: School Activities & General Alerts (Vertical Half 2) -->
-            <div class="border border-sky-200 rounded-xl p-2.5 bg-sky-50/70 shadow-2xs flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-1.5 border-b border-sky-200/80 pb-1">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-4 h-4 rounded bg-sky-600 text-white flex items-center justify-center text-[9px] shadow-2xs">
-                      <i class="fa-solid fa-bullhorn"></i>
-                    </span>
-                    <h4 class="font-bold text-sky-950 text-[11px] sm:text-xs" data-en="Part 2: School Activities & Alerts" data-te="భాగం 2: పాఠశాల విశేషాలు & సాధారణ ప్రకటనలు" data-ur="حصہ 2: اسکول کی سرگرمیاں">
-                      Part 2: School Activities & Alerts
-                    </h4>
-                  </div>
-                  <span class="px-1.5 py-0.2 bg-sky-200/80 text-sky-900 rounded font-bold text-[8.5px] uppercase">Part 2</span>
+          <!-- ======================================================== -->
+          <!-- 3. NOTIFICATIONS & ALERTS (Sky Blue, Left-Aligned)       -->
+          <!-- ======================================================== -->
+          <div class="border border-sky-200 rounded-xl p-2.5 sm:p-3 bg-sky-50/70 shadow-2xs flex flex-col justify-between text-left">
+            <div>
+              <div class="flex items-center justify-between pb-1.5 border-b border-sky-200/80 mb-2 text-left">
+                <div class="flex items-center gap-1.5 text-left">
+                  <span class="w-5 h-5 rounded bg-sky-600 text-white flex items-center justify-center text-[10px] shadow-2xs">
+                    <i class="fa-solid fa-bullhorn"></i>
+                  </span>
+                  <h4 class="font-bold text-sky-950 text-xs sm:text-sm text-left" data-en="Notifications & Alerts" data-te="నోటీసులు & అలర్ట్స్" data-ur="اعلانات اور الرట్స్">
+                    Notifications & Alerts
+                  </h4>
                 </div>
-                <ul id="home-notice-list-2" class="space-y-1 text-xs max-h-[96px] overflow-y-auto pr-1">
-                  <!-- Dynamically populated -->
-                </ul>
+                <span class="px-1.5 py-0.5 bg-sky-200 text-sky-900 rounded font-bold text-[8.5px] uppercase">Events</span>
               </div>
-              <div class="pt-1 mt-1 border-t border-sky-200/60 flex items-center justify-between text-[10px] text-sky-800/80">
-                <span class="flex items-center gap-1"><i class="fa-solid fa-calendar-check"></i> Event Updates</span>
-                <button onclick="switchTab('notices')" class="font-bold hover:underline text-sky-900 text-[10px]">View Events →</button>
-              </div>
+              <ul id="home-notice-list-2" class="space-y-1.5 text-xs max-h-[175px] overflow-y-auto pr-1 text-left">
+                <!-- Dynamically populated -->
+              </ul>
             </div>
-
+            <div class="pt-1.5 mt-2 border-t border-sky-200/60 flex items-center justify-between text-[10px] text-sky-800/90 text-left">
+              <span class="flex items-center gap-1 text-left"><i class="fa-solid fa-calendar-check text-sky-600"></i> School Events</span>
+              <button onclick="switchTab('notices')" class="font-bold hover:underline text-sky-900 cursor-pointer">View All →</button>
+            </div>
           </div>
 
         </div>
@@ -12854,12 +12833,12 @@
         var formattedDate = formatDisplayDateDDMMYYYY(n.date);
         var photoBadge = n.photo ? '<span class="inline-flex items-center gap-0.5 text-[8.5px] font-bold text-amber-800 bg-amber-100 border border-amber-300 px-1 py-0.2 rounded ml-1 shrink-0"><i class="fa-solid fa-camera text-[8px]"></i> File</span>' : '';
         return `
-          <li class="border-l-3 ${accentBorder} pl-2 py-1 bg-white/90 rounded-r-md hover:bg-white transition shadow-2xs border-y border-r border-slate-100">
-            <div class="flex items-center justify-between gap-1.5">
-              <h5 class="font-bold text-slate-800 text-[11px] sm:text-xs truncate flex items-center">${escapeText(n.title)} ${photoBadge}</h5>
+          <li class="border-l-3 ${accentBorder} pl-2 py-1 bg-white/90 rounded-r-md hover:bg-white transition shadow-2xs border-y border-r border-slate-100 text-left">
+            <div class="flex items-center justify-between gap-1 text-left">
+              <h5 class="font-bold text-slate-800 text-[11px] truncate flex items-center text-left">${escapeText(n.title)} ${photoBadge}</h5>
               <span class="text-[9px] font-semibold text-slate-500 whitespace-nowrap font-mono shrink-0 bg-slate-100 px-1 py-0.2 rounded">${escapeText(formattedDate)}</span>
             </div>
-            <p class="text-[10px] text-slate-600 truncate mt-0.2">${escapeText(n.content || '')}</p>
+            <p class="text-[10px] text-slate-600 truncate mt-0.2 text-left">${escapeText(n.content || '')}</p>
           </li>
         `;
       }
@@ -12871,13 +12850,13 @@
         if (p2.length === 0 && noticeList.length > 1) p2 = noticeList.slice(1);
 
         if (homeList1) {
-          homeList1.innerHTML = (p1.length ? p1 : noticeList).slice(0, 2).map(n => formatHomeNoticeCard(n, 'border-teal-600')).join('');
+          homeList1.innerHTML = (p1.length ? p1 : noticeList).slice(0, 3).map(n => formatHomeNoticeCard(n, 'border-teal-600')).join('');
         }
         if (homeList2) {
-          homeList2.innerHTML = (p2.length ? p2 : noticeList).slice(0, 2).map(n => formatHomeNoticeCard(n, 'border-sky-600')).join('');
+          homeList2.innerHTML = (p2.length ? p2 : noticeList).slice(0, 3).map(n => formatHomeNoticeCard(n, 'border-sky-600')).join('');
         }
         if (homeList) {
-          homeList.innerHTML = noticeList.slice(0, 2).map(n => formatHomeNoticeCard(n, 'border-emerald-600')).join('');
+          homeList.innerHTML = noticeList.slice(0, 3).map(n => formatHomeNoticeCard(n, 'border-emerald-600')).join('');
         }
       } else {
         var emptyNoticeMsg = '<li class="text-xs text-slate-400 italic py-2">No active announcements</li>';
