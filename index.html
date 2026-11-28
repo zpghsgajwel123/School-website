@@ -3298,7 +3298,6 @@
               <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
               <h2 class="text-xl font-bold text-slate-800" data-en="School E-Magazine: 'Sankalp' The Echoes of ZPGHS Gajwel" data-te="పాఠశాల ఈ-మ్యాగజైన్: 'సంకల్ప్' (ది ఎకోస్ ఆఫ్ ZPGHS గజ్వేల్)">School E-Magazine: "Sankalp" The Echoes of ZPGHS Gajwel</h2>
               <span class="text-xs bg-amber-400 text-slate-950 font-black px-2.5 py-0.5 rounded-full border border-amber-300 shadow-2xs">Present Year: 2026-27</span>
-              <span class="text-xs bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full border border-purple-200">Vol. V</span>
             </div>
             <p class="text-xs text-slate-500 mt-0.5" data-en="Annual Literary, Creative, Arts & Science Publication by Students and Teachers of ZPHS Girls Gajwel." data-te="జిల్లా పరిషత్ బాలికల ఉన్నత పాఠశాల గజ్వేల్ విద్యార్థినులు & ఉపాధ్యాయుల వార్షిక సృజనాత్మక & వైజ్ఞానిక సంచిక.">
               Annual Literary, Creative, Arts & Science Publication by Students and Teachers of ZPHS Girls Gajwel.
@@ -3343,10 +3342,10 @@
                 <div class="text-[9.5px] text-slate-300 italic">"Inspiring Girls Through Knowledge"</div>
               </div>
 
-              <!-- Cover Footer (Vol. IV • 2025-26 deleted as requested) -->
+              <!-- Cover Footer -->
               <div class="bg-slate-950/70 backdrop-blur-xs rounded-xl p-2 text-center text-[10px] text-purple-200 border border-white/10 flex items-center justify-between px-3">
-                <span class="text-amber-300 font-bold flex items-center gap-1"><i class="fa-solid fa-award text-[10px]"></i> Special Edition</span>
-                <span class="text-white font-extrabold bg-purple-600/90 px-2 py-0.5 rounded-md text-[10px] border border-purple-400/50 shadow-xs">Vol. V • 2026-27</span>
+                <span class="text-amber-300 font-bold flex items-center gap-1"><i class="fa-solid fa-award text-[10px]"></i> Annual Edition</span>
+                <span class="text-white font-extrabold bg-purple-600/90 px-2 py-0.5 rounded-md text-[10px] border border-purple-400/50 shadow-xs">2026-27 Edition</span>
               </div>
             </div>
 
@@ -6173,25 +6172,70 @@
           <input type="text" id="emag-form-title" required placeholder="Type custom article title, e.g. నా పాఠశాల - నా గర్వం / The Power of Digital Dreams" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Category / Section</label>
-            <select id="emag-form-category" onchange="handleEmagCategoryChange()" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
-              <option value="Editorial">Headmaster's Desk</option>
-              <option value="Poetry">Poetry &amp; Sahithyam</option>
-              <option value="Creative Writing">Creative Writing &amp; Essays</option>
-              <option value="Science &amp; Tech">Science &amp; Innovation</option>
-              <option value="Art &amp; Drawing">Student Art Gallery</option>
-              <option value="Achievements">School Triumphs</option>
-              <option value="Custom">+ Write Custom Category / Section...</option>
-            </select>
-            <div id="emag-custom-category-container" class="hidden mt-1.5">
-              <input type="text" id="emag-form-custom-category" placeholder="Type custom category name, e.g. Sports, Quiz, Special..." class="w-full border border-purple-300 bg-purple-50/60 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 font-medium">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Category / Section</label>
+          <select id="emag-form-category" onchange="handleEmagCategoryChange()" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+            <option value="Editorial">Headmistress's Desk (Editorial)</option>
+            <option value="Poetry">Poetry &amp; Sahithyam</option>
+            <option value="Creative Writing">Creative Writing &amp; Essays</option>
+            <option value="Science &amp; Tech">Science &amp; Innovation</option>
+            <option value="Art &amp; Drawing">Student Art Gallery</option>
+            <option value="Achievements">School Triumphs</option>
+            <option value="Custom">+ Write Custom Category / Section...</option>
+          </select>
+          <div id="emag-custom-category-container" class="hidden mt-1.5">
+            <input type="text" id="emag-form-custom-category" placeholder="Type custom category name, e.g. Sports, Quiz, Special..." class="w-full border border-purple-300 bg-purple-50/60 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 font-medium">
+          </div>
+        </div>
+
+        <!-- Author Linking & Details Section (Linked to Staff and Student Details) -->
+        <div class="p-3 bg-purple-50/70 border border-purple-200 rounded-xl space-y-2.5">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <label class="block text-xs font-bold text-purple-950 flex items-center gap-1.5">
+              <i class="fa-solid fa-users text-purple-600"></i>
+              <span>Author Details (Linked to School Records)</span>
+            </label>
+            <div class="inline-flex rounded-lg border border-purple-200 p-0.5 bg-white text-[11px] font-bold shadow-2xs">
+              <button type="button" onclick="setEmagAuthorType('student')" id="btn-emag-type-student" class="px-2.5 py-1 rounded-md bg-purple-600 text-white transition cursor-pointer">Student</button>
+              <button type="button" onclick="setEmagAuthorType('teacher')" id="btn-emag-type-teacher" class="px-2.5 py-1 rounded-md text-purple-900 hover:bg-purple-100 transition cursor-pointer">Teacher</button>
+              <button type="button" onclick="setEmagAuthorType('hm')" id="btn-emag-type-hm" class="px-2.5 py-1 rounded-md text-purple-900 hover:bg-purple-100 transition cursor-pointer">Headmistress</button>
+              <button type="button" onclick="setEmagAuthorType('custom')" id="btn-emag-type-custom" class="px-2.5 py-1 rounded-md text-purple-900 hover:bg-purple-100 transition cursor-pointer">Manual</button>
             </div>
           </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Author Name &amp; Role</label>
-            <input type="text" id="emag-form-author" required placeholder="e.g. K. Sravani (Class X-A)" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500">
+
+          <!-- Student Dropdown Selector -->
+          <div id="emag-student-select-box" class="space-y-1">
+            <label class="block text-[11px] font-bold text-slate-600 flex items-center gap-1">
+              <i class="fa-solid fa-graduation-cap text-purple-600 text-[10px]"></i>
+              <span>Select Student from Student Details:</span>
+            </label>
+            <select id="emag-select-student" onchange="onEmagStudentChosen(this.value)" class="w-full border border-purple-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+              <option value="">-- Choose Student from School Records --</option>
+            </select>
+          </div>
+
+          <!-- Teacher Dropdown Selector -->
+          <div id="emag-teacher-select-box" class="hidden space-y-1">
+            <label class="block text-[11px] font-bold text-slate-600 flex items-center gap-1">
+              <i class="fa-solid fa-chalkboard-user text-purple-600 text-[10px]"></i>
+              <span>Select Teacher from Staff Details:</span>
+            </label>
+            <select id="emag-select-teacher" onchange="onEmagTeacherChosen(this.value)" class="w-full border border-purple-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+              <option value="">-- Choose Teacher from Staff List --</option>
+            </select>
+          </div>
+
+          <!-- Direct Inputs: Name, Role & Class -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Author Name <span class="text-rose-500">*</span></label>
+              <input type="text" id="emag-form-author" required placeholder="e.g. K. Sravani / Bandi Anil Kumar" list="emag-author-datalist" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+              <datalist id="emag-author-datalist"></datalist>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Role / Class / Department</label>
+              <input type="text" id="emag-form-role" placeholder="e.g. Student (Class X-A) / School Asst. (English)" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+            </div>
           </div>
         </div>
 
@@ -6294,7 +6338,7 @@
       <form id="form-upload-past-magazine" onsubmit="handleSavePastMagazine(event)" class="space-y-3.5">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Magazine Edition Title</label>
-          <input type="text" id="past-mag-title" required placeholder="e.g. Sankalp Vol. III / Prathibha Annual Magazine" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
+          <input type="text" id="past-mag-title" required placeholder="e.g. Sankalp Annual Edition / Prathibha Magazine" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -6303,8 +6347,8 @@
             <input type="text" id="past-mag-year" required placeholder="e.g. 2024-25" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Volume / Issue</label>
-            <input type="text" id="past-mag-volume" required placeholder="e.g. Vol. III (Issue 1)" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Edition / Issue Label (Optional)</label>
+            <input type="text" id="past-mag-volume" placeholder="e.g. Annual Edition (2024-25)" class="w-full border border-slate-300 rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-amber-500">
           </div>
         </div>
 
@@ -13523,16 +13567,16 @@
       {
         id: 1,
         title: "Inspiring the Next Generation of Women Leaders",
-        titleTe: "నాయకత్వ పథంలో మన బాలికలు: ప్రధానోపాధ్యాయుల సందేశం",
+        titleTe: "నాయకత్వ పథంలో మన బాలికలు: ప్రధానోపాధ్యాయురాలి సందేశం",
         category: "Editorial",
-        author: "M. Ramana Kumar",
-        role: "Headmaster, ZPHS (Girls) Gajwel",
-        classVal: "Headmaster's Desk",
+        author: "Smt. Shaheen Sulthana, M.Sc, B.Ed",
+        role: "Headmistress, ZPGHS Gajwel",
+        classVal: "Headmistress's Desk",
         date: "November 2026",
         readTime: "4 min read",
         image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=80",
-        summary: "An inspiring message from the Headmaster celebrating our girls' courage, scientific curiosity, literary excellence, and academic heights in SSC 2026-27.",
-        body: "Dear Students, Teachers, and Parents,\n\nIt gives me immense pride and joy to present Volume V of our annual school e-magazine, \"Sankalp\" - The Echoes of ZPGHS Gajwel (సంకల్ప్) for the academic year 2026-27.\n\nEducation is not merely about memorizing formulas or scoring high percentages in tests; it is the beacon that awakens curiosity, builds self-confidence, and shapes character. At Zilla Parishad High School (Girls) Gajwel, our vision has always been to provide every girl student an environment where her dreams are nurtured, her creativity is celebrated, and her voices are heard with respect.\n\nOver the past academic session, our students have distinguished themselves across various domains:\n• 100% pass percentage and exceptional GPA performances in the SSC board examinations.\n• Inspiring science innovations recognized at the Siddipet District Science Fair.\n• Historic triumphs in Athletics, Kho-Kho, and Kabaddi at the inter-school level.\n• Vibrant participation in eco-initiatives like Telanganaku Haritha Haram, organic vegetable farming for mid-day meals, and green campus drives.\n\nThis magazine serves as a mirror reflecting the creative genius of our students—from heartfelt Telugu poetry and English essays to intricate artworks and scientific discoveries. I extend my sincere appreciation to the editorial committee, teachers, and above all, our talented students for bringing this edition to life.\n\nMay each of our girls rise with courage, dream with ambition, and conquer every field of knowledge.\n\nWarm regards,\nM. Ramana Kumar\nHeadmaster, ZPHS (Girls) Gajwel"
+        summary: "An inspiring message from the Headmistress celebrating our girls' courage, scientific curiosity, literary excellence, and academic heights in SSC 2026-27.",
+        body: "Dear Students, Teachers, and Parents,\n\nIt gives me immense pride and joy to present our annual school e-magazine, \"Sankalp\" - The Echoes of ZPGHS Gajwel (సంకల్ప్) for the academic year 2026-27.\n\nEducation is not merely about memorizing formulas or scoring high percentages in tests; it is the beacon that awakens curiosity, builds self-confidence, and shapes character. At Zilla Parishad High School (Girls) Gajwel, our vision has always been to provide every girl student an environment where her dreams are nurtured, her creativity is celebrated, and her voices are heard with respect.\n\nOver the past academic session, our students have distinguished themselves across various domains:\n• 100% pass percentage and exceptional GPA performances in the SSC board examinations.\n• Inspiring science innovations recognized at the Siddipet District Science Fair.\n• Historic triumphs in Athletics, Kho-Kho, and Kabaddi at the inter-school level.\n• Vibrant participation in eco-initiatives like Telanganaku Haritha Haram, organic vegetable farming for mid-day meals, and green campus drives.\n\nThis magazine serves as a mirror reflecting the creative genius of our students—from heartfelt Telugu poetry and English essays to intricate artworks and scientific discoveries. I extend my sincere appreciation to the editorial committee, teachers, and above all, our talented students for bringing this edition to life.\n\nMay each of our girls rise with courage, dream with ambition, and conquer every field of knowledge.\n\nWarm regards,\nSmt. Shaheen Sulthana, M.Sc, B.Ed\nHeadmistress, ZPGHS Gajwel"
       },
       {
         id: 2,
@@ -13676,6 +13720,23 @@
       });
     }
 
+    function getEmagHeadmasterName() {
+      if (typeof staffList !== 'undefined' && Array.isArray(staffList)) {
+        var hm = staffList.find(function(s) {
+          var des = (s.designation || '').toLowerCase();
+          return des.includes('ghm') || des.includes('headmistress') || des.includes('headmaster') || des.includes('hm') || des.includes('principal');
+        });
+        if (hm && hm.name) {
+          var name = hm.name.trim();
+          if (name.toUpperCase().includes('SHAHEEN')) {
+            return 'Smt. Shaheen Sulthana, M.Sc, B.Ed';
+          }
+          return (hm.gender && (hm.gender.includes('Female') || String(hm.gender).startsWith('2')) ? 'Smt. ' : 'Sri ') + name;
+        }
+      }
+      return 'Smt. Shaheen Sulthana, M.Sc, B.Ed';
+    }
+
     function renderEmagazine() {
       if (typeof renderPastMagazines === 'function') renderPastMagazines();
       var grid = document.getElementById('emagazine-articles-grid');
@@ -13688,15 +13749,44 @@
         else el.classList.add('hidden');
       });
 
+      var hmFullName = getEmagHeadmasterName();
+
       if (!emagazineArticles || emagazineArticles.length === 0) {
         emagazineArticles = defaultEmagazineArticles.slice();
         try {
           localStorage.setItem('zphs_emagazines', JSON.stringify(emagazineArticles));
         } catch(e) {}
       } else {
-        // Auto-migrate any cached "Prathibha" naming to "Sankalp"
+        // Auto-migrate any cached "Prathibha" naming to "Sankalp", and "M. Ramana Kumar" to current Headmistress
         var migrated = false;
         emagazineArticles.forEach(function(art) {
+          if (art.author && (art.author.toLowerCase().includes('ramana') || (art.category === 'Editorial' && !art.author.toLowerCase().includes('shaheen')))) {
+            art.author = hmFullName;
+            art.role = 'Headmistress, ZPGHS Gajwel';
+            art.classVal = "Headmistress's Desk";
+            migrated = true;
+          }
+          if (art.role && art.role.toLowerCase().includes('headmaster')) {
+            art.role = art.role.replace(/Headmaster/gi, 'Headmistress');
+            migrated = true;
+          }
+          if (art.classVal && art.classVal.toLowerCase().includes('headmaster')) {
+            art.classVal = art.classVal.replace(/Headmaster/gi, 'Headmistress');
+            migrated = true;
+          }
+          if (art.body && (art.body.toLowerCase().includes('ramana') || art.body.includes('Headmaster'))) {
+            art.body = art.body.replace(/M\.\s*Ramana\s*Kumar/gi, hmFullName)
+                               .replace(/Ramana\s*Kumar/gi, 'Shaheen Sulthana')
+                               .replace(/Headmaster,\s*ZPHS\s*\(Girls\)\s*Gajwel/gi, 'Headmistress, ZPGHS Gajwel')
+                               .replace(/Headmaster/gi, 'Headmistress');
+            migrated = true;
+          }
+          if (art.summary && (art.summary.toLowerCase().includes('ramana') || art.summary.includes('Headmaster'))) {
+            art.summary = art.summary.replace(/M\.\s*Ramana\s*Kumar/gi, hmFullName)
+                                     .replace(/Ramana\s*Kumar/gi, 'Shaheen Sulthana')
+                                     .replace(/Headmaster/gi, 'Headmistress');
+            migrated = true;
+          }
           if (art.body && art.body.includes('Prathibha')) {
             art.body = art.body.replace(/Prathibha/g, 'Sankalp (The Echoes of ZPGHS Gajwel)');
             migrated = true;
@@ -13706,11 +13796,16 @@
             migrated = true;
           }
           if (art.body && art.body.includes('2025-26')) {
-            art.body = art.body.replace(/2025-26/g, '2026-27').replace(/Volume IV/g, 'Volume V');
+            art.body = art.body.replace(/2025-26/g, '2026-27');
             migrated = true;
           }
           if (art.summary && art.summary.includes('2025-26')) {
             art.summary = art.summary.replace(/2025-26/g, '2026-27');
+            migrated = true;
+          }
+          if (art.body && /Volume\s+[IVX]+/i.test(art.body)) {
+            art.body = art.body.replace(/Volume\s+[IVX]+\s+of\s+our\s+annual\s+school\s+e-magazine/gi, 'our annual school e-magazine')
+                               .replace(/Volume\s+[IVX]+/gi, 'Annual Edition');
             migrated = true;
           }
         });
@@ -13735,7 +13830,7 @@
             All Articles
           </button>
           <button type="button" onclick="filterEmagazineCategory('Editorial')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Editorial' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
-            Headmaster's Desk
+            Headmistress's Desk
           </button>
           <button type="button" onclick="filterEmagazineCategory('Poetry')" class="btn-emag-filter px-3 py-1.5 rounded-lg text-xs ${currentEmagazineFilter === 'Poetry' ? 'font-bold bg-purple-600 text-white shadow-2xs' : 'font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200'} transition cursor-pointer">
             Poetry & Sahithyam
@@ -13985,7 +14080,7 @@
         '.content{white-space:pre-line;font-size:15px;color:#334155;}' +
         '.footer{margin-top:50px;border-top:1px solid #cbd5e1;padding-top:15px;font-size:12px;color:#94a3b8;font-family:sans-serif;text-align:center;}' +
         '</style></head><body>' +
-        '<div class="header"><h1>ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL</h1><p>Annual School E-Magazine: \"Sankalp\" - The Echoes of ZPGHS Gajwel (సంకల్ప్) • Vol. V (2026-27)</p></div>' +
+        '<div class="header"><h1>ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL</h1><p>Annual School E-Magazine: \"Sankalp\" - The Echoes of ZPGHS Gajwel (సంకల్ప్) • 2026-27 Edition</p></div>' +
         '<div><span class="badge">' + escapeEmagText(art.category) + '</span><div class="title">' + escapeEmagText(art.title) + '</div>' +
         '<div class="meta">By: <strong>' + escapeEmagText(art.author) + '</strong> (' + escapeEmagText(art.classVal || art.role || 'Contributor') + ') | Date: ' + escapeEmagText(art.date || '2026-27') + '</div>' +
         '<div class="content">' + escapeEmagText(art.body || art.summary || '') + '</div></div>' +
@@ -13996,6 +14091,7 @@
     }
 
     function downloadEmagazineIssue() {
+      var hmFullName = getEmagHeadmasterName();
       var fullHtml = '<!DOCTYPE html><html><head><title>SANKALP - Annual School E-Magazine 2026-27 (ZPHS Girls Gajwel)</title>' +
         '<style>@media print{.page-break{page-break-after:always;}}' +
         'body{font-family:Georgia,serif;line-height:1.8;color:#1e293b;max-width:850px;margin:40px auto;padding:20px;}' +
@@ -14009,7 +14105,7 @@
         '.article-meta{font-family:sans-serif;font-size:13px;color:#64748b;margin-bottom:15px;}' +
         '.article-body{font-size:14.5px;line-height:1.8;color:#334155;white-space:pre-line;}' +
         '</style></head><body>' +
-        '<div class="cover page-break"><p style="font-weight:bold;letter-spacing:1px;">ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL</p><div style="display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:15px;"><img src="school_emblem_logo.jpg" style="max-height:85px;border-radius:50%;border:2px solid #f59e0b;padding:2px;background:#fff;"><img src="sankalp_magazine_logo.jpg" style="max-height:85px;border-radius:10px;background:#ded7c8;padding:4px;"></div><h1 style="color:#1e3a8a;font-weight:900;">SANKALP (సంకల్ప్)</h1><h3 style="color:#ea580c;margin:0 0 10px 0;font-weight:bold;letter-spacing:1px;">THE ECHOES OF ZPGHS GAJWEL</h3><h2>ANNUAL SCHOOL E-MAGAZINE 2026-27 • VOLUME V</h2><div style="font-style:italic;color:#b45309;font-size:14px;margin:15px 0;">“Lead me from darkness to light • అసతోమా సద్గమయ • చీకటి నుంచి వెలుగు వైపుగా”</div><p style="margin-top:20px;">Inspiring Girls Education, Literary Expression, Arts & Scientific Innovation</p><p style="font-size:13px;color:#64748b;margin-top:40px;">Patron: M. Ramana Kumar, Headmaster<br>Editorial Committee: ZPHS Language & Science Faculty<br>Published: Gajwel, Siddipet District, Telangana</p></div>' +
+        '<div class="cover page-break"><p style="font-weight:bold;letter-spacing:1px;">ZILLA PARISHAD HIGH SCHOOL (GIRLS) GAJWEL</p><div style="display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:15px;"><img src="school_emblem_logo.jpg" style="max-height:85px;border-radius:50%;border:2px solid #f59e0b;padding:2px;background:#fff;"><img src="sankalp_magazine_logo.jpg" style="max-height:85px;border-radius:10px;background:#ded7c8;padding:4px;"></div><h1 style="color:#1e3a8a;font-weight:900;">SANKALP (సంకల్ప్)</h1><h3 style="color:#ea580c;margin:0 0 10px 0;font-weight:bold;letter-spacing:1px;">THE ECHOES OF ZPGHS GAJWEL</h3><h2>ANNUAL SCHOOL E-MAGAZINE 2026-27</h2><div style="font-style:italic;color:#b45309;font-size:14px;margin:15px 0;">“Lead me from darkness to light • అసతోమా సద్గమయ • చీకటి నుంచి వెలుగు వైపుగా”</div><p style="margin-top:20px;">Inspiring Girls Education, Literary Expression, Arts & Scientific Innovation</p><p style="font-size:13px;color:#64748b;margin-top:40px;">Patron: ' + hmFullName + ', Headmistress<br>Editorial Committee: ZPHS Language & Science Faculty<br>Published: Gajwel, Siddipet District, Telangana</p></div>' +
         emagazineArticles.map(function(art, i) {
           return '<div class="article ' + (i < emagazineArticles.length - 1 ? 'page-break' : '') + '">' +
             '<div class="article-cat">' + escapeEmagText(art.category) + '</div>' +
@@ -14225,6 +14321,114 @@
       }
     });
 
+    function populateEmagAuthorSelectors() {
+      var studentSel = document.getElementById('emag-select-student');
+      var teacherSel = document.getElementById('emag-select-teacher');
+      var datalist = document.getElementById('emag-author-datalist');
+
+      if (studentSel) {
+        var existingStudents = (typeof studentList !== 'undefined' && Array.isArray(studentList) && studentList.length > 0) ? studentList : (typeof defaultStudents !== 'undefined' ? defaultStudents : []);
+        var sortedStudents = existingStudents.slice().sort(function(a, b) {
+          return (a.name || '').localeCompare(b.name || '');
+        });
+
+        var sOptions = '<option value="">-- Choose Student from School Records (' + sortedStudents.length + ' students) --</option>';
+        sortedStudents.forEach(function(st) {
+          var cls = (st.classVal || '') + (st.section ? '-' + st.section : '');
+          var optVal = (st.name || '').trim() + '||Student||' + cls;
+          sOptions += '<option value="' + escapeEmagText(optVal) + '">' + escapeEmagText(st.name) + ' (' + escapeEmagText(cls || 'Student') + ')' + '</option>';
+        });
+        studentSel.innerHTML = sOptions;
+      }
+
+      if (teacherSel) {
+        var existingStaff = (typeof staffList !== 'undefined' && Array.isArray(staffList) && staffList.length > 0) ? staffList : (typeof defaultStaff !== 'undefined' ? defaultStaff : []);
+        var tOptions = '<option value="">-- Choose Teacher / Staff Member (' + existingStaff.length + ' staff) --</option>';
+        existingStaff.forEach(function(st) {
+          var des = st.designation || st.subject || 'Faculty';
+          var optVal = (st.name || '').trim() + '||' + des + '||Faculty';
+          tOptions += '<option value="' + escapeEmagText(optVal) + '">' + escapeEmagText(st.name) + ' (' + escapeEmagText(des) + ')' + '</option>';
+        });
+        teacherSel.innerHTML = tOptions;
+      }
+
+      if (datalist) {
+        var opts = '';
+        var hm = getEmagHeadmasterName();
+        opts += '<option value="' + escapeEmagText(hm) + '">';
+        if (typeof staffList !== 'undefined' && Array.isArray(staffList)) {
+          staffList.forEach(function(s) { if (s.name) opts += '<option value="' + escapeEmagText(s.name) + '">'; });
+        }
+        if (typeof studentList !== 'undefined' && Array.isArray(studentList)) {
+          studentList.forEach(function(s) { if (s.name) opts += '<option value="' + escapeEmagText(s.name) + '">'; });
+        }
+        datalist.innerHTML = opts;
+      }
+    }
+
+    function setEmagAuthorType(type) {
+      var btnStudent = document.getElementById('btn-emag-type-student');
+      var btnTeacher = document.getElementById('btn-emag-type-teacher');
+      var btnHm = document.getElementById('btn-emag-type-hm');
+      var btnCustom = document.getElementById('btn-emag-type-custom');
+      var studentBox = document.getElementById('emag-student-select-box');
+      var teacherBox = document.getElementById('emag-teacher-select-box');
+
+      var btns = [btnStudent, btnTeacher, btnHm, btnCustom];
+      btns.forEach(function(b) {
+        if (!b) return;
+        b.className = 'px-2.5 py-1 rounded-md text-purple-900 hover:bg-purple-100 transition cursor-pointer';
+      });
+
+      if (studentBox) studentBox.classList.add('hidden');
+      if (teacherBox) teacherBox.classList.add('hidden');
+
+      if (type === 'student') {
+        if (btnStudent) btnStudent.className = 'px-2.5 py-1 rounded-md bg-purple-600 text-white font-bold transition cursor-pointer';
+        if (studentBox) studentBox.classList.remove('hidden');
+      } else if (type === 'teacher') {
+        if (btnTeacher) btnTeacher.className = 'px-2.5 py-1 rounded-md bg-purple-600 text-white font-bold transition cursor-pointer';
+        if (teacherBox) teacherBox.classList.remove('hidden');
+      } else if (type === 'hm') {
+        if (btnHm) btnHm.className = 'px-2.5 py-1 rounded-md bg-purple-600 text-white font-bold transition cursor-pointer';
+        var hmName = getEmagHeadmasterName();
+        var authorInput = document.getElementById('emag-form-author');
+        var roleInput = document.getElementById('emag-form-role');
+        var catSelect = document.getElementById('emag-form-category');
+        if (authorInput) authorInput.value = hmName;
+        if (roleInput) roleInput.value = 'Headmistress, ZPGHS Gajwel';
+        if (catSelect) {
+          catSelect.value = 'Editorial';
+          handleEmagCategoryChange();
+        }
+      } else if (type === 'custom') {
+        if (btnCustom) btnCustom.className = 'px-2.5 py-1 rounded-md bg-purple-600 text-white font-bold transition cursor-pointer';
+      }
+    }
+
+    function onEmagStudentChosen(val) {
+      if (!val) return;
+      var parts = val.split('||');
+      var name = parts[0] || '';
+      var role = parts[1] || 'Student';
+      var cls = parts[2] || '';
+      var authorInput = document.getElementById('emag-form-author');
+      var roleInput = document.getElementById('emag-form-role');
+      if (authorInput) authorInput.value = name;
+      if (roleInput) roleInput.value = cls ? ('Student (' + cls + ')') : 'Student';
+    }
+
+    function onEmagTeacherChosen(val) {
+      if (!val) return;
+      var parts = val.split('||');
+      var name = parts[0] || '';
+      var des = parts[1] || 'Teacher';
+      var authorInput = document.getElementById('emag-form-author');
+      var roleInput = document.getElementById('emag-form-role');
+      if (authorInput) authorInput.value = name;
+      if (roleInput) roleInput.value = des;
+    }
+
     function openAddEmagazineModal() {
       if (!canManageEmagazine()) {
         alert('Access Denied: Only authorized staff and administrators can publish new magazine articles.');
@@ -14239,7 +14443,13 @@
       handleEmagCategoryChange();
       var customCatInput = document.getElementById('emag-form-custom-category');
       if (customCatInput) customCatInput.value = '';
+      var roleInput = document.getElementById('emag-form-role');
+      if (roleInput) roleInput.value = '';
       clearEmagArticlePhoto();
+
+      populateEmagAuthorSelectors();
+      setEmagAuthorType('student');
+
       var titleEl = document.getElementById('emag-modal-title');
       if (titleEl) titleEl.textContent = 'Publish to School E-Magazine';
       var subtitleEl = document.getElementById('emag-modal-subtitle');
@@ -14259,6 +14469,8 @@
         alert('Article not found.');
         return;
       }
+
+      populateEmagAuthorSelectors();
 
       var idField = document.getElementById('emag-form-id');
       if (idField) idField.value = art.id;
@@ -14282,6 +14494,15 @@
 
       var authorInput = document.getElementById('emag-form-author');
       if (authorInput) authorInput.value = art.author || '';
+
+      var roleInput = document.getElementById('emag-form-role');
+      if (roleInput) roleInput.value = art.classVal || art.role || '';
+
+      if (art.category === 'Editorial' || (art.author && art.author.toLowerCase().includes('shaheen'))) {
+        setEmagAuthorType('hm');
+      } else {
+        setEmagAuthorType('custom');
+      }
 
       if (art.image) {
         setEmagPhotoPreview(art.image, 'Saved Article Photo');
@@ -14319,6 +14540,7 @@
       var customCategory = (document.getElementById('emag-form-custom-category')?.value || '').trim();
       var category = (rawCategory === 'Custom' ? (customCategory || 'Custom Writing') : rawCategory) || 'Creative Writing';
       var author = (document.getElementById('emag-form-author')?.value || '').trim();
+      var roleVal = (document.getElementById('emag-form-role')?.value || '').trim();
       var image = (document.getElementById('emag-form-image')?.value || '').trim();
       var body = (document.getElementById('emag-form-body')?.value || '').trim();
 
@@ -14337,13 +14559,12 @@
           emagazineArticles[idx].title = title;
           emagazineArticles[idx].category = category;
           emagazineArticles[idx].author = author;
+          emagazineArticles[idx].role = roleVal || (author.includes('Shaheen') ? 'Headmistress, ZPGHS Gajwel' : 'Contributor');
+          emagazineArticles[idx].classVal = roleVal || (author.includes('Shaheen') ? "Headmistress's Desk" : 'ZPHS Girls Gajwel');
           emagazineArticles[idx].image = image || '';
           emagazineArticles[idx].body = body;
           emagazineArticles[idx].summary = summary;
           emagazineArticles[idx].readTime = readTime;
-          if (author.includes('Class') || author.includes('Headmaster')) {
-            emagazineArticles[idx].classVal = author;
-          }
 
           try {
             localStorage.setItem('zphs_emagazines', JSON.stringify(emagazineArticles));
@@ -14365,8 +14586,8 @@
         title: title,
         category: category,
         author: author,
-        role: 'Contributor',
-        classVal: author.includes('Class') ? author : 'ZPHS Girls Gajwel',
+        role: roleVal || (author.includes('Shaheen') ? 'Headmistress, ZPGHS Gajwel' : 'Contributor'),
+        classVal: roleVal || (author.includes('Shaheen') ? "Headmistress's Desk" : 'ZPHS Girls Gajwel'),
         date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
         readTime: readTime,
         image: image || '',
@@ -14387,9 +14608,9 @@
     var defaultPastMagazines = [
       {
         id: 'past-mag-1',
-        title: "Sankalp: The Echoes of ZPGHS Gajwel (Vol. III)",
+        title: "Sankalp: The Echoes of ZPGHS Gajwel (2024-25)",
         academicYear: "2024-25",
-        volume: "Vol. III (Issue 1)",
+        volume: "Annual Edition",
         pages: "24 Pages",
         fileSize: "3.2 MB",
         uploadedDate: "March 2025",
@@ -14399,9 +14620,9 @@
       },
       {
         id: 'past-mag-2',
-        title: "Prathibha - Annual School Magazine (Vol. II)",
+        title: "Prathibha - Annual School Magazine (2023-24)",
         academicYear: "2023-24",
-        volume: "Vol. II (Issue 1)",
+        volume: "Annual Edition",
         pages: "20 Pages",
         fileSize: "2.8 MB",
         uploadedDate: "March 2024",
@@ -14411,9 +14632,9 @@
       },
       {
         id: 'past-mag-3',
-        title: "Prathibha - Inaugural School Magazine (Vol. I)",
+        title: "Prathibha - Inaugural School Magazine (2022-23)",
         academicYear: "2022-23",
-        volume: "Vol. I (Inaugural)",
+        volume: "Inaugural Edition",
         pages: "16 Pages",
         fileSize: "2.1 MB",
         uploadedDate: "March 2023",
@@ -14429,6 +14650,15 @@
         if (raw !== null) {
           var parsed = JSON.parse(raw);
           if (Array.isArray(parsed)) {
+            // Clean up any legacy Vol. details from existing cache
+            parsed.forEach(function(m) {
+              if (m.volume && /Vol\.\s*[0-9IVX]+/i.test(m.volume)) {
+                m.volume = m.volume.replace(/Vol\.\s*[0-9IVX]+\s*(\(.*\))?/gi, 'Annual Edition').trim();
+              }
+              if (m.title && /Vol\.\s*[0-9IVX]+/i.test(m.title)) {
+                m.title = m.title.replace(/\(Vol\.\s*[0-9IVX]+\)/gi, '(' + m.academicYear + ')').trim();
+              }
+            });
             return filterDeletedPastMagazines(parsed);
           }
         }
@@ -14482,12 +14712,12 @@
       if (e) e.preventDefault();
       var title = (document.getElementById('past-mag-title')?.value || '').trim();
       var year = (document.getElementById('past-mag-year')?.value || '').trim();
-      var volume = (document.getElementById('past-mag-volume')?.value || '').trim();
+      var volume = (document.getElementById('past-mag-volume')?.value || '').trim() || (year + ' Edition');
       var url = (document.getElementById('past-mag-url')?.value || '').trim();
       var desc = (document.getElementById('past-mag-desc')?.value || '').trim();
 
-      if (!title || !year || !volume) {
-        alert('Please fill in Magazine Title, Academic Year, and Volume.');
+      if (!title || !year) {
+        alert('Please fill in Magazine Title and Academic Year.');
         return;
       }
 
@@ -14562,7 +14792,7 @@
                 '</div>' +
                 '<div>' +
                   '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">' + escapeEmagText(item.academicYear) + '</span>' +
-                  '<div class="text-[11px] text-slate-400 font-medium mt-0.5">' + escapeEmagText(item.volume) + '</div>' +
+                  '<div class="text-[11px] text-slate-400 font-medium mt-0.5">' + escapeEmagText((item.volume || '').replace(/Vol\.\s*[0-9IVX]+/gi, '').replace(/\(Issue\s*\d+\)/gi, '').trim() || 'Annual Edition') + '</div>' +
                 '</div>' +
               '</div>' +
               deleteBtnHtml +
@@ -14601,7 +14831,7 @@
       var scrollContainer = document.getElementById('past-magazine-reader-scroll');
 
       if (titleEl) titleEl.textContent = mag.title;
-      if (subtitleEl) subtitleEl.textContent = mag.volume + ' • Academic Year: ' + mag.academicYear;
+      if (subtitleEl) subtitleEl.textContent = 'Academic Year: ' + mag.academicYear + ' Edition';
 
       // If a native binary PDF blob/dataUrl exists, try showing iframe, else show rich digital magazine
       if (mag.pdfDataUrl && mag.pdfDataUrl.startsWith('blob:')) {
@@ -14642,26 +14872,26 @@
           '<div class="space-y-1">' +
             '<h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-wide">' + escapeEmagText(mag.title) + '</h2>' +
             '<div class="inline-block px-3 py-1 bg-amber-500 text-slate-950 font-black rounded-full text-xs shadow-xs uppercase tracking-wider">' +
-              escapeEmagText(mag.volume) + ' • ' + escapeEmagText(mag.academicYear) +
+              escapeEmagText(mag.academicYear) + ' Edition' +
             '</div>' +
           '</div>' +
           '<div class="p-3 bg-white/90 rounded-xl border border-amber-200 max-w-lg mx-auto text-xs text-amber-900 italic font-medium leading-relaxed">' +
             '“Lead me from darkness to light • అసతోమా సద్గమయ • చీకటి నుంచి వెలుగు వైపుగా”' +
           '</div>' +
           '<div class="pt-4 border-t border-amber-200/80 flex items-center justify-between text-[11px] text-slate-600 font-medium px-4">' +
-            '<span>Patron: Sri M. Ramana Kumar, HM</span>' +
+            '<span>Patron: ' + getEmagHeadmasterName() + ', HM</span>' +
             '<span>Annual Archival Edition</span>' +
             '<span>Published: Gajwel, Telangana</span>' +
           '</div>' +
         '</div>' +
 
-        // PAGE 2: EDITORIAL & HEADMASTER MESSAGE
+        // PAGE 2: EDITORIAL & HEADMISTRESS MESSAGE
         '<div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4 leading-relaxed font-serif">' +
           '<div class="border-b border-slate-100 pb-3 flex items-center justify-between font-sans">' +
             '<span class="text-xs font-bold uppercase text-purple-700 tracking-wider">Page 2 • Editorial Desk</span>' +
             '<span class="text-xs text-slate-400">' + escapeEmagText(mag.academicYear) + ' Edition</span>' +
           '</div>' +
-          '<h3 class="text-lg font-bold text-slate-900 font-sans">Headmaster’s Address: Illuminating Paths for Rural Girls</h3>' +
+          '<h3 class="text-lg font-bold text-slate-900 font-sans">Headmistress’s Address: Illuminating Paths for Rural Girls</h3>' +
           '<p class="text-xs sm:text-sm text-slate-700 leading-relaxed">' +
             'Education is the single most potent catalyst for social transformation. At ZPHS (Girls) Gajwel, our commitment during the academic year ' + escapeEmagText(mag.academicYear) +
             ' has been to provide holistic learning, moral grounding, and modern scientific temperament to our students.' +
@@ -14675,7 +14905,7 @@
               : 'Our girls participated enthusiastically in community tree plantation (Haritha Haram), cultural folk arts, and digital literacy workshops, proving that discipline and dedication know no bounds.') +
           '</p>' +
           '<div class="pt-2 text-right font-sans text-xs text-slate-600">' +
-            '<strong>M. Ramana Kumar</strong><br><span class="text-slate-400">Headmaster & Patron, ZPGHS Gajwel</span>' +
+            '<strong>' + getEmagHeadmasterName() + '</strong><br><span class="text-slate-400">Headmistress & Patron, ZPGHS Gajwel</span>' +
           '</div>' +
         '</div>' +
 
@@ -14748,15 +14978,15 @@
         '<p style="font-size:13px;font-weight:bold;letter-spacing:1.5px;color:#b45309;text-transform:uppercase;margin:0;">Zilla Parishad High School (Girls) Gajwel</p>' +
         '<img src="sankalp_magazine_logo.jpg" class="banner" alt="Sankalp">' +
         '<h1>' + escapeEmagText(mag.title) + '</h1>' +
-        '<h2>' + escapeEmagText(mag.volume) + ' • Academic Year ' + escapeEmagText(mag.academicYear) + '</h2>' +
+        '<h2>Academic Year ' + escapeEmagText(mag.academicYear) + ' Edition</h2>' +
         '<div class="motto">“Lead me from darkness to light • అసతోమా సద్గమయ • చీకటి నుంచి వెలుగు వైపుగా”</div>' +
-        '<p style="font-size:13px;color:#64748b;font-family:sans-serif;margin-top:40px;">Patron: Sri M. Ramana Kumar, Headmaster<br>Editorial Committee: ZPGHS Language & Science Faculty<br>Published: Gajwel, Siddipet District, Telangana</p>' +
+        '<p style="font-size:13px;color:#64748b;font-family:sans-serif;margin-top:40px;">Patron: ' + getEmagHeadmasterName() + ', Headmistress<br>Editorial Committee: ZPGHS Language & Science Faculty<br>Published: Gajwel, Siddipet District, Telangana</p>' +
         '</div>' +
         '<div class="page page-break">' +
-        '<div class="page-title">Headmaster’s Address: Educational Journey ' + escapeEmagText(mag.academicYear) + '</div>' +
+        '<div class="page-title">Headmistress’s Address: Educational Journey ' + escapeEmagText(mag.academicYear) + '</div>' +
         '<p>At Zilla Parishad High School (Girls) Gajwel, our vision has always been to provide every girl student an environment where her dreams are nurtured, her creativity is celebrated, and her voices are heard with respect.</p>' +
         '<p>Over this academic period, our students have demonstrated extraordinary grit in both scholastic and co-curricular fields. From 100% board exam passes to district science innovation prizes, our girls prove daily that dedication overcomes all challenges.</p>' +
-        '<p style="font-style:italic;color:#b45309;">- Sri M. Ramana Kumar, Headmaster</p>' +
+        '<p style="font-style:italic;color:#b45309;">- ' + getEmagHeadmasterName() + ', Headmistress</p>' +
         '</div>' +
         '<div class="page">' +
         '<div class="page-title">Chronicles of Excellence & Milestones</div>' +
