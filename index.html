@@ -544,8 +544,8 @@
       <div class="flex flex-col items-center justify-center shrink-0 self-center space-y-1">
         <div class="flex items-center space-x-2 sm:space-x-3">
           <!-- Telangana Government Official Logo -->
-          <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white p-1 shadow-md border-2 border-sky-200 flex-shrink-0 flex items-center justify-center overflow-hidden hover:scale-105 transition-transform" title="Government of Telangana">
-            <img src="ts_govt_logo.png" alt="Government of Telangana Logo" class="w-full h-full object-contain">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white p-0 shadow-md border-2 border-sky-200 flex-shrink-0 flex items-center justify-center overflow-hidden hover:scale-105 transition-transform" title="Government of Telangana">
+            <img src="ts_govt_logo.png" alt="Government of Telangana Logo" class="w-full h-full object-cover scale-105 rounded-full">
           </div>
 
           <!-- School Crest Logo -->
@@ -589,20 +589,20 @@
         </div>
 
         <!-- Language Switcher Button (Compact) -->
-        <button onclick="toggleLanguage()" class="bg-white/15 hover:bg-white/25 text-white border border-white/35 px-2 py-1 rounded-md text-xs font-bold transition flex items-center gap-1 shadow-xs cursor-pointer" title="Switch Language">
+        <button onclick="toggleLanguage()" class="bg-white/15 hover:bg-white/25 text-white border border-white/35 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap" title="Switch Language">
           <i class="fa-solid fa-language text-xs text-sky-200"></i>
           <span id="lang-btn-text">తెలుగు</span>
         </button>
 
         <!-- Live Cloud Sync Status & Manual Sync Button (Compact) -->
-        <button onclick="manualCloudSync()" id="header-cloud-sync-btn" class="bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-2 py-1 rounded-md text-xs font-bold transition flex items-center gap-1 shadow-xs cursor-pointer" title="Click to refresh & sync with Cloud Database">
+        <button onclick="manualCloudSync()" id="header-cloud-sync-btn" class="bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap" title="Click to refresh & sync with Cloud Database">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           <span id="header-cloud-sync-text">Live</span>
         </button>
 
         <!-- Login / User Badge (Compact) -->
         <div id="auth-status-container" class="flex items-center">
-          <button onclick="openLoginModal()" class="bg-white hover:bg-sky-50 text-sky-950 font-bold px-2 py-1 rounded-md text-xs transition flex items-center gap-1 shadow-xs cursor-pointer" title="Admin Login">
+          <button onclick="openLoginModal()" class="bg-white hover:bg-sky-50 text-sky-950 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap" title="Admin Login">
             <i class="fa-solid fa-user-lock text-[10px]"></i>
             <span id="login-btn-text">Login</span>
           </button>
@@ -7597,8 +7597,9 @@
 
       if (status === 'syncing') {
         if (headerBtn) {
-          headerBtn.className = 'bg-amber-500/25 hover:bg-amber-500/35 text-white border border-amber-300/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Syncing...') + '</span>';
+          headerBtn.className = 'bg-amber-500/25 hover:bg-amber-500/35 text-white border border-amber-300/40 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap';
+          headerBtn.title = text || 'Syncing with Cloud Database...';
+          headerBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-300 text-[10px]"></i> <span id="header-cloud-sync-text">Sync</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-300 px-2.5 py-1 rounded-full shadow-2xs transition';
@@ -7606,8 +7607,9 @@
         }
       } else if (status === 'error') {
         if (headerBtn) {
-          headerBtn.className = 'bg-rose-500/25 hover:bg-rose-500/35 text-white border border-rose-300/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> <span id="header-cloud-sync-text">' + (text || 'Offline') + '</span>';
+          headerBtn.className = 'bg-rose-500/25 hover:bg-rose-500/35 text-white border border-rose-300/40 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap';
+          headerBtn.title = text || 'Cloud Offline';
+          headerBtn.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> <span id="header-cloud-sync-text">Offline</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-rose-800 bg-rose-50 border border-rose-300 px-2.5 py-1 rounded-full shadow-2xs transition';
@@ -7615,8 +7617,9 @@
         }
       } else if (status === 'success') {
         if (headerBtn) {
-          headerBtn.className = 'bg-emerald-500/30 hover:bg-emerald-500/40 text-white border border-emerald-300/50 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-300 text-[11px]"></i> <span id="header-cloud-sync-text">' + (text || 'Synced') + '</span>';
+          headerBtn.className = 'bg-emerald-500/30 hover:bg-emerald-500/40 text-white border border-emerald-300/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap';
+          headerBtn.title = text || 'Cloud Synced Successfully';
+          headerBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-300 text-[10px]"></i> <span id="header-cloud-sync-text">Synced</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-full shadow-2xs transition';
@@ -7624,8 +7627,9 @@
         }
       } else {
         if (headerBtn) {
-          headerBtn.className = 'bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer';
-          headerBtn.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> <span id="header-cloud-sync-text">' + (text || 'Live') + '</span>';
+          headerBtn.className = 'bg-emerald-500/20 hover:bg-emerald-500/35 text-white border border-emerald-300/40 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap';
+          headerBtn.title = text || 'Live Cloud Database Sync';
+          headerBtn.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> <span id="header-cloud-sync-text">Live</span>';
         }
         if (vpInd) {
           vpInd.className = 'flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shadow-2xs hover:bg-emerald-100 transition cursor-pointer';
@@ -10522,15 +10526,15 @@
             : `${currentUser.name} - Class Teacher: ${assignedInfo || 'General'}`);
 
         container.innerHTML = `
-          <div class="flex items-center gap-1.5">
-            <span class="text-xs ${badgeColor} font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border cursor-default" title="${escapeText(badgeTooltip)}">
-              <i class="fa-solid ${badgeIcon} text-[11px]"></i> <span>${escapeText(badgeLabel)}</span>
+          <div class="flex items-center gap-1 sm:gap-1.5">
+            <span class="text-[11px] ${badgeColor} font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-xs flex items-center gap-1 border cursor-default whitespace-nowrap" title="${escapeText(badgeTooltip)}">
+              <i class="fa-solid ${badgeIcon} text-[10px]"></i> <span>${escapeText(badgeLabel)}</span>
             </span>
-            <button onclick="openChangePasswordModal()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Change Staff Login Password">
-              <i class="fa-solid fa-key text-[11px]"></i> <span class="hidden md:inline">Password</span>
+            <button onclick="openChangePasswordModal()" class="bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md transition shadow-xs flex items-center gap-1 cursor-pointer whitespace-nowrap" title="Change Staff Login Password">
+              <i class="fa-solid fa-key text-[10px]"></i> <span class="hidden md:inline">Password</span>
             </button>
-            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
-              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span class="hidden sm:inline">Logout</span>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md transition shadow-xs flex items-center gap-1 cursor-pointer whitespace-nowrap" title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-[10px]"></i> <span class="hidden sm:inline">Logout</span>
             </button>
           </div>
         `;
@@ -10567,12 +10571,12 @@
         if (sidebarAuth) sidebarAuth.classList.add('hidden');
       } else if (currentUser && currentUser.role === 'student') {
         container.innerHTML = `
-          <div class="flex items-center gap-1.5">
-            <span class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1.5 rounded-lg shadow-xs flex items-center gap-1 border border-emerald-500 cursor-default" title="Student PEN: ${escapeText(currentUser.pen || 'NA')}">
-              <i class="fa-solid fa-graduation-cap text-[11px]"></i> <span class="max-w-[80px] sm:max-w-[120px] truncate">${escapeText(currentUser.name)}</span>
+          <div class="flex items-center gap-1 sm:gap-1.5">
+            <span class="text-[11px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-xs flex items-center gap-1 border border-emerald-500 cursor-default whitespace-nowrap" title="Student PEN: ${escapeText(currentUser.pen || 'NA')}">
+              <i class="fa-solid fa-graduation-cap text-[10px]"></i> <span class="max-w-[80px] sm:max-w-[120px] truncate">${escapeText(currentUser.name)}</span>
             </span>
-            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-2 py-1.5 rounded-lg transition shadow-xs flex items-center gap-1 cursor-pointer" title="Logout">
-              <i class="fa-solid fa-right-from-bracket text-[11px]"></i> <span class="hidden sm:inline">Logout</span>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md transition shadow-xs flex items-center gap-1 cursor-pointer whitespace-nowrap" title="Logout">
+              <i class="fa-solid fa-right-from-bracket text-[10px]"></i> <span class="hidden sm:inline">Logout</span>
             </button>
           </div>
         `;
@@ -10585,8 +10589,8 @@
         if (sidebarAuth) sidebarAuth.classList.add('hidden');
       } else {
         container.innerHTML = `
-          <button onclick="openLoginModal()" class="bg-white hover:bg-amber-50 text-orange-950 font-bold px-2.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer" title="Login Portal">
-            <i class="fa-solid fa-user-lock text-[11px]"></i>
+          <button onclick="openLoginModal()" class="bg-white hover:bg-sky-50 text-sky-950 font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] transition flex items-center gap-1 shadow-xs cursor-pointer whitespace-nowrap" title="Login Portal">
+            <i class="fa-solid fa-user-lock text-[10px]"></i>
             <span id="login-btn-text">Login</span>
           </button>
         `;
